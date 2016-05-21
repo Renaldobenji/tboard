@@ -1,0 +1,457 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TBoardModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="TBoardModelStoreContainer">
+          <EntitySet Name="address" EntityType="TBoardModel.Store.address" store:Type="Tables" Schema="tboard" />
+          <EntitySet Name="addresstype" EntityType="TBoardModel.Store.addresstype" store:Type="Tables" Schema="tboard" />
+          <EntitySet Name="bankaccountdetails" EntityType="TBoardModel.Store.bankaccountdetails" store:Type="Tables" Schema="tboard" />
+          <EntitySet Name="bankaccounttype" EntityType="TBoardModel.Store.bankaccounttype" store:Type="Tables" Schema="tboard" />
+          <EntitySet Name="communication" EntityType="TBoardModel.Store.communication" store:Type="Tables" Schema="tboard" />
+          <EntitySet Name="communicationtype" EntityType="TBoardModel.Store.communicationtype" store:Type="Tables" Schema="tboard" />
+          <EntitySet Name="organization" EntityType="TBoardModel.Store.organization" store:Type="Tables" Schema="tboard" />
+          <EntitySet Name="organizationtypes" EntityType="TBoardModel.Store.organizationtypes" store:Type="Tables" Schema="tboard" />
+          <AssociationSet Name="addType" Association="TBoardModel.Store.addType">
+            <End Role="addresstype" EntitySet="addresstype" />
+            <End Role="address" EntitySet="address" />
+          </AssociationSet>
+          <AssociationSet Name="bankAcctype" Association="TBoardModel.Store.bankAcctype">
+            <End Role="bankaccounttype" EntitySet="bankaccounttype" />
+            <End Role="bankaccountdetails" EntitySet="bankaccountdetails" />
+          </AssociationSet>
+          <AssociationSet Name="commTypeID" Association="TBoardModel.Store.commTypeID">
+            <End Role="communicationtype" EntitySet="communicationtype" />
+            <End Role="communication" EntitySet="communication" />
+          </AssociationSet>
+          <AssociationSet Name="orgType" Association="TBoardModel.Store.orgType">
+            <End Role="organizationtypes" EntitySet="organizationtypes" />
+            <End Role="organization" EntitySet="organization" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="address">
+          <Key>
+            <PropertyRef Name="addressID" />
+          </Key>
+          <Property Name="addressID" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="owningType" Type="varchar" MaxLength="50" />
+          <Property Name="owningID" Type="varchar" MaxLength="50" />
+          <Property Name="addressTypeID" Type="int" />
+          <Property Name="addressLine1" Type="varchar" MaxLength="200" />
+          <Property Name="addressLine2" Type="varchar" MaxLength="200" />
+          <Property Name="addressLine3" Type="varchar" MaxLength="200" />
+          <Property Name="addressLine4" Type="varchar" MaxLength="200" />
+          <Property Name="addressLine5" Type="varchar" MaxLength="200" />
+          <Property Name="postalCode" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="addresstype">
+          <Key>
+            <PropertyRef Name="addressTypeID" />
+          </Key>
+          <Property Name="addressTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="addressTypeTLA" Type="varchar" MaxLength="45" />
+          <Property Name="AddressTypeDescription" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="bankaccountdetails">
+          <Key>
+            <PropertyRef Name="bankAccountDetailID" />
+          </Key>
+          <Property Name="bankAccountDetailID" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="owningType" Type="varchar" MaxLength="45" />
+          <Property Name="owningID" Type="varchar" MaxLength="45" />
+          <Property Name="accountName" Type="varchar" MaxLength="45" />
+          <Property Name="accountNumber" Type="varchar" MaxLength="45" />
+          <Property Name="branchCode" Type="varchar" MaxLength="45" />
+          <Property Name="branchName" Type="varchar" MaxLength="150" />
+          <Property Name="default" Type="bit" />
+          <Property Name="bankAccountTypeID" Type="int" />
+        </EntityType>
+        <EntityType Name="bankaccounttype">
+          <Key>
+            <PropertyRef Name="bankAccountTypeID" />
+          </Key>
+          <Property Name="bankAccountTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="bankAccountTypeCode" Type="varchar" MaxLength="45" />
+          <Property Name="bankAccountTypeDescription" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="communication">
+          <Key>
+            <PropertyRef Name="communicationID" />
+          </Key>
+          <Property Name="communicationID" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="owningType" Type="varchar" MaxLength="45" />
+          <Property Name="owningID" Type="varchar" MaxLength="45" />
+          <Property Name="communicationLine1" Type="varchar" MaxLength="45" />
+          <Property Name="communicationLine2" Type="varchar" MaxLength="45" />
+          <Property Name="communicationTypeID" Type="int" />
+        </EntityType>
+        <EntityType Name="communicationtype">
+          <Key>
+            <PropertyRef Name="communicationTypeID" />
+          </Key>
+          <Property Name="communicationTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="communicationTypeTLA" Type="varchar" MaxLength="45" />
+          <Property Name="communicationTypeDescription" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="organization">
+          <Key>
+            <PropertyRef Name="organizationID" />
+          </Key>
+          <Property Name="organizationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="varchar" MaxLength="150" />
+          <Property Name="tradingName" Type="varchar" MaxLength="150" />
+          <Property Name="registrationNumber" Type="varchar" MaxLength="150" />
+          <Property Name="vatNumber" Type="varchar" MaxLength="150" />
+          <Property Name="taxNumber" Type="varchar" MaxLength="150" />
+          <Property Name="organizationTypeID" Type="int" />
+        </EntityType>
+        <EntityType Name="organizationtypes">
+          <Key>
+            <PropertyRef Name="organizationTypeID" />
+          </Key>
+          <Property Name="organizationTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="varchar" MaxLength="150" />
+          <Property Name="description" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <Association Name="addType">
+          <End Role="addresstype" Type="TBoardModel.Store.addresstype" Multiplicity="0..1" />
+          <End Role="address" Type="TBoardModel.Store.address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="addresstype">
+              <PropertyRef Name="addressTypeID" />
+            </Principal>
+            <Dependent Role="address">
+              <PropertyRef Name="addressTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="bankAcctype">
+          <End Role="bankaccounttype" Type="TBoardModel.Store.bankaccounttype" Multiplicity="0..1" />
+          <End Role="bankaccountdetails" Type="TBoardModel.Store.bankaccountdetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bankaccounttype">
+              <PropertyRef Name="bankAccountTypeID" />
+            </Principal>
+            <Dependent Role="bankaccountdetails">
+              <PropertyRef Name="bankAccountTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="commTypeID">
+          <End Role="communicationtype" Type="TBoardModel.Store.communicationtype" Multiplicity="0..1" />
+          <End Role="communication" Type="TBoardModel.Store.communication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="communicationtype">
+              <PropertyRef Name="communicationTypeID" />
+            </Principal>
+            <Dependent Role="communication">
+              <PropertyRef Name="communicationTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="orgType">
+          <End Role="organizationtypes" Type="TBoardModel.Store.organizationtypes" Multiplicity="0..1" />
+          <End Role="organization" Type="TBoardModel.Store.organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="organizationtypes">
+              <PropertyRef Name="organizationTypeID" />
+            </Principal>
+            <Dependent Role="organization">
+              <PropertyRef Name="organizationTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TBoardModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TBoardEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="addresses" EntityType="TBoardModel.address" />
+          <EntitySet Name="addresstypes" EntityType="TBoardModel.addresstype" />
+          <EntitySet Name="bankaccountdetails" EntityType="TBoardModel.bankaccountdetail" />
+          <EntitySet Name="bankaccounttypes" EntityType="TBoardModel.bankaccounttype" />
+          <EntitySet Name="communications" EntityType="TBoardModel.communication" />
+          <EntitySet Name="communicationtypes" EntityType="TBoardModel.communicationtype" />
+          <EntitySet Name="organizations" EntityType="TBoardModel.organization" />
+          <EntitySet Name="organizationtypes" EntityType="TBoardModel.organizationtype" />
+          <AssociationSet Name="addType" Association="TBoardModel.addType">
+            <End Role="addresstype" EntitySet="addresstypes" />
+            <End Role="address" EntitySet="addresses" />
+          </AssociationSet>
+          <AssociationSet Name="bankAcctype" Association="TBoardModel.bankAcctype">
+            <End Role="bankaccounttype" EntitySet="bankaccounttypes" />
+            <End Role="bankaccountdetails" EntitySet="bankaccountdetails" />
+          </AssociationSet>
+          <AssociationSet Name="commTypeID" Association="TBoardModel.commTypeID">
+            <End Role="communicationtype" EntitySet="communicationtypes" />
+            <End Role="communication" EntitySet="communications" />
+          </AssociationSet>
+          <AssociationSet Name="orgType" Association="TBoardModel.orgType">
+            <End Role="organizationtypes" EntitySet="organizationtypes" />
+            <End Role="organization" EntitySet="organizations" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="address">
+          <Key>
+            <PropertyRef Name="addressID" />
+          </Key>
+          <Property Name="addressID" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="owningType" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="owningID" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="addressTypeID" Type="Int32" />
+          <Property Name="addressLine1" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+          <Property Name="addressLine2" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+          <Property Name="addressLine3" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+          <Property Name="addressLine4" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+          <Property Name="addressLine5" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+          <Property Name="postalCode" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="addresstype" Relationship="TBoardModel.addType" FromRole="address" ToRole="addresstype" />
+        </EntityType>
+        <EntityType Name="addresstype">
+          <Key>
+            <PropertyRef Name="addressTypeID" />
+          </Key>
+          <Property Name="addressTypeID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="addressTypeTLA" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="AddressTypeDescription" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="addresses" Relationship="TBoardModel.addType" FromRole="addresstype" ToRole="address" />
+        </EntityType>
+        <EntityType Name="bankaccountdetail">
+          <Key>
+            <PropertyRef Name="bankAccountDetailID" />
+          </Key>
+          <Property Name="bankAccountDetailID" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="owningType" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="owningID" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="accountName" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="accountNumber" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="branchCode" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="branchName" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
+          <Property Name="default" Type="Boolean" />
+          <Property Name="bankAccountTypeID" Type="Int32" />
+          <NavigationProperty Name="bankaccounttype" Relationship="TBoardModel.bankAcctype" FromRole="bankaccountdetails" ToRole="bankaccounttype" />
+        </EntityType>
+        <EntityType Name="bankaccounttype">
+          <Key>
+            <PropertyRef Name="bankAccountTypeID" />
+          </Key>
+          <Property Name="bankAccountTypeID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="bankAccountTypeCode" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="bankAccountTypeDescription" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="bankaccountdetails" Relationship="TBoardModel.bankAcctype" FromRole="bankaccounttype" ToRole="bankaccountdetails" />
+        </EntityType>
+        <EntityType Name="communication">
+          <Key>
+            <PropertyRef Name="communicationID" />
+          </Key>
+          <Property Name="communicationID" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="owningType" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="owningID" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="communicationLine1" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="communicationLine2" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="communicationTypeID" Type="Int32" />
+          <NavigationProperty Name="communicationtype" Relationship="TBoardModel.commTypeID" FromRole="communication" ToRole="communicationtype" />
+        </EntityType>
+        <EntityType Name="communicationtype">
+          <Key>
+            <PropertyRef Name="communicationTypeID" />
+          </Key>
+          <Property Name="communicationTypeID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="communicationTypeTLA" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+          <Property Name="communicationTypeDescription" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="communications" Relationship="TBoardModel.commTypeID" FromRole="communicationtype" ToRole="communication" />
+        </EntityType>
+        <EntityType Name="organization">
+          <Key>
+            <PropertyRef Name="organizationID" />
+          </Key>
+          <Property Name="organizationID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
+          <Property Name="tradingName" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
+          <Property Name="registrationNumber" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
+          <Property Name="vatNumber" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
+          <Property Name="taxNumber" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
+          <Property Name="organizationTypeID" Type="Int32" />
+          <NavigationProperty Name="organizationtype" Relationship="TBoardModel.orgType" FromRole="organization" ToRole="organizationtypes" />
+        </EntityType>
+        <EntityType Name="organizationtype">
+          <Key>
+            <PropertyRef Name="organizationTypeID" />
+          </Key>
+          <Property Name="organizationTypeID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
+          <Property Name="description" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="organizations" Relationship="TBoardModel.orgType" FromRole="organizationtypes" ToRole="organization" />
+        </EntityType>
+        <Association Name="addType">
+          <End Role="addresstype" Type="TBoardModel.addresstype" Multiplicity="0..1" />
+          <End Role="address" Type="TBoardModel.address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="addresstype">
+              <PropertyRef Name="addressTypeID" />
+            </Principal>
+            <Dependent Role="address">
+              <PropertyRef Name="addressTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="bankAcctype">
+          <End Role="bankaccounttype" Type="TBoardModel.bankaccounttype" Multiplicity="0..1" />
+          <End Role="bankaccountdetails" Type="TBoardModel.bankaccountdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bankaccounttype">
+              <PropertyRef Name="bankAccountTypeID" />
+            </Principal>
+            <Dependent Role="bankaccountdetails">
+              <PropertyRef Name="bankAccountTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="commTypeID">
+          <End Role="communicationtype" Type="TBoardModel.communicationtype" Multiplicity="0..1" />
+          <End Role="communication" Type="TBoardModel.communication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="communicationtype">
+              <PropertyRef Name="communicationTypeID" />
+            </Principal>
+            <Dependent Role="communication">
+              <PropertyRef Name="communicationTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="orgType">
+          <End Role="organizationtypes" Type="TBoardModel.organizationtype" Multiplicity="0..1" />
+          <End Role="organization" Type="TBoardModel.organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="organizationtypes">
+              <PropertyRef Name="organizationTypeID" />
+            </Principal>
+            <Dependent Role="organization">
+              <PropertyRef Name="organizationTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TBoardModelStoreContainer" CdmEntityContainer="TBoardEntities">
+          <EntitySetMapping Name="addresses">
+            <EntityTypeMapping TypeName="TBoardModel.address">
+              <MappingFragment StoreEntitySet="address">
+                <ScalarProperty Name="addressID" ColumnName="addressID" />
+                <ScalarProperty Name="owningType" ColumnName="owningType" />
+                <ScalarProperty Name="owningID" ColumnName="owningID" />
+                <ScalarProperty Name="addressTypeID" ColumnName="addressTypeID" />
+                <ScalarProperty Name="addressLine1" ColumnName="addressLine1" />
+                <ScalarProperty Name="addressLine2" ColumnName="addressLine2" />
+                <ScalarProperty Name="addressLine3" ColumnName="addressLine3" />
+                <ScalarProperty Name="addressLine4" ColumnName="addressLine4" />
+                <ScalarProperty Name="addressLine5" ColumnName="addressLine5" />
+                <ScalarProperty Name="postalCode" ColumnName="postalCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="addresstypes">
+            <EntityTypeMapping TypeName="TBoardModel.addresstype">
+              <MappingFragment StoreEntitySet="addresstype">
+                <ScalarProperty Name="addressTypeID" ColumnName="addressTypeID" />
+                <ScalarProperty Name="addressTypeTLA" ColumnName="addressTypeTLA" />
+                <ScalarProperty Name="AddressTypeDescription" ColumnName="AddressTypeDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bankaccountdetails">
+            <EntityTypeMapping TypeName="TBoardModel.bankaccountdetail">
+              <MappingFragment StoreEntitySet="bankaccountdetails">
+                <ScalarProperty Name="bankAccountDetailID" ColumnName="bankAccountDetailID" />
+                <ScalarProperty Name="owningType" ColumnName="owningType" />
+                <ScalarProperty Name="owningID" ColumnName="owningID" />
+                <ScalarProperty Name="accountName" ColumnName="accountName" />
+                <ScalarProperty Name="accountNumber" ColumnName="accountNumber" />
+                <ScalarProperty Name="branchCode" ColumnName="branchCode" />
+                <ScalarProperty Name="branchName" ColumnName="branchName" />
+                <ScalarProperty Name="default" ColumnName="default" />
+                <ScalarProperty Name="bankAccountTypeID" ColumnName="bankAccountTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bankaccounttypes">
+            <EntityTypeMapping TypeName="TBoardModel.bankaccounttype">
+              <MappingFragment StoreEntitySet="bankaccounttype">
+                <ScalarProperty Name="bankAccountTypeID" ColumnName="bankAccountTypeID" />
+                <ScalarProperty Name="bankAccountTypeCode" ColumnName="bankAccountTypeCode" />
+                <ScalarProperty Name="bankAccountTypeDescription" ColumnName="bankAccountTypeDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="communications">
+            <EntityTypeMapping TypeName="TBoardModel.communication">
+              <MappingFragment StoreEntitySet="communication">
+                <ScalarProperty Name="communicationID" ColumnName="communicationID" />
+                <ScalarProperty Name="owningType" ColumnName="owningType" />
+                <ScalarProperty Name="owningID" ColumnName="owningID" />
+                <ScalarProperty Name="communicationLine1" ColumnName="communicationLine1" />
+                <ScalarProperty Name="communicationLine2" ColumnName="communicationLine2" />
+                <ScalarProperty Name="communicationTypeID" ColumnName="communicationTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="communicationtypes">
+            <EntityTypeMapping TypeName="TBoardModel.communicationtype">
+              <MappingFragment StoreEntitySet="communicationtype">
+                <ScalarProperty Name="communicationTypeID" ColumnName="communicationTypeID" />
+                <ScalarProperty Name="communicationTypeTLA" ColumnName="communicationTypeTLA" />
+                <ScalarProperty Name="communicationTypeDescription" ColumnName="communicationTypeDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="organizations">
+            <EntityTypeMapping TypeName="TBoardModel.organization">
+              <MappingFragment StoreEntitySet="organization">
+                <ScalarProperty Name="organizationID" ColumnName="organizationID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="tradingName" ColumnName="tradingName" />
+                <ScalarProperty Name="registrationNumber" ColumnName="registrationNumber" />
+                <ScalarProperty Name="vatNumber" ColumnName="vatNumber" />
+                <ScalarProperty Name="taxNumber" ColumnName="taxNumber" />
+                <ScalarProperty Name="organizationTypeID" ColumnName="organizationTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="organizationtypes">
+            <EntityTypeMapping TypeName="TBoardModel.organizationtype">
+              <MappingFragment StoreEntitySet="organizationtypes">
+                <ScalarProperty Name="organizationTypeID" ColumnName="organizationTypeID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
