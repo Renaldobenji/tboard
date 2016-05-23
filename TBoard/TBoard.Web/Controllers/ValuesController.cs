@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Web.Http;
 
 namespace TBoard.Web.Controllers
@@ -22,7 +23,7 @@ namespace TBoard.Web.Controllers
         }
 
         // POST api/values
-        public void Post([FromBody]string value)
+        public void Post(FormDataCollection value)
         {
         }
 

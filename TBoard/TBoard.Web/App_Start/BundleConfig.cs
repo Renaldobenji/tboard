@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Optimization;
+using System.Web.Optimization.React;
 
 namespace TBoard.Web
 {
@@ -38,6 +39,17 @@ namespace TBoard.Web
                         "~/Content/themes/base/jquery.ui.datepicker.css",
                         "~/Content/themes/base/jquery.ui.progressbar.css",
                         "~/Content/themes/base/jquery.ui.theme.css"));
+
+            bundles.Add(new Bundle("~/bundles/myjsx", new IBundleTransform[]
+            {
+                // This works the same as BabelBundle (transform then minify) but you could
+                //add your own transforms as well.
+                new BabelTransform()
+                //,new JsMinify(),
+            }).Include(
+                "~/Scripts/reactLogic/registration.jsx",
+                "~/Scripts/reactLogic/app.jsx"
+            ));
         }
     }
 }
