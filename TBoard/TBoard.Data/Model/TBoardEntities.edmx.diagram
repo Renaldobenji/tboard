@@ -17,6 +17,7 @@
         <AssociationConnector Association="TBoardModel.bankAcctype" ManuallyRouted="false" />
         <AssociationConnector Association="TBoardModel.commTypeID" ManuallyRouted="false" />
         <AssociationConnector Association="TBoardModel.orgType" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="TBoardModel.user" Width="1.5" PointX="0.75" PointY="7.5" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

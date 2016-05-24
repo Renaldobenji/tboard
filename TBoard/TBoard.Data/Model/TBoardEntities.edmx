@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TBoardModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TBoardModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="TBoardModelStoreContainer">
           <EntitySet Name="address" EntityType="TBoardModel.Store.address" store:Type="Tables" Schema="tboard" />
           <EntitySet Name="addresstype" EntityType="TBoardModel.Store.addresstype" store:Type="Tables" Schema="tboard" />
@@ -14,6 +14,7 @@
           <EntitySet Name="communicationtype" EntityType="TBoardModel.Store.communicationtype" store:Type="Tables" Schema="tboard" />
           <EntitySet Name="organization" EntityType="TBoardModel.Store.organization" store:Type="Tables" Schema="tboard" />
           <EntitySet Name="organizationtypes" EntityType="TBoardModel.Store.organizationtypes" store:Type="Tables" Schema="tboard" />
+          <EntitySet Name="users" EntityType="TBoardModel.Store.users" store:Type="Tables" Schema="tboard" />
           <AssociationSet Name="addType" Association="TBoardModel.Store.addType">
             <End Role="addresstype" EntitySet="addresstype" />
             <End Role="address" EntitySet="address" />
@@ -115,6 +116,28 @@
           <Property Name="name" Type="varchar" MaxLength="150" />
           <Property Name="description" Type="varchar" MaxLength="150" />
         </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="organizationID" Type="int" />
+          <Property Name="username" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="password" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="passwordSalt" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="title" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="firstname" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="surname" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="identificationNumber" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="isApproved" Type="bit" Nullable="false" />
+          <Property Name="isLockedOut" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="lastActivityDate" Type="datetime" />
+          <Property Name="lastPasswordChange" Type="datetime" />
+          <Property Name="lastLoginDate" Type="datetime" />
+          <Property Name="failedPasswordAttemptCount" Type="int" />
+          <Property Name="created" Type="datetime" Nullable="false" />
+          <Property Name="updated" Type="datetime" />
+        </EntityType>
         <Association Name="addType">
           <End Role="addresstype" Type="TBoardModel.Store.addresstype" Multiplicity="0..1" />
           <End Role="address" Type="TBoardModel.Store.address" Multiplicity="*" />
@@ -163,8 +186,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TBoardModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -193,6 +215,7 @@
             <End Role="organizationtypes" EntitySet="organizationtypes" />
             <End Role="organization" EntitySet="organizations" />
           </AssociationSet>
+          <EntitySet Name="users" EntityType="TBoardModel.user" />
         </EntityContainer>
         <EntityType Name="address">
           <Key>
@@ -334,6 +357,28 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Type="Int32" Name="userID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="organizationID" />
+          <Property Type="String" Name="username" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="password" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="passwordSalt" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="title" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="firstname" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="surname" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="identificationNumber" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="isApproved" Nullable="false" />
+          <Property Type="String" Name="isLockedOut" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="lastActivityDate" Precision="0" />
+          <Property Type="DateTime" Name="lastPasswordChange" Precision="0" />
+          <Property Type="DateTime" Name="lastLoginDate" Precision="0" />
+          <Property Type="Int32" Name="failedPasswordAttemptCount" />
+          <Property Type="DateTime" Name="created" Nullable="false" Precision="0" />
+          <Property Type="DateTime" Name="updated" Precision="0" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -429,6 +474,29 @@
                 <ScalarProperty Name="organizationTypeID" ColumnName="organizationTypeID" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="TBoardModel.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="updated" ColumnName="updated" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="failedPasswordAttemptCount" ColumnName="failedPasswordAttemptCount" />
+                <ScalarProperty Name="lastLoginDate" ColumnName="lastLoginDate" />
+                <ScalarProperty Name="lastPasswordChange" ColumnName="lastPasswordChange" />
+                <ScalarProperty Name="lastActivityDate" ColumnName="lastActivityDate" />
+                <ScalarProperty Name="isLockedOut" ColumnName="isLockedOut" />
+                <ScalarProperty Name="isApproved" ColumnName="isApproved" />
+                <ScalarProperty Name="identificationNumber" ColumnName="identificationNumber" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="passwordSalt" ColumnName="passwordSalt" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="organizationID" ColumnName="organizationID" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -125,7 +125,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\ReactConfig.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Model\address.cs">
@@ -167,9 +166,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TBoardEntities.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Model\user.cs">
+      <DependentUpon>TBoardEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\AddressRepository.cs" />
+    <Compile Include="Repository\CommunicationRepository.cs" />
+    <Compile Include="Repository\OrganizationRepository.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\UnitOfWork.cs" />
+    <Compile Include="Repository\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="Model\TBoardEntities.edmx">
@@ -181,16 +187,13 @@
     <None Include="App.Config" />
     <None Include="Model\TBoardEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TBoardEntities.edmx</DependentUpon>
       <LastGenOutput>TBoardEntities.Context.cs</LastGenOutput>
-    </None>
-    <None Include="Model\TBoardEntities.edmx.diagram">
       <DependentUpon>TBoardEntities.edmx</DependentUpon>
     </None>
     <None Include="Model\TBoardEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TBoardEntities.edmx</DependentUpon>
       <LastGenOutput>TBoardEntities.cs</LastGenOutput>
+      <DependentUpon>TBoardEntities.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

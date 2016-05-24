@@ -33,5 +33,6 @@ namespace TBoard.Data.Model
         public DbSet<communicationtype> communicationtypes { get; set; }
         public DbSet<organization> organizations { get; set; }
         public DbSet<organizationtype> organizationtypes { get; set; }
+        public DbSet<user> users { get; set; }
     }
 }
