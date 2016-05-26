@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -30,46 +31,66 @@ namespace TBoard.Web.Controllers
         {
             UserResponse userResponse = null;
             organization org = null;
-
-            //Create Organization first
-            if (!string.IsNullOrEmpty(formData.Get("OrganizationName")))
+            try
             {
-                if (formData.Get("OrganizationName").Equals("Company Buyer"))
+
+                //Create Organization first
+                if (!string.IsNullOrEmpty(formData.Get("OrganizationName")))
                 {
-                    org = new organization();
-                    org.name = formData.Get("OrganizationName");
-                    org.organizationTypeID = 1;
+                    if (formData.Get("RegistrationType").Equals("CorporateBuyer"))
+                    {
+                        org = new organization();
+                        org.name = formData.Get("OrganizationName");
+                        org.organizationTypeID = 1;
+                    }
+                    else if (formData.Get("RegistrationType").Equals("CorporateSeller"))
+                    {
+                        org = new organization();
+                        org.name = formData.Get("OrganizationName");
+                        org.organizationTypeID = 2;
+                    }
+                    if (org != null)
+                        this.organizationBusinessLogic.Create(org);
                 }
-                else if (formData.Get("OrganizationName").Equals("Company Buyer"))
+
+                if (org == null)
                 {
-                    org = new organization();
-                    org.name = formData.Get("OrganizationName");
-                    org.organizationTypeID = 2;
+                    userResponse = userBusinessLogic.CreateUser(formData.Get("Name"), formData.Get("Name"),
+                        formData.Get("Surname"), formData.Get("Password"), "Mr", formData.Get("IDNumber"));
                 }
-                if (org != null)
-                    this.organizationBusinessLogic.Create(org);
-            }
+                else
+                {
+                    userResponse = userBusinessLogic.CreateUser(formData.Get("Name"), formData.Get("Name"),
+                        formData.Get("Surname"), formData.Get("Password"), "Mr", formData.Get("IDNumber"),
+                        org.organizationID);
+                }
 
-            if (org == null)
+                //Address Information
+                this.addAddressInformation(formData, org, userResponse);
+
+                //Communication
+                addCommunicationBasedOnType(formData, org, userResponse, "CellNumber", "CELL");
+                addCommunicationBasedOnType(formData, org, userResponse, "HomeNumber", "HME");
+                addCommunicationBasedOnType(formData, org, userResponse, "OfficeNumber", "WRK");
+                addCommunicationBasedOnType(formData, org, userResponse, "Email", "EML");
+            }
+            catch (DbEntityValidationException e)
             {
-                userResponse = userBusinessLogic.CreateUser(formData.Get("Name"), formData.Get("Name"),
-                    formData.Get("Surname"), formData.Get("Password"), formData.Get("Title"), formData.Get("IDNumber"));
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
             }
-            else
+            catch (Exception ex)
             {
-                userResponse = userBusinessLogic.CreateUser(formData.Get("Name"), formData.Get("Name"),
-                    formData.Get("Surname"), formData.Get("Password"), formData.Get("Title"), formData.Get("IDNumber"),
-                    org.organizationID);
+                throw;
             }
-
-            //Address Information
-            this.addAddressInformation(formData, org, userResponse);
-
-            //Communication
-            addCommunicationBasedOnType(formData, org, userResponse, "CellNumber", "CELL");
-            addCommunicationBasedOnType(formData, org, userResponse, "HomeNumber", "HME");
-            addCommunicationBasedOnType(formData, org, userResponse, "OfficeNumber", "WRK");
-            addCommunicationBasedOnType(formData, org, userResponse, "Email", "EML");
 
             return "";
         }

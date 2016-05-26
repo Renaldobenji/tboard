@@ -40,6 +40,7 @@ namespace TBoard.BusinessLogic.BusinessLogic
             newUser.isApproved = true;
             newUser.lastActivityDate = DateTime.Now;
             newUser.lastPasswordChange = DateTime.Now;
+            newUser.created = DateTime.Now;
             newUser.isLockedOut = "false";
             newUser.failedPasswordAttemptCount = 0;
             newUser.lastLoginDate = DateTime.Now;
@@ -72,6 +73,7 @@ namespace TBoard.BusinessLogic.BusinessLogic
             newUser.failedPasswordAttemptCount = 0;
             newUser.lastLoginDate = DateTime.Now;
             newUser.organizationID = organizationId;
+            newUser.created = DateTime.Now;
 
             this.Create(newUser);
 

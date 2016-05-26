@@ -70,7 +70,7 @@ var Register = React.createClass({
     registerUserPOST : function() {
         console.log('POSTING FORM');
         $.ajax({
-                  url: 'api/values',
+                  url: 'api/Registration/Post',
                   type: 'POST',
                   dataType: 'json',
                   data: this.state,
@@ -79,7 +79,7 @@ var Register = React.createClass({
                       alert(data);
                   }.bind(this),
                   error: function(xhr, status, err) {
-                    console.error('api/values', status, err.toString());
+                    console.error('api/Registration/Post', status, err.toString());
                   }.bind(this)
             });
     },
