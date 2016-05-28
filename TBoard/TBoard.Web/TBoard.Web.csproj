@@ -1039,6 +1039,10 @@
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\reactLogic\app.jsx" />
+    <Content Include="Scripts\reactLogic\dashboard.jsx" />
+    <Content Include="Scripts\reactLogic\mystyles.jsx" />
+    <Content Include="Scripts\reactLogic\navheader.jsx" />
+    <Content Include="Scripts\reactLogic\navmenu.jsx" />
     <Content Include="Scripts\reactLogic\registration.jsx" />
     <Content Include="Scripts\react\react-dom-server.js" />
     <Content Include="Scripts\react\react-dom-server.min.js" />

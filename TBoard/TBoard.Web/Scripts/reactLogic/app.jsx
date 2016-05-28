@@ -3,6 +3,10 @@
   registerClick: function(event) {
 		routie('register');
 	},
+  
+  loginClick: function(event) {
+		routie('dashboard');
+	},
 
   render: function() {
     return (
@@ -22,7 +26,7 @@
 										<div className="form-group">
 											<input className="form-control" placeholder="Password" name="password" type="password"/>
 										</div>																	
-										<a className="btn btn-lg btn-success btn-block">Login</a>
+										<a onClick={this.loginClick} className="btn btn-lg btn-success btn-block">Login</a>
 										<hr/>
 										<a onClick={this.registerClick} className="btn btn-outline btn-default btn-block">Register</a>
 									</fieldset>
@@ -47,6 +51,12 @@ routie({
 		'register': function(){
 			ReactDOM.render(
 				React.createElement(Register, null), document.getElementById('container')
+			);
+		}
+        ,
+		'dashboard': function(){
+			ReactDOM.render(
+				React.createElement(Dashboard, null), document.getElementById('container')
 			);
 		}	
 });
