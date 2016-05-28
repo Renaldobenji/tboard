@@ -54,9 +54,16 @@ routie({
 			);
 		}
         ,
-		'dashboard': function(){
+        'dashboard': function(){
 			ReactDOM.render(
 				React.createElement(Dashboard, null), document.getElementById('container')
 			);
-		}	
+		}
+        ,
+        'organization': function(){
+			ReactDOM.render(
+				React.createElement(Organization, null), document.getElementById('container')
+			);
+		}
+
 });

@@ -47,9 +47,11 @@ namespace TBoard.Web
                 new BabelTransform()
                 //,new JsMinify(),
             }).Include(
+                "~/Scripts/reactLogic/dashboard.jsx",
+                "~/Scripts/reactLogic/organization.jsx",
                 "~/Scripts/reactLogic/navheader.jsx",
                 "~/Scripts/reactLogic/navmenu.jsx",
-                "~/Scripts/reactLogic/dashboard.jsx",
+                "~/Scripts/reactLogic/admin.jsx",
                 "~/Scripts/reactLogic/registration.jsx",
                 "~/Scripts/reactLogic/app.jsx"
             ));

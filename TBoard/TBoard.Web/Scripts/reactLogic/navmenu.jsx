@@ -7,6 +7,20 @@
                             <li>
                                 <a href="#dashboard" className="active"><i className="fa fa-dashboard fa-fw"></i> Dashboard</a>
                             </li>
+                            <li>
+	                            <a><i className="fa fa-bar-chart-o fa-fw"></i> Organization<span className="fa arrow"></span></a>
+	                            <ul className="nav nav-second-level">
+		                            <li>
+			                            <a href="#organization">Details</a>
+		                            </li>
+		                            <li>
+			                            <a href="#organization">Documents</a>
+		                            </li>
+		                            <li>
+			                            <a href="#organization">Users</a>
+		                            </li>
+	                            </ul>	
+                            </li>
                         </ul>
                     </div>                
                 </div>

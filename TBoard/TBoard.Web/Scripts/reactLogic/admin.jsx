@@ -1,4 +1,4 @@
-﻿var Dashboard = React.createClass({	
+﻿var Admin = React.createClass({	
 	render: function() {
 
         var navBarSyle= {
@@ -11,15 +11,9 @@
                         <NavMenu />
                     </nav>
                     <div id="page-wrapper">
-	                        <div className="row">
-		                        <div className="col-lg-12">
-			                        <h1 className="page-header">Dashboard</h1>
-		                        </div>                
-	                        </div>  
+	                        
                     </div>
                 </div>
-
-                      
             )
 	}
 });
