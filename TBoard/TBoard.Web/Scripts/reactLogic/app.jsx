@@ -65,5 +65,11 @@ routie({
 				React.createElement(Organization, null), document.getElementById('container')
 			);
 		}
+        ,
+        'users': function(){
+			ReactDOM.render(
+				React.createElement(UserManagement, null), document.getElementById('container')
+			);
+		}
 
 });

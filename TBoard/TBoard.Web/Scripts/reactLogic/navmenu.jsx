@@ -17,7 +17,7 @@
 			                            <a href="#organization">Documents</a>
 		                            </li>
 		                            <li>
-			                            <a href="#organization">Users</a>
+			                            <a href="#users">Users</a>
 		                            </li>
 	                            </ul>	
                             </li>

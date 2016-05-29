@@ -202,6 +202,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrganizationController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1048,6 +1049,7 @@
     <Content Include="Scripts\reactLogic\navmenu.jsx" />
     <Content Include="Scripts\reactLogic\organization.jsx" />
     <Content Include="Scripts\reactLogic\registration.jsx" />
+    <Content Include="Scripts\reactLogic\users.jsx" />
     <Content Include="Scripts\react\react-dom-server.js" />
     <Content Include="Scripts\react\react-dom-server.min.js" />
     <Content Include="Scripts\react\react-dom.js" />
