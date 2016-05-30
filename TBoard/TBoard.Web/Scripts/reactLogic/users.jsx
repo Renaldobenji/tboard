@@ -81,6 +81,7 @@ var UserManagement = React.createClass({
 		                        </div>
 	                        </div>
                             <div className="row"> 
+                                <UserList />
                             </div>
                         </div>
                         <div className="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -129,8 +130,61 @@ var UserManagement = React.createClass({
 				                </div>				
 			                </div>			
 		                </div>
-
                     </div>  
+                
+		);
+	}
+});
+
+
+/*Register Page*/
+var UserList = React.createClass({
+
+    getInitialState: function() {
+			return {
+                        OrganizationID : 1
+					};
+
+	},
+
+    componentDidMount: function() {
+
+        $('#userTable').DataTable( {
+            ajax: {
+                    "url": 'api/User/GetByOrganization/1'
+                }
+                ,"columns": [
+                                { "data": "Username" },
+                                { "data": "FirstName" },
+                                { "data": "Surname" },
+                                { "data": "IDNumber" },
+                                { "data": "Created" },
+                                { "data": "IsApproved" }
+                            ]
+        } );
+    },
+    	
+	render: function(){
+        var navBarSyle= {
+              marginBottom:0
+            };
+	    
+        
+		return (
+	                <div className="col-lg-12">
+			            <table id="userTable" className="table table-striped table-bordered table-hover dataTable no-footer dtr-inline" width="100%" role="grid">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>FirstName</th>
+                                    <th>Surname</th>
+                                    <th>ID Number</th>
+                                    <th>Created</th>
+                                    <th>IsApproved</th>
+                                </tr>
+                            </thead>
+                        </table>
+		            </div>
                 
 		);
 	}

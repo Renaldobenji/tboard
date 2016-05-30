@@ -4,8 +4,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.Data.Model;
 
@@ -20,9 +22,30 @@ namespace TBoard.Web.Controllers
         }
         
         // GET api/<controller>/5
-        public string Get(int id)
+        [Route("api/User/GetByOrganization/{id}")]
+        public HttpResponseMessage GetByOrganization(int id)
         {
-            return "value";
+            var userArray = this.userBusinessLogic.FindBy(x => x.organizationID == id).Select(x => new
+            {
+                Username = x.username,
+                FirstName = x.firstname,
+                Surname = x.surname,
+                IDNumber = x.identificationNumber,
+                Created = x.created.ToString("yyyy-MM-dd"),
+                IsApproved = (x.isApproved ? "True" : "False")
+            }).ToList();
+
+            var r = new
+            {
+                data = userArray
+            };
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(r))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            return resp;
         }
 
         // POST api/<controller>
