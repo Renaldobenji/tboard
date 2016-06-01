@@ -12,19 +12,19 @@ namespace TBoard.Data.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class organizationtype
+    public partial class documenttype
     {
-        public organizationtype()
+        public documenttype()
         {
-            this.organizations = new HashSet<organization>();
             this.documentrequirements = new HashSet<documentrequirement>();
+            this.documents = new HashSet<document>();
         }
     
-        public int organizationTypeID { get; set; }
-        public string name { get; set; }
-        public string description { get; set; }
+        public int documentTypeID { get; set; }
+        public string documentCode { get; set; }
+        public string documentDescription { get; set; }
     
-        public virtual ICollection<organization> organizations { get; set; }
         public virtual ICollection<documentrequirement> documentrequirements { get; set; }
+        public virtual ICollection<document> documents { get; set; }
     }
 }

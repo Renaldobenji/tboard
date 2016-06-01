@@ -12,22 +12,13 @@ namespace TBoard.Data.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class organization
+    public partial class documentrequirement
     {
-        public organization()
-        {
-            this.documents = new HashSet<document>();
-        }
-    
-        public int organizationID { get; set; }
-        public string name { get; set; }
-        public string tradingName { get; set; }
-        public string registrationNumber { get; set; }
-        public string vatNumber { get; set; }
-        public string taxNumber { get; set; }
+        public int documentRequirementsID { get; set; }
+        public Nullable<int> documentTypeID { get; set; }
         public Nullable<int> organizationTypeID { get; set; }
     
+        public virtual documenttype documenttype { get; set; }
         public virtual organizationtype organizationtype { get; set; }
-        public virtual ICollection<document> documents { get; set; }
     }
 }

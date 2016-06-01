@@ -12,6 +12,9 @@
           <EntitySet Name="bankaccounttype" EntityType="TBoardModel.Store.bankaccounttype" store:Type="Tables" Schema="tboard" />
           <EntitySet Name="communication" EntityType="TBoardModel.Store.communication" store:Type="Tables" Schema="tboard" />
           <EntitySet Name="communicationtype" EntityType="TBoardModel.Store.communicationtype" store:Type="Tables" Schema="tboard" />
+          <EntitySet Name="documentrequirements" EntityType="TBoardModel.Store.documentrequirements" store:Type="Tables" Schema="tboard" />
+          <EntitySet Name="documents" EntityType="TBoardModel.Store.documents" store:Type="Tables" Schema="tboard" />
+          <EntitySet Name="documenttypes" EntityType="TBoardModel.Store.documenttypes" store:Type="Tables" Schema="tboard" />
           <EntitySet Name="organization" EntityType="TBoardModel.Store.organization" store:Type="Tables" Schema="tboard" />
           <EntitySet Name="organizationtypes" EntityType="TBoardModel.Store.organizationtypes" store:Type="Tables" Schema="tboard" />
           <EntitySet Name="users" EntityType="TBoardModel.Store.users" store:Type="Tables" Schema="tboard" />
@@ -26,6 +29,22 @@
           <AssociationSet Name="commTypeID" Association="TBoardModel.Store.commTypeID">
             <End Role="communicationtype" EntitySet="communicationtype" />
             <End Role="communication" EntitySet="communication" />
+          </AssociationSet>
+          <AssociationSet Name="documentType" Association="TBoardModel.Store.documentType">
+            <End Role="documenttypes" EntitySet="documenttypes" />
+            <End Role="documents" EntitySet="documents" />
+          </AssociationSet>
+          <AssociationSet Name="documentTypeID" Association="TBoardModel.Store.documentTypeID">
+            <End Role="documenttypes" EntitySet="documenttypes" />
+            <End Role="documentrequirements" EntitySet="documentrequirements" />
+          </AssociationSet>
+          <AssociationSet Name="organizationTypeID" Association="TBoardModel.Store.organizationTypeID">
+            <End Role="organizationtypes" EntitySet="organizationtypes" />
+            <End Role="documentrequirements" EntitySet="documentrequirements" />
+          </AssociationSet>
+          <AssociationSet Name="orgID" Association="TBoardModel.Store.orgID">
+            <End Role="organization" EntitySet="organization" />
+            <End Role="documents" EntitySet="documents" />
           </AssociationSet>
           <AssociationSet Name="orgType" Association="TBoardModel.Store.orgType">
             <End Role="organizationtypes" EntitySet="organizationtypes" />
@@ -95,6 +114,32 @@
           <Property Name="communicationTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="communicationTypeTLA" Type="varchar" MaxLength="45" />
           <Property Name="communicationTypeDescription" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="documentrequirements">
+          <Key>
+            <PropertyRef Name="documentRequirementsID" />
+          </Key>
+          <Property Name="documentRequirementsID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="documentTypeID" Type="int" />
+          <Property Name="organizationTypeID" Type="int" />
+        </EntityType>
+        <EntityType Name="documents">
+          <Key>
+            <PropertyRef Name="documentID" />
+          </Key>
+          <Property Name="documentID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="documentTypeID" Type="int" />
+          <Property Name="organizationID" Type="int" />
+          <Property Name="documentPath" Type="varchar" MaxLength="5000" />
+          <Property Name="dateCreated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="documenttypes">
+          <Key>
+            <PropertyRef Name="documentTypeID" />
+          </Key>
+          <Property Name="documentTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="documentCode" Type="varchar" MaxLength="45" />
+          <Property Name="documentDescription" Type="varchar" MaxLength="45" />
         </EntityType>
         <EntityType Name="organization">
           <Key>
@@ -174,6 +219,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="documentType">
+          <End Role="documenttypes" Type="TBoardModel.Store.documenttypes" Multiplicity="0..1" />
+          <End Role="documents" Type="TBoardModel.Store.documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="documenttypes">
+              <PropertyRef Name="documentTypeID" />
+            </Principal>
+            <Dependent Role="documents">
+              <PropertyRef Name="documentTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="documentTypeID">
+          <End Role="documenttypes" Type="TBoardModel.Store.documenttypes" Multiplicity="0..1" />
+          <End Role="documentrequirements" Type="TBoardModel.Store.documentrequirements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="documenttypes">
+              <PropertyRef Name="documentTypeID" />
+            </Principal>
+            <Dependent Role="documentrequirements">
+              <PropertyRef Name="documentTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="organizationTypeID">
+          <End Role="organizationtypes" Type="TBoardModel.Store.organizationtypes" Multiplicity="0..1" />
+          <End Role="documentrequirements" Type="TBoardModel.Store.documentrequirements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="organizationtypes">
+              <PropertyRef Name="organizationTypeID" />
+            </Principal>
+            <Dependent Role="documentrequirements">
+              <PropertyRef Name="organizationTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="orgID">
+          <End Role="organization" Type="TBoardModel.Store.organization" Multiplicity="0..1" />
+          <End Role="documents" Type="TBoardModel.Store.documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="organization">
+              <PropertyRef Name="organizationID" />
+            </Principal>
+            <Dependent Role="documents">
+              <PropertyRef Name="organizationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="orgType">
           <End Role="organizationtypes" Type="TBoardModel.Store.organizationtypes" Multiplicity="0..1" />
           <End Role="organization" Type="TBoardModel.Store.organization" Multiplicity="*" />
@@ -186,6 +279,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sps_GetOutstandingDocumentRequirements" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tboard">
+          <Parameter Name="organizationID" Type="int" Mode="In" />
+        </Function>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -216,6 +312,28 @@
             <End Role="organization" EntitySet="organizations" />
           </AssociationSet>
           <EntitySet Name="users" EntityType="TBoardModel.user" />
+          <EntitySet Name="documentrequirements" EntityType="TBoardModel.documentrequirement" />
+          <EntitySet Name="documenttypes" EntityType="TBoardModel.documenttype" />
+          <AssociationSet Name="documentTypeID" Association="TBoardModel.documentTypeID">
+            <End Role="documenttype" EntitySet="documenttypes" />
+            <End Role="documentrequirement" EntitySet="documentrequirements" />
+          </AssociationSet>
+          <AssociationSet Name="organizationTypeID" Association="TBoardModel.organizationTypeID">
+            <End Role="organizationtype" EntitySet="organizationtypes" />
+            <End Role="documentrequirement" EntitySet="documentrequirements" />
+          </AssociationSet>
+          <EntitySet Name="documents" EntityType="TBoardModel.document" />
+          <AssociationSet Name="documentType1" Association="TBoardModel.documentType1">
+            <End Role="documenttype" EntitySet="documenttypes" />
+            <End Role="document" EntitySet="documents" />
+          </AssociationSet>
+          <AssociationSet Name="orgID" Association="TBoardModel.orgID">
+            <End Role="organization" EntitySet="organizations" />
+            <End Role="document" EntitySet="documents" />
+          </AssociationSet>
+          <FunctionImport Name="sps_GetOutstandingDocumentRequirements" ReturnType="Collection(TBoardModel.DocumentReq)">
+          <Parameter Name="organizationID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="address">
           <Key>
@@ -299,6 +417,7 @@
           <Property Name="taxNumber" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
           <Property Name="organizationTypeID" Type="Int32" />
           <NavigationProperty Name="organizationtype" Relationship="TBoardModel.orgType" FromRole="organization" ToRole="organizationtypes" />
+          <NavigationProperty Name="documents" Relationship="TBoardModel.orgID" FromRole="organization" ToRole="document" />
         </EntityType>
         <EntityType Name="organizationtype">
           <Key>
@@ -308,6 +427,7 @@
           <Property Name="name" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
           <Property Name="description" Type="String" MaxLength="150" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="organizations" Relationship="TBoardModel.orgType" FromRole="organizationtypes" ToRole="organization" />
+          <NavigationProperty Name="documentrequirements" Relationship="TBoardModel.organizationTypeID" FromRole="organizationtype" ToRole="documentrequirement" />
         </EntityType>
         <Association Name="addType">
           <End Role="addresstype" Type="TBoardModel.addresstype" Multiplicity="0..1" />
@@ -379,6 +499,91 @@
           <Property Type="DateTime" Name="created" Nullable="false" Precision="0" />
           <Property Type="DateTime" Name="updated" Precision="0" />
         </EntityType>
+        <EntityType Name="documentrequirement">
+          <Key>
+            <PropertyRef Name="documentRequirementsID" />
+          </Key>
+          <Property Type="Int32" Name="documentRequirementsID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="documentTypeID" />
+          <Property Type="Int32" Name="organizationTypeID" />
+          <NavigationProperty Name="documenttype" Relationship="TBoardModel.documentTypeID" FromRole="documentrequirement" ToRole="documenttype" />
+          <NavigationProperty Name="organizationtype" Relationship="TBoardModel.organizationTypeID" FromRole="documentrequirement" ToRole="organizationtype" />
+        </EntityType>
+        <EntityType Name="documenttype">
+          <Key>
+            <PropertyRef Name="documentTypeID" />
+          </Key>
+          <Property Type="Int32" Name="documentTypeID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="documentCode" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="documentDescription" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="documentrequirements" Relationship="TBoardModel.documentTypeID" FromRole="documenttype" ToRole="documentrequirement" />
+          <NavigationProperty Name="documents" Relationship="TBoardModel.documentType1" FromRole="documenttype" ToRole="document" />
+        </EntityType>
+        <Association Name="documentTypeID">
+          <End Type="TBoardModel.documenttype" Role="documenttype" Multiplicity="0..1" />
+          <End Type="TBoardModel.documentrequirement" Role="documentrequirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="documenttype">
+              <PropertyRef Name="documentTypeID" />
+            </Principal>
+            <Dependent Role="documentrequirement">
+              <PropertyRef Name="documentTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="organizationTypeID">
+          <End Type="TBoardModel.organizationtype" Role="organizationtype" Multiplicity="0..1" />
+          <End Type="TBoardModel.documentrequirement" Role="documentrequirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="organizationtype">
+              <PropertyRef Name="organizationTypeID" />
+            </Principal>
+            <Dependent Role="documentrequirement">
+              <PropertyRef Name="organizationTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="document">
+          <Key>
+            <PropertyRef Name="documentID" />
+          </Key>
+          <Property Type="Int32" Name="documentID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="documentTypeID" />
+          <Property Type="DateTime" Name="dateCreated" Precision="0" />
+          <NavigationProperty Name="documenttype" Relationship="TBoardModel.documentType1" FromRole="document" ToRole="documenttype" />
+          <Property Type="String" Name="documentPath" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="organizationID" />
+          <NavigationProperty Name="organization" Relationship="TBoardModel.orgID" FromRole="document" ToRole="organization" />
+        </EntityType>
+        <Association Name="documentType1">
+          <End Type="TBoardModel.documenttype" Role="documenttype" Multiplicity="0..1" />
+          <End Type="TBoardModel.document" Role="document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="documenttype">
+              <PropertyRef Name="documentTypeID" />
+            </Principal>
+            <Dependent Role="document">
+              <PropertyRef Name="documentTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="orgID">
+          <End Type="TBoardModel.organization" Role="organization" Multiplicity="0..1" />
+          <End Type="TBoardModel.document" Role="document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="organization">
+              <PropertyRef Name="organizationID" />
+            </Principal>
+            <Dependent Role="document">
+              <PropertyRef Name="organizationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="DocumentReq" >
+          <Property Type="Int32" Name="documentTypeID" Nullable="false" />
+          <Property Type="String" Name="documentCode" Nullable="false" />
+          <Property Type="String" Name="documentDescription" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -500,6 +705,44 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="documentrequirements">
+            <EntityTypeMapping TypeName="TBoardModel.documentrequirement">
+              <MappingFragment StoreEntitySet="documentrequirements">
+                <ScalarProperty Name="organizationTypeID" ColumnName="organizationTypeID" />
+                <ScalarProperty Name="documentTypeID" ColumnName="documentTypeID" />
+                <ScalarProperty Name="documentRequirementsID" ColumnName="documentRequirementsID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="documenttypes">
+            <EntityTypeMapping TypeName="TBoardModel.documenttype">
+              <MappingFragment StoreEntitySet="documenttypes">
+                <ScalarProperty Name="documentDescription" ColumnName="documentDescription" />
+                <ScalarProperty Name="documentCode" ColumnName="documentCode" />
+                <ScalarProperty Name="documentTypeID" ColumnName="documentTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="documents">
+            <EntityTypeMapping TypeName="TBoardModel.document">
+              <MappingFragment StoreEntitySet="documents">
+                <ScalarProperty Name="organizationID" ColumnName="organizationID" />
+                <ScalarProperty Name="documentPath" ColumnName="documentPath" />
+                <ScalarProperty Name="dateCreated" ColumnName="dateCreated" />
+                <ScalarProperty Name="documentTypeID" ColumnName="documentTypeID" />
+                <ScalarProperty Name="documentID" ColumnName="documentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sps_GetOutstandingDocumentRequirements" FunctionName="TBoardModel.Store.sps_GetOutstandingDocumentRequirements">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TBoardModel.DocumentReq">
+                <ScalarProperty Name="documentTypeID" ColumnName="documentTypeID" />
+                <ScalarProperty Name="documentCode" ColumnName="documentCode" />
+                <ScalarProperty Name="documentDescription" ColumnName="documentDescription" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

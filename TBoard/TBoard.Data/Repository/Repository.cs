@@ -12,9 +12,9 @@ namespace TBoard.Data.Repository
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class 
     {
-        private readonly DbContext _dbContext;
+        public readonly TBoardEntities _dbContext;
 
-        public Repository(DbContext dbContext)
+        public Repository(TBoardEntities dbContext)
         {
             _dbContext = dbContext;
         }
@@ -44,6 +44,16 @@ namespace TBoard.Data.Repository
         public void Delete(TEntity entity)
         {
             _dbContext.Set<TEntity>().Remove(entity);
+        }
+        
+        public IEnumerable<TEntity> ExecWithStoreProcedure(string query, params object[] parameters)
+        {
+            return _dbContext.Database.SqlQuery<TEntity>(query, parameters);
+        }
+
+        public IEnumerable<TNewEntity> ExecWithStoreProcedure<TNewEntity>(string query, params object[] parameters)
+        {
+            return _dbContext.Database.SqlQuery<TNewEntity>(query, parameters);
         }
 
         public void Save()

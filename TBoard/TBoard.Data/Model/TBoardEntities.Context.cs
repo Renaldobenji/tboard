@@ -7,11 +7,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Data.Entity.Core.Objects;
+
 namespace TBoard.Data.Model
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+
+    using System.Linq;
     
     public partial class TBoardEntities : DbContext
     {
@@ -34,5 +38,17 @@ namespace TBoard.Data.Model
         public DbSet<organization> organizations { get; set; }
         public DbSet<organizationtype> organizationtypes { get; set; }
         public DbSet<user> users { get; set; }
+        public DbSet<documentrequirement> documentrequirements { get; set; }
+        public DbSet<documenttype> documenttypes { get; set; }
+        public DbSet<document> documents { get; set; }
+    
+        public virtual ObjectResult<DocumentReq> sps_GetOutstandingDocumentRequirements(Nullable<int> organizationID)
+        {
+            var organizationIDParameter = organizationID.HasValue ?
+                new ObjectParameter("organizationID", organizationID) :
+                new ObjectParameter("organizationID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DocumentReq>("sps_GetOutstandingDocumentRequirements", organizationIDParameter);
+        }
     }
 }

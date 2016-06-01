@@ -42,6 +42,8 @@
     <Compile Include="BusinessLogic\AddressBusinessLogic.cs" />
     <Compile Include="BusinessLogic\BusinessLogic.cs" />
     <Compile Include="BusinessLogic\CommunicationBusinessLogic.cs" />
+    <Compile Include="BusinessLogic\DocumentBusinessLogic.cs" />
+    <Compile Include="BusinessLogic\DocumentRequirementBusinessLogic.cs" />
     <Compile Include="BusinessLogic\OrganizationBusinessLogic.cs" />
     <Compile Include="BusinessLogic\UserBusinessLogic.cs" />
     <Compile Include="Interfaces\IEntityBusinessLogic.cs" />

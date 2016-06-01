@@ -10,7 +10,7 @@ namespace TBoard.Data.Repository
 {
     public class UserRepository: Repository<user>
     {
-        public UserRepository(DbContext dbContext)
+        public UserRepository(TBoardEntities dbContext)
             :base(dbContext)
         {
             

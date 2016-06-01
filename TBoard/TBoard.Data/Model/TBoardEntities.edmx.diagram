@@ -18,6 +18,13 @@
         <AssociationConnector Association="TBoardModel.commTypeID" ManuallyRouted="false" />
         <AssociationConnector Association="TBoardModel.orgType" ManuallyRouted="false" />
         <EntityTypeShape EntityType="TBoardModel.user" Width="1.5" PointX="0.75" PointY="7.5" />
+        <EntityTypeShape EntityType="TBoardModel.documentrequirement" Width="1.5" PointX="3.875" PointY="8.375" />
+        <EntityTypeShape EntityType="TBoardModel.documenttype" Width="1.5" PointX="6.375" PointY="8.5" />
+        <AssociationConnector Association="TBoardModel.documentTypeID" />
+        <AssociationConnector Association="TBoardModel.organizationTypeID" />
+        <EntityTypeShape EntityType="TBoardModel.document" Width="1.5" PointX="9.25" PointY="8.625" />
+        <AssociationConnector Association="TBoardModel.documentType1" />
+        <AssociationConnector Association="TBoardModel.orgID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -8,9 +8,9 @@ using TBoard.Data.Model;
 
 namespace TBoard.Data.Repository
 {
-    public class OrganizationRepository : Repository<organization>
+    public class DocumentRepository : Repository<document>
     {
-        public OrganizationRepository(TBoardEntities dbContext)
+        public DocumentRepository(TBoardEntities dbContext)
             :base(dbContext)
         {
             

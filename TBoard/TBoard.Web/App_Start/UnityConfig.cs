@@ -15,18 +15,22 @@ namespace TBoard.Web
         {
 			var container = new UnityContainer();
 
-            container.RegisterType<DbContext, TBoardEntities>(new HierarchicalLifetimeManager());
+            container.RegisterType<TBoardEntities, TBoardEntities>(new HierarchicalLifetimeManager());
             container.RegisterType<IUnitOfWork, UnitOfWork>(new HierarchicalLifetimeManager());
 
             container.RegisterType<CommunicationBusinessLogic, CommunicationBusinessLogic>();
             container.RegisterType<AddressBusinessLogic, AddressBusinessLogic>();
             container.RegisterType<OrganizationBusinessLogic, OrganizationBusinessLogic>();
             container.RegisterType<UserBusinessLogic, UserBusinessLogic>();
+            container.RegisterType<DocumentBusinessLogic, DocumentBusinessLogic>();
+            container.RegisterType<DocumentRequirementBusinessLogic, DocumentRequirementBusinessLogic>();
 
             container.RegisterType<UserRepository, UserRepository>();
             container.RegisterType<CommunicationRepository, CommunicationRepository>();
             container.RegisterType<AddressRepository, AddressRepository>();
             container.RegisterType<OrganizationRepository, OrganizationRepository>();
+            container.RegisterType<DocumentRepository, DocumentRepository>();
+            container.RegisterType<DocumentRequirementsRepository, DocumentRequirementsRepository>();
             
             // register all your components with the container here
             // it is NOT necessary to register your controllers

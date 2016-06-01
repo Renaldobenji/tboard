@@ -10,7 +10,7 @@ namespace TBoard.Data.Repository
 {
     public class AddressRepository : Repository<address>
     {
-        public AddressRepository(DbContext dbContext)
+        public AddressRepository(TBoardEntities dbContext)
             :base(dbContext)
         {
             
