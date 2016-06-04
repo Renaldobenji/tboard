@@ -6,7 +6,7 @@
             RegistrationNumber: '',
             VatNumber: '',
             TaxNumber: '',
-            OrganizationID: "",
+            OrganizationID: '1',
             CellNumber : '',
 			HomeNumber : '',
 			OfficeNumber : '',
@@ -18,7 +18,14 @@
 			AddressLine5 : '',
 			PostalCode : '',
             AddressID : '',
-            OwnerType : 'ORG'    
+            OwnerType : 'ORG',
+            AccountName: '',
+            AccountNumber : '',
+            BranchCode : '',
+            BranchName : '',
+            BankAccountType : [],
+            SelectedBankAccountType : '',
+            ExpertiseSubCategory : []
         };
     },
 
@@ -110,10 +117,69 @@
         });
     },
 
+    fetchBankDetails: function(orgID) {
+        $.ajax({
+          url: 'api/BankAccount/ORG/' + orgID,
+          dataType: 'json',
+          cache: false,
+          success: function(data) {
+               if (data.data.AccountName != null)
+                this.setState({AccountName : data.data.AccountName});
+              
+              if (data.data.AccountNumber != null)
+                this.setState({AccountNumber : data.data.AccountNumber});
+              
+              if (data.data.BranchCode != null)
+                this.setState({BranchCode : data.data.BranchCode});
+              
+              if (data.data.BranchName != null)
+                this.setState({BranchName : data.data.BranchName});
+
+              if (data.data.BankAccountTypeID != null)
+                this.setState({SelectedBankAccountType : data.data.BankAccountTypeID});
+
+          }.bind(this),
+          error: function(xhr, status, err) {
+            console.error('api/BankAccount/ORG', status, err.toString());
+          }.bind(this)
+        });
+    },
+
+    fetchAccountTypes: function() {
+        $.ajax({
+          url: 'api/BankAccount/BankAccountTypes/',
+          dataType: 'json',
+          cache: false,
+          success: function(data) {
+              this.setState({ BankAccountType: data.data });
+          }.bind(this),
+          error: function(xhr, status, err) {
+            console.error('api/Address/ORG/', status, err.toString());
+          }.bind(this)
+        });
+    },
+
+    fetchExpertiseCategory: function() {
+        $.ajax({
+          url: 'api/ExpertiseCategory/',
+          dataType: 'json',
+          cache: false,
+          success: function(data) {
+              this.setState({ ExpertiseSubCategory: data.data });
+          }.bind(this),
+          error: function(xhr, status, err) {
+            console.error('api/Address/ORG/', status, err.toString());
+          }.bind(this)
+        });
+    },
+
     componentDidMount: function() {
         this.fetchOrgDetails(1);
         this.fetchAddressDetails(1);
         this.fetchContactDetails(1);
+        this.fetchAccountTypes();
+        this.fetchBankDetails(1);
+        this.fetchExpertiseCategory();
     },
     
     registerUserPOST : function() {
@@ -167,6 +233,26 @@
             });
     },
 
+    bankDetailsPOST : function() {
+        console.log('POSTING FORM');
+        $.ajax({
+                  url: 'api/BankAccount/Post',
+                  type: 'POST',
+                  dataType: 'json',
+                  data: this.state,
+                  cache: false,
+                  success: function(data) {
+                      alert("Success");
+                  }.bind(this),
+                  error: function(xhr, status, err) {
+                    console.error('api/BankAccount/Post', status, err.toString());
+                  }.bind(this)
+            });
+    },
+
+    updateBankAccountType : function(e){
+        this.setState({SelectedBankAccountType : e.target.value});		
+    },
     updateName : function(e){
     this.setState({Name : e.target.value});		
     },
@@ -216,11 +302,30 @@
 		this.setState({Email : e.target.value});
 		console.log(this.state.Email);		
 	},
+    updateAccountName : function(e){
+		this.setState({AccountName : e.target.value});
+		console.log(this.state.AccountName);		
+	},
+    updateAccountNumber : function(e){
+		this.setState({AccountNumber : e.target.value});
+		console.log(this.state.AccountNumber);		
+	},
+    updateBranchCode : function(e){
+		this.setState({BranchCode : e.target.value});
+		console.log(this.state.BranchCode);		
+	},
+    updateBranchName : function(e){
+		this.setState({BranchName : e.target.value});
+		console.log(this.state.BranchName);		
+	},
 
 	render: function() {
         var navBarSyle= {
               marginBottom:0
             };
+
+        $("#ExpertiseSelect").select2();
+
 		return (	
                 <div>		
 				    <nav className="navbar navbar-default navbar-static-top" role="navigation" style={navBarSyle}>
@@ -240,6 +345,10 @@
 		                        <li className=""><a href="#Contact" data-toggle="tab" aria-expanded="false">Contact</a>
 		                        </li>
 		                        <li className=""><a href="#Address" data-toggle="tab" aria-expanded="false">Address</a>
+		                        </li>
+                                <li className=""><a href="#BankDetails" data-toggle="tab" aria-expanded="false">Bank Details</a>
+		                        </li>
+                                <li className=""><a href="#Expertise" data-toggle="tab" aria-expanded="false">Expertise</a>
 		                        </li>
 	                        </ul>	
 	                        <div className="tab-content">
@@ -269,6 +378,23 @@
 										                  addressLine4={this.state.AddressLine4} updateAddressLine4={this.updateAddLine4}
 										                  addressLine5={this.state.AddressLine5} updateAddressLine5={this.updateAddLine5}
 										                  postalCode={this.state.PostalCode} updatePostalCode={this.updatePostalCode} addressPOST= {this.addressPOST} />
+                                    </div>
+		                        </div>
+                                <div className="tab-pane fade" id="BankDetails">
+			                        <div className="col-lg-8">
+                                        <br/>
+                                        <OrganizationBankDetails accountName={this.state.AccountName} updateAccountName={this.updateAccountName}
+										                  accountNumber={this.state.AccountNumber} updateAccountNumber={this.updateAccountNumber}
+										                  branchCode={this.state.BranchCode} updateBranchCode={this.updateBranchCode}
+										                  branchName={this.state.BranchName} updateBranchName={this.updateBranchName}
+										                  accountType={this.state.AccountType} updateAccountType={this.updateAccountType}
+										                  bankDetailsPOST= {this.bankDetailsPOST} bankAccountTypes= {this.state.BankAccountType} updateBankAccountType= {this.updateBankAccountType} selectedBankAccountType= {this.state.SelectedBankAccountType} />
+                                    </div>
+		                        </div>
+                                <div className="tab-pane fade" id="Expertise">
+			                        <div className="col-lg-8">
+                                        <br/>
+                                        <OrganizationExpertise expertiseSubCategory= {this.state.ExpertiseSubCategory} />
                                     </div>
 		                        </div>
 	                        </div>
@@ -397,6 +523,74 @@ var OrganizationContact = React.createClass({
 			            </div> 
                         <div className="panel-footer text-right">
                             <button type="button" className="btn btn-primary" onClick={this.props.contactPOST} >Save</button>
+                        </div>
+		            </div>
+		);
+	}
+});
+
+/*Register Page*/
+var OrganizationBankDetails = React.createClass({	
+	render: function(){
+		return (	
+		            <div className="panel panel-default">
+			            <div className="panel-heading">
+				            Bank Details
+			            </div>
+			            <div className="panel-body">
+				            <form>
+						        <div className="form-group">
+                                    <label>Account Name</label>
+                                    <input id="AccountName" className="form-control" placeholder="Account Name" value={this.props.accountName} onChange={this.props.updateAccountName}/>
+                                </div>
+						        <div className="form-group">
+                                    <label>Account Number</label>
+                                    <input id="AccountNumber" className="form-control" placeholder="Account Number" value={this.props.accountNumber} onChange={this.props.updateAccountNumber}/>
+                                </div>
+						        <div className="form-group">
+                                    <label>Branch Code</label>
+                                    <input id="BranchCode" className="form-control" placeholder="Branch Code" value={this.props.branchCode} onChange={this.props.updateBranchCode}/>
+                                </div>
+						        <div className="form-group">
+                                    <label>Branch Name</label>
+                                    <input id="BranchName" className="form-control" placeholder="Branch Name" value={this.props.branchName} onChange={this.props.updateBranchName}/>
+                                </div>	
+                                <div className="form-group">
+                                    <label>Account Type</label>
+                                    <select className="form-control" value={this.props.selectedBankAccountType} onChange={this.props.updateBankAccountType}>
+                                        {this.props.bankAccountTypes.map(function(obj){
+                                            return <option value={obj.Key} >{obj.BankAccountTypeCode}</option>;
+                                          })}
+                                    </select>
+                                </div>					
+					        </form>
+			            </div> 
+                        <div className="panel-footer text-right">
+                            <button type="button" className="btn btn-primary" onClick={this.props.bankDetailsPOST} >Save</button>
+                        </div>
+		            </div>
+		);
+	}
+});
+
+
+/*Register Page*/
+var OrganizationExpertise = React.createClass({	
+	render: function(){
+		return (	
+		            <div className="panel panel-default">
+			            <div className="panel-heading">
+				            Please select your expertise
+			            </div>
+			            <div className="panel-body">
+                            <select id="ExpertiseSelect" className="form-control" multiple="multiple" style={{width:'100%'}}>
+                                {this.props.expertiseSubCategory.map(function(obj){
+                                            return <option value={obj.ExpertiseSubCategoryID} >{obj.SubCategoryName}</option>;
+                                          })}
+                            </select>
+			            </div> 
+                        <div className="panel-footer text-right">
+                            <button type="button" className="btn btn-primary">Save</button>
                         </div>
 		            </div>
 		);

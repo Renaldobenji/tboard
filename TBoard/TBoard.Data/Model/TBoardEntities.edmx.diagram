@@ -25,6 +25,9 @@
         <EntityTypeShape EntityType="TBoardModel.document" Width="1.5" PointX="9.25" PointY="8.625" />
         <AssociationConnector Association="TBoardModel.documentType1" />
         <AssociationConnector Association="TBoardModel.orgID" />
+        <EntityTypeShape EntityType="TBoardModel.expertisecategory" Width="1.5" PointX="2.7491416198895973" PointY="13.779868862489177" />
+        <EntityTypeShape EntityType="TBoardModel.expertisesubcategory" Width="1.5" PointX="7.3243790936304158" PointY="3.2976029232598854" />
+        <AssociationConnector Association="TBoardModel.CatetoryID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

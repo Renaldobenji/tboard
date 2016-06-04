@@ -24,6 +24,9 @@ namespace TBoard.Web
             container.RegisterType<UserBusinessLogic, UserBusinessLogic>();
             container.RegisterType<DocumentBusinessLogic, DocumentBusinessLogic>();
             container.RegisterType<DocumentRequirementBusinessLogic, DocumentRequirementBusinessLogic>();
+            container.RegisterType<BankAccountBusinessLogic, BankAccountBusinessLogic>();
+            container.RegisterType<BankAccountTypeBusinessLogic, BankAccountTypeBusinessLogic>();
+            container.RegisterType<ExpertiseCategoryBusinessLogic, ExpertiseCategoryBusinessLogic>();
 
             container.RegisterType<UserRepository, UserRepository>();
             container.RegisterType<CommunicationRepository, CommunicationRepository>();
@@ -31,6 +34,10 @@ namespace TBoard.Web
             container.RegisterType<OrganizationRepository, OrganizationRepository>();
             container.RegisterType<DocumentRepository, DocumentRepository>();
             container.RegisterType<DocumentRequirementsRepository, DocumentRequirementsRepository>();
+            container.RegisterType<ExpertiseCategoryRepository, ExpertiseCategoryRepository>();
+
+            container.RegisterType<BankAccountRepository, BankAccountRepository>();
+            container.RegisterType<BankAccountTypesRepository, BankAccountTypesRepository>();
             
             // register all your components with the container here
             // it is NOT necessary to register your controllers

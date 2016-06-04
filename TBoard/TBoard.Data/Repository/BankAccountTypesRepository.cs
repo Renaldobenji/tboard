@@ -8,9 +8,9 @@ using TBoard.Data.Model;
 
 namespace TBoard.Data.Repository
 {
-    public class BankAccountRepository : Repository<bankaccountdetail>
+    public class BankAccountTypesRepository : Repository<bankaccounttype>
     {
-        public BankAccountRepository(TBoardEntities dbContext)
+        public BankAccountTypesRepository(TBoardEntities dbContext)
             :base(dbContext)
         {
             

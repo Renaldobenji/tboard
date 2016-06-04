@@ -14,7 +14,6 @@ namespace TBoard.Data.Model
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-
     using System.Linq;
     
     public partial class TBoardEntities : DbContext
@@ -41,6 +40,8 @@ namespace TBoard.Data.Model
         public DbSet<documentrequirement> documentrequirements { get; set; }
         public DbSet<documenttype> documenttypes { get; set; }
         public DbSet<document> documents { get; set; }
+        public DbSet<expertisecategory> expertisecategories { get; set; }
+        public DbSet<expertisesubcategory> expertisesubcategories { get; set; }
     
         public virtual ObjectResult<DocumentReq> sps_GetOutstandingDocumentRequirements(Nullable<int> organizationID)
         {
