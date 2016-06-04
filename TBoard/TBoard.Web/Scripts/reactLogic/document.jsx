@@ -22,7 +22,10 @@ var DocumentManagement = React.createClass({
 		                        </div>
 	                        </div>
                             <div className="row">
-		                        <div className="col-lg-12">
+                                <div className="col-lg-8">
+			                        <DocumentList />
+		                        </div>
+		                        <div className="col-lg-4">
 			                        <DocumentRequirements />
 		                        </div>
 	                        </div>
@@ -88,3 +91,46 @@ var DocumentRequirements = React.createClass({
 });
 
 
+/*Register Page*/
+var DocumentList = React.createClass({
+
+    getInitialState: function() {
+			return {
+                        OrganizationID : 1
+					};
+
+	},
+
+    componentDidMount: function() {
+
+        $('#documentTable').DataTable( {
+            ajax: {
+                    "url": 'api/Document/1'
+                }
+                ,"columns": [
+                                { "data": "documentTypeCode" },
+                                { "data": "documentDescription" },
+                                { "data": "dateCreated" }
+                            ]
+        } );
+    },
+    	
+	render: function(){
+        var navBarSyle= {
+              marginBottom:0
+            };
+	    
+        
+		return (
+	            <table id="documentTable" className="table table-striped table-bordered table-hover dataTable no-footer dtr-inline" width="100%" role="grid">
+                    <thead>
+                        <tr>
+                            <th>Document Type Code</th>
+                            <th>Document Description</th>
+                            <th>Created</th>
+                        </tr>
+                    </thead>
+                </table>
+		);
+	}
+});

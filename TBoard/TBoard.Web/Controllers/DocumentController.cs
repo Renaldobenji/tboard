@@ -43,15 +43,29 @@ namespace TBoard.Web.Controllers
         [Route("api/Document/{organizationID}")]
         public HttpResponseMessage Get(int organizationID)
         {
-            var result = this.documentBusinessLogic.FindBy(x => x.organizationID == organizationID);
+            var result = this.documentBusinessLogic.FindBy(x => x.organizationID == organizationID).ToList();
+
+            var documents = from x in result
+                            select new
+                                {
+                                    documentID = x.documentID,
+                                    documentTypeID = x.documentTypeID,
+                                    documentTypeCode = x.documenttype.documentCode,
+                                    documentDescription = x.documenttype.documentDescription,
+                                    dateCreated = x.dateCreated
+                                };
 
             var response = new
             {
-                data = result
+                data = documents.ToList()
             };
             var resp = new HttpResponseMessage()
             {
-                Content = new StringContent(JsonConvert.SerializeObject(response))
+                Content = new StringContent(JsonConvert.SerializeObject(response, Formatting.None,
+                                                new JsonSerializerSettings
+                                                {
+                                                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                                }))
             };
 
             resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");

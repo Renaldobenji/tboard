@@ -234,20 +234,45 @@
 		                    </div>                
 	                    </div>
                         <div className="row"> 
-                        <OrganizationDetails  Name={this.state.Name} TradingName={this.state.TradingName} RegistrationNumber={this.state.RegistrationNumber} VatNumber={this.state.VatNumber} TaxNumber={this.state.TaxNumber}
-                                          updateName={this.updateName}  updateTradingName={this.updateTradingName} updateRegistrationNumber={this.updateRegistrationNumber} updateVatNumber={this.updateVatNumber} updateTaxNumber={this.updateTaxNumber} registerUserPOST= {this.registerUserPOST} />
-                        <OrganizationContact 
-                                            cellNumber={this.state.CellNumber} updateCellNumber={this.updateCellNumberState}
-											homeNumber={this.state.HomeNumber} updateHomeNumber={this.updateHomeNumberState}
-											officeNumber={this.state.OfficeNumber} updateOfficeNumber={this.updateOfficeNumberState}
-											email={this.state.Email} updateEmail={this.updateEmailState} contactPOST= {this.contactPOST} />
-
-                        <OrganizationAddress addressLine1={this.state.AddressLine1} updateAddressLine1={this.updateAddLine1}
-										  addressLine2={this.state.AddressLine2} updateAddressLine2={this.updateAddLine2}
-										  addressLine3={this.state.AddressLine3} updateAddressLine3={this.updateAddLine3}
-										  addressLine4={this.state.AddressLine4} updateAddressLine4={this.updateAddLine4}
-										  addressLine5={this.state.AddressLine5} updateAddressLine5={this.updateAddLine5}
-										  postalCode={this.state.PostalCode} updatePostalCode={this.updatePostalCode} addressPOST= {this.addressPOST} />
+                            <ul className="nav nav-tabs">
+		                        <li className="active"><a href="#Details" data-toggle="tab" aria-expanded="true">Details</a>
+		                        </li>
+		                        <li className=""><a href="#Contact" data-toggle="tab" aria-expanded="false">Contact</a>
+		                        </li>
+		                        <li className=""><a href="#Address" data-toggle="tab" aria-expanded="false">Address</a>
+		                        </li>
+	                        </ul>	
+	                        <div className="tab-content">
+		                        <div className="tab-pane fade active in" id="Details">
+			                        <div className="col-lg-8">
+                                        <br/>
+                                        <OrganizationDetails  Name={this.state.Name} TradingName={this.state.TradingName} RegistrationNumber={this.state.RegistrationNumber} VatNumber={this.state.VatNumber} TaxNumber={this.state.TaxNumber}
+                                                      updateName={this.updateName}  updateTradingName={this.updateTradingName} updateRegistrationNumber={this.updateRegistrationNumber} updateVatNumber={this.updateVatNumber} updateTaxNumber={this.updateTaxNumber} registerUserPOST= {this.registerUserPOST} />
+                                    </div>
+		                        </div>
+		                        <div className="tab-pane fade" id="Contact">
+			                        <div className="col-lg-8">
+                                        <br/>
+                                        <OrganizationContact 
+                                                            cellNumber={this.state.CellNumber} updateCellNumber={this.updateCellNumberState}
+											                homeNumber={this.state.HomeNumber} updateHomeNumber={this.updateHomeNumberState}
+											                officeNumber={this.state.OfficeNumber} updateOfficeNumber={this.updateOfficeNumberState}
+											                email={this.state.Email} updateEmail={this.updateEmailState} contactPOST= {this.contactPOST} />
+                                    </div>
+		                        </div>
+		                        <div className="tab-pane fade" id="Address">
+			                        <div className="col-lg-8">
+                                        <br/>
+                                        <OrganizationAddress addressLine1={this.state.AddressLine1} updateAddressLine1={this.updateAddLine1}
+										                  addressLine2={this.state.AddressLine2} updateAddressLine2={this.updateAddLine2}
+										                  addressLine3={this.state.AddressLine3} updateAddressLine3={this.updateAddLine3}
+										                  addressLine4={this.state.AddressLine4} updateAddressLine4={this.updateAddLine4}
+										                  addressLine5={this.state.AddressLine5} updateAddressLine5={this.updateAddLine5}
+										                  postalCode={this.state.PostalCode} updatePostalCode={this.updatePostalCode} addressPOST= {this.addressPOST} />
+                                    </div>
+		                        </div>
+	                        </div>
+                            
                         </div>
                     </div>
                 </div>       
@@ -260,43 +285,39 @@
 /*Register Page*/
 var OrganizationDetails = React.createClass({	
 	render: function(){
-		return (			
-				
-	                <div className="col-lg-4">
-		                <div className="panel panel-default">
-			                <div className="panel-heading">
-				                Details
-			                </div>
-			                <div className="panel-body">
-				                <form>
-						            <div className="form-group">
-                                        <label>Name</label>
-                                        <input id="Name" className="form-control" placeholder="Name" value={this.props.Name} onChange={this.props.updateName} />
-                                    </div>
-						            <div className="form-group">
-                                        <label>Trading Name</label>
-                                        <input id="TradingName" className="form-control" placeholder="Trading Name" value={this.props.TradingName} onChange={this.props.updateTradingName}/>
-                                    </div>
-						            <div className="form-group">
-                                        <label>Registration Number</label>
-                                        <input id="RegistrationNumber" className="form-control" placeholder="Registration Number" value={this.props.RegistrationNumber}  onChange={this.props.updateRegistrationNumber}/>
-                                    </div>
-						            <div className="form-group">
-                                        <label>Vat Number</label>
-                                        <input id="VatNumber" className="form-control" placeholder="Vat Number" value={this.props.VatNumber} onChange={this.props.updateVatNumber}/>
-                                    </div>
-						            <div className="form-group">
-                                        <label>Tax Number</label>
-                                        <input id="TaxNumber" className="form-control" placeholder="Tax Number" value={this.props.TaxNumber} onChange={this.props.updateTaxNumber}/>
-                                    </div>
-					            </form>
-			                </div> 
-                            <div className="panel-footer text-right">
-                                <button type="button" className="btn btn-primary" onClick={this.props.registerUserPOST} >Save</button>
+		return (    
+		        <div className="panel panel-default">
+			        <div className="panel-heading">
+				        Details
+			        </div>
+			        <div className="panel-body">
+				        <form>
+						    <div className="form-group">
+                                <label>Name</label>
+                                <input id="Name" className="form-control" placeholder="Name" value={this.props.Name} onChange={this.props.updateName} />
                             </div>
-		                </div>
-	                </div>	
-                
+						    <div className="form-group">
+                                <label>Trading Name</label>
+                                <input id="TradingName" className="form-control" placeholder="Trading Name" value={this.props.TradingName} onChange={this.props.updateTradingName}/>
+                            </div>
+						    <div className="form-group">
+                                <label>Registration Number</label>
+                                <input id="RegistrationNumber" className="form-control" placeholder="Registration Number" value={this.props.RegistrationNumber}  onChange={this.props.updateRegistrationNumber}/>
+                            </div>
+						    <div className="form-group">
+                                <label>Vat Number</label>
+                                <input id="VatNumber" className="form-control" placeholder="Vat Number" value={this.props.VatNumber} onChange={this.props.updateVatNumber}/>
+                            </div>
+						    <div className="form-group">
+                                <label>Tax Number</label>
+                                <input id="TaxNumber" className="form-control" placeholder="Tax Number" value={this.props.TaxNumber} onChange={this.props.updateTaxNumber}/>
+                            </div>
+					    </form>
+			        </div> 
+                    <div className="panel-footer text-right">
+                        <button type="button" className="btn btn-primary" onClick={this.props.registerUserPOST} >Save</button>
+                    </div>
+		        </div>
 		);
 	}
 });
@@ -304,47 +325,43 @@ var OrganizationDetails = React.createClass({
 /*Register Page*/
 var OrganizationAddress = React.createClass({	
 	render: function(){
-		return (			
-				
-	                <div className="col-lg-4">
-		                <div className="panel panel-default">
-			                <div className="panel-heading">
-				                Address Information
-			                </div>
-			                <div className="panel-body">
-				                <form>
-						            <div className="form-group">
-                                        <label>Address Line 1</label>
-                                        <input id="AddressLine1" className="form-control" placeholder="Address Line 1" value={this.props.addressLine1} onChange={this.props.updateAddressLine1}/>
-                                    </div>
-						            <div className="form-group">
-                                        <label>Address Line 2</label>
-                                        <input id="AddressLine2" className="form-control" placeholder="Address Line 2" value={this.props.addressLine2} onChange={this.props.updateAddressLine2}/>
-                                    </div>
-						            <div className="form-group">
-                                        <label>Address Line 3</label>
-                                        <input id="AddressLine3" className="form-control" placeholder="Address Line 3" value={this.props.addressLine3} onChange={this.props.updateAddressLine3}/>
-                                    </div>
-						            <div className="form-group">
-                                        <label>Address Line 4</label>
-                                        <input id="AddressLine4" className="form-control" placeholder="Address Line 4" value={this.props.addressLine4} onChange={this.props.updateAddressLine4}/>
-                                    </div>
-						            <div className="form-group">
-                                        <label>Address Line 5</label>
-                                        <input id="AddressLine5" className="form-control" placeholder="Address Line 5" value={this.props.addressLine5} onChange={this.props.updateAddressLine5}/>
-                                    </div>
-						            <div className="form-group">
-                                        <label>Postal Code</label>
-                                        <input id="PostalCode" className="form-control" placeholder="Postal Code" value={this.props.postalCode} onChange={this.props.updatePostalCode}/>
-                                    </div>
-					            </form>
-			                </div> 
-                            <div className="panel-footer text-right">
-                                <button type="button" className="btn btn-primary" onClick={this.props.addressPOST} >Save</button>
+		return (	
+		        <div className="panel panel-default">
+			        <div className="panel-heading">
+				        Address Information
+			        </div>
+			        <div className="panel-body">
+				        <form>
+						    <div className="form-group">
+                                <label>Address Line 1</label>
+                                <input id="AddressLine1" className="form-control" placeholder="Address Line 1" value={this.props.addressLine1} onChange={this.props.updateAddressLine1}/>
                             </div>
-		                </div>
-	                </div>	
-                
+						    <div className="form-group">
+                                <label>Address Line 2</label>
+                                <input id="AddressLine2" className="form-control" placeholder="Address Line 2" value={this.props.addressLine2} onChange={this.props.updateAddressLine2}/>
+                            </div>
+						    <div className="form-group">
+                                <label>Address Line 3</label>
+                                <input id="AddressLine3" className="form-control" placeholder="Address Line 3" value={this.props.addressLine3} onChange={this.props.updateAddressLine3}/>
+                            </div>
+						    <div className="form-group">
+                                <label>Address Line 4</label>
+                                <input id="AddressLine4" className="form-control" placeholder="Address Line 4" value={this.props.addressLine4} onChange={this.props.updateAddressLine4}/>
+                            </div>
+						    <div className="form-group">
+                                <label>Address Line 5</label>
+                                <input id="AddressLine5" className="form-control" placeholder="Address Line 5" value={this.props.addressLine5} onChange={this.props.updateAddressLine5}/>
+                            </div>
+						    <div className="form-group">
+                                <label>Postal Code</label>
+                                <input id="PostalCode" className="form-control" placeholder="Postal Code" value={this.props.postalCode} onChange={this.props.updatePostalCode}/>
+                            </div>
+					    </form>
+			        </div> 
+                    <div className="panel-footer text-right">
+                        <button type="button" className="btn btn-primary" onClick={this.props.addressPOST} >Save</button>
+                    </div>
+		        </div>
 		);
 	}
 });
@@ -353,39 +370,35 @@ var OrganizationAddress = React.createClass({
 /*Register Page*/
 var OrganizationContact = React.createClass({	
 	render: function(){
-		return (			
-				
-	                <div className="col-lg-4">
-		                <div className="panel panel-default">
-			                <div className="panel-heading">
-				                Contact Information
-			                </div>
-			                <div className="panel-body">
-				                <form>
-						            <div className="form-group">
-                                        <label>Cell Number</label>
-                                        <input id="CellNumber" className="form-control" placeholder="Cell Number" value={this.props.cellNumber} onChange={this.props.updateCellNumber}/>
-                                    </div>
-						            <div className="form-group">
-                                        <label>Home Number</label>
-                                        <input id="HomeNumber" className="form-control" placeholder="Home Number" value={this.props.homeNumber} onChange={this.props.updateHomeNumber}/>
-                                    </div>
-						            <div className="form-group">
-                                        <label>Office Number</label>
-                                        <input id="WorkNumber" className="form-control" placeholder="Work Number" value={this.props.officeNumber} onChange={this.props.updateOfficeNumber}/>
-                                    </div>
-						            <div className="form-group">
-                                        <label>Email</label>
-                                        <input id="Email" className="form-control" placeholder="Email" value={this.props.email} onChange={this.props.updateEmail}/>
-                                    </div>						
-					            </form>
-			                </div> 
-                            <div className="panel-footer text-right">
-                                <button type="button" className="btn btn-primary" onClick={this.props.contactPOST} >Save</button>
-                            </div>
-		                </div>
-	                </div>	
-                
+		return (	
+		            <div className="panel panel-default">
+			            <div className="panel-heading">
+				            Contact Information
+			            </div>
+			            <div className="panel-body">
+				            <form>
+						        <div className="form-group">
+                                    <label>Cell Number</label>
+                                    <input id="CellNumber" className="form-control" placeholder="Cell Number" value={this.props.cellNumber} onChange={this.props.updateCellNumber}/>
+                                </div>
+						        <div className="form-group">
+                                    <label>Home Number</label>
+                                    <input id="HomeNumber" className="form-control" placeholder="Home Number" value={this.props.homeNumber} onChange={this.props.updateHomeNumber}/>
+                                </div>
+						        <div className="form-group">
+                                    <label>Office Number</label>
+                                    <input id="WorkNumber" className="form-control" placeholder="Work Number" value={this.props.officeNumber} onChange={this.props.updateOfficeNumber}/>
+                                </div>
+						        <div className="form-group">
+                                    <label>Email</label>
+                                    <input id="Email" className="form-control" placeholder="Email" value={this.props.email} onChange={this.props.updateEmail}/>
+                                </div>						
+					        </form>
+			            </div> 
+                        <div className="panel-footer text-right">
+                            <button type="button" className="btn btn-primary" onClick={this.props.contactPOST} >Save</button>
+                        </div>
+		            </div>
 		);
 	}
 });
