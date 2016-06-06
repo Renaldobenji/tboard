@@ -324,8 +324,6 @@
               marginBottom:0
             };
 
-        $("#ExpertiseSelect").select2();
-
 		return (	
                 <div>		
 				    <nav className="navbar navbar-default navbar-static-top" role="navigation" style={navBarSyle}>
@@ -576,6 +574,61 @@ var OrganizationBankDetails = React.createClass({
 
 /*Register Page*/
 var OrganizationExpertise = React.createClass({	
+
+	componentDidMount: function() {
+		$("#ExpertiseSelect").select2();
+	    this.fetchUserCategories(1);
+	},
+
+	fetchUserCategories : function(org) {
+	    
+        $.ajax({
+                  url: 'api/ExpertiseCategory/GetExpertiseCategory/ORG/' + org,
+                  type: 'GET',
+                  dataType: 'json',
+                  cache: false,
+                  success: function(data) {
+					
+					var $select = $('#ExpertiseSelect');
+
+					for (i = 0; i < data.data.length; i++) {
+					    var $option = $('<option selected>Loading...</option>').val(1);
+						$select.append($option);
+						$option.text(data.data[i].Name).val(data.data[i].Key);
+						$option.removeData();
+					}
+					$select.trigger('change');
+                  }.bind(this),
+                  error: function(xhr, status, err) {
+                    console.error('api/Organization/Post', status, err.toString());
+                  }.bind(this)
+            });
+    },
+
+	 userCategoriesPOST : function() {
+	    var userCat = $('#ExpertiseSelect').val();
+
+	     var postData = {
+	         UserCategories: userCat,
+			 Organization: 1
+	     };
+
+        console.log('POSTING FORM');
+        $.ajax({
+                  url: 'api/ExpertiseCategory/Post',
+                  type: 'POST',
+                  dataType: 'json',
+                  data: postData,
+                  cache: false,
+                  success: function(data) {
+                      alert("Success");
+                  }.bind(this),
+                  error: function(xhr, status, err) {
+                    console.error('api/Organization/Post', status, err.toString());
+                  }.bind(this)
+            });
+    },
+
 	render: function(){
 		return (	
 		            <div className="panel panel-default">
@@ -590,7 +643,7 @@ var OrganizationExpertise = React.createClass({
                             </select>
 			            </div> 
                         <div className="panel-footer text-right">
-                            <button type="button" className="btn btn-primary">Save</button>
+                            <button type="button" className="btn btn-primary" onClick= {this.userCategoriesPOST} >Save</button>
                         </div>
 		            </div>
 		);

@@ -44,6 +44,7 @@
     <Compile Include="BusinessLogic\CommunicationBusinessLogic.cs" />
     <Compile Include="BusinessLogic\BankAccountBusinessLogic.cs" />
     <Compile Include="BusinessLogic\BankAccountTypeBusinessLogic.cs" />
+    <Compile Include="BusinessLogic\ExpertiseOwnershipBusinessLogic.cs" />
     <Compile Include="BusinessLogic\ExpertiseCategoryBusinessLogic.cs" />
     <Compile Include="BusinessLogic\DocumentBusinessLogic.cs" />
     <Compile Include="BusinessLogic\DocumentRequirementBusinessLogic.cs" />

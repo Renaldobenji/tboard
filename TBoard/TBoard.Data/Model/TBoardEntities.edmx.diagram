@@ -26,8 +26,10 @@
         <AssociationConnector Association="TBoardModel.documentType1" />
         <AssociationConnector Association="TBoardModel.orgID" />
         <EntityTypeShape EntityType="TBoardModel.expertisecategory" Width="1.5" PointX="2.7491416198895973" PointY="13.779868862489177" />
-        <EntityTypeShape EntityType="TBoardModel.expertisesubcategory" Width="1.5" PointX="7.3243790936304158" PointY="3.2976029232598854" />
+        <EntityTypeShape EntityType="TBoardModel.expertisesubcategory" Width="1.5" PointX="10.75" PointY="3.25" />
         <AssociationConnector Association="TBoardModel.CatetoryID" />
+        <EntityTypeShape EntityType="TBoardModel.expertiseownership" Width="1.5" PointX="6.7530608171378548" PointY="29.309499947963982" />
+        <AssociationConnector Association="TBoardModel.subCat" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

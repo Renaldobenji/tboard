@@ -42,6 +42,7 @@ namespace TBoard.Data.Model
         public DbSet<document> documents { get; set; }
         public DbSet<expertisecategory> expertisecategories { get; set; }
         public DbSet<expertisesubcategory> expertisesubcategories { get; set; }
+        public DbSet<expertiseownership> expertiseownerships { get; set; }
     
         public virtual ObjectResult<DocumentReq> sps_GetOutstandingDocumentRequirements(Nullable<int> organizationID)
         {

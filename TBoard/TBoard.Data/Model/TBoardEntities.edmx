@@ -16,6 +16,7 @@
           <EntitySet Name="documents" EntityType="TBoardModel.Store.documents" store:Type="Tables" Schema="tboard" />
           <EntitySet Name="documenttypes" EntityType="TBoardModel.Store.documenttypes" store:Type="Tables" Schema="tboard" />
           <EntitySet Name="expertisecategory" EntityType="TBoardModel.Store.expertisecategory" store:Type="Tables" Schema="tboard" />
+          <EntitySet Name="expertiseownership" EntityType="TBoardModel.Store.expertiseownership" store:Type="Tables" Schema="tboard" />
           <EntitySet Name="expertisesubcategory" EntityType="TBoardModel.Store.expertisesubcategory" store:Type="Tables" Schema="tboard" />
           <EntitySet Name="organization" EntityType="TBoardModel.Store.organization" store:Type="Tables" Schema="tboard" />
           <EntitySet Name="organizationtypes" EntityType="TBoardModel.Store.organizationtypes" store:Type="Tables" Schema="tboard" />
@@ -55,6 +56,10 @@
           <AssociationSet Name="orgType" Association="TBoardModel.Store.orgType">
             <End Role="organizationtypes" EntitySet="organizationtypes" />
             <End Role="organization" EntitySet="organization" />
+          </AssociationSet>
+          <AssociationSet Name="subCat" Association="TBoardModel.Store.subCat">
+            <End Role="expertisesubcategory" EntitySet="expertisesubcategory" />
+            <End Role="expertiseownership" EntitySet="expertiseownership" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="address">
@@ -153,6 +158,15 @@
           </Key>
           <Property Name="ExpertiseCategoryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="expertiseownership">
+          <Key>
+            <PropertyRef Name="expertiseOwnershipID" />
+          </Key>
+          <Property Name="expertiseOwnershipID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ownerType" Type="varchar" MaxLength="45" />
+          <Property Name="owningID" Type="varchar" MaxLength="45" />
+          <Property Name="expertiseSubCategoryID" Type="int" />
         </EntityType>
         <EntityType Name="expertisesubcategory">
           <Key>
@@ -312,6 +326,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="subCat">
+          <End Role="expertisesubcategory" Type="TBoardModel.Store.expertisesubcategory" Multiplicity="0..1" />
+          <End Role="expertiseownership" Type="TBoardModel.Store.expertiseownership" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="expertisesubcategory">
+              <PropertyRef Name="ExpertiseSubCategoryID" />
+            </Principal>
+            <Dependent Role="expertiseownership">
+              <PropertyRef Name="expertiseSubCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="sps_GetOutstandingDocumentRequirements" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tboard">
           <Parameter Name="organizationID" Type="int" Mode="In" />
         </Function>
@@ -372,6 +398,11 @@
           <AssociationSet Name="CatetoryID" Association="TBoardModel.CatetoryID">
             <End Role="expertisecategory" EntitySet="expertisecategories" />
             <End Role="expertisesubcategory" EntitySet="expertisesubcategories" />
+          </AssociationSet>
+          <EntitySet Name="expertiseownerships" EntityType="TBoardModel.expertiseownership" />
+          <AssociationSet Name="subCat" Association="TBoardModel.subCat">
+            <End Role="expertisesubcategory" EntitySet="expertisesubcategories" />
+            <End Role="expertiseownership" EntitySet="expertiseownerships" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="address">
@@ -639,6 +670,7 @@
           <Property Type="String" Name="Name" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Type="Int32" Name="ExpertiseCategoryID" />
           <NavigationProperty Name="expertisecategory" Relationship="TBoardModel.CatetoryID" FromRole="expertisesubcategory" ToRole="expertisecategory" />
+          <NavigationProperty Name="expertiseownerships" Relationship="TBoardModel.subCat" FromRole="expertisesubcategory" ToRole="expertiseownership" />
         </EntityType>
         <Association Name="CatetoryID">
           <End Type="TBoardModel.expertisecategory" Role="expertisecategory" Multiplicity="0..1" />
@@ -649,6 +681,28 @@
             </Principal>
             <Dependent Role="expertisesubcategory">
               <PropertyRef Name="ExpertiseCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="expertiseownership">
+          <Key>
+            <PropertyRef Name="expertiseOwnershipID" />
+          </Key>
+          <Property Type="Int32" Name="expertiseOwnershipID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="ownerType" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="owningID" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="expertiseSubCategoryID" />
+          <NavigationProperty Name="expertisesubcategory" Relationship="TBoardModel.subCat" FromRole="expertiseownership" ToRole="expertisesubcategory" />
+        </EntityType>
+        <Association Name="subCat">
+          <End Type="TBoardModel.expertisesubcategory" Role="expertisesubcategory" Multiplicity="0..1" />
+          <End Type="TBoardModel.expertiseownership" Role="expertiseownership" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="expertisesubcategory">
+              <PropertyRef Name="ExpertiseSubCategoryID" />
+            </Principal>
+            <Dependent Role="expertiseownership">
+              <PropertyRef Name="expertiseSubCategoryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -825,6 +879,16 @@
                 <ScalarProperty Name="ExpertiseCategoryID" ColumnName="ExpertiseCategoryID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ExpertiseSubCategoryID" ColumnName="ExpertiseSubCategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="expertiseownerships">
+            <EntityTypeMapping TypeName="TBoardModel.expertiseownership">
+              <MappingFragment StoreEntitySet="expertiseownership">
+                <ScalarProperty Name="expertiseSubCategoryID" ColumnName="expertiseSubCategoryID" />
+                <ScalarProperty Name="owningID" ColumnName="owningID" />
+                <ScalarProperty Name="ownerType" ColumnName="ownerType" />
+                <ScalarProperty Name="expertiseOwnershipID" ColumnName="expertiseOwnershipID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

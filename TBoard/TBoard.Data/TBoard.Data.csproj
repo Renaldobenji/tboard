@@ -171,6 +171,9 @@
     <Compile Include="Model\expertisecategory.cs">
       <DependentUpon>TBoardEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\expertiseownership.cs">
+      <DependentUpon>TBoardEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\expertisesubcategory.cs">
       <DependentUpon>TBoardEntities.tt</DependentUpon>
     </Compile>
@@ -203,6 +206,7 @@
     <Compile Include="Repository\CommunicationRepository.cs" />
     <Compile Include="Repository\BankAccountRepository.cs" />
     <Compile Include="Repository\BankAccountTypesRepository.cs" />
+    <Compile Include="Repository\ExpertiseOwnershipRepository.cs" />
     <Compile Include="Repository\ExpertiseCategoryRepository.cs" />
     <Compile Include="Repository\DocumentRequirementsRepository.cs" />
     <Compile Include="Repository\DocumentRepository.cs" />

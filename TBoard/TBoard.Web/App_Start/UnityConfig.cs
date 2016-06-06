@@ -27,6 +27,9 @@ namespace TBoard.Web
             container.RegisterType<BankAccountBusinessLogic, BankAccountBusinessLogic>();
             container.RegisterType<BankAccountTypeBusinessLogic, BankAccountTypeBusinessLogic>();
             container.RegisterType<ExpertiseCategoryBusinessLogic, ExpertiseCategoryBusinessLogic>();
+            container.RegisterType<ExpertiseOwnershipBusinessLogic, ExpertiseOwnershipBusinessLogic>();
+
+            container.RegisterType<ExpertiseOwnershipRepository, ExpertiseOwnershipRepository>();
 
             container.RegisterType<UserRepository, UserRepository>();
             container.RegisterType<CommunicationRepository, CommunicationRepository>();
