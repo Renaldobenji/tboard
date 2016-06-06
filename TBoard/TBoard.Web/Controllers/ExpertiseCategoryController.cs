@@ -79,7 +79,7 @@ namespace TBoard.Web.Controllers
             {
                 var resp = new HttpResponseMessage()
                 {
-                    Content = new StringContent("")
+                    Content = new StringContent("{data:[]}")
                 };
                 resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 return resp;

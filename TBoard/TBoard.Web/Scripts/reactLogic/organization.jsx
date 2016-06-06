@@ -24,8 +24,7 @@
             BranchCode : '',
             BranchName : '',
             BankAccountType : [],
-            SelectedBankAccountType : '',
-            ExpertiseSubCategory : []
+            SelectedBankAccountType : ''
         };
     },
 
@@ -159,27 +158,12 @@
         });
     },
 
-    fetchExpertiseCategory: function() {
-        $.ajax({
-          url: 'api/ExpertiseCategory/',
-          dataType: 'json',
-          cache: false,
-          success: function(data) {
-              this.setState({ ExpertiseSubCategory: data.data });
-          }.bind(this),
-          error: function(xhr, status, err) {
-            console.error('api/Address/ORG/', status, err.toString());
-          }.bind(this)
-        });
-    },
-
     componentDidMount: function() {
         this.fetchOrgDetails(1);
         this.fetchAddressDetails(1);
         this.fetchContactDetails(1);
         this.fetchAccountTypes();
         this.fetchBankDetails(1);
-        this.fetchExpertiseCategory();
     },
     
     registerUserPOST : function() {
@@ -392,7 +376,7 @@
                                 <div className="tab-pane fade" id="Expertise">
 			                        <div className="col-lg-8">
                                         <br/>
-                                        <OrganizationExpertise expertiseSubCategory= {this.state.ExpertiseSubCategory} />
+                                        <OrganizationExpertise />
                                     </div>
 		                        </div>
 	                        </div>
@@ -575,10 +559,56 @@ var OrganizationBankDetails = React.createClass({
 /*Register Page*/
 var OrganizationExpertise = React.createClass({	
 
+	getInitialState: function() {
+        return {
+            ExpertiseSubCategory : []
+        };
+    },
+
+	fetchExpertiseCategory: function() {
+        $.ajax({
+          url: 'api/ExpertiseCategory/',
+          dataType: 'json',
+          cache: false,
+          success: function(data) {
+              this.setState({ ExpertiseSubCategory: data.data });
+          }.bind(this),
+          error: function(xhr, status, err) {
+            console.error('api/Address/ORG/', status, err.toString());
+          }.bind(this)
+        });
+    },
+
 	componentDidMount: function() {
 		$("#ExpertiseSelect").select2();
+	    this.fetchExpertiseCategory();
 	    this.fetchUserCategories(1);
 	},
+
+	fetchUserCategories1 : function(org) {
+	    
+        $.ajax({
+                  url: 'api/ExpertiseCategory/GetExpertiseCategory/ORG/' + org,
+                  type: 'GET',
+                  dataType: 'json',
+                  cache: false,
+                  success: function(data) {
+					var $select = $('#ExpertiseSelect');
+					for (i = 0; i < data.data.length; i++) {
+
+					    var $v = $('#ExpertiseSelect option[value = 1]');
+					    var $option = $('<option selected>Loading...</option>').val(1);
+						$select.append($option);
+						$option.text(data.data[i].Name).val(data.data[i].Key);
+						$option.removeData();
+					}
+					$select.trigger('change');
+                  }.bind(this),
+                  error: function(xhr, status, err) {
+                    console.error('api/Organization/Post', status, err.toString());
+                  }.bind(this)
+            });
+    },
 
 	fetchUserCategories : function(org) {
 	    
@@ -588,13 +618,10 @@ var OrganizationExpertise = React.createClass({
                   dataType: 'json',
                   cache: false,
                   success: function(data) {
-					
 					var $select = $('#ExpertiseSelect');
-
 					for (i = 0; i < data.data.length; i++) {
-					    var $option = $('<option selected>Loading...</option>').val(1);
-						$select.append($option);
-						$option.text(data.data[i].Name).val(data.data[i].Key);
+					    var $option = $('#ExpertiseSelect option[value = '+data.data[i].Key+']');
+					    $option.attr("selected", "selected");
 						$option.removeData();
 					}
 					$select.trigger('change');
@@ -637,7 +664,7 @@ var OrganizationExpertise = React.createClass({
 			            </div>
 			            <div className="panel-body">
                             <select id="ExpertiseSelect" className="form-control" multiple="multiple" style={{width:'100%'}}>
-                                {this.props.expertiseSubCategory.map(function(obj){
+                                {this.state.ExpertiseSubCategory.map(function(obj){
                                             return <option value={obj.ExpertiseSubCategoryID} >{obj.SubCategoryName}</option>;
                                           })}
                             </select>
