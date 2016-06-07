@@ -1,0 +1,52 @@
+﻿@model TBoard.Web.Controllers.UploadController.UploadViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Upload</title>
+     <link href="@Url.Content("~/Content/bootstrap/bootstrap.min.css")" rel="stylesheet"/>
+    <link href="@Url.Content("~/Content/bootstrap/metismenu/metismenu.css")"  rel="stylesheet">
+    <link href="@Url.Content("~/Content/bootstrap/sb-admin-2.css")"  rel="stylesheet">
+    <link href="@Url.Content("~/Content/bootstrap/font-awesome/css/font-awesome.min.css")" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/metisMenu.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/sb-admin-2.js")"></script>
+</head>
+<body>
+<div>
+    <form method="POST" action="@Url.Action("PostForm", "Upload")" enctype="multipart/form-data">
+    <div class="panel panel-red">
+        <div class="panel-heading">
+            Upload Document
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label>Document Type</label>
+                <select id="DocumentType" name="DocumentType" class="form-control">
+                    @foreach (var topic in Model.DocumentTypes)
+                    {
+                        <option value=@topic.Key>@topic.Value</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label>File Path</label>
+                <input id="UploadFile" name="UploadFile" type="file" class="form-control"/>
+            </div>
+            <input id="OrganizationID" name="OrganizationID" type="hidden" value="@Model.OrganizationID"/>
+        </div>
+        <div class="panel-footer text-right">
+            <button id="submitButton" name="submitButton" type="submit" class="btn btn-primary">Upload</button>
+        </div>
+    </div>
+    </form>
+</div>  
+</body>
+</html>

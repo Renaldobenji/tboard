@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Web;
 using System.Web.Http;
 using Newtonsoft.Json;
 using TBoard.BusinessLogic.BusinessLogic;
@@ -73,8 +74,35 @@ namespace TBoard.Web.Controllers
         }
 
         // POST api/<controller>
-        public void Post([FromBody]string value)
+        [HttpPost]
+        [Route("api/Document/Upload")]
+        public HttpResponseMessage Upload()
         {
+            var httpRequest = HttpContext.Current.Request;
+            if (httpRequest.Files.Count > 0)
+            {
+                foreach (string file in httpRequest.Files)
+                {
+                    var postedFile = httpRequest.Files[file];
+                    var filePath = HttpContext.Current.Server.MapPath("~/" + postedFile.FileName);
+                    postedFile.SaveAs(filePath);
+                    // NOTE: To store in memory use postedFile.InputStream
+                }
+
+                return Request.CreateResponse(HttpStatusCode.Created);
+            }
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject("", Formatting.None,
+                                                new JsonSerializerSettings
+                                                {
+                                                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                                }))
+            };
+
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            return resp;
         }
 
         // PUT api/<controller>/5
