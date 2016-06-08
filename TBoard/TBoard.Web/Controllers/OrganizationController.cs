@@ -43,6 +43,7 @@ namespace TBoard.Web.Controllers
             org.taxNumber = formData.Get("TaxNumber");
             org.tradingName = formData.Get("TradingName");
             org.vatNumber = formData.Get("VatNumber");
+            org.oem = (formData.Get("oem").ToLower().Equals("true") ? true : false);
             this.organizationBusinessLogic.Update(org);
         }
 

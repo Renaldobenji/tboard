@@ -24,7 +24,8 @@
             BranchCode : '',
             BranchName : '',
             BankAccountType : [],
-            SelectedBankAccountType : ''
+            SelectedBankAccountType : '',
+			OEM : 'false'
         };
     },
 
@@ -47,6 +48,8 @@
                 this.setState({TaxNumber : obj.taxNumber});
               if (obj.organizationID != null)
                 this.setState({OrganizationID : obj.organizationID});
+			  if (obj.oem != null)
+                this.setState({OEM : obj.oem});
           }.bind(this),
           error: function(xhr, status, err) {
             console.error('api/organization', status, err.toString());
@@ -302,6 +305,10 @@
 		this.setState({BranchName : e.target.value});
 		console.log(this.state.BranchName);		
 	},
+	updateOEM : function(e){
+		this.setState({OEM : e.target.value});
+		console.log(this.state.OEM);		
+	},
 
 	render: function() {
         var navBarSyle= {
@@ -337,7 +344,7 @@
 		                        <div className="tab-pane fade active in" id="Details">
 			                        <div className="col-lg-8">
                                         <br/>
-                                        <OrganizationDetails  Name={this.state.Name} TradingName={this.state.TradingName} RegistrationNumber={this.state.RegistrationNumber} VatNumber={this.state.VatNumber} TaxNumber={this.state.TaxNumber}
+                                        <OrganizationDetails OEM={this.state.OEM} updateOEM={this.updateOEM} Name={this.state.Name} TradingName={this.state.TradingName} RegistrationNumber={this.state.RegistrationNumber} VatNumber={this.state.VatNumber} TaxNumber={this.state.TaxNumber}
                                                       updateName={this.updateName}  updateTradingName={this.updateTradingName} updateRegistrationNumber={this.updateRegistrationNumber} updateVatNumber={this.updateVatNumber} updateTaxNumber={this.updateTaxNumber} registerUserPOST= {this.registerUserPOST} />
                                     </div>
 		                        </div>
@@ -419,6 +426,13 @@ var OrganizationDetails = React.createClass({
 						    <div className="form-group">
                                 <label>Tax Number</label>
                                 <input id="TaxNumber" className="form-control" placeholder="Tax Number" value={this.props.TaxNumber} onChange={this.props.updateTaxNumber}/>
+                            </div>
+							<div className="form-group">
+                                <label>OEM</label>
+                                <select className="form-control" value={this.props.OEM} onChange={this.props.updateOEM}>
+                                    <option value='false'>False</option>
+									<option value='true'>True</option>
+                                </select>
                             </div>
 					    </form>
 			        </div> 

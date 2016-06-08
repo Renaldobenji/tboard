@@ -187,6 +187,7 @@
           <Property Name="vatNumber" Type="varchar" MaxLength="150" />
           <Property Name="taxNumber" Type="varchar" MaxLength="150" />
           <Property Name="organizationTypeID" Type="int" />
+          <Property Name="oem" Type="bit" />
         </EntityType>
         <EntityType Name="organizationtypes">
           <Key>
@@ -488,6 +489,7 @@
           <Property Name="organizationTypeID" Type="Int32" />
           <NavigationProperty Name="organizationtype" Relationship="TBoardModel.orgType" FromRole="organization" ToRole="organizationtypes" />
           <NavigationProperty Name="documents" Relationship="TBoardModel.orgID" FromRole="organization" ToRole="document" />
+          <Property Type="Boolean" Name="oem" />
         </EntityType>
         <EntityType Name="organizationtype">
           <Key>
@@ -785,6 +787,7 @@
           <EntitySetMapping Name="organizations">
             <EntityTypeMapping TypeName="TBoardModel.organization">
               <MappingFragment StoreEntitySet="organization">
+                <ScalarProperty Name="oem" ColumnName="oem" />
                 <ScalarProperty Name="organizationID" ColumnName="organizationID" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="tradingName" ColumnName="tradingName" />

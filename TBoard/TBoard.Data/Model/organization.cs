@@ -26,6 +26,7 @@ namespace TBoard.Data.Model
         public string vatNumber { get; set; }
         public string taxNumber { get; set; }
         public Nullable<int> organizationTypeID { get; set; }
+        public Nullable<bool> oem { get; set; }
     
         public virtual organizationtype organizationtype { get; set; }
         public virtual ICollection<document> documents { get; set; }
