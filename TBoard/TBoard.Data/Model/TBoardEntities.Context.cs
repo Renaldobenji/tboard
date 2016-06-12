@@ -14,6 +14,7 @@ namespace TBoard.Data.Model
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+  
     using System.Linq;
     
     public partial class TBoardEntities : DbContext
@@ -43,6 +44,9 @@ namespace TBoard.Data.Model
         public DbSet<expertisecategory> expertisecategories { get; set; }
         public DbSet<expertisesubcategory> expertisesubcategories { get; set; }
         public DbSet<expertiseownership> expertiseownerships { get; set; }
+        public DbSet<rfq> rfqs { get; set; }
+        public DbSet<rfqtype> rfqtypes { get; set; }
+        public DbSet<emailqueue> emailqueues { get; set; }
     
         public virtual ObjectResult<DocumentReq> sps_GetOutstandingDocumentRequirements(Nullable<int> organizationID)
         {
@@ -51,6 +55,15 @@ namespace TBoard.Data.Model
                 new ObjectParameter("organizationID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<DocumentReq>("sps_GetOutstandingDocumentRequirements", organizationIDParameter);
+        }
+    
+        public virtual ObjectResult<GetSubscribedOwnershipDetails> GetSubscribedOwnershipDetails(Nullable<int> expertiseSubCategoryID)
+        {
+            var expertiseSubCategoryIDParameter = expertiseSubCategoryID.HasValue ?
+                new ObjectParameter("expertiseSubCategoryID", expertiseSubCategoryID) :
+                new ObjectParameter("expertiseSubCategoryID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetSubscribedOwnershipDetails>("GetSubscribedOwnershipDetails", expertiseSubCategoryIDParameter);
         }
     }
 }

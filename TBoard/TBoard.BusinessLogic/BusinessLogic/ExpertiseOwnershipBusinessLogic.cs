@@ -5,6 +5,7 @@ using System.Net.Configuration;
 using System.Text;
 using System.Threading.Tasks;
 using TBoard.Data.Interfaces;
+using TBoard.Data.Model;
 using TBoard.Data.Repository;
 
 namespace TBoard.BusinessLogic.BusinessLogic
@@ -17,6 +18,11 @@ namespace TBoard.BusinessLogic.BusinessLogic
             : base(unitOfWork, repository)
         {
             this.repository = repository;
+        }
+
+        public IList<GetSubscribedOwnershipDetails> GetSubscribed(int expertiseSubCategoryID)
+        {
+            return this.repository.GetSubscribed(expertiseSubCategoryID).ToList();
         }
     }
 }

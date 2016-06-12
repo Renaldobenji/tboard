@@ -14,6 +14,11 @@ namespace TBoard.Data.Model
     
     public partial class user
     {
+        public user()
+        {
+            this.rfqs = new HashSet<rfq>();
+        }
+    
         public int userID { get; set; }
         public Nullable<int> organizationID { get; set; }
         public string username { get; set; }
@@ -31,5 +36,7 @@ namespace TBoard.Data.Model
         public Nullable<int> failedPasswordAttemptCount { get; set; }
         public System.DateTime created { get; set; }
         public Nullable<System.DateTime> updated { get; set; }
+    
+        public virtual ICollection<rfq> rfqs { get; set; }
     }
 }

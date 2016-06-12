@@ -204,6 +204,7 @@
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\CommunicationController.cs" />
     <Compile Include="Controllers\BankAccountController.cs" />
+    <Compile Include="Controllers\RFQController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\ExpertiseCategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

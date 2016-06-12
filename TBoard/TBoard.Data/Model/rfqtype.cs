@@ -12,20 +12,18 @@ namespace TBoard.Data.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class expertisesubcategory
+    public partial class rfqtype
     {
-        public expertisesubcategory()
+        public rfqtype()
         {
-            this.expertiseownerships = new HashSet<expertiseownership>();
             this.rfqs = new HashSet<rfq>();
         }
     
-        public int ExpertiseSubCategoryID { get; set; }
-        public string Name { get; set; }
-        public Nullable<int> ExpertiseCategoryID { get; set; }
+        public int rfqTypeID { get; set; }
+        public string code { get; set; }
+        public string description { get; set; }
+        public string Prefix { get; set; }
     
-        public virtual expertisecategory expertisecategory { get; set; }
-        public virtual ICollection<expertiseownership> expertiseownerships { get; set; }
         public virtual ICollection<rfq> rfqs { get; set; }
     }
 }

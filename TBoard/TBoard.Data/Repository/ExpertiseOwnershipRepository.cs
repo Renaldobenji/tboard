@@ -15,5 +15,10 @@ namespace TBoard.Data.Repository
         {
             
         }
+
+        public IList<GetSubscribedOwnershipDetails> GetSubscribed(int expertiseSubCategoryID)
+        {
+            return this._dbContext.GetSubscribedOwnershipDetails(expertiseSubCategoryID).ToList();
+        }
     }
 }

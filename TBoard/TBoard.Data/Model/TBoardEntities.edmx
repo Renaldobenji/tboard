@@ -15,11 +15,14 @@
           <EntitySet Name="documentrequirements" EntityType="TBoardModel.Store.documentrequirements" store:Type="Tables" Schema="tboard" />
           <EntitySet Name="documents" EntityType="TBoardModel.Store.documents" store:Type="Tables" Schema="tboard" />
           <EntitySet Name="documenttypes" EntityType="TBoardModel.Store.documenttypes" store:Type="Tables" Schema="tboard" />
+          <EntitySet Name="emailqueue" EntityType="TBoardModel.Store.emailqueue" store:Type="Tables" Schema="tboard" />
           <EntitySet Name="expertisecategory" EntityType="TBoardModel.Store.expertisecategory" store:Type="Tables" Schema="tboard" />
           <EntitySet Name="expertiseownership" EntityType="TBoardModel.Store.expertiseownership" store:Type="Tables" Schema="tboard" />
           <EntitySet Name="expertisesubcategory" EntityType="TBoardModel.Store.expertisesubcategory" store:Type="Tables" Schema="tboard" />
           <EntitySet Name="organization" EntityType="TBoardModel.Store.organization" store:Type="Tables" Schema="tboard" />
           <EntitySet Name="organizationtypes" EntityType="TBoardModel.Store.organizationtypes" store:Type="Tables" Schema="tboard" />
+          <EntitySet Name="rfq" EntityType="TBoardModel.Store.rfq" store:Type="Tables" Schema="tboard" />
+          <EntitySet Name="rfqtype" EntityType="TBoardModel.Store.rfqtype" store:Type="Tables" Schema="tboard" />
           <EntitySet Name="users" EntityType="TBoardModel.Store.users" store:Type="Tables" Schema="tboard" />
           <AssociationSet Name="addType" Association="TBoardModel.Store.addType">
             <End Role="addresstype" EntitySet="addresstype" />
@@ -56,6 +59,18 @@
           <AssociationSet Name="orgType" Association="TBoardModel.Store.orgType">
             <End Role="organizationtypes" EntitySet="organizationtypes" />
             <End Role="organization" EntitySet="organization" />
+          </AssociationSet>
+          <AssociationSet Name="rfq1" Association="TBoardModel.Store.rfq1">
+            <End Role="rfqtype" EntitySet="rfqtype" />
+            <End Role="rfq" EntitySet="rfq" />
+          </AssociationSet>
+          <AssociationSet Name="rfq2" Association="TBoardModel.Store.rfq2">
+            <End Role="users" EntitySet="users" />
+            <End Role="rfq" EntitySet="rfq" />
+          </AssociationSet>
+          <AssociationSet Name="rfq3" Association="TBoardModel.Store.rfq3">
+            <End Role="expertisesubcategory" EntitySet="expertisesubcategory" />
+            <End Role="rfq" EntitySet="rfq" />
           </AssociationSet>
           <AssociationSet Name="subCat" Association="TBoardModel.Store.subCat">
             <End Role="expertisesubcategory" EntitySet="expertisesubcategory" />
@@ -152,6 +167,18 @@
           <Property Name="documentCode" Type="varchar" MaxLength="45" />
           <Property Name="documentDescription" Type="varchar" MaxLength="45" />
         </EntityType>
+        <EntityType Name="emailqueue">
+          <Key>
+            <PropertyRef Name="emailQueueID" />
+          </Key>
+          <Property Name="emailQueueID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="from" Type="varchar" MaxLength="200" />
+          <Property Name="to" Type="varchar" MaxLength="200" />
+          <Property Name="subject" Type="varchar" MaxLength="500" />
+          <Property Name="body" Type="varchar" MaxLength="5000" />
+          <Property Name="createdDate" Type="datetime" />
+          <Property Name="sentDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="expertisecategory">
           <Key>
             <PropertyRef Name="ExpertiseCategoryID" />
@@ -196,6 +223,29 @@
           <Property Name="organizationTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="varchar" MaxLength="150" />
           <Property Name="description" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="rfq">
+          <Key>
+            <PropertyRef Name="rfqID" />
+          </Key>
+          <Property Name="rfqID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="reference" Type="varchar" MaxLength="45" />
+          <Property Name="userID" Type="int" />
+          <Property Name="expertiseSubCategoryID" Type="int" />
+          <Property Name="rfqDetails" Type="varchar" MaxLength="5000" />
+          <Property Name="rfqTypeID" Type="int" />
+          <Property Name="dateCreated" Type="datetime" />
+          <Property Name="expiryDate" Type="datetime" />
+          <Property Name="status" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="rfqtype">
+          <Key>
+            <PropertyRef Name="rfqTypeID" />
+          </Key>
+          <Property Name="rfqTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="code" Type="varchar" MaxLength="45" />
+          <Property Name="description" Type="varchar" MaxLength="200" />
+          <Property Name="Prefix" Type="varchar" MaxLength="3" />
         </EntityType>
         <EntityType Name="users">
           <Key>
@@ -327,6 +377,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="rfq1">
+          <End Role="rfqtype" Type="TBoardModel.Store.rfqtype" Multiplicity="0..1" />
+          <End Role="rfq" Type="TBoardModel.Store.rfq" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rfqtype">
+              <PropertyRef Name="rfqTypeID" />
+            </Principal>
+            <Dependent Role="rfq">
+              <PropertyRef Name="rfqTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="rfq2">
+          <End Role="users" Type="TBoardModel.Store.users" Multiplicity="0..1" />
+          <End Role="rfq" Type="TBoardModel.Store.rfq" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="rfq">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="rfq3">
+          <End Role="expertisesubcategory" Type="TBoardModel.Store.expertisesubcategory" Multiplicity="0..1" />
+          <End Role="rfq" Type="TBoardModel.Store.rfq" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="expertisesubcategory">
+              <PropertyRef Name="ExpertiseSubCategoryID" />
+            </Principal>
+            <Dependent Role="rfq">
+              <PropertyRef Name="expertiseSubCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="subCat">
           <End Role="expertisesubcategory" Type="TBoardModel.Store.expertisesubcategory" Multiplicity="0..1" />
           <End Role="expertiseownership" Type="TBoardModel.Store.expertiseownership" Multiplicity="*" />
@@ -339,6 +425,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="GetSubscribedOwnershipDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tboard">
+          <Parameter Name="expertiseSubCategoryID" Type="int" Mode="In" />
+        </Function>
         <Function Name="sps_GetOutstandingDocumentRequirements" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tboard">
           <Parameter Name="organizationID" Type="int" Mode="In" />
         </Function>
@@ -405,6 +494,24 @@
             <End Role="expertisesubcategory" EntitySet="expertisesubcategories" />
             <End Role="expertiseownership" EntitySet="expertiseownerships" />
           </AssociationSet>
+          <EntitySet Name="rfqs" EntityType="TBoardModel.rfq" />
+          <EntitySet Name="rfqtypes" EntityType="TBoardModel.rfqtype" />
+          <AssociationSet Name="rfq3" Association="TBoardModel.rfq3">
+            <End Role="expertisesubcategory" EntitySet="expertisesubcategories" />
+            <End Role="rfq" EntitySet="rfqs" />
+          </AssociationSet>
+          <AssociationSet Name="rfq1" Association="TBoardModel.rfq1">
+            <End Role="rfqtype" EntitySet="rfqtypes" />
+            <End Role="rfq" EntitySet="rfqs" />
+          </AssociationSet>
+          <AssociationSet Name="rfq2" Association="TBoardModel.rfq2">
+            <End Role="user" EntitySet="users" />
+            <End Role="rfq" EntitySet="rfqs" />
+          </AssociationSet>
+          <EntitySet Name="emailqueues" EntityType="TBoardModel.emailqueue" />
+          <FunctionImport Name="GetSubscribedOwnershipDetails" ReturnType="Collection(TBoardModel.GetSubscribedOwnershipDetails)">
+            <Parameter Name="expertiseSubCategoryID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="address">
           <Key>
@@ -570,6 +677,7 @@
           <Property Type="Int32" Name="failedPasswordAttemptCount" />
           <Property Type="DateTime" Name="created" Nullable="false" Precision="0" />
           <Property Type="DateTime" Name="updated" Precision="0" />
+          <NavigationProperty Name="rfqs" Relationship="TBoardModel.rfq2" FromRole="user" ToRole="rfq" />
         </EntityType>
         <EntityType Name="documentrequirement">
           <Key>
@@ -673,6 +781,7 @@
           <Property Type="Int32" Name="ExpertiseCategoryID" />
           <NavigationProperty Name="expertisecategory" Relationship="TBoardModel.CatetoryID" FromRole="expertisesubcategory" ToRole="expertisecategory" />
           <NavigationProperty Name="expertiseownerships" Relationship="TBoardModel.subCat" FromRole="expertisesubcategory" ToRole="expertiseownership" />
+          <NavigationProperty Name="rfqs" Relationship="TBoardModel.rfq3" FromRole="expertisesubcategory" ToRole="rfq" />
         </EntityType>
         <Association Name="CatetoryID">
           <End Type="TBoardModel.expertisecategory" Role="expertisecategory" Multiplicity="0..1" />
@@ -708,6 +817,89 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="rfq">
+          <Key>
+            <PropertyRef Name="rfqID" />
+          </Key>
+          <Property Type="Int32" Name="rfqID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="reference" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="userID" />
+          <Property Type="Int32" Name="expertiseSubCategoryID" />
+          <Property Type="String" Name="rfqDetails" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="rfqTypeID" />
+          <Property Type="DateTime" Name="dateCreated" Precision="0" />
+          <Property Type="DateTime" Name="expiryDate" Precision="0" />
+          <Property Type="String" Name="status" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="expertisesubcategory" Relationship="TBoardModel.rfq3" FromRole="rfq" ToRole="expertisesubcategory" />
+          <NavigationProperty Name="rfqtype" Relationship="TBoardModel.rfq1" FromRole="rfq" ToRole="rfqtype" />
+          <NavigationProperty Name="user" Relationship="TBoardModel.rfq2" FromRole="rfq" ToRole="user" />
+        </EntityType>
+        <EntityType Name="rfqtype">
+          <Key>
+            <PropertyRef Name="rfqTypeID" />
+          </Key>
+          <Property Type="Int32" Name="rfqTypeID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="code" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="description" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="rfqs" Relationship="TBoardModel.rfq1" FromRole="rfqtype" ToRole="rfq" />
+          <Property Type="String" Name="Prefix" MaxLength="3" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="rfq3">
+          <End Type="TBoardModel.expertisesubcategory" Role="expertisesubcategory" Multiplicity="0..1" />
+          <End Type="TBoardModel.rfq" Role="rfq" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="expertisesubcategory">
+              <PropertyRef Name="ExpertiseSubCategoryID" />
+            </Principal>
+            <Dependent Role="rfq">
+              <PropertyRef Name="expertiseSubCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="rfq1">
+          <End Type="TBoardModel.rfqtype" Role="rfqtype" Multiplicity="0..1" />
+          <End Type="TBoardModel.rfq" Role="rfq" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rfqtype">
+              <PropertyRef Name="rfqTypeID" />
+            </Principal>
+            <Dependent Role="rfq">
+              <PropertyRef Name="rfqTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="rfq2">
+          <End Type="TBoardModel.user" Role="user" Multiplicity="0..1" />
+          <End Type="TBoardModel.rfq" Role="rfq" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="rfq">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="emailqueue">
+          <Key>
+            <PropertyRef Name="emailQueueID" />
+          </Key>
+          <Property Type="Int32" Name="emailQueueID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="from" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="to" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="subject" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="body" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="createdDate" Precision="0" />
+          <Property Type="DateTime" Name="sentDate" Precision="0" />
+        </EntityType>
+        <ComplexType Name="GetSubscribedOwnershipDetails" >
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="tradingName" Nullable="false" />
+          <Property Type="String" Name="ownerType" Nullable="false" />
+          <Property Type="String" Name="owningID" Nullable="false" />
+          <Property Type="String" Name="communicationLine1" Nullable="false" />
+          <Property Type="String" Name="communicationLine2" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -895,6 +1087,56 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="rfqs">
+            <EntityTypeMapping TypeName="TBoardModel.rfq">
+              <MappingFragment StoreEntitySet="rfq">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="expiryDate" ColumnName="expiryDate" />
+                <ScalarProperty Name="dateCreated" ColumnName="dateCreated" />
+                <ScalarProperty Name="rfqTypeID" ColumnName="rfqTypeID" />
+                <ScalarProperty Name="rfqDetails" ColumnName="rfqDetails" />
+                <ScalarProperty Name="expertiseSubCategoryID" ColumnName="expertiseSubCategoryID" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="reference" ColumnName="reference" />
+                <ScalarProperty Name="rfqID" ColumnName="rfqID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rfqtypes">
+            <EntityTypeMapping TypeName="TBoardModel.rfqtype">
+              <MappingFragment StoreEntitySet="rfqtype">
+                <ScalarProperty Name="Prefix" ColumnName="Prefix" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="rfqTypeID" ColumnName="rfqTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="emailqueues">
+            <EntityTypeMapping TypeName="TBoardModel.emailqueue">
+              <MappingFragment StoreEntitySet="emailqueue">
+                <ScalarProperty Name="sentDate" ColumnName="sentDate" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="body" ColumnName="body" />
+                <ScalarProperty Name="subject" ColumnName="subject" />
+                <ScalarProperty Name="to" ColumnName="to" />
+                <ScalarProperty Name="from" ColumnName="from" />
+                <ScalarProperty Name="emailQueueID" ColumnName="emailQueueID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetSubscribedOwnershipDetails" FunctionName="TBoardModel.Store.GetSubscribedOwnershipDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TBoardModel.GetSubscribedOwnershipDetails">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="tradingName" ColumnName="tradingName" />
+                <ScalarProperty Name="ownerType" ColumnName="ownerType" />
+                <ScalarProperty Name="owningID" ColumnName="owningID" />
+                <ScalarProperty Name="communicationLine1" ColumnName="communicationLine1" />
+                <ScalarProperty Name="communicationLine2" ColumnName="communicationLine2" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
