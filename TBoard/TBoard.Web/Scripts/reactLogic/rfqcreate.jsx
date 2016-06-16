@@ -1,9 +1,32 @@
-﻿var RFQRequest = React.createClass({	
+﻿var RFQRequest = React.createClass({
+
+    getInitialState: function(){
+        return { 
+                    QuoteType: ""
+        };
+    },
+
+    componentDidMount: function () {
+        $('#step2').hide();
+    },
+
+    quoteTypeClick: function (e) {        
+        this.setState({ QuoteType: e });
+        $('#step1').hide();
+        $('#step2').show();
+    },
+
+    cancelClick: function (){
+        $('#step1').show();
+        $('#step2').hide();
+    },
+
 	render: function() {
 
         var navBarSyle= {
               marginBottom:0
-            };
+        };
+
 		return (	
                 <div>		
 				    <nav className="navbar navbar-default navbar-static-top" role="navigation" style={navBarSyle}>
@@ -17,9 +40,13 @@
 		                    </div>                
 	                    </div>  
                         <br/><br /><br />
-                        <RFQRequestType />  
-                        <RFQRequestDetail />             
-                    </div>
+                        <div id="step1">
+                            <RFQRequestType quoteTypeClick={this.quoteTypeClick} />  
+                        </div>
+                        <div id="step2">
+                            <RFQRequestDetail cancelClick={this.cancelClick}/>
+                        </div>
+                     </div>
                 </div>
 
                       
@@ -37,6 +64,7 @@ var RFQRequestType = React.createClass({
         return (	
                 <div className="row">
 		            <div className="col-lg-3 col-md-6 col-md-offset-1">
+                        <a onClick={() => this.props.quoteTypeClick('RFQ')}>
                         <div className="panel panel-primary">
                             <div className="panel-heading">
                                 <div className="row">
@@ -49,16 +77,17 @@ var RFQRequestType = React.createClass({
                                     </div>
                                 </div>
                             </div>
-                            <a href="#">
-                                <div className="panel-footer">
-                                    <span className="pull-left">Select</span>
-                                    <span className="pull-right"><i className="fa fa-arrow-circle-right"></i></span>
-                                    <div className="clearfix"></div>
-                                </div>
-                            </a>
+                            <div className="panel-footer">
+                                <span className="pull-left">Select</span>
+                                <span className="pull-right"><i className="fa fa-arrow-circle-right"></i></span>
+                                <div className="clearfix"></div>
+                            </div>
                         </div>
+                        </a>
 		            </div>
                     <div className="col-lg-3 col-md-6">
+                        <a onClick={() =>
+                            this.props.quoteTypeClick('TRFQ')}>
                         <div className="panel panel-green">
                             <div className="panel-heading">
                                 <div className="row">
@@ -71,16 +100,19 @@ var RFQRequestType = React.createClass({
                                     </div>
                                 </div>
                             </div>
-                            <a href="#">
+
                                 <div className="panel-footer">
                                     <span className="pull-left">Select</span>
                                     <span className="pull-right"><i className="fa fa-arrow-circle-right"></i></span>
                                     <div className="clearfix"></div>
                                 </div>
+
+                        </div>
                             </a>
                         </div>
-                    </div>
                     <div className="col-lg-3 col-md-6">
+                        <a onClick={() =>
+                            this.props.quoteTypeClick('CRFQ')}>
                         <div className="panel panel-yellow">
                             <div className="panel-heading">
                                 <div className="row">
@@ -93,14 +125,15 @@ var RFQRequestType = React.createClass({
                                     </div>
                                 </div>
                             </div>
-                            <a href="#">
+
                                 <div className="panel-footer">
                                     <span className="pull-left">Select</span>
                                     <span className="pull-right"><i className="fa fa-arrow-circle-right"></i></span>
                                     <div className="clearfix"></div>
                                 </div>
-                            </a>
+
                         </div>
+                       </a>
                     </div>
                 </div> 
 
@@ -143,6 +176,7 @@ var RFQRequestDetail = React.createClass({
                             </div>
                             <div className="panel-footer">
                                 <div className="text-right">
+                                    <button type="button" onClick={this.props.cancelClick} className="btn btn-warning btn-lg">Cancel</button><span> </span>
                                     <button type="button" className="btn btn-primary btn-lg">Submit</button>
                                 </div>
                             </div>
