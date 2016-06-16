@@ -76,6 +76,12 @@ routie({
 			ReactDOM.render(
 				React.createElement(DocumentManagement, null), document.getElementById('container')
 			);
-		}
+        }
+        ,
+        'rfqrequest': function () {
+            ReactDOM.render(
+				React.createElement(RFQRequest, null), document.getElementById('container')
+			);
+        }
 
 });

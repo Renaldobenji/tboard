@@ -21,6 +21,14 @@
 		                            </li>
 	                            </ul>	
                             </li>
+                            <li>
+	                            <a><i className="fa fa-bar-chart-o fa-fw"></i> Quotation<span className="fa arrow"></span></a>
+	                            <ul className="nav nav-second-level">
+		                            <li>
+			                            <a href="#rfqrequest">Request</a>
+		                            </li>		                            
+	                            </ul>
+                            </li>
                         </ul>
                     </div>                
                 </div>
