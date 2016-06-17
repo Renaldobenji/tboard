@@ -18,5 +18,10 @@ namespace TBoard.BusinessLogic.BusinessLogic
         {
             this.repository = repository;
         }
+
+        public IList<SearchSubCategory> GetExpertiseLike(string q)
+        {
+            return this.repository.GetExpertiseLike(q);
+        }
     }
 }

@@ -2,7 +2,8 @@
 
     getInitialState: function(){
         return { 
-                    QuoteType: ""
+            QuoteType: "",
+            ExpertiseSubCategoryID : 1
         };
     },
 
@@ -21,6 +22,11 @@
         $('#step2').hide();
     },
 
+    updateExpertiseSubCategoryID: function (e) {
+        alert(e);
+        this.setState({ ExpertiseSubCategoryID: e.target.value });
+        },
+
 	render: function() {
 
         var navBarSyle= {
@@ -36,7 +42,7 @@
                     <div id="page-wrapper">
 	                    <div className="row">
 		                    <div className="col-lg-12">
-			                    <h1 className="page-header">Request for Quotation</h1>
+			                    <h1 className="page-header">Request for Quotation </h1>
 		                    </div>                
 	                    </div>  
                         <br/><br /><br />
@@ -44,7 +50,7 @@
                             <RFQRequestType quoteTypeClick={this.quoteTypeClick} />  
                         </div>
                         <div id="step2">
-                            <RFQRequestDetail cancelClick={this.cancelClick}/>
+                            <RFQRequestDetail cancelClick={this.cancelClick} ExpertiseSubCategoryID={this.state.ExpertiseSubCategoryID} updateExpertiseSubCategoryID={this.updateExpertiseSubCategoryID}/>                           
                         </div>
                      </div>
                 </div>
@@ -142,7 +148,52 @@ var RFQRequestType = React.createClass({
 }
 });
 
-var RFQRequestDetail = React.createClass({	
+var RFQRequestDetail = React.createClass({
+
+   
+
+    componentDidMount: function () {
+
+        function formatRepo (repo) {
+            if (repo.loading) return repo.text;
+
+            var markup = "<label>" + repo.CategoryName + "-" + repo.SubCategoryName +"</label>";
+           
+            return markup;
+        }
+
+        function formatRepoSelection (repo) {
+            return repo.CategoryName || repo.SubCategoryName;
+        }
+
+        $("#category").select2({
+            placeholder: "Search for an Item",
+            ajax: {
+                url: "api/ExpertiseCategory/GetExpertiseLike",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: $.map(data.items, function (item) {
+                            return {
+                                text: item.CategoryName + "-" + item.SubCategoryName,
+                                id: item.ExpertiseSubCategoryID
+                            }
+                        })
+                    };
+                },
+                cache: true
+            },           
+            minimumInputLength: 1            
+        });
+    },
+
     render: function() {
 
         var navBarSyle= {
@@ -162,8 +213,10 @@ var RFQRequestDetail = React.createClass({
                             </div>
                             <div className="panel-body">
                                 <div className="form-group">
-                                    <label>Category</label>
-                                    <input className="form-control" placeholder="Quote Required For:"/>                                   
+                                    <label>Category</label>                                    
+                                    <select id="category" name="category" className="form-control" value={this.props.ExpertiseSubCategoryID} onChange={this.props.updateExpertiseSubCategoryID}>
+                                       
+                                    </select>                                 
                                 </div>
                                 <div className="form-group">
                                     <label>Expiry Date</label>

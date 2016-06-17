@@ -10,6 +10,7 @@ using System.Web.Http;
 using Newtonsoft.Json;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.Data.Model;
+using System.Web;
 
 namespace TBoard.Web.Controllers
 {
@@ -84,6 +85,24 @@ namespace TBoard.Web.Controllers
                 resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 return resp;
             }
+        }
+
+        [Route("api/ExpertiseCategory/GetExpertiseLike/")]
+        public HttpResponseMessage GetExpertiseLike([FromUri] string q)
+        {          
+
+            var result = this.expertiseCategoryBusinessLogic.GetExpertiseLike(q);
+
+            var r = new
+            {
+                items = result
+            };
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(r))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            return resp;
         }
 
         // POST api/<controller>
