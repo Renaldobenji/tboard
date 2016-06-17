@@ -3,7 +3,10 @@
     getInitialState: function(){
         return { 
             QuoteType: "",
-            ExpertiseSubCategoryID : 1
+            ExpertiseSubCategoryID: 1,
+            ExpiryDate: "",
+            RFQDetails: "",
+            UserID : 1
         };
     },
 
@@ -20,6 +23,18 @@
     cancelClick: function (){
         $('#step1').show();
         $('#step2').hide();
+    },
+
+    updateExpiryDate: function (e) {        
+        this.setState({ ExpiryDate: e.target.value });
+    },
+
+    updateRFQDetails: function (e) {
+        this.setState({ RFQDetails: e.target.value });
+    },
+
+    PostRFQ: function () {
+        
     },
 
     updateExpertiseSubCategoryID: function (e) {
@@ -50,12 +65,10 @@
                             <RFQRequestType quoteTypeClick={this.quoteTypeClick} />  
                         </div>
                         <div id="step2">
-                            <RFQRequestDetail cancelClick={this.cancelClick} ExpertiseSubCategoryID={this.state.ExpertiseSubCategoryID} updateExpertiseSubCategoryID={this.updateExpertiseSubCategoryID}/>                           
+                            <RFQRequestDetail PostRFQ={this.PostRFQ} ExpiryDate={this.state.ExpiryDate} RFQDetails={this.state.RFQDetails} updateExpiryDate={this.updateExpiryDate} updateRFQDetails={this.updateRFQDetails} cancelClick={this.cancelClick} ExpertiseSubCategoryID={this.state.ExpertiseSubCategoryID} updateExpertiseSubCategoryID={this.updateExpertiseSubCategoryID}/>                           
                         </div>
                      </div>
-                </div>
-
-                      
+                </div>     
             )
 	}
 });
@@ -220,24 +233,22 @@ var RFQRequestDetail = React.createClass({
                                 </div>
                                 <div className="form-group">
                                     <label>Expiry Date</label>
-                                    <input id="expiryDate" className="form-control" placeholder="Expiry date of quotation" />
+                                    <input id="expiryDate" className="form-control" value={this.props.ExpiryDate} onChange={this.props.updateExpiryDate} placeholder="Expiry date of quotation" />
                                 </div>
                                 <div className="form-group">
                                     <label>Quotation Details</label>
-                                    <textarea className="form-control" rows="5" placeholder="Details for your quotation"></textarea>
+                                    <textarea className="form-control" rows="5" value={this.props.RFQDetails} onChange={this.props.updateRFQDetails} placeholder="Details for your quotation"></textarea>
                                 </div>
                             </div>
                             <div className="panel-footer">
                                 <div className="text-right">
                                     <button type="button" onClick={this.props.cancelClick} className="btn btn-warning btn-lg">Cancel</button><span> </span>
-                                    <button type="button" className="btn btn-primary btn-lg">Submit</button>
+                                    <button type="button" onClick={this.props.PostRFQ} className="btn btn-primary btn-lg">Submit</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div> 
-
-                      
             )
 }
 });
