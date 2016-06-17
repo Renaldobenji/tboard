@@ -29,5 +29,10 @@ namespace TBoard.BusinessLogic.BusinessLogic
         {
             return this.repository.GetRFQ(rfqTypeID);
         }
+
+        public rfqtype GetRFQ(string prefix)
+        {
+            return this.repository.GetRFQ(prefix);
+        }
     }
 }

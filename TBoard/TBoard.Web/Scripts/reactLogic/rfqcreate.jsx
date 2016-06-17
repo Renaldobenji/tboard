@@ -34,12 +34,24 @@
     },
 
     PostRFQ: function () {
-        
+        console.log('POSTING FORM');
+        $.ajax({
+            url: 'api/RFQ/Post',
+            type: 'POST',
+            dataType: 'json',
+            data: this.state,
+            cache: false,
+            success: function (data) {
+                alert("Success");
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error('api/RFQ/Post', status, err.toString());
+            }.bind(this)
+        });
     },
 
-    updateExpertiseSubCategoryID: function (e) {
-        alert(e);
-        this.setState({ ExpertiseSubCategoryID: e.target.value });
+    updateExpertiseSubCategoryID: function (e) {        
+        this.setState({ ExpertiseSubCategoryID: e });
         },
 
 	render: function() {
@@ -106,7 +118,7 @@ var RFQRequestType = React.createClass({
 		            </div>
                     <div className="col-lg-3 col-md-6">
                         <a onClick={() =>
-                            this.props.quoteTypeClick('TRFQ')}>
+                            this.props.quoteTypeClick('OTT')}>
                         <div className="panel panel-green">
                             <div className="panel-heading">
                                 <div className="row">
@@ -131,7 +143,7 @@ var RFQRequestType = React.createClass({
                         </div>
                     <div className="col-lg-3 col-md-6">
                         <a onClick={() =>
-                            this.props.quoteTypeClick('CRFQ')}>
+                            this.props.quoteTypeClick('CTT')}>
                         <div className="panel panel-yellow">
                             <div className="panel-heading">
                                 <div className="row">
@@ -163,7 +175,11 @@ var RFQRequestType = React.createClass({
 
 var RFQRequestDetail = React.createClass({
 
-   
+    buttonClick: function () {
+        var userCat = $('#category').val();
+        this.props.updateExpertiseSubCategoryID(userCat);
+        this.props.PostRFQ();
+    },
 
     componentDidMount: function () {
 
@@ -243,7 +259,7 @@ var RFQRequestDetail = React.createClass({
                             <div className="panel-footer">
                                 <div className="text-right">
                                     <button type="button" onClick={this.props.cancelClick} className="btn btn-warning btn-lg">Cancel</button><span> </span>
-                                    <button type="button" onClick={this.props.PostRFQ} className="btn btn-primary btn-lg">Submit</button>
+                                    <button type="button" onClick={this.buttonClick} className="btn btn-primary btn-lg">Submit</button>
                                 </div>
                             </div>
                         </div>

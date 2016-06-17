@@ -69,7 +69,7 @@ namespace TBoard.Web.Controllers
             //Send out email
             var expertiseOwnership =
                 this.expertiseOwnershipBusinessLogic.GetSubscribed(
-                    Convert.ToInt32(formData.Get("expertiseSubCategoryID")));
+                    Convert.ToInt32(formData.Get("ExpertiseSubCategoryID")));       
 
             if (expertiseOwnership.Count.Equals(0))
             {
@@ -116,19 +116,19 @@ namespace TBoard.Web.Controllers
 
         private void populateRFQ(FormDataCollection formData, rfq rfq)
         {
-            var rfqTypeID = Convert.ToInt32(formData.Get("rfqTypeID"));
-            var todayDate = DateTime.Now.ToString("YYMMDD");
-            var rfqPrefix = rfqBusinessLogic.GetRFQ(rfqTypeID).Prefix;
+            var rfqType = rfqBusinessLogic.GetRFQ(formData.Get("QuoteType"));
+            var todayDate = DateTime.Now.ToString("yyMMdd");
+            var rfqPrefix = rfqType.Prefix;
 
-            rfq.reference = string.Format("{0}{1}{2}", rfqPrefix, todayDate, GenerateRandomString(3));
-            rfq.userID = Convert.ToInt32(formData.Get("userID"));
-            rfq.expertiseSubCategoryID = Convert.ToInt32(formData.Get("expertiseSubCategoryID"));
-            rfq.rfqDetails = formData.Get("rfqDetails");
-            rfq.rfqTypeID = rfqTypeID;
+            rfq.reference = string.Format("{0}{1}{2}", rfqPrefix, todayDate, GenerateRandomString(3).ToUpper());
+            rfq.userID = Convert.ToInt32(formData.Get("UserID"));
+            rfq.expertiseSubCategoryID = Convert.ToInt32(formData.Get("ExpertiseSubCategoryID"));
+            rfq.rfqDetails = formData.Get("RFQDetails");
+            rfq.rfqTypeID = rfqType.rfqTypeID;
             rfq.dateCreated = DateTime.Now;
-            if (String.IsNullOrEmpty(formData.Get("expiryDate")))
+            if (!String.IsNullOrEmpty(formData.Get("ExpiryDate")))
             {
-                rfq.expiryDate = Convert.ToDateTime(formData.Get("expiryDate"));
+                rfq.expiryDate = Convert.ToDateTime(formData.Get("ExpiryDate"));
             }
             rfq.status = "ACT";
         }

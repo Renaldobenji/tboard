@@ -25,5 +25,10 @@ namespace TBoard.Data.Repository
         {
             return this._dbContext.rfqtypes.FirstOrDefault(x => x.rfqTypeID == rfqTypeID);
         }
+
+        public rfqtype GetRFQ(string prefix)
+        {
+            return this._dbContext.rfqtypes.FirstOrDefault(x => x.Prefix == prefix);
+        }
     }
 }
