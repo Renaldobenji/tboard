@@ -30,6 +30,7 @@ namespace TBoard.BusinessLogic.BusinessLogic
                 subject = subject,
                 to = to
             });
+            this.repository.Save();
         }
     }
 }
