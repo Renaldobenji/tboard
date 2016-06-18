@@ -280,6 +280,12 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="readme.txt" />
+    <Content Include="Scripts\allenfang\css\react-bootstrap-table-all.min.css" />
+    <Content Include="Scripts\allenfang\css\react-bootstrap-table.css" />
+    <Content Include="Scripts\allenfang\css\react-bootstrap-table.min.css" />
+    <Content Include="Scripts\allenfang\css\toastr.css" />
+    <Content Include="Scripts\allenfang\dist\react-bootstrap-table.js" />
+    <Content Include="Scripts\allenfang\dist\react-bootstrap-table.min.js" />
     <Content Include="Scripts\bootstap\bower_components\bootstrap-social\.bower.json" />
     <Content Include="Scripts\bootstap\bower_components\bootstrap-social\.editorconfig" />
     <Content Include="Scripts\bootstap\bower_components\bootstrap-social\.gitignore" />
@@ -598,6 +604,7 @@
     <Content Include="Scripts\bootstap\bower_components\morrisjs\spec\viz\run.sh" />
     <Content Include="Scripts\bootstap\bower_components\raphael\.bower.json" />
     <Content Include="Scripts\bootstap\bower_components\raphael\bower.json" />
+    <Content Include="Scripts\allenfang\dist\react-bootstrap-table.js.map" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\bootstap\bower_components\bootstrap-social\bootstrap-social.css" />
     <Content Include="Scripts\bootstap\bower_components\bootstrap\dist\css\bootstrap-theme.css" />
@@ -1151,6 +1158,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Upload\Index.cshtml" />
     <Content Include="Scripts\reactLogic\rfqcreate.jsx" />
+    <Content Include="Scripts\reactLogic\rfqmine.jsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

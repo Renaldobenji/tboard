@@ -83,5 +83,11 @@ routie({
 				React.createElement(RFQRequest, null), document.getElementById('container')
 			);
         }
+        ,
+        'rfqmyrequest': function () {
+            ReactDOM.render(
+				React.createElement(MyRFQ, null), document.getElementById('container')
+			);
+        }
 
 });

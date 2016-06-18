@@ -46,7 +46,8 @@ namespace TBoard.Web.Controllers
                     rfqDetails = y.rfqDetails,
                     rfqType = y.rfqtype.code,
                     createdDate = y.dateCreated,
-                    expiryDate = y.expiryDate
+                    expiryDate = y.expiryDate,
+                    actions = y.reference
                 })
             };
 

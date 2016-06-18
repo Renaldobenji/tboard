@@ -26,7 +26,10 @@
 	                            <ul className="nav nav-second-level">
 		                            <li>
 			                            <a href="#rfqrequest">Request</a>
-		                            </li>		                            
+		                            </li>	
+                                    <li>
+			                            <a href="#rfqmyrequest">My Requests</a>
+                                    </li>	                            
 	                            </ul>
                             </li>
                         </ul>
