@@ -142,7 +142,8 @@ var Actions = React.createClass({
     
     handleClick: function () {
         // Explicitly focus the text input using the raw DOM API.
-        alert(this.props.reference);
+        //alert(this.props.reference);
+        routie('rfqdetail/' + this.props.reference);
     },
 
     render: function () { 

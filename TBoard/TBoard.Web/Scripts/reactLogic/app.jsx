@@ -88,6 +88,11 @@ routie({
             ReactDOM.render(
 				React.createElement(MyRFQ, null), document.getElementById('container')
 			);
-        }
+        }  
+});
 
+routie('rfqdetail/:rfqreference', function (rfqreference) {
+    ReactDOM.render(
+				React.createElement(RfqDetail, { rfqreference: rfqreference }), document.getElementById('container')
+			);
 });

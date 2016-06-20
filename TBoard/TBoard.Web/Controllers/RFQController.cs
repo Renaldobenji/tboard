@@ -60,6 +60,36 @@ namespace TBoard.Web.Controllers
             return resp;
         }
 
+        [HttpGet]
+        [Route("api/RFQ/Detail/{rfqReference}")]
+        public HttpResponseMessage Detail(string rfqReference)
+        {            
+            var rfq = this.rfqBusinessLogic.FindBy(x => x.reference == rfqReference).First();
+
+            var r = new
+            {
+                data = new
+                {
+                    reference = rfq.reference,
+                    userName = rfq.user.username,
+                    expertise = rfq.expertisesubcategory.Name,
+                    rfqDetails = rfq.rfqDetails,
+                    rfqType = rfq.rfqtype.code,
+                    createdDate = rfq.dateCreated,
+                    expiryDate = rfq.expiryDate,
+                    actions = rfq.reference
+                }
+            };
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(r))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return resp;
+        }
+
         // POST api/<controller>
         public void Post(FormDataCollection formData)
         {
@@ -91,7 +121,7 @@ namespace TBoard.Web.Controllers
         [Route("api/RFQ/Cancel")]
         public void Cancel(FormDataCollection formData)
         {
-            var rfqReference = formData.Get("rfqReference");
+            var rfqReference = formData.Get("RFQReference");
             var rfq = this.rfqBusinessLogic.FindBy(x => x.reference == rfqReference).SingleOrDefault();
             rfq.status = "CAN";
             this.rfqBusinessLogic.Update(rfq);
@@ -101,17 +131,18 @@ namespace TBoard.Web.Controllers
         [Route("api/RFQ/Update")]
         public void Update(FormDataCollection formData)
         {
-            rfq rfq = new rfq();
+            var rfqReference = formData.Get("RFQReference");
+            var rfq = this.rfqBusinessLogic.FindBy(x => x.reference == rfqReference).SingleOrDefault();
             populateUpdateRFQ(formData, rfq);
             this.rfqBusinessLogic.Update(rfq);
         }
 
         private void populateUpdateRFQ(FormDataCollection formData, rfq rfq)
         {
-            rfq.rfqDetails = formData.Get("rfqDetails");
-            if (String.IsNullOrEmpty(formData.Get("expiryDate")))
+            rfq.rfqDetails = formData.Get("RFQDetails");
+            if (!String.IsNullOrEmpty(formData.Get("ExpiryDate")))
             {
-                rfq.expiryDate = Convert.ToDateTime(formData.Get("expiryDate"));
+                rfq.expiryDate = Convert.ToDateTime(formData.Get("ExpiryDate"));
             }
         }
 
