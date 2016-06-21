@@ -28,8 +28,11 @@
 			                            <a href="#rfqrequest">Request</a>
 		                            </li>	
                                     <li>
-			                            <a href="#rfqmyrequest">My Requests</a>
-                                    </li>	                            
+			                            <a href="#rfqmyrequest">Active Requests</a>
+                                    </li>	
+                                    <li>
+			                            <a href="#rfqallrequest">All Requests</a>
+                                    </li>                            
 	                            </ul>
                             </li>
                         </ul>

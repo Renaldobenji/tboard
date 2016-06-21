@@ -88,7 +88,13 @@ routie({
             ReactDOM.render(
 				React.createElement(MyRFQ, null), document.getElementById('container')
 			);
-        }  
+        }
+        ,
+        'rfqallrequest': function () {
+            ReactDOM.render(
+				React.createElement(MyAllRFQ, null), document.getElementById('container')
+			);
+        }
 });
 
 routie('rfqdetail/:rfqreference', function (rfqreference) {

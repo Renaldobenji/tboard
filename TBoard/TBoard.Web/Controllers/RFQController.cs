@@ -61,6 +61,38 @@ namespace TBoard.Web.Controllers
         }
 
         [HttpGet]
+        [Route("api/RFQ/All/{userID}")]
+        public HttpResponseMessage All(string userID)
+        {
+            var userIDInt = Convert.ToInt32(userID);
+            var rfq = this.rfqBusinessLogic.FindBy(x => x.userID == userIDInt).ToList();
+
+            var r = new
+            {
+                data = rfq.Select(y => new
+                {
+                    reference = y.reference,
+                    userName = y.user.username,
+                    expertise = y.expertisesubcategory.Name,
+                    rfqDetails = y.rfqDetails,
+                    rfqType = y.rfqtype.code,
+                    status = y.status,
+                    createdDate = y.dateCreated,
+                    expiryDate = y.expiryDate,
+                    actions = y.reference
+                })
+            };
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(r))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return resp;
+        }
+
+        [HttpGet]
         [Route("api/RFQ/Detail/{rfqReference}")]
         public HttpResponseMessage Detail(string rfqReference)
         {            

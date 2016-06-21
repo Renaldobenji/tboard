@@ -18,7 +18,7 @@
                     <div id="page-wrapper">
 	                        <div className="row">
 		                        <div className="col-lg-12">
-			                        <h1 className="page-header">My Requests</h1>                                   
+			                        <h1 className="page-header">Active Requests</h1>                                   
 		                        </div>                
 	                        </div>  
                             <div className="row">
@@ -28,6 +28,38 @@
                 </div>                      
             )
 	}
+});
+
+var MyAllRFQ = React.createClass({
+    getInitialState: function () {
+        return {
+            UserID: 1
+        };
+
+    },
+    render: function() {        
+        var navBarSyle= {
+            marginBottom:0
+        };
+        return (	
+                <div>		
+				    <nav className="navbar navbar-default navbar-static-top" role="navigation" style={navBarSyle}>
+	                    <NavHeader />
+                        <NavMenu />
+                    </nav>
+                    <div id="page-wrapper">
+	                        <div className="row">
+		                        <div className="col-lg-12">
+			                        <h1 className="page-header">All Requests</h1>                                   
+		                        </div>                
+	                        </div>  
+                            <div className="row">
+                                <AllRFQList UserID={this.state.UserID} />
+                            </div>
+                    </div>
+                </div>                      
+            )
+}
 });
 
 /*Register Page
@@ -150,6 +182,49 @@ var Actions = React.createClass({
 
         return (
 				 <button className="btn btn-outline btn-warning btn-sm" onClick={this.handleClick}>View</button>
+		)
+    }
+});
+
+var AllRFQList = React.createClass({
+
+    getInitialState: function () {
+        return { data: [] }
+    },
+
+    loadData: function () {
+        $.ajax({
+            url: 'api/RFQ/All/' + this.props.UserID,
+            success: function (data) {
+                this.setState({ data: data.data });
+            }.bind(this)
+        })
+    },
+
+    componentWillMount: function () {
+        this.loadData();
+    },   
+    
+    render: function () {      
+
+        function actionsFormatter(cell, row) {
+            return <Actions reference={row.reference}/>;
+        }
+
+        return (
+			<div className="col-lg-12">	
+				<BootstrapTable data={this.state.data} striped={true} hover={true} pagination={true} search={true}>
+                  <TableHeaderColumn isKey={true} dataField="reference">Reference</TableHeaderColumn>
+                  <TableHeaderColumn dataField="userName">User</TableHeaderColumn>
+                  <TableHeaderColumn dataField="expertise">Expertise</TableHeaderColumn>
+                  <TableHeaderColumn dataField="rfqDetails">Details</TableHeaderColumn>
+                  <TableHeaderColumn dataField="rfqType">Type</TableHeaderColumn>
+                  <TableHeaderColumn dataField="status">Status</TableHeaderColumn>
+                  <TableHeaderColumn dataField="expiryDate" dataSort={true}>Expiry Date</TableHeaderColumn>
+                  <TableHeaderColumn dataField="createdDate" dataSort={true}>Created Date</TableHeaderColumn>    
+                  <TableHeaderColumn dataFormat={actionsFormatter}>Actions</TableHeaderColumn>                
+				</BootstrapTable>				
+			</div>
 		)
     }
 });
