@@ -25,17 +25,23 @@
         <EntityTypeShape EntityType="TBoardModel.document" Width="1.5" PointX="9.25" PointY="8.625" />
         <AssociationConnector Association="TBoardModel.documentType1" />
         <AssociationConnector Association="TBoardModel.orgID" />
-        <EntityTypeShape EntityType="TBoardModel.expertisecategory" Width="1.5" PointX="2.7491416198895973" PointY="13.779868862489177" />
+        <EntityTypeShape EntityType="TBoardModel.expertisecategory" Width="1.5" PointX="2.75" PointY="12.25" />
         <EntityTypeShape EntityType="TBoardModel.expertisesubcategory" Width="1.5" PointX="10.75" PointY="3.25" />
         <AssociationConnector Association="TBoardModel.CatetoryID" />
-        <EntityTypeShape EntityType="TBoardModel.expertiseownership" Width="1.5" PointX="6.7530608171378548" PointY="29.309499947963982" />
+        <EntityTypeShape EntityType="TBoardModel.expertiseownership" Width="1.5" PointX="5.25" PointY="21.5" />
         <AssociationConnector Association="TBoardModel.subCat" />
         <EntityTypeShape EntityType="TBoardModel.rfq" Width="1.5" PointX="5.6162942003534617" PointY="6.479195776618643" />
         <EntityTypeShape EntityType="TBoardModel.rfqtype" Width="1.5" PointX="0.36641623841897408" PointY="2.1151261637523429" />
         <AssociationConnector Association="TBoardModel.rfq3" />
         <AssociationConnector Association="TBoardModel.rfq1" />
         <AssociationConnector Association="TBoardModel.rfq2" />
-        <EntityTypeShape EntityType="TBoardModel.emailqueue" Width="1.5" PointX="11.021281007221566" PointY="14.296858451467408" />
+        <EntityTypeShape EntityType="TBoardModel.emailqueue" Width="1.5" PointX="11.25" PointY="10.375" />
+        <EntityTypeShape EntityType="TBoardModel.auditentry" Width="1.5" PointX="5.375" PointY="11.75" />
+        <EntityTypeShape EntityType="TBoardModel.auditentrytype" Width="1.5" PointX="11.375" PointY="6.75" />
+        <EntityTypeShape EntityType="TBoardModel.groupmembership" Width="1.5" PointX="7.625" PointY="11.75" />
+        <EntityTypeShape EntityType="TBoardModel.grouprolemapping" Width="1.5" PointX="13.375" PointY="0.75" />
+        <EntityTypeShape EntityType="TBoardModel.group" Width="1.5" PointX="13.375" PointY="3.75" />
+        <EntityTypeShape EntityType="TBoardModel.role" Width="1.5" PointX="13.375" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

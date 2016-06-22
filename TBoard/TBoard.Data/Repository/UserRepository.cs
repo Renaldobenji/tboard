@@ -15,5 +15,10 @@ namespace TBoard.Data.Repository
         {
             
         }
+
+        public IList<role> GetRolesForUser(int userID)
+        {
+            return this._dbContext.sps_GetRolesForUser(userID).ToList();
+        }
     }
 }

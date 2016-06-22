@@ -7,16 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.Data.Entity.Core.Objects;
-
 namespace TBoard.Data.Model
 {
     using System;
     using System.Data.Entity;
+    using System.Data.Entity.Core.Objects;
     using System.Data.Entity.Infrastructure;
-  
     using System.Linq;
-    
+
     public partial class TBoardEntities : DbContext
     {
         public TBoardEntities()
@@ -47,6 +45,12 @@ namespace TBoard.Data.Model
         public DbSet<rfq> rfqs { get; set; }
         public DbSet<rfqtype> rfqtypes { get; set; }
         public DbSet<emailqueue> emailqueues { get; set; }
+        public DbSet<auditentry> auditentries { get; set; }
+        public DbSet<auditentrytype> auditentrytypes { get; set; }
+        public DbSet<groupmembership> groupmemberships { get; set; }
+        public DbSet<grouprolemapping> grouprolemappings { get; set; }
+        public DbSet<group> groups { get; set; }
+        public DbSet<role> roles { get; set; }
     
         public virtual ObjectResult<DocumentReq> sps_GetOutstandingDocumentRequirements(Nullable<int> organizationID)
         {
@@ -64,6 +68,24 @@ namespace TBoard.Data.Model
                 new ObjectParameter("expertiseSubCategoryID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetSubscribedOwnershipDetails>("GetSubscribedOwnershipDetails", expertiseSubCategoryIDParameter);
+        }
+    
+        public virtual ObjectResult<role> sps_GetRolesForUser(Nullable<int> userID)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("userID", userID) :
+                new ObjectParameter("userID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<role>("sps_GetRolesForUser", userIDParameter);
+        }
+    
+        public virtual ObjectResult<role> sps_GetRolesForUser(Nullable<int> userID, MergeOption mergeOption)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("userID", userID) :
+                new ObjectParameter("userID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<role>("sps_GetRolesForUser", mergeOption, userIDParameter);
         }
     }
 }

@@ -4,84 +4,12 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TBoardModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="TBoardModelStoreContainer">
-          <EntitySet Name="address" EntityType="TBoardModel.Store.address" store:Type="Tables" Schema="tboard" />
-          <EntitySet Name="addresstype" EntityType="TBoardModel.Store.addresstype" store:Type="Tables" Schema="tboard" />
-          <EntitySet Name="bankaccountdetails" EntityType="TBoardModel.Store.bankaccountdetails" store:Type="Tables" Schema="tboard" />
-          <EntitySet Name="bankaccounttype" EntityType="TBoardModel.Store.bankaccounttype" store:Type="Tables" Schema="tboard" />
-          <EntitySet Name="communication" EntityType="TBoardModel.Store.communication" store:Type="Tables" Schema="tboard" />
-          <EntitySet Name="communicationtype" EntityType="TBoardModel.Store.communicationtype" store:Type="Tables" Schema="tboard" />
-          <EntitySet Name="documentrequirements" EntityType="TBoardModel.Store.documentrequirements" store:Type="Tables" Schema="tboard" />
-          <EntitySet Name="documents" EntityType="TBoardModel.Store.documents" store:Type="Tables" Schema="tboard" />
-          <EntitySet Name="documenttypes" EntityType="TBoardModel.Store.documenttypes" store:Type="Tables" Schema="tboard" />
-          <EntitySet Name="emailqueue" EntityType="TBoardModel.Store.emailqueue" store:Type="Tables" Schema="tboard" />
-          <EntitySet Name="expertisecategory" EntityType="TBoardModel.Store.expertisecategory" store:Type="Tables" Schema="tboard" />
-          <EntitySet Name="expertiseownership" EntityType="TBoardModel.Store.expertiseownership" store:Type="Tables" Schema="tboard" />
-          <EntitySet Name="expertisesubcategory" EntityType="TBoardModel.Store.expertisesubcategory" store:Type="Tables" Schema="tboard" />
-          <EntitySet Name="organization" EntityType="TBoardModel.Store.organization" store:Type="Tables" Schema="tboard" />
-          <EntitySet Name="organizationtypes" EntityType="TBoardModel.Store.organizationtypes" store:Type="Tables" Schema="tboard" />
-          <EntitySet Name="rfq" EntityType="TBoardModel.Store.rfq" store:Type="Tables" Schema="tboard" />
-          <EntitySet Name="rfqtype" EntityType="TBoardModel.Store.rfqtype" store:Type="Tables" Schema="tboard" />
-          <EntitySet Name="users" EntityType="TBoardModel.Store.users" store:Type="Tables" Schema="tboard" />
-          <AssociationSet Name="addType" Association="TBoardModel.Store.addType">
-            <End Role="addresstype" EntitySet="addresstype" />
-            <End Role="address" EntitySet="address" />
-          </AssociationSet>
-          <AssociationSet Name="bankAcctype" Association="TBoardModel.Store.bankAcctype">
-            <End Role="bankaccounttype" EntitySet="bankaccounttype" />
-            <End Role="bankaccountdetails" EntitySet="bankaccountdetails" />
-          </AssociationSet>
-          <AssociationSet Name="CatetoryID" Association="TBoardModel.Store.CatetoryID">
-            <End Role="expertisecategory" EntitySet="expertisecategory" />
-            <End Role="expertisesubcategory" EntitySet="expertisesubcategory" />
-          </AssociationSet>
-          <AssociationSet Name="commTypeID" Association="TBoardModel.Store.commTypeID">
-            <End Role="communicationtype" EntitySet="communicationtype" />
-            <End Role="communication" EntitySet="communication" />
-          </AssociationSet>
-          <AssociationSet Name="documentType" Association="TBoardModel.Store.documentType">
-            <End Role="documenttypes" EntitySet="documenttypes" />
-            <End Role="documents" EntitySet="documents" />
-          </AssociationSet>
-          <AssociationSet Name="documentTypeID" Association="TBoardModel.Store.documentTypeID">
-            <End Role="documenttypes" EntitySet="documenttypes" />
-            <End Role="documentrequirements" EntitySet="documentrequirements" />
-          </AssociationSet>
-          <AssociationSet Name="organizationTypeID" Association="TBoardModel.Store.organizationTypeID">
-            <End Role="organizationtypes" EntitySet="organizationtypes" />
-            <End Role="documentrequirements" EntitySet="documentrequirements" />
-          </AssociationSet>
-          <AssociationSet Name="orgID" Association="TBoardModel.Store.orgID">
-            <End Role="organization" EntitySet="organization" />
-            <End Role="documents" EntitySet="documents" />
-          </AssociationSet>
-          <AssociationSet Name="orgType" Association="TBoardModel.Store.orgType">
-            <End Role="organizationtypes" EntitySet="organizationtypes" />
-            <End Role="organization" EntitySet="organization" />
-          </AssociationSet>
-          <AssociationSet Name="rfq1" Association="TBoardModel.Store.rfq1">
-            <End Role="rfqtype" EntitySet="rfqtype" />
-            <End Role="rfq" EntitySet="rfq" />
-          </AssociationSet>
-          <AssociationSet Name="rfq2" Association="TBoardModel.Store.rfq2">
-            <End Role="users" EntitySet="users" />
-            <End Role="rfq" EntitySet="rfq" />
-          </AssociationSet>
-          <AssociationSet Name="rfq3" Association="TBoardModel.Store.rfq3">
-            <End Role="expertisesubcategory" EntitySet="expertisesubcategory" />
-            <End Role="rfq" EntitySet="rfq" />
-          </AssociationSet>
-          <AssociationSet Name="subCat" Association="TBoardModel.Store.subCat">
-            <End Role="expertisesubcategory" EntitySet="expertisesubcategory" />
-            <End Role="expertiseownership" EntitySet="expertiseownership" />
-          </AssociationSet>
-        </EntityContainer>
+    <Schema Namespace="TBoardModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="address">
           <Key>
             <PropertyRef Name="addressID" />
           </Key>
-          <Property Name="addressID" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="addressID" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="owningType" Type="varchar" MaxLength="50" />
           <Property Name="owningID" Type="varchar" MaxLength="50" />
           <Property Name="addressTypeID" Type="int" />
@@ -96,15 +24,37 @@
           <Key>
             <PropertyRef Name="addressTypeID" />
           </Key>
-          <Property Name="addressTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="addressTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="addressTypeTLA" Type="varchar" MaxLength="45" />
           <Property Name="AddressTypeDescription" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="auditentry">
+          <Key>
+            <PropertyRef Name="auditEntryID" />
+          </Key>
+          <Property Name="auditEntryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userID" Type="int" Nullable="false" />
+          <Property Name="auditEntryOwnerType" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="auditEntryOwnerTypeID" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="auditEntrySummary" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="auditEntryDetail" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="auditEntryComment" Type="varchar" MaxLength="250" />
+          <Property Name="auditEntryTime" Type="datetime" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="auditentrytype">
+          <Key>
+            <PropertyRef Name="auditEntryTypeID" />
+          </Key>
+          <Property Name="auditEntryTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="auditEntryOwnerType" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="auditEntryName" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="auditEntryDescription" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="bankaccountdetails">
           <Key>
             <PropertyRef Name="bankAccountDetailID" />
           </Key>
-          <Property Name="bankAccountDetailID" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="bankAccountDetailID" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="owningType" Type="varchar" MaxLength="45" />
           <Property Name="owningID" Type="varchar" MaxLength="45" />
           <Property Name="accountName" Type="varchar" MaxLength="45" />
@@ -118,7 +68,7 @@
           <Key>
             <PropertyRef Name="bankAccountTypeID" />
           </Key>
-          <Property Name="bankAccountTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="bankAccountTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="bankAccountTypeCode" Type="varchar" MaxLength="45" />
           <Property Name="bankAccountTypeDescription" Type="varchar" MaxLength="200" />
         </EntityType>
@@ -126,7 +76,7 @@
           <Key>
             <PropertyRef Name="communicationID" />
           </Key>
-          <Property Name="communicationID" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="communicationID" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="owningType" Type="varchar" MaxLength="45" />
           <Property Name="owningID" Type="varchar" MaxLength="45" />
           <Property Name="communicationLine1" Type="varchar" MaxLength="45" />
@@ -137,7 +87,7 @@
           <Key>
             <PropertyRef Name="communicationTypeID" />
           </Key>
-          <Property Name="communicationTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="communicationTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="communicationTypeTLA" Type="varchar" MaxLength="45" />
           <Property Name="communicationTypeDescription" Type="varchar" MaxLength="45" />
         </EntityType>
@@ -145,7 +95,7 @@
           <Key>
             <PropertyRef Name="documentRequirementsID" />
           </Key>
-          <Property Name="documentRequirementsID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="documentRequirementsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="documentTypeID" Type="int" />
           <Property Name="organizationTypeID" Type="int" />
         </EntityType>
@@ -153,17 +103,17 @@
           <Key>
             <PropertyRef Name="documentID" />
           </Key>
-          <Property Name="documentID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="documentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="documentTypeID" Type="int" />
           <Property Name="organizationID" Type="int" />
           <Property Name="documentPath" Type="varchar" MaxLength="5000" />
-          <Property Name="dateCreated" Type="datetime" />
+          <Property Name="dateCreated" Type="datetime" Precision="0" />
         </EntityType>
         <EntityType Name="documenttypes">
           <Key>
             <PropertyRef Name="documentTypeID" />
           </Key>
-          <Property Name="documentTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="documentTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="documentCode" Type="varchar" MaxLength="45" />
           <Property Name="documentDescription" Type="varchar" MaxLength="45" />
         </EntityType>
@@ -171,26 +121,26 @@
           <Key>
             <PropertyRef Name="emailQueueID" />
           </Key>
-          <Property Name="emailQueueID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="emailQueueID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="from" Type="varchar" MaxLength="200" />
           <Property Name="to" Type="varchar" MaxLength="200" />
           <Property Name="subject" Type="varchar" MaxLength="500" />
           <Property Name="body" Type="varchar" MaxLength="5000" />
-          <Property Name="createdDate" Type="datetime" />
-          <Property Name="sentDate" Type="datetime" />
+          <Property Name="createdDate" Type="datetime" Precision="0" />
+          <Property Name="sentDate" Type="datetime" Precision="0" />
         </EntityType>
         <EntityType Name="expertisecategory">
           <Key>
             <PropertyRef Name="ExpertiseCategoryID" />
           </Key>
-          <Property Name="ExpertiseCategoryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ExpertiseCategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="expertiseownership">
           <Key>
             <PropertyRef Name="expertiseOwnershipID" />
           </Key>
-          <Property Name="expertiseOwnershipID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="expertiseOwnershipID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ownerType" Type="varchar" MaxLength="45" />
           <Property Name="owningID" Type="varchar" MaxLength="45" />
           <Property Name="expertiseSubCategoryID" Type="int" />
@@ -199,15 +149,45 @@
           <Key>
             <PropertyRef Name="ExpertiseSubCategoryID" />
           </Key>
-          <Property Name="ExpertiseSubCategoryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ExpertiseSubCategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="500" />
           <Property Name="ExpertiseCategoryID" Type="int" />
+        </EntityType>
+        <EntityType Name="groupmembership">
+          <Key>
+            <PropertyRef Name="groupMembershipID" />
+          </Key>
+          <Property Name="groupMembershipID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userID" Type="int" Nullable="false" />
+          <Property Name="groupCode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="fromDate" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="toDate" Type="datetime" Precision="0" />
+        </EntityType>
+        <EntityType Name="grouprolemapping">
+          <Key>
+            <PropertyRef Name="groupRoleMappingID" />
+          </Key>
+          <Property Name="groupRoleMappingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="groupCode" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="roleCode" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="fromDate" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="toDate" Type="datetime" Precision="0" />
+        </EntityType>
+        <EntityType Name="groups">
+          <Key>
+            <PropertyRef Name="groupID" />
+          </Key>
+          <Property Name="groupID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="groupCode" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="groupName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="groupDescription" Type="varchar" MaxLength="100" />
+          <Property Name="groupStatus" Type="varchar" MaxLength="45" Nullable="false" />
         </EntityType>
         <EntityType Name="organization">
           <Key>
             <PropertyRef Name="organizationID" />
           </Key>
-          <Property Name="organizationID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="organizationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="150" />
           <Property Name="tradingName" Type="varchar" MaxLength="150" />
           <Property Name="registrationNumber" Type="varchar" MaxLength="150" />
@@ -220,7 +200,7 @@
           <Key>
             <PropertyRef Name="organizationTypeID" />
           </Key>
-          <Property Name="organizationTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="organizationTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="150" />
           <Property Name="description" Type="varchar" MaxLength="150" />
         </EntityType>
@@ -228,50 +208,60 @@
           <Key>
             <PropertyRef Name="rfqID" />
           </Key>
-          <Property Name="rfqID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="rfqID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="reference" Type="varchar" MaxLength="45" />
           <Property Name="userID" Type="int" />
           <Property Name="expertiseSubCategoryID" Type="int" />
           <Property Name="rfqDetails" Type="varchar" MaxLength="5000" />
           <Property Name="rfqTypeID" Type="int" />
-          <Property Name="dateCreated" Type="datetime" />
-          <Property Name="expiryDate" Type="datetime" />
+          <Property Name="dateCreated" Type="datetime" Precision="0" />
+          <Property Name="expiryDate" Type="datetime" Precision="0" />
           <Property Name="status" Type="varchar" MaxLength="45" />
         </EntityType>
         <EntityType Name="rfqtype">
           <Key>
             <PropertyRef Name="rfqTypeID" />
           </Key>
-          <Property Name="rfqTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="rfqTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="code" Type="varchar" MaxLength="45" />
           <Property Name="description" Type="varchar" MaxLength="200" />
           <Property Name="Prefix" Type="varchar" MaxLength="3" />
+        </EntityType>
+        <EntityType Name="roles">
+          <Key>
+            <PropertyRef Name="roleID" />
+          </Key>
+          <Property Name="roleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="roleCode" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="roleName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="roleDescription" Type="varchar" MaxLength="200" />
+          <Property Name="roleStatus" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="users">
           <Key>
             <PropertyRef Name="userID" />
           </Key>
-          <Property Name="userID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="userID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="organizationID" Type="int" />
-          <Property Name="username" Type="varchar" Nullable="false" MaxLength="45" />
-          <Property Name="password" Type="varchar" Nullable="false" MaxLength="100" />
-          <Property Name="passwordSalt" Type="varchar" Nullable="false" MaxLength="45" />
-          <Property Name="title" Type="varchar" Nullable="false" MaxLength="45" />
-          <Property Name="firstname" Type="varchar" Nullable="false" MaxLength="100" />
-          <Property Name="surname" Type="varchar" Nullable="false" MaxLength="100" />
-          <Property Name="identificationNumber" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="username" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="passwordSalt" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="firstname" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="surname" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="identificationNumber" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="isApproved" Type="bit" Nullable="false" />
-          <Property Name="isLockedOut" Type="varchar" Nullable="false" MaxLength="45" />
-          <Property Name="lastActivityDate" Type="datetime" />
-          <Property Name="lastPasswordChange" Type="datetime" />
-          <Property Name="lastLoginDate" Type="datetime" />
+          <Property Name="isLockedOut" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="lastActivityDate" Type="datetime" Precision="0" />
+          <Property Name="lastPasswordChange" Type="datetime" Precision="0" />
+          <Property Name="lastLoginDate" Type="datetime" Precision="0" />
           <Property Name="failedPasswordAttemptCount" Type="int" />
-          <Property Name="created" Type="datetime" Nullable="false" />
-          <Property Name="updated" Type="datetime" />
+          <Property Name="created" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="updated" Type="datetime" Precision="0" />
         </EntityType>
         <Association Name="addType">
-          <End Role="addresstype" Type="TBoardModel.Store.addresstype" Multiplicity="0..1" />
-          <End Role="address" Type="TBoardModel.Store.address" Multiplicity="*" />
+          <End Role="addresstype" Type="Self.addresstype" Multiplicity="0..1" />
+          <End Role="address" Type="Self.address" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="addresstype">
               <PropertyRef Name="addressTypeID" />
@@ -282,8 +272,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="bankAcctype">
-          <End Role="bankaccounttype" Type="TBoardModel.Store.bankaccounttype" Multiplicity="0..1" />
-          <End Role="bankaccountdetails" Type="TBoardModel.Store.bankaccountdetails" Multiplicity="*" />
+          <End Role="bankaccounttype" Type="Self.bankaccounttype" Multiplicity="0..1" />
+          <End Role="bankaccountdetails" Type="Self.bankaccountdetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="bankaccounttype">
               <PropertyRef Name="bankAccountTypeID" />
@@ -294,8 +284,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="CatetoryID">
-          <End Role="expertisecategory" Type="TBoardModel.Store.expertisecategory" Multiplicity="0..1" />
-          <End Role="expertisesubcategory" Type="TBoardModel.Store.expertisesubcategory" Multiplicity="*" />
+          <End Role="expertisecategory" Type="Self.expertisecategory" Multiplicity="0..1" />
+          <End Role="expertisesubcategory" Type="Self.expertisesubcategory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="expertisecategory">
               <PropertyRef Name="ExpertiseCategoryID" />
@@ -306,8 +296,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="commTypeID">
-          <End Role="communicationtype" Type="TBoardModel.Store.communicationtype" Multiplicity="0..1" />
-          <End Role="communication" Type="TBoardModel.Store.communication" Multiplicity="*" />
+          <End Role="communicationtype" Type="Self.communicationtype" Multiplicity="0..1" />
+          <End Role="communication" Type="Self.communication" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="communicationtype">
               <PropertyRef Name="communicationTypeID" />
@@ -318,8 +308,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="documentType">
-          <End Role="documenttypes" Type="TBoardModel.Store.documenttypes" Multiplicity="0..1" />
-          <End Role="documents" Type="TBoardModel.Store.documents" Multiplicity="*" />
+          <End Role="documenttypes" Type="Self.documenttypes" Multiplicity="0..1" />
+          <End Role="documents" Type="Self.documents" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="documenttypes">
               <PropertyRef Name="documentTypeID" />
@@ -330,8 +320,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="documentTypeID">
-          <End Role="documenttypes" Type="TBoardModel.Store.documenttypes" Multiplicity="0..1" />
-          <End Role="documentrequirements" Type="TBoardModel.Store.documentrequirements" Multiplicity="*" />
+          <End Role="documenttypes" Type="Self.documenttypes" Multiplicity="0..1" />
+          <End Role="documentrequirements" Type="Self.documentrequirements" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="documenttypes">
               <PropertyRef Name="documentTypeID" />
@@ -342,8 +332,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="organizationTypeID">
-          <End Role="organizationtypes" Type="TBoardModel.Store.organizationtypes" Multiplicity="0..1" />
-          <End Role="documentrequirements" Type="TBoardModel.Store.documentrequirements" Multiplicity="*" />
+          <End Role="organizationtypes" Type="Self.organizationtypes" Multiplicity="0..1" />
+          <End Role="documentrequirements" Type="Self.documentrequirements" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="organizationtypes">
               <PropertyRef Name="organizationTypeID" />
@@ -354,8 +344,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="orgID">
-          <End Role="organization" Type="TBoardModel.Store.organization" Multiplicity="0..1" />
-          <End Role="documents" Type="TBoardModel.Store.documents" Multiplicity="*" />
+          <End Role="organization" Type="Self.organization" Multiplicity="0..1" />
+          <End Role="documents" Type="Self.documents" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="organization">
               <PropertyRef Name="organizationID" />
@@ -366,8 +356,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="orgType">
-          <End Role="organizationtypes" Type="TBoardModel.Store.organizationtypes" Multiplicity="0..1" />
-          <End Role="organization" Type="TBoardModel.Store.organization" Multiplicity="*" />
+          <End Role="organizationtypes" Type="Self.organizationtypes" Multiplicity="0..1" />
+          <End Role="organization" Type="Self.organization" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="organizationtypes">
               <PropertyRef Name="organizationTypeID" />
@@ -378,8 +368,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="rfq1">
-          <End Role="rfqtype" Type="TBoardModel.Store.rfqtype" Multiplicity="0..1" />
-          <End Role="rfq" Type="TBoardModel.Store.rfq" Multiplicity="*" />
+          <End Role="rfqtype" Type="Self.rfqtype" Multiplicity="0..1" />
+          <End Role="rfq" Type="Self.rfq" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="rfqtype">
               <PropertyRef Name="rfqTypeID" />
@@ -390,8 +380,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="rfq2">
-          <End Role="users" Type="TBoardModel.Store.users" Multiplicity="0..1" />
-          <End Role="rfq" Type="TBoardModel.Store.rfq" Multiplicity="*" />
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="rfq" Type="Self.rfq" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="userID" />
@@ -402,8 +392,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="rfq3">
-          <End Role="expertisesubcategory" Type="TBoardModel.Store.expertisesubcategory" Multiplicity="0..1" />
-          <End Role="rfq" Type="TBoardModel.Store.rfq" Multiplicity="*" />
+          <End Role="expertisesubcategory" Type="Self.expertisesubcategory" Multiplicity="0..1" />
+          <End Role="rfq" Type="Self.rfq" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="expertisesubcategory">
               <PropertyRef Name="ExpertiseSubCategoryID" />
@@ -414,8 +404,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="subCat">
-          <End Role="expertisesubcategory" Type="TBoardModel.Store.expertisesubcategory" Multiplicity="0..1" />
-          <End Role="expertiseownership" Type="TBoardModel.Store.expertiseownership" Multiplicity="*" />
+          <End Role="expertisesubcategory" Type="Self.expertisesubcategory" Multiplicity="0..1" />
+          <End Role="expertiseownership" Type="Self.expertiseownership" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="expertisesubcategory">
               <PropertyRef Name="ExpertiseSubCategoryID" />
@@ -431,6 +421,87 @@
         <Function Name="sps_GetOutstandingDocumentRequirements" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tboard">
           <Parameter Name="organizationID" Type="int" Mode="In" />
         </Function>
+        <Function Name="sps_GetRolesForUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tboard">
+          <Parameter Name="userID" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="TBoardModelStoreContainer">
+          <EntitySet Name="address" EntityType="Self.address" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="addresstype" EntityType="Self.addresstype" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="auditentry" EntityType="Self.auditentry" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="auditentrytype" EntityType="Self.auditentrytype" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="bankaccountdetails" EntityType="Self.bankaccountdetails" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="bankaccounttype" EntityType="Self.bankaccounttype" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="communication" EntityType="Self.communication" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="communicationtype" EntityType="Self.communicationtype" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="documentrequirements" EntityType="Self.documentrequirements" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="documents" EntityType="Self.documents" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="documenttypes" EntityType="Self.documenttypes" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="emailqueue" EntityType="Self.emailqueue" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="expertisecategory" EntityType="Self.expertisecategory" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="expertiseownership" EntityType="Self.expertiseownership" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="expertisesubcategory" EntityType="Self.expertisesubcategory" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="groupmembership" EntityType="Self.groupmembership" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="grouprolemapping" EntityType="Self.grouprolemapping" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="groups" EntityType="Self.groups" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="organization" EntityType="Self.organization" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="organizationtypes" EntityType="Self.organizationtypes" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="rfq" EntityType="Self.rfq" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="rfqtype" EntityType="Self.rfqtype" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="roles" EntityType="Self.roles" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="tboard" store:Type="Tables" />
+          <AssociationSet Name="addType" Association="Self.addType">
+            <End Role="addresstype" EntitySet="addresstype" />
+            <End Role="address" EntitySet="address" />
+          </AssociationSet>
+          <AssociationSet Name="bankAcctype" Association="Self.bankAcctype">
+            <End Role="bankaccounttype" EntitySet="bankaccounttype" />
+            <End Role="bankaccountdetails" EntitySet="bankaccountdetails" />
+          </AssociationSet>
+          <AssociationSet Name="CatetoryID" Association="Self.CatetoryID">
+            <End Role="expertisecategory" EntitySet="expertisecategory" />
+            <End Role="expertisesubcategory" EntitySet="expertisesubcategory" />
+          </AssociationSet>
+          <AssociationSet Name="commTypeID" Association="Self.commTypeID">
+            <End Role="communicationtype" EntitySet="communicationtype" />
+            <End Role="communication" EntitySet="communication" />
+          </AssociationSet>
+          <AssociationSet Name="documentType" Association="Self.documentType">
+            <End Role="documenttypes" EntitySet="documenttypes" />
+            <End Role="documents" EntitySet="documents" />
+          </AssociationSet>
+          <AssociationSet Name="documentTypeID" Association="Self.documentTypeID">
+            <End Role="documenttypes" EntitySet="documenttypes" />
+            <End Role="documentrequirements" EntitySet="documentrequirements" />
+          </AssociationSet>
+          <AssociationSet Name="organizationTypeID" Association="Self.organizationTypeID">
+            <End Role="organizationtypes" EntitySet="organizationtypes" />
+            <End Role="documentrequirements" EntitySet="documentrequirements" />
+          </AssociationSet>
+          <AssociationSet Name="orgID" Association="Self.orgID">
+            <End Role="organization" EntitySet="organization" />
+            <End Role="documents" EntitySet="documents" />
+          </AssociationSet>
+          <AssociationSet Name="orgType" Association="Self.orgType">
+            <End Role="organizationtypes" EntitySet="organizationtypes" />
+            <End Role="organization" EntitySet="organization" />
+          </AssociationSet>
+          <AssociationSet Name="rfq1" Association="Self.rfq1">
+            <End Role="rfqtype" EntitySet="rfqtype" />
+            <End Role="rfq" EntitySet="rfq" />
+          </AssociationSet>
+          <AssociationSet Name="rfq2" Association="Self.rfq2">
+            <End Role="users" EntitySet="users" />
+            <End Role="rfq" EntitySet="rfq" />
+          </AssociationSet>
+          <AssociationSet Name="rfq3" Association="Self.rfq3">
+            <End Role="expertisesubcategory" EntitySet="expertisesubcategory" />
+            <End Role="rfq" EntitySet="rfq" />
+          </AssociationSet>
+          <AssociationSet Name="subCat" Association="Self.subCat">
+            <End Role="expertisesubcategory" EntitySet="expertisesubcategory" />
+            <End Role="expertiseownership" EntitySet="expertiseownership" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -510,7 +581,16 @@
           </AssociationSet>
           <EntitySet Name="emailqueues" EntityType="TBoardModel.emailqueue" />
           <FunctionImport Name="GetSubscribedOwnershipDetails" ReturnType="Collection(TBoardModel.GetSubscribedOwnershipDetails)">
-            <Parameter Name="expertiseSubCategoryID" Mode="In" Type="Int32" />
+          <Parameter Name="expertiseSubCategoryID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="auditentries" EntityType="TBoardModel.auditentry" />
+          <EntitySet Name="auditentrytypes" EntityType="TBoardModel.auditentrytype" />
+          <EntitySet Name="groupmemberships" EntityType="TBoardModel.groupmembership" />
+          <EntitySet Name="grouprolemappings" EntityType="TBoardModel.grouprolemapping" />
+          <EntitySet Name="groups" EntityType="TBoardModel.group" />
+          <EntitySet Name="roles" EntityType="TBoardModel.role" />
+          <FunctionImport Name="sps_GetRolesForUser" EntitySet="roles" ReturnType="Collection(TBoardModel.role)">
+            <Parameter Name="userID" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="address">
@@ -900,6 +980,69 @@
           <Property Type="String" Name="communicationLine1" Nullable="false" />
           <Property Type="String" Name="communicationLine2" Nullable="false" />
         </ComplexType>
+        <EntityType Name="auditentry">
+          <Key>
+            <PropertyRef Name="auditEntryID" />
+          </Key>
+          <Property Name="auditEntryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userID" Type="Int32" Nullable="false" />
+          <Property Name="auditEntryOwnerType" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="auditEntryOwnerTypeID" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="auditEntrySummary" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="auditEntryDetail" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="auditEntryComment" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="auditEntryTime" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="auditentrytype">
+          <Key>
+            <PropertyRef Name="auditEntryTypeID" />
+          </Key>
+          <Property Name="auditEntryTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="auditEntryOwnerType" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="auditEntryName" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="auditEntryDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="groupmembership">
+          <Key>
+            <PropertyRef Name="groupMembershipID" />
+          </Key>
+          <Property Name="groupMembershipID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userID" Type="Int32" Nullable="false" />
+          <Property Name="groupCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fromDate" Type="DateTime" Nullable="false" />
+          <Property Name="toDate" Type="DateTime" />
+        </EntityType>
+        <EntityType Name="grouprolemapping">
+          <Key>
+            <PropertyRef Name="groupRoleMappingID" />
+          </Key>
+          <Property Name="groupRoleMappingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="groupCode" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="roleCode" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="fromDate" Type="DateTime" Nullable="false" />
+          <Property Name="toDate" Type="DateTime" />
+        </EntityType>
+        <EntityType Name="group">
+          <Key>
+            <PropertyRef Name="groupID" />
+          </Key>
+          <Property Name="groupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="groupCode" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="groupName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="groupDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="groupStatus" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="roleID" />
+          </Key>
+          <Property Name="roleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="roleCode" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="roleName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="roleDescription" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="roleStatus" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <ComplexType Name="sps_GetRolesForUser_Result" />
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1137,6 +1280,75 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="auditentries">
+            <EntityTypeMapping TypeName="TBoardModel.auditentry">
+              <MappingFragment StoreEntitySet="auditentry">
+                <ScalarProperty Name="auditEntryTime" ColumnName="auditEntryTime" />
+                <ScalarProperty Name="auditEntryComment" ColumnName="auditEntryComment" />
+                <ScalarProperty Name="auditEntryDetail" ColumnName="auditEntryDetail" />
+                <ScalarProperty Name="auditEntrySummary" ColumnName="auditEntrySummary" />
+                <ScalarProperty Name="auditEntryOwnerTypeID" ColumnName="auditEntryOwnerTypeID" />
+                <ScalarProperty Name="auditEntryOwnerType" ColumnName="auditEntryOwnerType" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="auditEntryID" ColumnName="auditEntryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="auditentrytypes">
+            <EntityTypeMapping TypeName="TBoardModel.auditentrytype">
+              <MappingFragment StoreEntitySet="auditentrytype">
+                <ScalarProperty Name="auditEntryDescription" ColumnName="auditEntryDescription" />
+                <ScalarProperty Name="auditEntryName" ColumnName="auditEntryName" />
+                <ScalarProperty Name="auditEntryOwnerType" ColumnName="auditEntryOwnerType" />
+                <ScalarProperty Name="auditEntryTypeID" ColumnName="auditEntryTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="groupmemberships">
+            <EntityTypeMapping TypeName="TBoardModel.groupmembership">
+              <MappingFragment StoreEntitySet="groupmembership">
+                <ScalarProperty Name="toDate" ColumnName="toDate" />
+                <ScalarProperty Name="fromDate" ColumnName="fromDate" />
+                <ScalarProperty Name="groupCode" ColumnName="groupCode" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="groupMembershipID" ColumnName="groupMembershipID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="grouprolemappings">
+            <EntityTypeMapping TypeName="TBoardModel.grouprolemapping">
+              <MappingFragment StoreEntitySet="grouprolemapping">
+                <ScalarProperty Name="toDate" ColumnName="toDate" />
+                <ScalarProperty Name="fromDate" ColumnName="fromDate" />
+                <ScalarProperty Name="roleCode" ColumnName="roleCode" />
+                <ScalarProperty Name="groupCode" ColumnName="groupCode" />
+                <ScalarProperty Name="groupRoleMappingID" ColumnName="groupRoleMappingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="groups">
+            <EntityTypeMapping TypeName="TBoardModel.group">
+              <MappingFragment StoreEntitySet="groups">
+                <ScalarProperty Name="groupStatus" ColumnName="groupStatus" />
+                <ScalarProperty Name="groupDescription" ColumnName="groupDescription" />
+                <ScalarProperty Name="groupName" ColumnName="groupName" />
+                <ScalarProperty Name="groupCode" ColumnName="groupCode" />
+                <ScalarProperty Name="groupID" ColumnName="groupID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="roles">
+            <EntityTypeMapping TypeName="TBoardModel.role">
+              <MappingFragment StoreEntitySet="roles">
+                <ScalarProperty Name="roleStatus" ColumnName="roleStatus" />
+                <ScalarProperty Name="roleDescription" ColumnName="roleDescription" />
+                <ScalarProperty Name="roleName" ColumnName="roleName" />
+                <ScalarProperty Name="roleCode" ColumnName="roleCode" />
+                <ScalarProperty Name="roleID" ColumnName="roleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sps_GetRolesForUser" FunctionName="TBoardModel.Store.sps_GetRolesForUser" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1154,6 +1366,7 @@
         <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

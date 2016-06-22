@@ -82,5 +82,10 @@ namespace TBoard.BusinessLogic.BusinessLogic
             return response;
         }
 
+        public IList<role> GetRolesForUser(int userID)
+        {
+            return this.repository.GetRolesForUser(userID);
+        }
+
     }
 }

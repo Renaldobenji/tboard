@@ -144,6 +144,12 @@
     <Compile Include="Model\addresstype.cs">
       <DependentUpon>TBoardEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\auditentry.cs">
+      <DependentUpon>TBoardEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\auditentrytype.cs">
+      <DependentUpon>TBoardEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\bankaccountdetail.cs">
       <DependentUpon>TBoardEntities.tt</DependentUpon>
     </Compile>
@@ -183,6 +189,15 @@
     <Compile Include="Model\GetSubscribedOwnershipDetails.cs">
       <DependentUpon>TBoardEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\group.cs">
+      <DependentUpon>TBoardEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\groupmembership.cs">
+      <DependentUpon>TBoardEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\grouprolemapping.cs">
+      <DependentUpon>TBoardEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\organization.cs">
       <DependentUpon>TBoardEntities.tt</DependentUpon>
     </Compile>
@@ -193,6 +208,12 @@
       <DependentUpon>TBoardEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\rfqtype.cs">
+      <DependentUpon>TBoardEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\role.cs">
+      <DependentUpon>TBoardEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\sps_GetRolesForUser_Result.cs">
       <DependentUpon>TBoardEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TBoardEntities.Context.cs">
