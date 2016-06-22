@@ -6,6 +6,7 @@ using TBoard.Data.Interfaces;
 using TBoard.Data.Model;
 using TBoard.Data.Repository;
 using Unity.WebApi;
+using TBoard.Web.Services;
 
 namespace TBoard.Web
 {
@@ -17,6 +18,8 @@ namespace TBoard.Web
 
             container.RegisterType<TBoardEntities, TBoardEntities>(new HierarchicalLifetimeManager());
             container.RegisterType<IUnitOfWork, UnitOfWork>(new HierarchicalLifetimeManager());
+
+            container.RegisterType<IAuthenticationService, AuthenticationService>();
 
             container.RegisterType<CommunicationBusinessLogic, CommunicationBusinessLogic>();
             container.RegisterType<AddressBusinessLogic, AddressBusinessLogic>();
