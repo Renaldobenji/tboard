@@ -1074,6 +1074,7 @@
     <Content Include="Scripts\reactLogic\navmenu.jsx" />
     <Content Include="Scripts\reactLogic\organization.jsx" />
     <Content Include="Scripts\reactLogic\registration.jsx" />
+    <Content Include="Scripts\reactLogic\tboard.js" />
     <Content Include="Scripts\reactLogic\users.jsx" />
     <Content Include="Scripts\react\react-dom-server.js" />
     <Content Include="Scripts\react\react-dom-server.min.js" />

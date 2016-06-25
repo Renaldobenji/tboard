@@ -14,8 +14,7 @@
 
   
   loginClick: function (event) {
-      this.authenticateGET();      
-		//routie('dashboard');
+      this.authenticateGET();
   },
 
   updateUsername: function (e) {
@@ -32,10 +31,18 @@
           dataType: 'json',
           cache: false,
           success: function (result) {
-              this.setState({ JWSToken: result.data });
-              var sJWT = this.state.JWSToken;
-              var decoded = jwt_decode(sJWT);
-              console.log(decoded);
+              if (result.authenicated == "true"){
+                this.setState({ JWSToken: result.data });
+                var sJWT = this.state.JWSToken;
+                var sa = new TboardJWTToken();
+                sa.store(sJWT);
+                sa.show();
+                routie('dashboard');
+              }
+              else
+              {
+                  alert(result.errorMessage);
+              }
           }.bind(this),
           error: function (xhr, status, err) {
               console.error('api/Authentication/', status, err.toString());
