@@ -1,12 +1,47 @@
 ﻿var login = React.createClass({
 
+    getInitialState: function () {
+        return {
+            Username: "Renaldo",
+            Password: "Renaldo",
+            JWSToken: ""
+        };
+    },
+
   registerClick: function(event) {
 		routie('register');
-	},
+  },
+
   
-  loginClick: function(event) {
-		routie('dashboard');
-	},
+  loginClick: function (event) {
+      this.authenticateGET();      
+		//routie('dashboard');
+  },
+
+  updateUsername: function (e) {
+      this.setState({ Username: e.target.value });
+  },
+
+  updatePassword: function (e) {
+      this.setState({ Password: e.target.value });
+  },
+  
+  authenticateGET: function () {
+      $.ajax({
+          url: 'api/Authentication/'+this.state.Username+'/'+this.state.Password,
+          dataType: 'json',
+          cache: false,
+          success: function (result) {
+              this.setState({ JWSToken: result.data });
+              var sJWT = this.state.JWSToken;
+              var decoded = jwt_decode(sJWT);
+              console.log(decoded);
+          }.bind(this),
+          error: function (xhr, status, err) {
+              console.error('api/Authentication/', status, err.toString());
+          }.bind(this)
+      });
+  },
 
   render: function() {
     return (
@@ -21,10 +56,10 @@
 								<form role="form">
 									<fieldset>
 										<div className="form-group">
-											<input className="form-control" placeholder="E-mail" name="email" type="email" autofocus/>
+											<input className="form-control" placeholder="E-mail" name="email" type="email" autofocus value={this.state.Username} onChange={this.updateUsername}/>
 										</div>
 										<div className="form-group">
-											<input className="form-control" placeholder="Password" name="password" type="password"/>
+											<input className="form-control" placeholder="Password" name="password" type="password" value={this.state.Password} onChange={this.updatePassword}/>
 										</div>																	
 										<a onClick={this.loginClick} className="btn btn-lg btn-success btn-block">Login</a>
 										<hr/>
