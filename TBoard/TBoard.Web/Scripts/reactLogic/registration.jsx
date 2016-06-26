@@ -184,6 +184,7 @@ var Register = React.createClass({
 
 			<div className="container">
 				<div className="row">
+                    <div className="col-lg-12">
                     <section>
                         <div className="wizard">
                             <div className="wizard-inner">
@@ -211,7 +212,13 @@ var Register = React.createClass({
                                             </span>
                                         </a>
                                     </li>
-
+                                    <li role="presentation" className="disabled">
+                                        <a href="#step4" data-toggle="tab" aria-controls="step4" role="tab" title="Step 4">
+                                            <span className="round-tab">
+                                                <i className="glyphicon glyphicon-picture"></i>
+                                            </span>
+                                        </a>
+                                    </li>
                                     <li role="presentation" className="disabled">
                                         <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
                                             <span className="round-tab">
@@ -222,7 +229,7 @@ var Register = React.createClass({
                                 </ul>
                             </div>
 
-                            
+
                                 <div className="tab-content">
                                     <div className="tab-pane active" role="tabpanel" id="step1">
                                         <RegisterType updateRegistrationTypeState={this.updateRegistrationTypeState} regChecked={this.state.regChecked} />
@@ -248,8 +255,8 @@ var Register = React.createClass({
                                                                 officeNumber={this.state.OfficeNumber} updateOfficeNumber={this.updateOfficeNumberState}
                                                                 email={this.state.Email} updateEmail={this.updateEmailState} />
                                         <ul className="list-inline pull-right">
-                                            <li><button type="button" className="btn btn-default prev-step">Previous</button></li>                                           
-                                            <li><button type="button" className="btn btn-primary btn-info-full next-step">Next</button></li>
+                                            <li><button type="button" className="btn btn-default prev-step">Previous</button></li>
+                                            <li><button type="button" className="btn btn-primary next-step">Next</button></li>
                                         </ul>
                                     </div>
                                     <div className="tab-pane" role="tabpanel" id="step4">
@@ -258,21 +265,22 @@ var Register = React.createClass({
                                                          addressLine3={this.state.AddressLine3} updateAddressLine3={this.updateAddLine3State}
                                                          addressLine4={this.state.AddressLine4} updateAddressLine4={this.updateAddLine4State}
                                                          addressLine5={this.state.AddressLine5} updateAddressLine5={this.updateAddLine5State}
-                                                         postalCode={this.state.PostalCode} updatePostalCode={this.updatePostalCodeState} />		
+                                                         postalCode={this.state.PostalCode} updatePostalCode={this.updatePostalCodeState} />
                                         <ul className="list-inline pull-right">
-                                            <li><button type="button" className="btn btn-default prev-step">Previous</button></li>                                            
-                                            <li><button type="button" className="btn btn-primary btn-info-full next-step">Save and continue</button></li>                                            
+                                            <li><button type="button" className="btn btn-default prev-step">Previous</button></li>
+                                            <li><button type="button" className="btn btn-primary btn-info-full next-step">Save and continue</button></li>
                                         </ul>
                                     </div>
-                                    <div className="tab-pane" role="tabpanel" id="complete">                                        
+                                    <div className="tab-pane" role="tabpanel" id="complete">
                                         <RegisterComplete registerUserPOST={this.registerUserPOST} />
                                     </div>
                                     <div className="clearfix"></div>
                                 </div>
-                            
+
                         </div>
-                    </section>					
-				</div>							
+                    </section>
+                        </div>
+                    </div>							
 			</div>
 		);
 	}
