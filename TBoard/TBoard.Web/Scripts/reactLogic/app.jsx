@@ -136,11 +136,17 @@ routie({
             ReactDOM.render(
 				React.createElement(MyAllRFQ, null), document.getElementById('container')
 			);
-        }
+        }        
 });
 
 routie('rfqdetail/:rfqreference', function (rfqreference) {
     ReactDOM.render(
 				React.createElement(RfqDetail, { rfqreference: rfqreference }), document.getElementById('container')
+			);
+});
+
+routie('rfqbid/:rfqreference', function (rfqreference) {
+    ReactDOM.render(
+				React.createElement(RfqBidScreen, { rfqreference: rfqreference }), document.getElementById('container')
 			);
 });

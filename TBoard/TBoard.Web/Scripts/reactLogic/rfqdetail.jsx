@@ -82,7 +82,7 @@
                     <div id="page-wrapper">
 	                        <div className="row">
 		                        <div className="col-lg-12">
-			                        <h1 className="page-header">RFQ Detail({this.props.rfqreference})</h1>
+			                        <h1 className="page-header">RFQ Detail ({this.props.rfqreference})</h1>
 		                        </div>
 	                        </div>
                         <div className="row">
