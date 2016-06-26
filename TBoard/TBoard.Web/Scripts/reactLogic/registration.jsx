@@ -1,6 +1,9 @@
 ﻿/*Register Page*/
-var RegisterType = React.createClass({	
-	render: function(){
+var RegisterType = React.createClass({
+
+    
+
+    render: function () {
 		return (			
 				<div className="panel panel-primary">
 					<div className="panel-heading">
@@ -36,7 +39,7 @@ var RegisterType = React.createClass({
 var RegisterComplete = React.createClass({	
 	render: function(){
 		return (			
-			<button type="button" className="btn btn-success btn-lg btn-block" onClick={this.props.registerUserPOST}>Complete</button>		
+			<button type="button" className="btn btn-success btn-lg btn-block" onClick={this.props.registerUserPOST}>Register</button>		
 		);
 	}
 });
@@ -65,6 +68,39 @@ var Register = React.createClass({
 						PostalCode : ''
 					};
 
+	},
+
+	componentDidMount: function () {
+	    //Initialize tooltips
+	    $('.nav-tabs > li a[title]').tooltip();
+
+	    //Wizard
+	    $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+	        var $target = $(e.target);
+
+	        if ($target.parent().hasClass('disabled')) {
+	            return false;
+	        }
+	    });
+
+	    $(".next-step").click(function (e) {
+	        var $active = $('.wizard .nav-tabs li.active');
+	        $active.next().removeClass('disabled');
+	        nextTab($active);
+
+	    });
+	    $(".prev-step").click(function (e) {
+	        var $active = $('.wizard .nav-tabs li.active');
+	        prevTab($active);
+	    });
+
+	    function nextTab(elem) {
+	        $(elem).next().find('a[data-toggle="tab"]').click();
+	    }
+
+	    function prevTab(elem) {
+	        $(elem).prev().find('a[data-toggle="tab"]').click();
+	    }
 	},
 
     registerUserPOST : function() {
@@ -143,33 +179,99 @@ var Register = React.createClass({
 		console.log(this.state.PostalCode);		
 	},
 
-	render: function(){
-		return (
+	render: function () {
+	    return (
+
 			<div className="container">
 				<div className="row">
-					<div className="col-md-3">
-						<RegisterType updateRegistrationTypeState={this.updateRegistrationTypeState} regChecked={this.state.regChecked} />
-						<RegisterComplete registerUserPOST={this.registerUserPOST} />
-					</div>					
-					<div className="col-md-8">
-						<RegisterPersonal  name={this.state.Name} updateName={this.updateNameState}
-										   surname={this.state.Surname} updateSurname={this.updateSurnameState}
-										   password={this.state.Password} updatePassword={this.updatePasswordState}
-										   confirmPassword={this.state.ConfirmPassword} updateConfirmPassword={this.updatePasswordConfirmState}
-										   idNumber={this.state.IDNumber} updateIDNumber={this.updateIDNumberState}
-										   orgName={this.state.OrganizationName} updateOrgName={this.updateOrgNameState}/>
-						<RegisterContactDetails cellNumber={this.state.CellNumber} updateCellNumber={this.updateCellNumberState}
-												homeNumber={this.state.HomeNumber} updateHomeNumber={this.updateHomeNumberState}
-												officeNumber={this.state.OfficeNumber} updateOfficeNumber={this.updateOfficeNumberState}
-												email={this.state.Email} updateEmail={this.updateEmailState}
-												/>
-						<RegisterAddress  addressLine1={this.state.AddressLine1} updateAddressLine1={this.updateAddLine1State}
-										  addressLine2={this.state.AddressLine2} updateAddressLine2={this.updateAddLine2State}
-										  addressLine3={this.state.AddressLine3} updateAddressLine3={this.updateAddLine3State}
-										  addressLine4={this.state.AddressLine4} updateAddressLine4={this.updateAddLine4State}
-										  addressLine5={this.state.AddressLine5} updateAddressLine5={this.updateAddLine5State}
-										  postalCode={this.state.PostalCode} updatePostalCode={this.updatePostalCodeState} />						
-					</div>
+                    <section>
+                        <div className="wizard">
+                            <div className="wizard-inner">
+                                <div className="connecting-line"></div>
+                                <ul className="nav nav-tabs" role="tablist">
+                                    <li role="presentation" className="active">
+                                        <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Step 1">
+                                            <span className="round-tab">
+                                                <i className="glyphicon glyphicon-folder-open"></i>
+                                            </span>
+                                        </a>
+                                    </li>
+
+                                    <li role="presentation" className="disabled">
+                                        <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Step 2">
+                                            <span className="round-tab">
+                                                <i className="glyphicon glyphicon-pencil"></i>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li role="presentation" className="disabled">
+                                        <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Step 3">
+                                            <span className="round-tab">
+                                                <i className="glyphicon glyphicon-picture"></i>
+                                            </span>
+                                        </a>
+                                    </li>
+
+                                    <li role="presentation" className="disabled">
+                                        <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
+                                            <span className="round-tab">
+                                                <i className="glyphicon glyphicon-ok"></i>
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            
+                                <div className="tab-content">
+                                    <div className="tab-pane active" role="tabpanel" id="step1">
+                                        <RegisterType updateRegistrationTypeState={this.updateRegistrationTypeState} regChecked={this.state.regChecked} />
+                                        <ul className="list-inline pull-right">
+                                            <li><button type="button" className="btn btn-primary next-step">Next</button></li>
+                                        </ul>
+                                    </div>
+                                    <div className="tab-pane" role="tabpanel" id="step2">
+                                        <RegisterPersonal name={this.state.Name} updateName={this.updateNameState}
+                                                          surname={this.state.Surname} updateSurname={this.updateSurnameState}
+                                                          password={this.state.Password} updatePassword={this.updatePasswordState}
+                                                          confirmPassword={this.state.ConfirmPassword} updateConfirmPassword={this.updatePasswordConfirmState}
+                                                          idNumber={this.state.IDNumber} updateIDNumber={this.updateIDNumberState}
+                                                          orgName={this.state.OrganizationName} updateOrgName={this.updateOrgNameState} />
+                                        <ul className="list-inline pull-right">
+                                            <li><button type="button" className="btn btn-default prev-step">Previous</button></li>
+                                            <li><button type="button" className="btn btn-primary next-step">Next</button></li>
+                                        </ul>
+                                    </div>
+                                    <div className="tab-pane" role="tabpanel" id="step3">
+                                        <RegisterContactDetails cellNumber={this.state.CellNumber} updateCellNumber={this.updateCellNumberState}
+                                                                homeNumber={this.state.HomeNumber} updateHomeNumber={this.updateHomeNumberState}
+                                                                officeNumber={this.state.OfficeNumber} updateOfficeNumber={this.updateOfficeNumberState}
+                                                                email={this.state.Email} updateEmail={this.updateEmailState} />
+                                        <ul className="list-inline pull-right">
+                                            <li><button type="button" className="btn btn-default prev-step">Previous</button></li>                                           
+                                            <li><button type="button" className="btn btn-primary btn-info-full next-step">Next</button></li>
+                                        </ul>
+                                    </div>
+                                    <div className="tab-pane" role="tabpanel" id="step4">
+                                        <RegisterAddress addressLine1={this.state.AddressLine1} updateAddressLine1={this.updateAddLine1State}
+                                                         addressLine2={this.state.AddressLine2} updateAddressLine2={this.updateAddLine2State}
+                                                         addressLine3={this.state.AddressLine3} updateAddressLine3={this.updateAddLine3State}
+                                                         addressLine4={this.state.AddressLine4} updateAddressLine4={this.updateAddLine4State}
+                                                         addressLine5={this.state.AddressLine5} updateAddressLine5={this.updateAddLine5State}
+                                                         postalCode={this.state.PostalCode} updatePostalCode={this.updatePostalCodeState} />		
+                                        <ul className="list-inline pull-right">
+                                            <li><button type="button" className="btn btn-default prev-step">Previous</button></li>                                            
+                                            <li><button type="button" className="btn btn-primary btn-info-full next-step">Save and continue</button></li>                                            
+                                        </ul>
+                                    </div>
+                                    <div className="tab-pane" role="tabpanel" id="complete">                                        
+                                        <RegisterComplete registerUserPOST={this.registerUserPOST} />
+                                    </div>
+                                    <div className="clearfix"></div>
+                                </div>
+                            
+                        </div>
+                    </section>					
 				</div>							
 			</div>
 		);
