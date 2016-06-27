@@ -204,6 +204,16 @@
           <Property Name="name" Type="varchar" MaxLength="150" />
           <Property Name="description" Type="varchar" MaxLength="150" />
         </EntityType>
+        <EntityType Name="quote">
+          <Key>
+            <PropertyRef Name="quoteID" />
+          </Key>
+          <Property Name="quoteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rfqReference" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="userID" Type="int" />
+          <Property Name="createdDate" Type="datetime" Precision="0" />
+          <Property Name="amount" Type="decimal" Precision="16" Scale="9" />
+        </EntityType>
         <EntityType Name="rfq">
           <Key>
             <PropertyRef Name="rfqID" />
@@ -445,6 +455,7 @@
           <EntitySet Name="groups" EntityType="Self.groups" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="organization" EntityType="Self.organization" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="organizationtypes" EntityType="Self.organizationtypes" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="quote" EntityType="Self.quote" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="rfq" EntityType="Self.rfq" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="rfqtype" EntityType="Self.rfqtype" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="roles" EntityType="Self.roles" Schema="tboard" store:Type="Tables" />
@@ -590,8 +601,9 @@
           <EntitySet Name="groups" EntityType="TBoardModel.group" />
           <EntitySet Name="roles" EntityType="TBoardModel.role" />
           <FunctionImport Name="sps_GetRolesForUser" EntitySet="roles" ReturnType="Collection(TBoardModel.role)">
-            <Parameter Name="userID" Mode="In" Type="Int32" />
+          <Parameter Name="userID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="quotes" EntityType="TBoardModel.quote" />
         </EntityContainer>
         <EntityType Name="address">
           <Key>
@@ -1043,6 +1055,16 @@
           <Property Name="roleStatus" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <ComplexType Name="sps_GetRolesForUser_Result" />
+        <EntityType Name="quote">
+          <Key>
+            <PropertyRef Name="quoteID" />
+          </Key>
+          <Property Name="quoteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rfqReference" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="userID" Type="Int32" />
+          <Property Name="createdDate" Type="DateTime" />
+          <Property Name="amount" Type="Decimal" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1349,6 +1371,17 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="sps_GetRolesForUser" FunctionName="TBoardModel.Store.sps_GetRolesForUser" />
+          <EntitySetMapping Name="quotes">
+            <EntityTypeMapping TypeName="TBoardModel.quote">
+              <MappingFragment StoreEntitySet="quote">
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="rfqReference" ColumnName="rfqReference" />
+                <ScalarProperty Name="quoteID" ColumnName="quoteID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -17,11 +17,14 @@ namespace TBoard.Web.Controllers
         private RFQBusinessLogic rfqBusinessLogic;
         private ExpertiseOwnershipBusinessLogic expertiseOwnershipBusinessLogic;
         private EmailQueueBusinessLogic emailQueueBusinessLogic;
-        public RFQController(RFQBusinessLogic addressBusinessLogic, ExpertiseOwnershipBusinessLogic expertiseOwnershipBusinessLogic, EmailQueueBusinessLogic emailQueueBusinessLogic)
+        private QuoteBusinessLogic quoteBusinessLogic;
+
+        public RFQController(RFQBusinessLogic addressBusinessLogic, ExpertiseOwnershipBusinessLogic expertiseOwnershipBusinessLogic, EmailQueueBusinessLogic emailQueueBusinessLogic, QuoteBusinessLogic quoteBusinessLogic)
         {
             this.rfqBusinessLogic = addressBusinessLogic;
             this.expertiseOwnershipBusinessLogic = expertiseOwnershipBusinessLogic;
             this.emailQueueBusinessLogic = emailQueueBusinessLogic;
+            this.quoteBusinessLogic = quoteBusinessLogic;
         }
 
         public IEnumerable<string> Get()
@@ -144,9 +147,59 @@ namespace TBoard.Web.Controllers
             foreach (var e in expertiseOwnership)
             {
                 this.emailQueueBusinessLogic.SendEmail("admin@Tenderboard.co.za",e.communicationLine1,"Request for Quotation","Body of the Quotation");
-            }
-            
+            } 
+        }
 
+        [HttpPost]
+        [Route("api/RFQ/Quote")]
+        public HttpResponseMessage Quote(FormDataCollection formData)
+        {
+            var rfqReference = formData.Get("rfqReference");
+            var userID = Convert.ToInt32("userID");
+            var amount = Convert.ToDecimal("amount");
+            //Create Quote
+            quote q = new quote();
+            q.rfqReference = rfqReference;
+            q.userID = userID;
+            q.amount = amount;
+            q.createdDate = DateTime.Now;
+            this.quoteBusinessLogic.Create(q);
+
+            //This will need to send out an email
+
+            var r = new
+            {
+                data = q
+            };
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(r))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return resp;
+        }
+
+        [HttpGet]
+        [Route("api/RFQ/MyLatestQuote/{rfqReference}/{userID}")]
+        public HttpResponseMessage MyLatestQuote(string rfqReference, string userID)
+        {
+            var userIDInt = Convert.ToInt32(userID);
+            var quote = this.quoteBusinessLogic.FindBy(x => x.rfqReference == rfqReference && x.userID == userIDInt).LastOrDefault();
+
+            var r = new
+            {
+                data = quote
+            };
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(r))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return resp;
         }
 
         [HttpPost]

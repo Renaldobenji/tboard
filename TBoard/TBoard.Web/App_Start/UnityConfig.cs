@@ -34,6 +34,8 @@ namespace TBoard.Web
             container.RegisterType<ExpertiseOwnershipRepository, ExpertiseOwnershipRepository>();
             container.RegisterType<RFQBusinessLogic, RFQBusinessLogic>();
             container.RegisterType<EmailQueueBusinessLogic, EmailQueueBusinessLogic>();
+            container.RegisterType<QuoteBusinessLogic, QuoteBusinessLogic>();
+            container.RegisterType<QuoteRepository, QuoteRepository>();
 
             container.RegisterType<UserRepository, UserRepository>();
             container.RegisterType<CommunicationRepository, CommunicationRepository>();

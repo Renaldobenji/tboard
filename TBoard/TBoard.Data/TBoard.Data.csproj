@@ -204,6 +204,9 @@
     <Compile Include="Model\organizationtype.cs">
       <DependentUpon>TBoardEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\quote.cs">
+      <DependentUpon>TBoardEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\rfq.cs">
       <DependentUpon>TBoardEntities.tt</DependentUpon>
     </Compile>
@@ -244,6 +247,7 @@
     <Compile Include="Repository\BankAccountTypesRepository.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Repository\QuoteRepository.cs" />
     <Compile Include="Repository\CommunicationRepository.cs">
       <SubType>Code</SubType>
     </Compile>

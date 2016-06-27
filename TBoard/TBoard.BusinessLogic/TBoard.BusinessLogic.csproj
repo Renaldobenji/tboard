@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="BusinessLogic\AddressBusinessLogic.cs" />
     <Compile Include="BusinessLogic\BusinessLogic.cs" />
+    <Compile Include="BusinessLogic\QuoteBusinessLogic.cs" />
     <Compile Include="BusinessLogic\CommunicationBusinessLogic.cs" />
     <Compile Include="BusinessLogic\BankAccountBusinessLogic.cs" />
     <Compile Include="BusinessLogic\BankAccountTypeBusinessLogic.cs" />
