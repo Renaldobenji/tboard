@@ -15,5 +15,10 @@ namespace TBoard.Data.Repository
         {
                 
         }
+
+        public IList<sps_getRFQOwnerDetails_Result> GetQuoteOwnerDetails(string rfqReference)
+        {
+            return this._dbContext.sps_getRFQOwnerDetails(rfqReference).ToList();
+        }
     }
 }

@@ -13,7 +13,6 @@ namespace TBoard.Data.Model
     using System.Data.Entity;
     using System.Data.Entity.Core.Objects;
     using System.Data.Entity.Infrastructure;
-
     using System.Linq;
 
     public partial class TBoardEntities : DbContext
@@ -88,6 +87,15 @@ namespace TBoard.Data.Model
                 new ObjectParameter("userID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<role>("sps_GetRolesForUser", mergeOption, userIDParameter);
+        }
+    
+        public virtual ObjectResult<sps_getRFQOwnerDetails_Result> sps_getRFQOwnerDetails(string rfqReference)
+        {
+            var rfqReferenceParameter = rfqReference != null ?
+                new ObjectParameter("rfqReference", rfqReference) :
+                new ObjectParameter("rfqReference", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sps_getRFQOwnerDetails_Result>("sps_getRFQOwnerDetails", rfqReferenceParameter);
         }
     }
 }

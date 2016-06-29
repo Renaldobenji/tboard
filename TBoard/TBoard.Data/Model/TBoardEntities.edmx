@@ -431,6 +431,9 @@
         <Function Name="sps_GetOutstandingDocumentRequirements" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tboard">
           <Parameter Name="organizationID" Type="int" Mode="In" />
         </Function>
+        <Function Name="sps_getRFQOwnerDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tboard">
+          <Parameter Name="rfqReference" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="sps_GetRolesForUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tboard">
           <Parameter Name="userID" Type="int" Mode="In" />
         </Function>
@@ -604,6 +607,9 @@
           <Parameter Name="userID" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="quotes" EntityType="TBoardModel.quote" />
+          <FunctionImport Name="sps_getRFQOwnerDetails" ReturnType="Collection(TBoardModel.sps_getRFQOwnerDetails_Result)">
+            <Parameter Name="rfqReference" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="address">
           <Key>
@@ -1065,6 +1071,13 @@
           <Property Name="createdDate" Type="DateTime" />
           <Property Name="amount" Type="Decimal" />
         </EntityType>
+        <ComplexType Name="sps_getRFQOwnerDetails_Result" >
+          <Property Type="String" Name="reference" Nullable="false" />
+          <Property Type="DateTime" Name="dateCreated" Nullable="false" />
+          <Property Type="String" Name="communicationLine1" Nullable="false" />
+          <Property Type="String" Name="firstname" Nullable="false" />
+          <Property Type="String" Name="surname" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1382,6 +1395,11 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sps_getRFQOwnerDetails" FunctionName="TBoardModel.Store.sps_getRFQOwnerDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TBoardModel.sps_getRFQOwnerDetails_Result" />
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

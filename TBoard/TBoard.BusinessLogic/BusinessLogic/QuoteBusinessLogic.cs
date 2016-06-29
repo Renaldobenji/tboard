@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TBoard.Data.Interfaces;
+using TBoard.Data.Model;
 using TBoard.Data.Repository;
 
 namespace TBoard.BusinessLogic.BusinessLogic
@@ -15,5 +16,11 @@ namespace TBoard.BusinessLogic.BusinessLogic
         {
             this.repository = repository;
         }
+
+        public IList<sps_getRFQOwnerDetails_Result> GetQuoteOwnerDetails(string rfqReference)
+        {
+            return this.repository.GetQuoteOwnerDetails(rfqReference);
+        }
+
     }
 }

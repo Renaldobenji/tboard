@@ -4,7 +4,11 @@
         return {            
             ExpiryDate: "",
             RFQDetails: "",
-            RFQReference: this.props.rfqreference
+            RFQReference: this.props.rfqreference,
+            UserID: 1,
+            MyLatestBidAmount: "",
+            MyLatestBidDate: "",
+            NewBidAmount : 0
         };
     },
 
@@ -12,14 +16,48 @@
         $.ajax({
             url: 'api/RFQ/Detail/' + this.props.rfqreference,
             success: function (data) {
-                if (data.data.expiryDate != null)
-                    {
+                if (data.data.expiryDate != null) {
                     this.setState({ ExpiryDate: data.data.expiryDate });
                 }
                 this.setState({ RFQDetails: data.data.rfqDetails });
             }.bind(this)
-        })
-    }, 
+        });
+
+        $.ajax({
+            url: 'api/RFQ/MyLatestQuote/' + this.props.rfqreference + '/' + this.state.UserID,
+            success: function (data) {
+                if (data.data.amount != null) {
+                    this.setState({ MyLatestBidAmount: data.data.amount });
+                }
+                if (data.data.createdDate != null) {
+                    this.setState({ MyLatestBidDate: data.data.createdDate });
+                }
+                this.setState({ RFQDetails: data.data.rfqDetails });
+            }.bind(this)
+        });
+    },
+
+    updateBidAmount: function (e) {
+        this.setState({ NewBidAmount: e.target.value });
+        console.log(this.state.NewBidAmount);
+    },
+
+    bidPost: function () {
+        console.log('POSTING FORM');
+        $.ajax({
+            url: 'api/RFQ/Quote',
+            type: 'POST',
+            dataType: 'json',
+            data: this.state,
+            cache: false,
+            success: function (data) {
+                alert("Success");
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error('api/RFQ/Quote', status, err.toString());
+            }.bind(this)
+        });
+    },
 
     componentWillMount: function () {
         this.loadData();
@@ -41,10 +79,10 @@
                         <br /><br />              
                         <div className="row">
 		                   <div className="col-md-9">
-                            <RFQBidDetail ExpiryDate={this.state.ExpiryDate} RFQDetails={this.state.RFQDetails}/>
+                            <RFQBidDetail ExpiryDate={this.state.ExpiryDate} RFQDetails={this.state.RFQDetails} bidPost={this.bidPost} updateBidAmount={this.updateBidAmount}/>
 		                   </div> 
                             <div className="col-md-3">
-                            <RFQMyDids />
+                            <RFQMyDids MyLatestBidAmount={this.state.MyLatestBidAmount} MyLatestBidDate={this.state.MyLatestBidDate}/>
                             </div>                           
                         </div>                        
                     </div>
@@ -74,14 +112,13 @@ var RFQBidDetail = React.createClass({
                                     <label>Amount</label>
                                     <div className="form-group input-group">                                        
                                         <span className="input-group-addon">R</span>
-                                        <input type="text" className="form-control"/>
+                                        <input type="text" className="form-control" value={this.props.NewBidAmount} onChange={this.props.updateBidAmount}/>
                                         <span className="input-group-addon">.00</span>
-                                    </div>
-                                    </form>
+                                    </div>                                    </form>
                                 </div>
 								<div className="modal-footer">
 									<button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-									<button type="submit" className="btn btn-primary">Proceed</button>
+									<button type="submit" className="btn btn-primary" onClick={this.props.bidPost}>Proceed</button>
 								</div>
 							</div>
 						</div>
@@ -126,9 +163,13 @@ var RFQMyDids = React.createClass({
                             </div>                                   
                         </div>
                     </div>
+                    <div className="panel-body text-center">
+                         <h3>Bid Date</h3>
+                         <h1 className="text-primary">R{this.props.MyLatestBidDate}</h1>
+                    </div> 
                     <div className="panel-body text-center">     
                          <h3>My Highest Bid</h3>                             
-                         <h1 className="text-primary">R100</h1>                  
+                         <h1 className="text-primary">R{this.props.MyLatestBidAmount}</h1>                  
                     </div>                    
                 </div>
 

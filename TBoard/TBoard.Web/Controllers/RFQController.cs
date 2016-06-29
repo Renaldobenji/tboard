@@ -166,6 +166,8 @@ namespace TBoard.Web.Controllers
             this.quoteBusinessLogic.Create(q);
 
             //This will need to send out an email
+            var rfqOwner = this.quoteBusinessLogic.GetQuoteOwnerDetails(rfqReference).SingleOrDefault();
+            this.emailQueueBusinessLogic.SendEmail("admin@Tenderboard.co.za", rfqOwner.communicationLine1, "Hi, please see quote from supplier", "Hi, please see quote from supplier");            
 
             var r = new
             {
@@ -188,7 +190,8 @@ namespace TBoard.Web.Controllers
             var userIDInt = Convert.ToInt32(userID);
             var quote = this.quoteBusinessLogic.FindBy(x => x.rfqReference == rfqReference && x.userID == userIDInt).LastOrDefault();
 
-            var r = new
+            quote.createdDate
+             var r = new
             {
                 data = quote
             };
