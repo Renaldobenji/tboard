@@ -213,6 +213,8 @@
           <Property Name="userID" Type="int" />
           <Property Name="createdDate" Type="datetime" Precision="0" />
           <Property Name="amount" Type="decimal" Precision="16" Scale="9" />
+          <Property Name="supplyTime" Type="datetime" Precision="0" />
+          <Property Name="deliveryTime" Type="datetime" Precision="0" />
         </EntityType>
         <EntityType Name="rfq">
           <Key>
@@ -608,7 +610,7 @@
           </FunctionImport>
           <EntitySet Name="quotes" EntityType="TBoardModel.quote" />
           <FunctionImport Name="sps_getRFQOwnerDetails" ReturnType="Collection(TBoardModel.sps_getRFQOwnerDetails_Result)">
-            <Parameter Name="rfqReference" Mode="In" Type="String" />
+          <Parameter Name="rfqReference" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="address">
@@ -1070,6 +1072,8 @@
           <Property Name="userID" Type="Int32" />
           <Property Name="createdDate" Type="DateTime" />
           <Property Name="amount" Type="Decimal" />
+          <Property Name="supplyTime" Type="DateTime" />
+          <Property Name="deliveryTime" Type="DateTime" />
         </EntityType>
         <ComplexType Name="sps_getRFQOwnerDetails_Result" >
           <Property Type="String" Name="reference" Nullable="false" />
@@ -1387,6 +1391,8 @@
           <EntitySetMapping Name="quotes">
             <EntityTypeMapping TypeName="TBoardModel.quote">
               <MappingFragment StoreEntitySet="quote">
+                <ScalarProperty Name="deliveryTime" ColumnName="deliveryTime" />
+                <ScalarProperty Name="supplyTime" ColumnName="supplyTime" />
                 <ScalarProperty Name="amount" ColumnName="amount" />
                 <ScalarProperty Name="createdDate" ColumnName="createdDate" />
                 <ScalarProperty Name="userID" ColumnName="userID" />

@@ -6,8 +6,8 @@
             RFQDetails: "",
             RFQReference: this.props.rfqreference,
             UserID: 1,
-            MyLatestBidAmount: "",
-            MyLatestBidDate: "",
+            MyLatestBidAmount: 0,
+            MyLatestBidDate: "N/A",
             NewBidAmount : 0
         };
     },
@@ -26,13 +26,16 @@
         $.ajax({
             url: 'api/RFQ/MyLatestQuote/' + this.props.rfqreference + '/' + this.state.UserID,
             success: function (data) {
+                if (data.data == null)
+                {
+                    return;
+                }
                 if (data.data.amount != null) {
                     this.setState({ MyLatestBidAmount: data.data.amount });
                 }
                 if (data.data.createdDate != null) {
-                    this.setState({ MyLatestBidDate: data.data.createdDate });
-                }
-                this.setState({ RFQDetails: data.data.rfqDetails });
+                    this.setState({ MyLatestBidDate: data.data.createdDate.substring(0, 10) });
+                }                
             }.bind(this)
         });
     },
@@ -51,6 +54,8 @@
             data: this.state,
             cache: false,
             success: function (data) {
+                this.setState({ MyLatestBidAmount: data.data.amount });
+                this.setState({ MyLatestBidDate: data.data.createdDate.substring(0, 10) });
                 alert("Success");
             }.bind(this),
             error: function (xhr, status, err) {
@@ -118,12 +123,12 @@ var RFQBidDetail = React.createClass({
                                 </div>
 								<div className="modal-footer">
 									<button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-									<button type="submit" className="btn btn-primary" onClick={this.props.bidPost}>Proceed</button>
+									<button type="submit" className="btn btn-primary" data-dismiss="modal" onClick={this.props.bidPost}>Proceed</button>
 								</div>
 							</div>
 						</div>
                     </div>
-                <div className="bs-calltoaction bs-calltoaction-default" style={{"margin-top": "0px"}}>
+                <div className="bs-calltoaction bs-calltoaction-default" style={{ "marginTop": "0px" }}>
                     <div className="row">
                         <div className="col-md-9 cta-contents">
                             <h1 className="cta-title">Its a Call To Action</h1>
@@ -155,22 +160,13 @@ var RFQMyDids = React.createClass({
 
         return (
                 <div>
-                <div className="panel panel-default">
-                    <div className="panel-heading">
-                        <div className="row">
-                            <div className="col-xs-7">                                        
-                                My Bids
-                            </div>                                   
-                        </div>
-                    </div>
+                <div className="panel panel-default">                    
                     <div className="panel-body text-center">
                          <h3>Bid Date</h3>
-                         <h1 className="text-primary">R{this.props.MyLatestBidDate}</h1>
-                    </div> 
-                    <div className="panel-body text-center">     
-                         <h3>My Highest Bid</h3>                             
-                         <h1 className="text-primary">R{this.props.MyLatestBidAmount}</h1>                  
-                    </div>                    
+                         <h1 className="text-primary">{this.props.MyLatestBidDate}</h1>
+                         <h3>My Highest Bid</h3>
+                         <h1 className="text-primary">R{this.props.MyLatestBidAmount}</h1>        
+                    </div>                                      
                 </div>
 
                     

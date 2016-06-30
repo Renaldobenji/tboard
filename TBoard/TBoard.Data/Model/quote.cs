@@ -19,5 +19,7 @@ namespace TBoard.Data.Model
         public Nullable<int> userID { get; set; }
         public Nullable<System.DateTime> createdDate { get; set; }
         public Nullable<decimal> amount { get; set; }
+        public Nullable<System.DateTime> supplyTime { get; set; }
+        public Nullable<System.DateTime> deliveryTime { get; set; }
     }
 }

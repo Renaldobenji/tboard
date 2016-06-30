@@ -154,14 +154,39 @@ namespace TBoard.Web.Controllers
         [Route("api/RFQ/Quote")]
         public HttpResponseMessage Quote(FormDataCollection formData)
         {
-            var rfqReference = formData.Get("rfqReference");
-            var userID = Convert.ToInt32("userID");
-            var amount = Convert.ToDecimal("amount");
+            var rfqReference = formData.Get("RFQReference");
+            var userID = Convert.ToInt32(formData.Get("UserID"));
+            var amount = Convert.ToDecimal(formData.Get("NewBidAmount"));
+            var supplyTime = Convert.ToDateTime(formData.Get("SupplyTime"));
+            var deliveryTime = Convert.ToDateTime(formData.Get("DeliveryTime"));
             //Create Quote
+
+            var quote = this.quoteBusinessLogic.FindBy(x => x.rfqReference == rfqReference && x.userID == userID).LastOrDefault();
+            if (quote != null)
+            {
+                if (quote.amount > amount)
+                {
+                    var rs = new
+                    {
+                        data = quote
+                    };
+
+                    var resps = new HttpResponseMessage()
+                    {
+                        Content = new StringContent(JsonConvert.SerializeObject(rs))
+                    };
+                    resps.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+                    return resps;
+                }
+            }
+
             quote q = new quote();
             q.rfqReference = rfqReference;
             q.userID = userID;
             q.amount = amount;
+            q.deliveryTime = deliveryTime;
+            q.supplyTime = supplyTime;
             q.createdDate = DateTime.Now;
             this.quoteBusinessLogic.Create(q);
 
@@ -189,8 +214,7 @@ namespace TBoard.Web.Controllers
         {
             var userIDInt = Convert.ToInt32(userID);
             var quote = this.quoteBusinessLogic.FindBy(x => x.rfqReference == rfqReference && x.userID == userIDInt).LastOrDefault();
-
-            quote.createdDate
+            
              var r = new
             {
                 data = quote
