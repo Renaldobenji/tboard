@@ -8,7 +8,9 @@
             UserID: 1,
             MyLatestBidAmount: 0,
             MyLatestBidDate: "N/A",
-            NewBidAmount : 0
+            NewBidAmount: 0,
+            SupplyTime: "",
+            DeliveryTime : ""
         };
     },
 
@@ -42,6 +44,16 @@
 
     updateBidAmount: function (e) {
         this.setState({ NewBidAmount: e.target.value });
+        console.log(this.state.NewBidAmount);
+    },
+
+    updateSupplyTime: function (e) {
+        this.setState({ SupplyTime: e });
+        console.log(this.state.NewBidAmount);
+    },
+
+    updateDeliveryTime: function (e) {
+        this.setState({ DeliveryTime: e });
         console.log(this.state.NewBidAmount);
     },
 
@@ -84,7 +96,7 @@
                         <br /><br />              
                         <div className="row">
 		                   <div className="col-md-9">
-                            <RFQBidDetail ExpiryDate={this.state.ExpiryDate} RFQDetails={this.state.RFQDetails} bidPost={this.bidPost} updateBidAmount={this.updateBidAmount}/>
+                            <RFQBidDetail ExpiryDate={this.state.ExpiryDate} RFQDetails={this.state.RFQDetails} bidPost={this.bidPost} updateBidAmount={this.updateBidAmount} updateSupplyTime={this.updateSupplyTime} updateDeliveryTime={this.updateDeliveryTime}/>
 		                   </div> 
                             <div className="col-md-3">
                             <RFQMyDids MyLatestBidAmount={this.state.MyLatestBidAmount} MyLatestBidDate={this.state.MyLatestBidDate}/>
@@ -97,6 +109,19 @@
 });
 
 var RFQBidDetail = React.createClass({
+
+    componentDidMount: function () {
+        $('#SupplyTime').datetimepicker();
+        $('#DeliveryTime').datetimepicker();
+    },
+
+    WillYouPOST: function () {
+        var sd = $('#SupplyTimeControl').val();
+        var ds = $('#DeliveryTimeControl').val();
+        this.props.updateDeliveryTime(ds);
+        this.props.updateSupplyTime(sd);
+        this.props.bidPost();
+    },
 
     render: function() {
 
@@ -117,13 +142,32 @@ var RFQBidDetail = React.createClass({
                                     <label>Amount</label>
                                     <div className="form-group input-group">                                        
                                         <span className="input-group-addon">R</span>
-                                        <input type="text" className="form-control" value={this.props.NewBidAmount} onChange={this.props.updateBidAmount}/>
+                                        <input type="text" className="form-control" placeholder="Amount" value={this.props.NewBidAmount} onChange={this.props.updateBidAmount}/>
                                         <span className="input-group-addon">.00</span>
-                                    </div>                                    </form>
+                                    </div> 
+                                        <label>Supply Time</label>
+                                        <div className="form-group">
+                                            <div className='input-group date' id='SupplyTime'>
+                                                <input type='text' id='SupplyTimeControl' className="form-control" placeholder="Supply Time"/>
+                                                <span className="input-group-addon">
+                                                    <span className="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <label>Delivery Time</label>
+                                        <div className="form-group">
+                                            <div className='input-group date' id='DeliveryTime'>
+                                                <input type='text' id='DeliveryTimeControl' className="form-control" placeholder="Delivery Time"/>
+                                                <span className="input-group-addon">
+                                                    <span className="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
 								<div className="modal-footer">
 									<button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-									<button type="submit" className="btn btn-primary" data-dismiss="modal" onClick={this.props.bidPost}>Proceed</button>
+									<button type="submit" className="btn btn-primary" data-dismiss="modal" onClick={this.WillYouPOST}>Proceed</button>
 								</div>
 							</div>
 						</div>
