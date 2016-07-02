@@ -6,7 +6,7 @@
             RegistrationNumber: '',
             VatNumber: '',
             TaxNumber: '',
-            OrganizationID: '1',
+            OrganizationID: '',
             CellNumber : '',
 			HomeNumber : '',
 			OfficeNumber : '',
@@ -25,8 +25,16 @@
             BranchName : '',
             BankAccountType : [],
             SelectedBankAccountType : '',
-			OEM : 'false'
+            OEM: 'false',
+            UserID : ''
         };
+    },
+
+    componentWillMount: function () {
+        var tokens = new TboardJWTToken();
+        var decodedToken = tokens.getJWTToken();
+        this.setState({ OrganizationID: decodedToken.OrganizationID });
+        this.setState({ UserID: decodedToken.UserID });
     },
 
     fetchOrgDetails: function(orgID) {
@@ -162,11 +170,11 @@
     },
 
     componentDidMount: function() {
-        this.fetchOrgDetails(1);
-        this.fetchAddressDetails(1);
-        this.fetchContactDetails(1);
+        this.fetchOrgDetails(this.state.OrganizationID);
+        this.fetchAddressDetails(this.state.OrganizationID);
+        this.fetchContactDetails(this.state.OrganizationID);
         this.fetchAccountTypes();
-        this.fetchBankDetails(1);
+        this.fetchBankDetails(this.state.OrganizationID);
     },
     
     registerUserPOST : function() {
@@ -383,7 +391,7 @@
                                 <div className="tab-pane fade" id="Expertise">
 			                        <div className="col-lg-8">
                                         <br/>
-                                        <OrganizationExpertise />
+                                        <OrganizationExpertise OrganizationID={this.state.OrganizationID}/>
                                     </div>
 		                        </div>
 	                        </div>
@@ -596,7 +604,7 @@ var OrganizationExpertise = React.createClass({
 	componentDidMount: function() {
 		$("#ExpertiseSelect").select2();
 	    this.fetchExpertiseCategory();
-	    this.fetchUserCategories(1);
+	    this.fetchUserCategories(this.props.OrganizationID);
 	},
 
 	fetchUserCategories1 : function(org) {
@@ -651,7 +659,7 @@ var OrganizationExpertise = React.createClass({
 
 	     var postData = {
 	         UserCategories: userCat,
-			 Organization: 1
+			 Organization: this.props.OrganizationID
 	     };
 
         console.log('POSTING FORM');

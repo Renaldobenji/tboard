@@ -10,10 +10,16 @@ var UserManagement = React.createClass({
 						IDNumber : '',
                         Username : '',
                         Title : '',
-                        OrganizationID : 1
+                        OrganizationID : ""
 					};
 
 	},
+
+    componentWillMount: function () {
+        var tokens = new TboardJWTToken();
+        var decodedToken = tokens.getJWTToken();
+        this.setState({ OrganizationID: decodedToken.OrganizationID });        
+    },
 
     createUserPOST : function() {
         console.log('POSTING FORM');
@@ -81,7 +87,7 @@ var UserManagement = React.createClass({
 		                        </div>
 	                        </div>
                             <div className="row"> 
-                                <UserList />
+                                <UserList OrganizationID={this.state.OrganizationID} />
                             </div>
                         </div>
                         <div className="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -138,20 +144,13 @@ var UserManagement = React.createClass({
 
 
 /*Register Page*/
-var UserList = React.createClass({
-
-    getInitialState: function() {
-			return {
-                        OrganizationID : 1
-					};
-
-	},
+var UserList = React.createClass({   
 
     componentDidMount: function() {
 
         $('#userTable').DataTable( {
             ajax: {
-                    "url": 'api/User/GetByOrganization/1'
+                    "url": 'api/User/GetByOrganization/' + this.props.OrganizationID
                 }
                 ,"columns": [
                                 { "data": "Username" },

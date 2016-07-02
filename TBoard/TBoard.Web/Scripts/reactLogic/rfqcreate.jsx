@@ -6,8 +6,16 @@
             ExpertiseSubCategoryID: 1,
             ExpiryDate: "",
             RFQDetails: "",
-            UserID : 1
+            UserID: "",
+            OrganizationID : ""
         };
+    },
+
+    componentWillMount: function () {
+        var tokens = new TboardJWTToken();
+        var decodedToken = tokens.getJWTToken();
+        this.setState({ OrganizationID: decodedToken.OrganizationID });
+        this.setState({ UserID: decodedToken.UserID });        
     },
 
     componentDidMount: function () {

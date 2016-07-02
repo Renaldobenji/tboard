@@ -45,7 +45,9 @@ namespace TBoard.Web.Controllers
             {
                 new Claim(ClaimTypes.NameIdentifier, user.username),
                 new Claim(ClaimTypes.Name, user.firstname),
-                new Claim(ClaimTypes.Surname, user.surname)
+                new Claim(ClaimTypes.Surname, user.surname),
+                new Claim("OrganizationID",user.organizationID.ToString()),
+                new Claim("UserID",user.userID.ToString())
             }, "Custom");
 
             foreach (var roles in userRoles)

@@ -5,7 +5,7 @@
             ExpiryDate: "",
             RFQDetails: "",
             RFQReference: this.props.rfqreference,
-            UserID: 1,
+            UserID: "",
             MyLatestBidAmount: 0,
             MyLatestBidDate: "N/A",
             NewBidAmount: 0,
@@ -77,7 +77,10 @@
     },
 
     componentWillMount: function () {
-        this.loadData();
+        var tokens = new TboardJWTToken();
+        var decodedToken = tokens.getJWTToken();
+        this.setState({ UserID: decodedToken.UserID });
+        this.loadData();       
     },
 
 

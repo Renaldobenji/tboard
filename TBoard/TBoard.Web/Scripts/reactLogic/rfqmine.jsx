@@ -1,10 +1,18 @@
 ﻿var MyRFQ = React.createClass({
     getInitialState: function () {
         return {
-            UserID: 1
+            UserID: ""
         };
 
     },
+
+    componentWillMount: function () {
+        var tokens = new TboardJWTToken();
+        var decodedToken = tokens.getJWTToken();
+        this.setState({ UserID: decodedToken.UserID });
+    },
+
+
 	render: function() {        
         var navBarSyle= {
               marginBottom:0
@@ -33,10 +41,17 @@
 var MyAllRFQ = React.createClass({
     getInitialState: function () {
         return {
-            UserID: 1
+            UserID: ""
         };
 
     },
+
+    componentWillMount: function () {
+        var tokens = new TboardJWTToken();
+        var decodedToken = tokens.getJWTToken();
+        this.setState({ UserID: decodedToken.UserID });
+    },
+
     render: function() {        
         var navBarSyle= {
             marginBottom:0

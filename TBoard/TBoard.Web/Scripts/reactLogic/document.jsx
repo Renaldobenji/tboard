@@ -4,12 +4,21 @@ var DocumentManagement = React.createClass({
 	getInitialState: function() {
         return {
             MissingRequirements: [],
-			OrganizationID : 1,
+            OrganizationID : "",
 			FileName : "",
 			DocumentType: "",
-			UploadURL : "Upload?key=1"
+			UploadURL: "",
+            UserID : ""
         };
-    },
+	},
+
+	componentWillMount: function () {
+	    var tokens = new TboardJWTToken();
+	    var decodedToken = tokens.getJWTToken();
+	    this.setState({ OrganizationID: decodedToken.OrganizationID });
+	    this.setState({ UserID: decodedToken.UserID });
+	    this.setState({ UploadURL: "Upload?key=" + decodedToken.OrganizationID });	    
+	},
 
     fetchMissingRequirements: function(orgID) {
         $.ajax({
@@ -26,7 +35,7 @@ var DocumentManagement = React.createClass({
     },
     
     componentDidMount: function() {
-        this.fetchMissingRequirements(1);
+        this.fetchMissingRequirements(this.state.OrganizationID);
     },
 
 	updateFileName: function(e) {
@@ -62,16 +71,13 @@ var DocumentManagement = React.createClass({
 										 &nbsp;
                                         <a href={this.state.UploadURL} id="fakeLink" target="_blank"><button className="btn btn-outline btn-primary">
 			                               Upload
-		                                </button></a>
-										<button className="btn btn-outline btn-primary" data-toggle="modal" data-target="#myModal">
-			                               Upload
-		                                </button>
+		                                </button></a>										
                                     </h1>
 		                        </div>
 	                        </div>
                             <div className="row">
                                 <div className="col-lg-8">
-			                        <DocumentList />
+			                        <DocumentList OrganizationID={this.state.OrganizationID}/>
 		                        </div>
 		                        <div className="col-lg-4">
 			                        <DocumentRequirements MissingRequirements= {this.state.MissingRequirements} />
@@ -148,20 +154,13 @@ var DocumentRequirements = React.createClass({
 
 
 /*Register Page*/
-var DocumentList = React.createClass({
-
-    getInitialState: function() {
-			return {
-                        OrganizationID : 1
-					};
-
-	},
+var DocumentList = React.createClass({    
 
     componentDidMount: function() {
 
         $('#documentTable').DataTable( {
             ajax: {
-                    "url": 'api/Document/1'
+                    "url": 'api/Document/' + this.props.OrganizationID
                 }
                 ,"columns": [
                                 { "data": "documentTypeCode" },
