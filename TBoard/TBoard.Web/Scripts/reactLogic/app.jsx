@@ -13,8 +13,8 @@
   },
 
   
-  loginClick: function (event) {
-      this.authenticateGET();
+  loginClick: function (event) {      
+      this.authenticateGET();      
   },
 
   updateUsername: function (e) {
@@ -36,8 +36,18 @@
                 var sJWT = this.state.JWSToken;
                 var sa = new TboardJWTToken();
                 sa.store(sJWT);
-                sa.show();
-                routie('dashboard');
+                var tokens = new TboardJWTToken();
+                var result = tokens.IsLoggedIn();
+                
+                if (this.props.returnURL == "")
+                    routie('dashboard');
+
+                if (typeof this.props.returnURL !== 'undefined')
+                { var fixedURL = this.props.returnURL.replace('-', '/');
+                routie(fixedURL);
+                }
+                else
+                    routie('dashboard');
               }
               else
               {
@@ -83,12 +93,21 @@
 });
 
 
-
 routie({
-		'': function(){
-			ReactDOM.render(
+    '': function () {
+            var tokens = new TboardJWTToken();
+            var result = tokens.IsLoggedIn();
+            if (result == true)
+            {
+                routie('dashboard');
+            }
+            else
+            {
+                ReactDOM.render(
 				React.createElement(login, null), document.getElementById('container')
 			);
+            }
+			
 		},
 		'register': function(){
 			ReactDOM.render(
@@ -140,6 +159,10 @@ routie({
 });
 
 routie('rfqdetail/:rfqreference', function (rfqreference) {
+
+    var tokens = new TboardJWTToken();
+    var result = tokens.IsLoggedIn();
+
     ReactDOM.render(
 				React.createElement(RfqDetail, { rfqreference: rfqreference }), document.getElementById('container')
 			);
@@ -148,5 +171,11 @@ routie('rfqdetail/:rfqreference', function (rfqreference) {
 routie('rfqbid/:rfqreference', function (rfqreference) {
     ReactDOM.render(
 				React.createElement(RfqBidScreen, { rfqreference: rfqreference }), document.getElementById('container')
+			);
+});
+
+routie('login/:returnURL', function (returnURL) {
+    ReactDOM.render(
+				React.createElement(login, { returnURL: returnURL }), document.getElementById('container')
 			);
 });

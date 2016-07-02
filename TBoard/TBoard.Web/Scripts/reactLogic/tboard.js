@@ -65,9 +65,29 @@
         createCookie("jwtToken", jwtToken,1);
     };
 
-    TboardJWTToken.prototype.show = function (jwtToken) {
+    TboardJWTToken.prototype.IsLoggedIn = function () {
+        var token = this.getJWTToken();
+
+        var params = window.location.hash.replace("#", '').replace("/",'-');        
+
+        if (token == null) {
+            if (params != "")
+            { routie('login/' + params); }
+            else
+                routie('');            
+        }
+            
+        return true;
+    };
+
+    TboardJWTToken.prototype.getJWTToken = function () {
         var value = readCookie("jwtToken");
+        if (value == null)
+            return null;
+
         var decoded = jwt_decode(value);
+
+        return decoded;
     };
 
     function createCookie(name, value, days) {
