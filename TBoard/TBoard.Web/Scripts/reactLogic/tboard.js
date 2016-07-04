@@ -74,7 +74,7 @@
             if (params != "")
             { routie('login/' + params); }
             else
-                routie('');            
+                return false;            
         }
             
         return true;

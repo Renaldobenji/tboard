@@ -98,5 +98,14 @@ namespace TBoard.Data.Model
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sps_getRFQOwnerDetails_Result>("sps_getRFQOwnerDetails", rfqReferenceParameter);
         }
+    
+        public virtual ObjectResult<sps_GetBidsForQuote_Result> sps_GetBidsForQuote(string rfqReference)
+        {
+            var rfqReferenceParameter = rfqReference != null ?
+                new ObjectParameter("rfqReference", rfqReference) :
+                new ObjectParameter("rfqReference", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sps_GetBidsForQuote_Result>("sps_GetBidsForQuote", rfqReferenceParameter);
+        }
     }
 }

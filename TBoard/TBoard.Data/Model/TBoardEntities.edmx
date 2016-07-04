@@ -430,6 +430,9 @@
         <Function Name="GetSubscribedOwnershipDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tboard">
           <Parameter Name="expertiseSubCategoryID" Type="int" Mode="In" />
         </Function>
+        <Function Name="sps_GetBidsForQuote" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tboard">
+          <Parameter Name="rfqReference" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="sps_GetOutstandingDocumentRequirements" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tboard">
           <Parameter Name="organizationID" Type="int" Mode="In" />
         </Function>
@@ -611,6 +614,9 @@
           <EntitySet Name="quotes" EntityType="TBoardModel.quote" />
           <FunctionImport Name="sps_getRFQOwnerDetails" ReturnType="Collection(TBoardModel.sps_getRFQOwnerDetails_Result)">
           <Parameter Name="rfqReference" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sps_GetBidsForQuote" ReturnType="Collection(TBoardModel.sps_GetBidsForQuote_Result)">
+            <Parameter Name="rfqReference" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="address">
@@ -1082,6 +1088,16 @@
           <Property Type="String" Name="firstname" Nullable="false" />
           <Property Type="String" Name="surname" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="sps_GetBidsForQuote_Result" >
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="false" />
+          <Property Type="String" Name="Surname" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" />
+          <Property Type="DateTime" Name="SupplyTime" Nullable="false" />
+          <Property Type="DateTime" Name="DeliveryTime" Nullable="false" />
+          <Property Type="String" Name="name" Nullable="false" />
+          <Property Type="Boolean" Name="oem" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1404,6 +1420,11 @@
           <FunctionImportMapping FunctionImportName="sps_getRFQOwnerDetails" FunctionName="TBoardModel.Store.sps_getRFQOwnerDetails">
             <ResultMapping>
               <ComplexTypeMapping TypeName="TBoardModel.sps_getRFQOwnerDetails_Result" />
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sps_GetBidsForQuote" FunctionName="TBoardModel.Store.sps_GetBidsForQuote">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TBoardModel.sps_GetBidsForQuote_Result" />
             </ResultMapping>
           </FunctionImportMapping>
         </EntityContainerMapping>

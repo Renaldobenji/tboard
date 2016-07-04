@@ -30,5 +30,10 @@ namespace TBoard.Data.Repository
         {
             return this._dbContext.rfqtypes.FirstOrDefault(x => x.Prefix == prefix);
         }
+
+        public IList<sps_GetBidsForQuote_Result> GetRFQBids(string rfqReference)
+        {
+            return this._dbContext.sps_GetBidsForQuote(rfqReference).ToList();
+        }
     }
 }

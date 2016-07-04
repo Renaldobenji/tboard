@@ -93,7 +93,10 @@
                                 <RFQDetailActions cancelRFQPost={this.cancelRFQPost}/>
                             </div>
                         </div>
-                    </div>
+                        <div className="row">
+                            <RFQBidQuotes RFQReference={this.state.RFQReference} />
+                         </div>
+                      </div>
                   </div>
             )
 	}
@@ -161,4 +164,64 @@ var RFQDetailActions = React.createClass({
                 </div>
             )
 }
+});
+
+var RFQBidQuotes = React.createClass({
+
+     getInitialState: function () {
+        return { data: [] }
+    },
+
+    loadData: function () {
+        $.ajax({
+            url: 'api/RFQ/QuoteBids/' + this.props.RFQReference,
+            success: function (data) {
+                this.setState({ data: data });
+            }.bind(this)
+        })
+    },
+
+    componentWillMount: function () {
+        this.loadData();
+    },
+
+    componentDidMount: function () {
+        Sortable.create(simpleList, {
+           
+        });
+    },
+
+    render: function () {
+
+        function oemFormatter(cell, row) {
+            return <div> {row.oem.toString()} </div>;
+        }
+
+        return (
+            <div>
+			<div className="col-lg-8">
+				<BootstrapTable data={this.state.data} striped={true} hover={true}>
+                  <TableHeaderColumn isKey={true} dataField="CreatedDate">CreatedDate</TableHeaderColumn>
+                  <TableHeaderColumn dataField="FirstName">FirstName</TableHeaderColumn>
+                  <TableHeaderColumn dataField="Surname">Surname</TableHeaderColumn>
+                  <TableHeaderColumn dataField="Amount">Amount</TableHeaderColumn>
+                  <TableHeaderColumn dataField="SupplyTime">SupplyTime</TableHeaderColumn>
+                  <TableHeaderColumn dataField="DeliveryTime">DeliveryTime</TableHeaderColumn>
+                  <TableHeaderColumn dataField="name">Company Name</TableHeaderColumn>                  
+                 <TableHeaderColumn dataFormat={oemFormatter}>OEM</TableHeaderColumn>  
+				</BootstrapTable>
+			</div>
+            <div className="col-lg-4">
+             <ul id="simpleList" className="list-group">
+                    <li className="list-group-item">This is <a href="http://rubaxa.github.io/Sortable/">Sortable</a></li>
+                    <li className="list-group-item">It works with Bootstrap...</li>
+                    <li className="list-group-item">...out of the box.</li>
+                    <li className="list-group-item">It has support for touch devices.</li>
+                    <li className="list-group-item">Just drag some elements around.</li>
+                </ul>
+            </div>
+            </div>
+		)
+    }
+
 });

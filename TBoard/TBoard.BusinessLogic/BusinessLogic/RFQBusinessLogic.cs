@@ -34,5 +34,10 @@ namespace TBoard.BusinessLogic.BusinessLogic
         {
             return this.repository.GetRFQ(prefix);
         }
+
+        public IList<sps_GetBidsForQuote_Result> GetRFQBids(string rfqReference)
+        {
+            return this.repository.GetRFQBids(rfqReference);
+        }
     }
 }

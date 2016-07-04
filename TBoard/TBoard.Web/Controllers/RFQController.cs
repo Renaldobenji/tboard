@@ -5,10 +5,10 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
-using System.Web.Http;
 using Newtonsoft.Json;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.Data.Model;
+using System.Web.Http;
 
 namespace TBoard.Web.Controllers
 {
@@ -202,6 +202,26 @@ namespace TBoard.Web.Controllers
             var resp = new HttpResponseMessage()
             {
                 Content = new StringContent(JsonConvert.SerializeObject(r))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return resp;
+        }
+
+        [HttpGet]
+        [Route("api/RFQ/QuoteBids/{rfqReference}")]
+        public HttpResponseMessage QuoteBids(string rfqReference)
+        {
+            var result = JsonConvert.SerializeObject(rfqBusinessLogic.GetRFQBids(rfqReference));
+
+            var r = new
+            {
+                data = result
+            };
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(result)
             };
             resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
