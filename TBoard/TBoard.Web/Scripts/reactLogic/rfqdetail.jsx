@@ -181,13 +181,20 @@ var RFQBidQuotes = React.createClass({
         })
     },
 
+    onClickShow: function () {    
+
+        $("#simpleList li").each(function () {
+            alert($(this).text());
+        });
+    },
+
     componentWillMount: function () {
         this.loadData();
     },
 
     componentDidMount: function () {
         Sortable.create(simpleList, {
-           
+            draggable: ".list-group-item"
         });
     },
 
@@ -196,11 +203,16 @@ var RFQBidQuotes = React.createClass({
         function oemFormatter(cell, row) {
             return <div> {row.oem.toString()} </div>;
         }
+      
 
         return (
-            <div>
-			<div className="col-lg-8">
-				<BootstrapTable data={this.state.data} striped={true} hover={true}>
+            <div>            
+			<div className="col-lg-9">
+                <button className="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                    Order Quotes
+                </button>
+
+				<BootstrapTable data={this.state.data} striped={true} hover={true} tableStyle={{margin:0}}>
                   <TableHeaderColumn isKey={true} dataField="CreatedDate">CreatedDate</TableHeaderColumn>
                   <TableHeaderColumn dataField="FirstName">FirstName</TableHeaderColumn>
                   <TableHeaderColumn dataField="Surname">Surname</TableHeaderColumn>
@@ -210,16 +222,32 @@ var RFQBidQuotes = React.createClass({
                   <TableHeaderColumn dataField="name">Company Name</TableHeaderColumn>                  
                  <TableHeaderColumn dataFormat={oemFormatter}>OEM</TableHeaderColumn>  
 				</BootstrapTable>
-			</div>
-            <div className="col-lg-4">
-             <ul id="simpleList" className="list-group">
-                    <li className="list-group-item">This is <a href="http://rubaxa.github.io/Sortable/">Sortable</a></li>
-                    <li className="list-group-item">It works with Bootstrap...</li>
-                    <li className="list-group-item">...out of the box.</li>
-                    <li className="list-group-item">It has support for touch devices.</li>
-                    <li className="list-group-item">Just drag some elements around.</li>
-                </ul>
-            </div>
+
+                <div className="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div className="modal-dialog">
+						<div className="modal-content">
+							<div className="modal-header">
+								<button type="button" className="close" data-dismiss="modal" aria-hidden="true">×</button>
+								<h4 className="modal-title" id="myModalLabel">Order Quote</h4>
+							</div>
+							<div className="modal-body">
+								<ul id="simpleList" className="list-group" draggable="true">
+                                    <li className="list-group-item">                                    <span className="drag-handle">☰ </span>Cost</li>
+                                    <li className="list-group-item">                                    <span className="drag-handle">☰ </span>Supply Time</li>
+                                    <li className="list-group-item">                                    <span className="drag-handle">☰ </span>Delivery Time</li>
+                                    <li className="list-group-item">                                    <span className="drag-handle">☰ </span>BEE</li>
+                                    <li className="list-group-item">                                    <span className="drag-handle">☰ </span>OEM</li>
+                                    <li className="list-group-item">                                    <span className="drag-handle">☰ </span>Track Record</li>
+								</ul>						
+							</div>
+							<div className="modal-footer">
+								<button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+								<button type="submit" className="btn btn-primary" onClick={this.onClickShow}>Order</button>
+							</div>
+						</div>
+					</div>
+                </div>
+			</div>            
             </div>
 		)
     }
