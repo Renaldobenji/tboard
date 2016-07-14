@@ -228,6 +228,43 @@ namespace TBoard.Web.Controllers
             return resp;
         }
 
+        [HttpPost]
+        [Route("api/RFQ/QuoteBids/Order/")]
+        public HttpResponseMessage QuoteBidsOrder(FormDataCollection formData)
+        {
+            var rfqReference = formData.Get("RFQReference");
+            var orderList = formData.Get("OrderList");
+
+            var quotes = rfqBusinessLogic.GetRFQBids(rfqReference);
+
+            var orderlistValue = orderList.Split(',');
+            var property1 = typeof(sps_GetBidsForQuote_Result).GetProperty(orderlistValue[0]);
+            var property2 = typeof(sps_GetBidsForQuote_Result).GetProperty(orderlistValue[1]);
+            var property3 = typeof(sps_GetBidsForQuote_Result).GetProperty(orderlistValue[2]);
+            var property4 = typeof(sps_GetBidsForQuote_Result).GetProperty(orderlistValue[3]);
+
+
+            var sortedList = quotes.OrderBy(a => property1.GetValue(a, null))
+                .ThenBy(b => property2.GetValue(b, null))
+                .ThenBy(c => property3.GetValue(c, null))
+                .ThenBy(d => property4.GetValue(d, null)).ToList();
+
+            var result = JsonConvert.SerializeObject(sortedList);
+
+            var r = new
+            {
+                data = result
+            };
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(result)
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return resp;
+        }
+
         [HttpGet]
         [Route("api/RFQ/MyLatestQuote/{rfqReference}/{userID}")]
         public HttpResponseMessage MyLatestQuote(string rfqReference, string userID)

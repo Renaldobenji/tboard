@@ -169,7 +169,11 @@ var RFQDetailActions = React.createClass({
 var RFQBidQuotes = React.createClass({
 
      getInitialState: function () {
-        return { data: [] }
+         return {
+             data: [],
+             OrderList: "",
+             RFQReference : this.props.RFQReference
+         }
     },
 
     loadData: function () {
@@ -182,9 +186,26 @@ var RFQBidQuotes = React.createClass({
     },
 
     onClickShow: function () {    
-
+        var list = "";
         $("#simpleList li").each(function () {
-            alert($(this).text());
+            list = list.concat($(this)[0].id + ",")
+        });
+        this.setState({ OrderList: list });
+
+        var data0 = { OrderList: list, RFQReference: this.props.RFQReference };
+        
+        $.ajax({
+            url: 'api/RFQ/QuoteBids/Order',
+            type: 'POST',
+            dataType: 'json',
+            data: data0,
+            cache: false,
+            success: function (data) {
+                this.setState({ data: data });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error('api/RFQ/QuoteBids/Order', status, err.toString());
+            }.bind(this)
         });
     },
 
@@ -232,17 +253,15 @@ var RFQBidQuotes = React.createClass({
 							</div>
 							<div className="modal-body">
 								<ul id="simpleList" className="list-group" draggable="true">
-                                    <li className="list-group-item">                                    <span className="drag-handle">☰ </span>Cost</li>
-                                    <li className="list-group-item">                                    <span className="drag-handle">☰ </span>Supply Time</li>
-                                    <li className="list-group-item">                                    <span className="drag-handle">☰ </span>Delivery Time</li>
-                                    <li className="list-group-item">                                    <span className="drag-handle">☰ </span>BEE</li>
-                                    <li className="list-group-item">                                    <span className="drag-handle">☰ </span>OEM</li>
-                                    <li className="list-group-item">                                    <span className="drag-handle">☰ </span>Track Record</li>
+                                    <li id="Amount" className="list-group-item">                                    <span className="drag-handle">☰ </span>Cost</li>
+                                    <li id="SupplyTime" className="list-group-item">                                    <span className="drag-handle">☰ </span>Supply Time</li>
+                                    <li id="DeliveryTime"className="list-group-item">                                    <span className="drag-handle">☰ </span>Delivery Time</li>                                    
+                                    <li id="oem" className="list-group-item">                                    <span className="drag-handle">☰ </span>OEM</li>                                    
 								</ul>						
 							</div>
 							<div className="modal-footer">
 								<button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-								<button type="submit" className="btn btn-primary" onClick={this.onClickShow}>Order</button>
+								<button type="submit" className="btn btn-primary" data-dismiss="modal" onClick={this.onClickShow}>Order</button>
 							</div>
 						</div>
 					</div>
