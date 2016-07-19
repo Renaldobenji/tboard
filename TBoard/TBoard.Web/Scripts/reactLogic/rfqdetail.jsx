@@ -217,6 +217,12 @@ var RFQBidQuotes = React.createClass({
         Sortable.create(simpleList, {
             draggable: ".list-group-item"
         });
+
+        $("#jRate").jRate({
+            count: 5,
+            min: 1,
+            max: 5
+        });
     },
 
     render: function () {
@@ -224,15 +230,39 @@ var RFQBidQuotes = React.createClass({
         function oemFormatter(cell, row) {
             return <div> {row.oem.toString()} </div>;
         }
-      
+        
+        function actionsRateFormatter(cell, row) {
+            return <ActionsRate OrganizationID={row.OrganizationID}/>;
+        }
 
         return (
-            <div>            
+            <div> 
+            <div className="modal fade" id="myRateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			    <div className="modal-dialog">
+				    <div className="modal-content">
+					    <div className="modal-header">
+						    <button type="button" className="close" data-dismiss="modal" aria-hidden="true">×</button>
+						    <h4 className="modal-title" id="myModalLabel">Rate Supplier</h4>
+					    </div>
+					    <div className="modal-body">
+                                <div id="jRate"></div>
+                                <div className="form-group">
+                                <textarea className="form-control" rows="5" placeholder="Rate Supplier"></textarea>
+                                </div>
+
+					    </div>
+					    <div className="modal-footer">
+						    <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+						    <button type="submit" className="btn btn-primary" data-dismiss="modal" onClick={this.ratePostClick}>Rate</button>
+					    </div>
+				    </div>
+			    </div>
+            </div>           
 			<div className="col-lg-9">
                 <button className="btn btn-primary" data-toggle="modal" data-target="#myModal">
                     Order Quotes
                 </button>
-
+              
 				<BootstrapTable data={this.state.data} striped={true} hover={true} tableStyle={{margin:0}}>
                   <TableHeaderColumn isKey={true} dataField="CreatedDate">CreatedDate</TableHeaderColumn>
                   <TableHeaderColumn dataField="FirstName">FirstName</TableHeaderColumn>
@@ -241,7 +271,8 @@ var RFQBidQuotes = React.createClass({
                   <TableHeaderColumn dataField="SupplyTime">SupplyTime</TableHeaderColumn>
                   <TableHeaderColumn dataField="DeliveryTime">DeliveryTime</TableHeaderColumn>
                   <TableHeaderColumn dataField="name">Company Name</TableHeaderColumn>                  
-                 <TableHeaderColumn dataFormat={oemFormatter}>OEM</TableHeaderColumn>  
+                 <TableHeaderColumn dataFormat={oemFormatter}>OEM</TableHeaderColumn> 
+                 <TableHeaderColumn dataFormat={actionsRateFormatter}>Actions</TableHeaderColumn>        
 				</BootstrapTable>
 
                 <div className="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -271,4 +302,36 @@ var RFQBidQuotes = React.createClass({
 		)
     }
 
+});
+
+var ActionsRate = React.createClass({
+    
+   rateClick: function () {
+        
+   },
+
+   ratePostClick: function () {
+       // Explicitly focus the text input using the raw DOM API.
+       //alert(this.props.reference);
+       alert("Rate");
+   },
+
+   rateCheckClick: function (e) {
+       // Explicitly focus the text input using the raw DOM API.
+       //alert(this.props.reference);
+       e.checked = true;
+   },
+
+   componentDidMount: function () {
+       
+   }, 
+
+    render: function () { 
+
+        return (
+                 <div>                     
+				    <button className="btn btn-outline btn-warning btn-sm" data-toggle="modal" data-target="#myRateModal" onClick={this.rateClick}>Rate</button>
+                 </div>
+		)
+}
 });

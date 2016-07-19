@@ -53,6 +53,7 @@ namespace TBoard.Data.Model
         public DbSet<group> groups { get; set; }
         public DbSet<role> roles { get; set; }
         public DbSet<quote> quotes { get; set; }
+        public DbSet<rating> ratings { get; set; }
     
         public virtual ObjectResult<DocumentReq> sps_GetOutstandingDocumentRequirements(Nullable<int> organizationID)
         {

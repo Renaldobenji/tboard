@@ -10,17 +10,15 @@
 namespace TBoard.Data.Model
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class sps_GetBidsForQuote_Result
+    public partial class rating
     {
-        public System.DateTime CreatedDate { get; set; }
-        public string FirstName { get; set; }
-        public string Surname { get; set; }
-        public decimal Amount { get; set; }
-        public System.DateTime SupplyTime { get; set; }
-        public System.DateTime DeliveryTime { get; set; }
-        public string name { get; set; }
-        public bool oem { get; set; }
-        public int OrganizationID { get; set; }
+        public int ratingID { get; set; }
+        public string ownerType { get; set; }
+        public string owningID { get; set; }
+        public Nullable<int> rating1 { get; set; }
+        public string comment { get; set; }
+        public Nullable<System.DateTime> dateCreated { get; set; }
     }
 }

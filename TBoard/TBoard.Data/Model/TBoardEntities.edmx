@@ -216,6 +216,17 @@
           <Property Name="supplyTime" Type="datetime" Precision="0" />
           <Property Name="deliveryTime" Type="datetime" Precision="0" />
         </EntityType>
+        <EntityType Name="rating">
+          <Key>
+            <PropertyRef Name="ratingID" />
+          </Key>
+          <Property Name="ratingID" Type="int" Nullable="false" />
+          <Property Name="ownerType" Type="varchar" MaxLength="45" />
+          <Property Name="owningID" Type="varchar" MaxLength="45" />
+          <Property Name="rating" Type="int" />
+          <Property Name="comment" Type="varchar" MaxLength="590" />
+          <Property Name="dateCreated" Type="datetime" Precision="0" />
+        </EntityType>
         <EntityType Name="rfq">
           <Key>
             <PropertyRef Name="rfqID" />
@@ -464,6 +475,7 @@
           <EntitySet Name="organization" EntityType="Self.organization" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="organizationtypes" EntityType="Self.organizationtypes" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="quote" EntityType="Self.quote" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="rating" EntityType="Self.rating" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="rfq" EntityType="Self.rfq" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="rfqtype" EntityType="Self.rfqtype" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="roles" EntityType="Self.roles" Schema="tboard" store:Type="Tables" />
@@ -616,8 +628,9 @@
           <Parameter Name="rfqReference" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sps_GetBidsForQuote" ReturnType="Collection(TBoardModel.sps_GetBidsForQuote_Result)">
-            <Parameter Name="rfqReference" Mode="In" Type="String" />
+          <Parameter Name="rfqReference" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="ratings" EntityType="TBoardModel.rating" />
         </EntityContainer>
         <EntityType Name="address">
           <Key>
@@ -1097,7 +1110,19 @@
           <Property Type="DateTime" Name="DeliveryTime" Nullable="false" />
           <Property Type="String" Name="name" Nullable="false" />
           <Property Type="Boolean" Name="oem" Nullable="false" />
+          <Property Type="Int32" Name="OrganizationID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="rating">
+          <Key>
+            <PropertyRef Name="ratingID" />
+          </Key>
+          <Property Name="ratingID" Type="Int32" Nullable="false" />
+          <Property Name="ownerType" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="owningID" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="rating1" Type="Int32" />
+          <Property Name="comment" Type="String" MaxLength="590" FixedLength="false" Unicode="false" />
+          <Property Name="dateCreated" Type="DateTime" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1427,6 +1452,18 @@
               <ComplexTypeMapping TypeName="TBoardModel.sps_GetBidsForQuote_Result" />
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="ratings">
+            <EntityTypeMapping TypeName="TBoardModel.rating">
+              <MappingFragment StoreEntitySet="rating">
+                <ScalarProperty Name="dateCreated" ColumnName="dateCreated" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="rating1" ColumnName="rating" />
+                <ScalarProperty Name="owningID" ColumnName="owningID" />
+                <ScalarProperty Name="ownerType" ColumnName="ownerType" />
+                <ScalarProperty Name="ratingID" ColumnName="ratingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
