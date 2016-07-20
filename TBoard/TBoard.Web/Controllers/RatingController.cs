@@ -47,7 +47,7 @@ namespace TBoard.Web.Controllers
             rating.owningID = formData.Get("owningID");
             rating.rating1 = Convert.ToInt32(formData.Get("rating1"));
             rating.comment = formData.Get("comment");
-            rating.dateCreated = Convert.ToDateTime(formData.Get("dateCreated"));
+            rating.dateCreated = DateTime.Now;
         }
 
         // PUT api/<controller>/5

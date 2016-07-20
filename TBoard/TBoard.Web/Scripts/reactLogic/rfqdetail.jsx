@@ -172,7 +172,8 @@ var RFQBidQuotes = React.createClass({
          return {
              data: [],
              OrderList: "",
-             RFQReference : this.props.RFQReference
+             RFQReference: this.props.RFQReference,
+             CurrentOrganizationID : 0
          }
     },
 
@@ -221,10 +222,37 @@ var RFQBidQuotes = React.createClass({
         $("#jRate").jRate({
             count: 5,
             min: 1,
-            max: 5
+            max: 5,
+            onChange: function (rating) {
+                $('#rating').val(rating);
+            }
         });
     },
 
+    ratePostClick: function () {
+
+        alert($('#rating').val());
+        alert($('#OrganizationID').val());
+        alert($('#ratingComment').val());
+
+        var data0 = { ownerType: "ORG", owningID: $('#OrganizationID').val(), rating1: $('#rating').val(), comment: $('#ratingComment').val() };
+
+        $.ajax({
+            url: 'api/Rating',
+            type: 'POST',
+            dataType: 'json',
+            data: data0,
+            cache: false,
+            success: function (data) {
+                this.setState({ data: data });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error('api/Rating', status, err.toString());
+            }.bind(this)
+        });
+    },
+
+    
     render: function () {
 
         function oemFormatter(cell, row) {
@@ -237,27 +265,28 @@ var RFQBidQuotes = React.createClass({
 
         return (
             <div> 
-            <div className="modal fade" id="myRateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			    <div className="modal-dialog">
-				    <div className="modal-content">
-					    <div className="modal-header">
-						    <button type="button" className="close" data-dismiss="modal" aria-hidden="true">×</button>
-						    <h4 className="modal-title" id="myModalLabel">Rate Supplier</h4>
-					    </div>
-					    <div className="modal-body">
-                                <div id="jRate"></div>
-                                <div className="form-group">
-                                <textarea className="form-control" rows="5" placeholder="Rate Supplier"></textarea>
-                                </div>
+             <div className="modal fade" id="myRateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			        <div className="modal-dialog">
+				        <div className="modal-content">
+					        <div className="modal-header">
+						        <button type="button" className="close" data-dismiss="modal" aria-hidden="true">×</button>
+						        <h4 className="modal-title" id="myModalLabel">Rate Supplier</h4>
+					        </div>
+					        <div className="modal-body">
+                                    <div id="jRate"></div>
+                                    <input type="hidden" id="rating"></input>
+                                    <div className="form-group">
+                                    <textarea  id="ratingComment" className="form-control" rows="5" placeholder="Rate Supplier"></textarea>
+                                    </div>
 
-					    </div>
-					    <div className="modal-footer">
-						    <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-						    <button type="submit" className="btn btn-primary" data-dismiss="modal" onClick={this.ratePostClick}>Rate</button>
-					    </div>
-				    </div>
-			    </div>
-            </div>           
+					        </div>
+					        <div className="modal-footer">
+						        <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+						        <button type="submit" className="btn btn-primary" data-dismiss="modal" onClick={this.ratePostClick}>Rate</button>
+					        </div>
+				        </div>
+			        </div>
+             </div>    
 			<div className="col-lg-9">
                 <button className="btn btn-primary" data-toggle="modal" data-target="#myModal">
                     Order Quotes
@@ -305,32 +334,23 @@ var RFQBidQuotes = React.createClass({
 });
 
 var ActionsRate = React.createClass({
-    
-   rateClick: function () {
-        
-   },
 
    ratePostClick: function () {
        // Explicitly focus the text input using the raw DOM API.
        //alert(this.props.reference);
-       alert("Rate");
-   },
+       $('input[type="hidden"][id="OrganizationID"]').remove();
+       var $hiddenInput = $('<input/>', { type: 'hidden', id: "OrganizationID", value: this.props.OrganizationID });
+       $hiddenInput.appendTo($('#myRateModal'));     
+       $('#myRateModal').modal('show');
 
-   rateCheckClick: function (e) {
-       // Explicitly focus the text input using the raw DOM API.
-       //alert(this.props.reference);
-       e.checked = true;
    },
-
-   componentDidMount: function () {
-       
-   }, 
 
     render: function () { 
 
         return (
-                 <div>                     
-				    <button className="btn btn-outline btn-warning btn-sm" data-toggle="modal" data-target="#myRateModal" onClick={this.rateClick}>Rate</button>
+                 <div>  
+                                              
+				    <button className="btn btn-outline btn-warning btn-sm" onClick={this.ratePostClick}>Rate</button>
                  </div>
 		)
 }
