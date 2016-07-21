@@ -45,9 +45,11 @@ namespace TBoard.Web.Controllers
             rating rating = new rating();
             rating.ownerType = formData.Get("ownerType");
             rating.owningID = formData.Get("owningID");
-            rating.rating1 = Convert.ToInt32(formData.Get("rating1"));
+            rating.rating1 = Decimal.ToInt32(Convert.ToDecimal(formData.Get("rating1")));
             rating.comment = formData.Get("comment");
             rating.dateCreated = DateTime.Now;
+
+            this.ratingBusinessLogic.Create(rating);
         }
 
         // PUT api/<controller>/5

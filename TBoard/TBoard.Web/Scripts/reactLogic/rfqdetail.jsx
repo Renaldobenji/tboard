@@ -221,7 +221,8 @@ var RFQBidQuotes = React.createClass({
 
         $("#jRate").jRate({
             count: 5,
-            min: 1,
+            precision: 1,
+            min: 0,
             max: 5,
             onChange: function (rating) {
                 $('#rating').val(rating);
@@ -230,11 +231,7 @@ var RFQBidQuotes = React.createClass({
     },
 
     ratePostClick: function () {
-
-        alert($('#rating').val());
-        alert($('#OrganizationID').val());
-        alert($('#ratingComment').val());
-
+       
         var data0 = { ownerType: "ORG", owningID: $('#OrganizationID').val(), rating1: $('#rating').val(), comment: $('#ratingComment').val() };
 
         $.ajax({
@@ -261,6 +258,10 @@ var RFQBidQuotes = React.createClass({
         
         function actionsRateFormatter(cell, row) {
             return <ActionsRate OrganizationID={row.OrganizationID}/>;
+        }
+
+        function actionsRateDisplayFormatter(cell, row) {
+            return <ActionsRateDisplay QuoteID={row.QuoteID} AVGRating={row.AverageRating }/>;
         }
 
         return (
@@ -300,7 +301,8 @@ var RFQBidQuotes = React.createClass({
                   <TableHeaderColumn dataField="SupplyTime">SupplyTime</TableHeaderColumn>
                   <TableHeaderColumn dataField="DeliveryTime">DeliveryTime</TableHeaderColumn>
                   <TableHeaderColumn dataField="name">Company Name</TableHeaderColumn>                  
-                 <TableHeaderColumn dataFormat={oemFormatter}>OEM</TableHeaderColumn> 
+                  <TableHeaderColumn dataFormat={oemFormatter}>OEM</TableHeaderColumn> 
+                  <TableHeaderColumn dataFormat={actionsRateDisplayFormatter}>Rating</TableHeaderColumn>  
                  <TableHeaderColumn dataFormat={actionsRateFormatter}>Actions</TableHeaderColumn>        
 				</BootstrapTable>
 
@@ -316,7 +318,9 @@ var RFQBidQuotes = React.createClass({
                                     <li id="Amount" className="list-group-item">                                    <span className="drag-handle">☰ </span>Cost</li>
                                     <li id="SupplyTime" className="list-group-item">                                    <span className="drag-handle">☰ </span>Supply Time</li>
                                     <li id="DeliveryTime"className="list-group-item">                                    <span className="drag-handle">☰ </span>Delivery Time</li>                                    
-                                    <li id="oem" className="list-group-item">                                    <span className="drag-handle">☰ </span>OEM</li>                                    
+                                    <li id="oem" className="list-group-item">                                    <span className="drag-handle">☰ </span>OEM</li>   
+                                    <li id="AverageRating" className="list-group-item">                                    <span className="drag-handle">☰ </span>Rating</li>      
+                                                                   
 								</ul>						
 							</div>
 							<div className="modal-footer">
@@ -352,6 +356,24 @@ var ActionsRate = React.createClass({
                                               
 				    <button className="btn btn-outline btn-warning btn-sm" onClick={this.ratePostClick}>Rate</button>
                  </div>
+		)
+}
+});
+
+var ActionsRateDisplay = React.createClass({
+
+    componentDidMount: function () {        
+
+        $("#jRate" + this.props.QuoteID).jRate({
+            rating: this.props.AVGRating,
+            readOnly: true
+        });
+    },
+
+    render: function () { 
+
+        return (
+                 <div id={'jRate' + this.props.QuoteID}></div>
 		)
 }
 });

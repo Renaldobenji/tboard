@@ -242,12 +242,14 @@ namespace TBoard.Web.Controllers
             var property2 = typeof(sps_GetBidsForQuote_Result).GetProperty(orderlistValue[1]);
             var property3 = typeof(sps_GetBidsForQuote_Result).GetProperty(orderlistValue[2]);
             var property4 = typeof(sps_GetBidsForQuote_Result).GetProperty(orderlistValue[3]);
+            var property5 = typeof(sps_GetBidsForQuote_Result).GetProperty(orderlistValue[4]);
 
 
             var sortedList = quotes.OrderBy(a => property1.GetValue(a, null))
                 .ThenBy(b => property2.GetValue(b, null))
                 .ThenBy(c => property3.GetValue(c, null))
-                .ThenBy(d => property4.GetValue(d, null)).ToList();
+                .ThenBy(d => property4.GetValue(d, null))
+                .ThenBy(d => property5.GetValue(d, null)).ToList();
 
             var result = JsonConvert.SerializeObject(sortedList);
 

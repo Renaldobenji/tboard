@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TBoard.Data", "TBoard.Data\TBoard.Data.csproj", "{B08545B1-739D-4D91-8A04-840ACE45576E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TBoard.BusinessLogic", "TBoard.BusinessLogic\TBoard.BusinessLogic.csproj", "{73660039-926C-400C-9EE8-36A645676C19}"

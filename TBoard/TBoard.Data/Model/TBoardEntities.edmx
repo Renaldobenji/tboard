@@ -220,7 +220,7 @@
           <Key>
             <PropertyRef Name="ratingID" />
           </Key>
-          <Property Name="ratingID" Type="int" Nullable="false" />
+          <Property Name="ratingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ownerType" Type="varchar" MaxLength="45" />
           <Property Name="owningID" Type="varchar" MaxLength="45" />
           <Property Name="rating" Type="int" />
@@ -1111,6 +1111,8 @@
           <Property Type="String" Name="name" Nullable="false" />
           <Property Type="Boolean" Name="oem" Nullable="false" />
           <Property Type="Int32" Name="OrganizationID" Nullable="false" />
+          <Property Type="Decimal" Name="AverageRating" Nullable="false" />
+          <Property Type="Int32" Name="QuoteID" Nullable="false" />
         </ComplexType>
         <EntityType Name="rating">
           <Key>

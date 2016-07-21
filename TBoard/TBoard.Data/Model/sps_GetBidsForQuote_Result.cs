@@ -22,5 +22,7 @@ namespace TBoard.Data.Model
         public string name { get; set; }
         public bool oem { get; set; }
         public int OrganizationID { get; set; }
+        public decimal AverageRating { get; set; }
+        public int QuoteID { get; set; }
     }
 }
