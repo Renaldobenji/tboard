@@ -32,5 +32,10 @@ namespace TBoard.BusinessLogic.BusinessLogic
             });
             this.repository.Save();
         }
+
+        public IList<emailqueue> GetUnprocessedEmail()
+        {
+            return this.repository.GetUnprocessedEmail();
+        }
     }
 }

@@ -115,7 +115,11 @@ routie({
 			);
 		}
         ,
-        'dashboard': function(){
+		'dashboard': function () {
+
+		    var tokens = new TboardJWTToken();
+		    var result = tokens.IsLoggedIn();
+
 			ReactDOM.render(
 				React.createElement(Dashboard, null), document.getElementById('container')
 			);

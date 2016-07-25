@@ -18,13 +18,15 @@ namespace TBoard.Web.Controllers
         private AddressBusinessLogic addressBusinessLogic;
         private UserBusinessLogic userBusinessLogic;
         private OrganizationBusinessLogic organizationBusinessLogic;
+        private EmailQueueBusinessLogic emailQueueBusinessLogic;
 
-        public RegistrationController(CommunicationBusinessLogic communicationBusinessLogic, AddressBusinessLogic addressBusinessLogic, UserBusinessLogic userBusinessLogic, OrganizationBusinessLogic organizationBusinessLogic)
+        public RegistrationController(CommunicationBusinessLogic communicationBusinessLogic, AddressBusinessLogic addressBusinessLogic, UserBusinessLogic userBusinessLogic, OrganizationBusinessLogic organizationBusinessLogic, EmailQueueBusinessLogic emailQueueBusinessLogic)
         {
             this.communicationBusinessLogic = communicationBusinessLogic;
             this.addressBusinessLogic = addressBusinessLogic;
             this.userBusinessLogic = userBusinessLogic;
             this.organizationBusinessLogic = organizationBusinessLogic;
+            this.emailQueueBusinessLogic = emailQueueBusinessLogic;
         }
         // POST api/<controller>
         public string Post(FormDataCollection formData)
@@ -73,6 +75,9 @@ namespace TBoard.Web.Controllers
                 addCommunicationBasedOnType(formData, org, userResponse, "HomeNumber", "HME");
                 addCommunicationBasedOnType(formData, org, userResponse, "OfficeNumber", "WRK");
                 addCommunicationBasedOnType(formData, org, userResponse, "Email", "EML");
+
+                string emailBody = String.Format("Thank you for Registering, Please login using the following username:{0} and password:{1}", formData.Get("Name"), formData.Get("Password"));
+                this.emailQueueBusinessLogic.SendEmail("admin@Tenderboard.co.za", formData.Get("Email"), "Registration Complete", emailBody);
             }
             catch (DbEntityValidationException e)
             {

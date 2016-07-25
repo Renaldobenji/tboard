@@ -14,7 +14,7 @@
         };
     },
 
-    loadData: function () {
+    loadData: function (userID) {
         $.ajax({
             url: 'api/RFQ/Detail/' + this.props.rfqreference,
             success: function (data) {
@@ -26,7 +26,7 @@
         });
 
         $.ajax({
-            url: 'api/RFQ/MyLatestQuote/' + this.props.rfqreference + '/' + this.state.UserID,
+            url: 'api/RFQ/MyLatestQuote/' + this.props.rfqreference + '/' + userID,
             success: function (data) {
                 if (data.data == null)
                 {
@@ -78,9 +78,12 @@
 
     componentWillMount: function () {
         var tokens = new TboardJWTToken();
-        var decodedToken = tokens.getJWTToken();
-        this.setState({ UserID: decodedToken.UserID });
-        this.loadData();       
+        var loggedIn = tokens.IsLoggedIn();
+        if (loggedIn == true) {
+            var decodedToken = tokens.getJWTToken();
+            this.setState({ UserID: decodedToken.UserID });
+            this.loadData(decodedToken.UserID);
+        }
     },
 
 
@@ -123,7 +126,16 @@ var RFQBidDetail = React.createClass({
         var ds = $('#DeliveryTimeControl').val();
         this.props.updateDeliveryTime(ds);
         this.props.updateSupplyTime(sd);
+        this.wait(2000);
         this.props.bidPost();
+    },
+
+    wait: function (ms){
+        var start = new Date().getTime();
+        var end = start;
+        while(end < start + ms) {
+            end = new Date().getTime();
+        }
     },
 
     render: function() {

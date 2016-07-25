@@ -72,7 +72,9 @@
 
         if (token == null) {
             if (params != "")
-            { routie('login/' + params); }
+            {
+                routie('login/' + params);
+                return false;}
             else
                 return false;            
         }

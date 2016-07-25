@@ -112,7 +112,8 @@ var Register = React.createClass({
                   data: this.state,
                   cache: false,
                   success: function(data) {
-                      alert(data);
+                      alert("Registration Complete");
+                      window.location.href = '../'; //one level up
                   }.bind(this),
                   error: function(xhr, status, err) {
                     console.error('api/Registration/Post', status, err.toString());

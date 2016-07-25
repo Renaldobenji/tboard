@@ -140,13 +140,14 @@ namespace TBoard.Web.Controllers
             if (expertiseOwnership.Count.Equals(0))
             {
                 //Send email to admin
-                this.emailQueueBusinessLogic.SendEmail("admin@Tenderboard.co.za", "admin@Tenderboard.co.za", "Request for Quotation", "There is no organization available to serve this request");
+                this.emailQueueBusinessLogic.SendEmail("admin@Tenderboard.co.za", "admin@Tenderboard.co.za", "Request for Quotation", string.Format("There is no organization available to serve this request: {0}", rfq.reference));
                 return;
             }
             //Send out email to all subscribed to that category
             foreach (var e in expertiseOwnership)
             {
-                this.emailQueueBusinessLogic.SendEmail("admin@Tenderboard.co.za",e.communicationLine1,"Request for Quotation","Body of the Quotation");
+                string emailBody = string.Format("The following quote has been created for your subscribed category: {0}. You can view information and bid here: {1}",rfq.reference, "http://tboard.azurewebsites.net/#rfqbid/"+ rfq.reference);
+                this.emailQueueBusinessLogic.SendEmail("admin@Tenderboard.co.za",e.communicationLine1,"Request for Quotation", emailBody);
             } 
         }
 

@@ -15,5 +15,10 @@ namespace TBoard.Data.Repository
         {
             
         }
+
+        public IList<emailqueue> GetUnprocessedEmail()
+        {
+            return this._dbContext.emailqueues.Where(x => x.sentDate == null).ToList();
+        }
     }
 }
