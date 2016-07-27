@@ -57,25 +57,6 @@
         console.log(this.state.NewBidAmount);
     },
 
-    bidPost: function () {
-        console.log('POSTING FORM');
-        $.ajax({
-            url: 'api/RFQ/Quote',
-            type: 'POST',
-            dataType: 'json',
-            data: this.state,
-            cache: false,
-            success: function (data) {
-                this.setState({ MyLatestBidAmount: data.data.amount });
-                this.setState({ MyLatestBidDate: data.data.createdDate.substring(0, 10) });
-                alert("Success");
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error('api/RFQ/Quote', status, err.toString());
-            }.bind(this)
-        });
-    },
-
     componentWillMount: function () {
         var tokens = new TboardJWTToken();
         var loggedIn = tokens.IsLoggedIn();
@@ -102,7 +83,7 @@
                         <br /><br />              
                         <div className="row">
 		                   <div className="col-md-9">
-                            <RFQBidDetail ExpiryDate={this.state.ExpiryDate} RFQDetails={this.state.RFQDetails} bidPost={this.bidPost} updateBidAmount={this.updateBidAmount} updateSupplyTime={this.updateSupplyTime} updateDeliveryTime={this.updateDeliveryTime}/>
+                            <RFQBidDetail UserID={this.state.UserID} RFQReference={this.state.RFQReference} ExpiryDate={this.state.ExpiryDate} RFQDetails={this.state.RFQDetails} bidPost={this.bidPost} updateBidAmount={this.updateBidAmount} updateSupplyTime={this.updateSupplyTime} updateDeliveryTime={this.updateDeliveryTime}/>
 		                   </div> 
                             <div className="col-md-3">
                             <RFQMyDids MyLatestBidAmount={this.state.MyLatestBidAmount} MyLatestBidDate={this.state.MyLatestBidDate}/>
@@ -120,14 +101,38 @@ var RFQBidDetail = React.createClass({
         $('#SupplyTime').datetimepicker();
         $('#DeliveryTime').datetimepicker();
     },
-
+   
     WillYouPOST: function () {
         var sd = $('#SupplyTimeControl').val();
         var ds = $('#DeliveryTimeControl').val();
+        var bidAmount = $('#bidAmount').val();
         this.props.updateDeliveryTime(ds);
         this.props.updateSupplyTime(sd);
-        this.wait(2000);
-        this.props.bidPost();
+
+        var dataPost = {
+            RFQReference: this.props.RFQReference,
+            UserID: this.props.UserID,
+            NewBidAmount: bidAmount,
+            SupplyTime  : sd,
+            DeliveryTime  : ds
+        };        
+
+        console.log('POSTING FORM');
+        $.ajax({
+            url: 'api/RFQ/Quote',
+            type: 'POST',
+            dataType: 'json',
+            data: dataPost,
+            cache: false,
+            success: function (data) {
+                this.setState({ MyLatestBidAmount: data.data.amount });
+                this.setState({ MyLatestBidDate: data.data.createdDate.substring(0, 10) });
+                alert("Success");
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error('api/RFQ/Quote', status, err.toString());
+            }.bind(this)
+        });
     },
 
     wait: function (ms){
@@ -157,7 +162,7 @@ var RFQBidDetail = React.createClass({
                                     <label>Amount</label>
                                     <div className="form-group input-group">                                        
                                         <span className="input-group-addon">R</span>
-                                        <input type="text" className="form-control" placeholder="Amount" value={this.props.NewBidAmount} onChange={this.props.updateBidAmount}/>
+                                        <input id="bidAmount" type="text" className="form-control" placeholder="Amount" value={this.props.NewBidAmount} onChange={this.props.updateBidAmount}/>
                                         <span className="input-group-addon">.00</span>
                                     </div> 
                                         <label>Supply Time</label>
