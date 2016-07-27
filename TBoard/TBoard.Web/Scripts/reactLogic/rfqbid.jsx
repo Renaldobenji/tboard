@@ -42,6 +42,10 @@
         });
     },
 
+    updateloadData: function (e) {
+        this.loadData(this.state.UserID);
+    },
+
     updateBidAmount: function (e) {
         this.setState({ NewBidAmount: e.target.value });
         console.log(this.state.NewBidAmount);
@@ -83,7 +87,7 @@
                         <br /><br />              
                         <div className="row">
 		                   <div className="col-md-9">
-                            <RFQBidDetail UserID={this.state.UserID} RFQReference={this.state.RFQReference} ExpiryDate={this.state.ExpiryDate} RFQDetails={this.state.RFQDetails} bidPost={this.bidPost} updateBidAmount={this.updateBidAmount} updateSupplyTime={this.updateSupplyTime} updateDeliveryTime={this.updateDeliveryTime}/>
+                            <RFQBidDetail UserID={this.state.UserID} RFQReference={this.state.RFQReference} ExpiryDate={this.state.ExpiryDate} RFQDetails={this.state.RFQDetails} bidPost={this.updateloadData} updateBidAmount={this.updateBidAmount} updateSupplyTime={this.updateSupplyTime} updateDeliveryTime={this.updateDeliveryTime}/>
 		                   </div> 
                             <div className="col-md-3">
                             <RFQMyDids MyLatestBidAmount={this.state.MyLatestBidAmount} MyLatestBidDate={this.state.MyLatestBidDate}/>
@@ -127,6 +131,7 @@ var RFQBidDetail = React.createClass({
             success: function (data) {
                 this.setState({ MyLatestBidAmount: data.data.amount });
                 this.setState({ MyLatestBidDate: data.data.createdDate.substring(0, 10) });
+                this.props.bidPost();
                 alert("Success");
             }.bind(this),
             error: function (xhr, status, err) {
