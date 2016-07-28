@@ -151,6 +151,11 @@ var ActiveRequestList = React.createClass({
 
     loadData: function () {
         $.ajax({
+            beforeSend: function (request) {
+                var tokens = new TboardJWTToken();
+                value = tokens.getJWTTokenRAW();
+                request.setRequestHeader("Authority", value);
+            },
             url: 'api/RFQ/Active/' + this.props.UserID,
             success: function (data) {
                 this.setState({ data: data.data });

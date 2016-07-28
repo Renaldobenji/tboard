@@ -1,4 +1,11 @@
-﻿var NavHeader = React.createClass({	
+﻿var NavHeader = React.createClass({
+
+    logout:function(){
+        var tokens = new TboardJWTToken();
+        var result = tokens.logout();
+        routie('');
+    },
+
 	render: function(){
 		return (	
                     <div>
@@ -23,7 +30,7 @@
 				                    <li><a href="#"><i className="fa fa-gear fa-fw"></i> Settings</a>
 				                    </li>
 				                    <li className="divider"></li>
-				                    <li><a href="login.html"><i className="fa fa-sign-out fa-fw"></i> Logout</a>
+				                    <li><a onClick={this.logout}><i className="fa fa-sign-out fa-fw"></i> Logout</a>
 				                    </li>
 			                    </ul>			
 		                    </li>		

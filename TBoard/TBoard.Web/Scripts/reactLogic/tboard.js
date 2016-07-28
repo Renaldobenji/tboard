@@ -82,6 +82,10 @@
         return true;
     };
 
+    TboardJWTToken.prototype.logout = function () {
+        eraseCookie('jwtToken');
+    };
+
     TboardJWTToken.prototype.getJWTToken = function () {
         var value = readCookie("jwtToken");
         if (value == null)
@@ -90,6 +94,14 @@
         var decoded = jwt_decode(value);
 
         return decoded;
+    };
+
+    TboardJWTToken.prototype.getJWTTokenRAW = function () {
+        var value = readCookie("jwtToken");
+        if (value == null)
+            return null;
+
+        return value;
     };
 
     function createCookie(name, value, days) {
