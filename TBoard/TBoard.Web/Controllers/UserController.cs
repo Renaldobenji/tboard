@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.Data.Model;
+using TBoard.Web.Attributes;
 
 namespace TBoard.Web.Controllers
 {
@@ -20,8 +21,9 @@ namespace TBoard.Web.Controllers
         {
             this.userBusinessLogic = userBusinessLogic;
         }
-        
+
         // GET api/<controller>/5
+        [JWTTokenValidation(Roles = "Admin")]
         [Route("api/User/GetByOrganization/{id}")]
         public HttpResponseMessage GetByOrganization(int id)
         {
