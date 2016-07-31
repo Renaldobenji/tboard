@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.Data.Model;
+using TBoard.Web.Attributes;
 
 namespace TBoard.Web.Controllers
 {
@@ -14,7 +15,7 @@ namespace TBoard.Web.Controllers
     {
         //
         // GET: /Upload/
-
+        [JWTTokenValidation]
         public ActionResult Index(int key)
         {
             using (TBoardEntities entities = new TBoardEntities())
@@ -34,6 +35,7 @@ namespace TBoard.Web.Controllers
         }
 
         [System.Web.Http.HttpPost]
+        [JWTTokenValidation]
         public HttpResponseMessage PostForm()
         {
             var httpRequest = System.Web.HttpContext.Current.Request;

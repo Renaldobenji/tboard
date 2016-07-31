@@ -8,6 +8,7 @@ using System.Web.Http;
 using Newtonsoft.Json;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.Data.Model;
+using TBoard.Web.Attributes;
 
 namespace TBoard.Web.Controllers
 {
@@ -19,6 +20,8 @@ namespace TBoard.Web.Controllers
         {
             this.organizationBusinessLogic = organizationBusinessLogic;
         }
+
+        [JWTTokenValidation]
         public string Get(int id)
         {
             organization org = this.organizationBusinessLogic.FindBy(x => x.organizationID == id).FirstOrDefault();
@@ -33,6 +36,7 @@ namespace TBoard.Web.Controllers
         }
 
         // POST api/<controller>
+        [JWTTokenValidation]
         public void Post(FormDataCollection formData)
         {
             int organizationID = Convert.ToInt32(formData.Get("OrganizationID"));

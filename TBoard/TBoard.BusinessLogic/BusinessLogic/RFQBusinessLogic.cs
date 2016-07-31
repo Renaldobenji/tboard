@@ -39,5 +39,9 @@ namespace TBoard.BusinessLogic.BusinessLogic
         {
             return this.repository.GetRFQBids(rfqReference);
         }
+        public int MyActiveRFQ(int userID)
+        {
+            return this.repository.MyActiveRFQ(userID);
+        }
     }
 }

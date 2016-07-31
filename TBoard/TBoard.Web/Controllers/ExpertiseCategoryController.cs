@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.Data.Model;
 using System.Web;
+using TBoard.Web.Attributes;
 
 namespace TBoard.Web.Controllers
 {
@@ -24,6 +25,7 @@ namespace TBoard.Web.Controllers
             this.expertiseOwnershipBusinessLogic = expertiseOwnershipBusinessLogic;
         }
         // GET api/<controller>
+        [JWTTokenValidation]
         public HttpResponseMessage Get()
         {
             var expertiseList = expertiseCategoryBusinessLogic.GetAll().ToList().SelectMany(x => x.expertisesubcategories).Select(y => new
@@ -52,6 +54,7 @@ namespace TBoard.Web.Controllers
         }
 
         [Route("api/ExpertiseCategory/GetExpertiseCategory/{ownerType}/{ownerID}")]
+        [JWTTokenValidation]
         public HttpResponseMessage GetExpertiseCategory(string ownerType, string ownerID)
         {
             var ownershipCat =
@@ -88,6 +91,7 @@ namespace TBoard.Web.Controllers
         }
 
         [Route("api/ExpertiseCategory/GetExpertiseLike/")]
+        [JWTTokenValidation]
         public HttpResponseMessage GetExpertiseLike([FromUri] string q)
         {          
 
@@ -106,6 +110,7 @@ namespace TBoard.Web.Controllers
         }
 
         // POST api/<controller>
+        [JWTTokenValidation]
         public void Post(FormDataCollection formData)
         {
             var orgID = formData.Get("Organization");

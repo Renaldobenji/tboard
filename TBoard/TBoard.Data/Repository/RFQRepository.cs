@@ -35,5 +35,10 @@ namespace TBoard.Data.Repository
         {
             return this._dbContext.sps_GetBidsForQuote(rfqReference).ToList();
         }
+
+        public int MyActiveRFQ(int userID)
+        {
+            return this._dbContext.rfqs.Where(x => x.userID == userID && x.status == "ACT").Count();
+        }
     }
 }

@@ -8,6 +8,7 @@ using System.Web.Http;
 using Newtonsoft.Json;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.Data.Model;
+using TBoard.Web.Attributes;
 
 namespace TBoard.Web.Controllers
 {
@@ -26,6 +27,7 @@ namespace TBoard.Web.Controllers
 
         // GET api/<controller>/5
         [Route("api/Rating/{ownerType}/{ownerID}")]
+        [JWTTokenValidation]
         public string Get(string ownerType, string ownerID)
         {
             IList<rating> rating = this.ratingBusinessLogic.FindBy(x => x.ownerType == ownerType && x.owningID == ownerID).ToList();
@@ -40,6 +42,7 @@ namespace TBoard.Web.Controllers
         }
 
         // POST api/<controller>
+        [JWTTokenValidation]
         public void Post(FormDataCollection formData)
         {
             rating rating = new rating();

@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.Data.Model;
 using System.Web.Http;
+using TBoard.Web.Attributes;
 
 namespace TBoard.Web.Controllers
 {
@@ -34,6 +35,7 @@ namespace TBoard.Web.Controllers
 
         // GET api/<controller>/5
         [Route("api/RFQ/Active/{userID}")]
+        [JWTTokenValidation]
         public HttpResponseMessage Get(string userID)
         {
             var userIDInt = Convert.ToInt32(userID);
@@ -63,8 +65,38 @@ namespace TBoard.Web.Controllers
             return resp;
         }
 
+        [Route("api/RFQ/Statistics/{userID}")]
+        [HttpGet]
+        [JWTTokenValidation]
+        public HttpResponseMessage Statistics(int userID)
+        {
+            //Get RFQ Active Count 
+            var activeRFQTotal = this.rfqBusinessLogic.MyActiveRFQ(userID);
+            //My Active Bids
+            var activeBidsTotal = this.quoteBusinessLogic.GetActiveBids(userID);
+
+            var r = new
+            {
+                data= new 
+                {
+                    activeRFQTotal = activeRFQTotal,
+                    activeBidsTotal = activeBidsTotal
+                }
+            };
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(r))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return resp;
+            //My Organization Rating
+        }
+
         [HttpGet]
         [Route("api/RFQ/All/{userID}")]
+        [JWTTokenValidation]
         public HttpResponseMessage All(string userID)
         {
             var userIDInt = Convert.ToInt32(userID);
@@ -96,6 +128,7 @@ namespace TBoard.Web.Controllers
         }
 
         [HttpGet]
+        [JWTTokenValidation]
         [Route("api/RFQ/Detail/{rfqReference}")]
         public HttpResponseMessage Detail(string rfqReference)
         {            
@@ -126,6 +159,7 @@ namespace TBoard.Web.Controllers
         }
 
         // POST api/<controller>
+        [JWTTokenValidation]
         public void Post(FormDataCollection formData)
         {
             rfq rfq = new rfq();
@@ -152,6 +186,7 @@ namespace TBoard.Web.Controllers
         }
 
         [HttpPost]
+        [JWTTokenValidation]
         [Route("api/RFQ/Quote")]
         public HttpResponseMessage Quote(FormDataCollection formData)
         {
@@ -210,6 +245,7 @@ namespace TBoard.Web.Controllers
         }
 
         [HttpGet]
+        [JWTTokenValidation]
         [Route("api/RFQ/QuoteBids/{rfqReference}")]
         public HttpResponseMessage QuoteBids(string rfqReference)
         {
@@ -230,6 +266,7 @@ namespace TBoard.Web.Controllers
         }
 
         [HttpPost]
+        [JWTTokenValidation]
         [Route("api/RFQ/QuoteBids/Order/")]
         public HttpResponseMessage QuoteBidsOrder(FormDataCollection formData)
         {
@@ -269,6 +306,7 @@ namespace TBoard.Web.Controllers
         }
 
         [HttpGet]
+        [JWTTokenValidation]
         [Route("api/RFQ/MyLatestQuote/{rfqReference}/{userID}")]
         public HttpResponseMessage MyLatestQuote(string rfqReference, string userID)
         {
@@ -290,6 +328,7 @@ namespace TBoard.Web.Controllers
         }
 
         [HttpPost]
+        [JWTTokenValidation]
         [Route("api/RFQ/Cancel")]
         public void Cancel(FormDataCollection formData)
         {
@@ -300,6 +339,7 @@ namespace TBoard.Web.Controllers
         }
 
         [HttpPost]
+        [JWTTokenValidation]
         [Route("api/RFQ/Update")]
         public void Update(FormDataCollection formData)
         {

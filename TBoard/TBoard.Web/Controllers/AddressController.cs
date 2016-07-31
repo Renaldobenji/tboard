@@ -8,6 +8,7 @@ using System.Web.Http;
 using Newtonsoft.Json;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.Data.Model;
+using TBoard.Web.Attributes;
 
 namespace TBoard.Web.Controllers
 {
@@ -25,6 +26,7 @@ namespace TBoard.Web.Controllers
         }
 
         // GET api/<controller>/5
+        [JWTTokenValidation]
         [Route("api/Address/{ownerType}/{ownerID}")]
         public string Get(string ownerType, string ownerID)
         {
@@ -40,6 +42,7 @@ namespace TBoard.Web.Controllers
         }
 
         // POST api/<controller>
+        [JWTTokenValidation]
         public void Post(FormDataCollection formData)
         {
             int addressID = Convert.ToInt32(formData.Get("AddressID"));

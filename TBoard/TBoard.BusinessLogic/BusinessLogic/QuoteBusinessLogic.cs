@@ -22,5 +22,10 @@ namespace TBoard.BusinessLogic.BusinessLogic
             return this.repository.GetQuoteOwnerDetails(rfqReference);
         }
 
+        public int GetActiveBids(int userID)
+        {
+            return this.repository.GetActiveBids(userID);
+        }
+
     }
 }

@@ -23,7 +23,7 @@ namespace TBoard.Web.Controllers
         }
 
         // GET api/<controller>/5
-        [JWTTokenValidation(Roles = "Admin")]
+        [JWTTokenValidation]
         [Route("api/User/GetByOrganization/{id}")]
         public HttpResponseMessage GetByOrganization(int id)
         {
@@ -51,6 +51,7 @@ namespace TBoard.Web.Controllers
         }
 
         // POST api/<controller>
+        [JWTTokenValidation]
         public string Post(FormDataCollection formData)
         {
             var orgID = Convert.ToInt32(formData.Get("OrganizationID"));

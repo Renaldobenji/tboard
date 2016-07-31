@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Http;
 using Newtonsoft.Json;
 using TBoard.BusinessLogic.BusinessLogic;
+using TBoard.Web.Attributes;
 
 namespace TBoard.Web.Controllers
 {
@@ -22,6 +23,7 @@ namespace TBoard.Web.Controllers
         }
 
         // GET api/<controller>/5
+        [JWTTokenValidation]
         [Route("api/Document/GetOutstandingRequirements/{organizationID}")]
         public HttpResponseMessage GetOutstandingRequirements(int organizationID)
         {
@@ -42,6 +44,7 @@ namespace TBoard.Web.Controllers
         }
 
         [Route("api/Document/{organizationID}")]
+        [JWTTokenValidation]
         public HttpResponseMessage Get(int organizationID)
         {
             var result = this.documentBusinessLogic.FindBy(x => x.organizationID == organizationID).ToList();
@@ -76,6 +79,7 @@ namespace TBoard.Web.Controllers
         // POST api/<controller>
         [HttpPost]
         [Route("api/Document/Upload")]
+        [JWTTokenValidation]
         public HttpResponseMessage Upload()
         {
             var httpRequest = HttpContext.Current.Request;

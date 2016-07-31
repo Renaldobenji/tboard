@@ -8,6 +8,7 @@ using System.Web.Http;
 using Newtonsoft.Json;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.Data.Model;
+using TBoard.Web.Attributes;
 
 namespace TBoard.Web.Controllers
 {
@@ -20,6 +21,7 @@ namespace TBoard.Web.Controllers
         }
 
         // GET api/<controller>/5
+        [JWTTokenValidation]
         [Route("api/Communication/{ownerType}/{ownerID}")]
         public string Get(string ownerType, string ownerID)
         {
@@ -39,6 +41,7 @@ namespace TBoard.Web.Controllers
         }
 
         // POST api/<controller>
+        [JWTTokenValidation]
         public void PostOrganization(FormDataCollection formData)
         {
             var orgID = formData.Get("OrganizationID");
