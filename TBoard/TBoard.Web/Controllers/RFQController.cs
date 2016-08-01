@@ -94,6 +94,32 @@ namespace TBoard.Web.Controllers
             //My Organization Rating
         }
 
+        [Route("api/RFQ/MyActiveBids/{userID}")]
+        [HttpGet]
+        [JWTTokenValidation]
+        public HttpResponseMessage MyActiveBids(int userID)
+        {            
+            //My Active Bids
+            var activeBids = this.quoteBusinessLogic.GetMyActiveBids(userID);
+
+            var r = new
+            {
+                data = new
+                {
+                    activeBids = activeBids
+                }
+            };
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(r))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return resp;
+            //My Organization Rating
+        }
+
         [HttpGet]
         [Route("api/RFQ/All/{userID}")]
         [JWTTokenValidation]

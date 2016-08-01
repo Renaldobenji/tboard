@@ -787,6 +787,7 @@
     <Content Include="Scripts\reactLogic\rfqmine.jsx" />
     <Content Include="Scripts\reactLogic\rfqdetail.jsx" />
     <Content Include="Scripts\reactLogic\rfqbid.jsx" />
+    <Content Include="Scripts\reactLogic\rfqmybids.jsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -27,5 +27,10 @@ namespace TBoard.BusinessLogic.BusinessLogic
             return this.repository.GetActiveBids(userID);
         }
 
+        public IList<quote> GetMyActiveBids(int userID)
+        {
+            return this.repository.GetMyActiveBids(userID);
+        }
+
     }
 }

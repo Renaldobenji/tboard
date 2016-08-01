@@ -159,7 +159,13 @@ routie({
             ReactDOM.render(
 				React.createElement(MyAllRFQ, null), document.getElementById('container')
 			);
-        }        
+        }
+        ,
+        'rfqmyactivebids': function () {
+            ReactDOM.render(
+				React.createElement(MyActiveBids, null), document.getElementById('container')
+			);
+        }
 });
 
 routie('rfqdetail/:rfqreference', function (rfqreference) {

@@ -32,6 +32,9 @@
                                     </li>	
                                     <li>
 			                            <a href="#rfqallrequest">All Requests</a>
+                                    </li>   
+                                    <li>
+			                            <a href="#rfqmyactivebids">My Bids</a>
                                     </li>                            
 	                            </ul>
                             </li>
