@@ -162,6 +162,9 @@
     <Compile Include="Model\communicationtype.cs">
       <DependentUpon>TBoardEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\config.cs">
+      <DependentUpon>TBoardEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\document.cs">
       <DependentUpon>TBoardEntities.tt</DependentUpon>
     </Compile>
@@ -247,6 +250,7 @@
       <DependentUpon>TBoardEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\ConfigRepository.cs" />
     <Compile Include="Repository\RatingRepository.cs" />
     <Compile Include="Repository\AddressRepository.cs">
       <SubType>Code</SubType>

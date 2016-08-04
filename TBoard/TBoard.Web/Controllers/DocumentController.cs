@@ -16,10 +16,12 @@ namespace TBoard.Web.Controllers
     {
         private DocumentRequirementBusinessLogic documentRequirementBusinessLogic;
         private DocumentBusinessLogic documentBusinessLogic;
-        public DocumentController(DocumentRequirementBusinessLogic documentRequirementBusinessLogic, DocumentBusinessLogic documentBusinessLogic)
+        ConfigBusinessLogic configBusinesslogic;
+        public DocumentController(DocumentRequirementBusinessLogic documentRequirementBusinessLogic, DocumentBusinessLogic documentBusinessLogic, ConfigBusinessLogic configBusinesslogic)
         {
             this.documentRequirementBusinessLogic = documentRequirementBusinessLogic;
             this.documentBusinessLogic = documentBusinessLogic;
+            this.configBusinesslogic = configBusinesslogic;
         }
 
         // GET api/<controller>/5
@@ -88,9 +90,8 @@ namespace TBoard.Web.Controllers
                 foreach (string file in httpRequest.Files)
                 {
                     var postedFile = httpRequest.Files[file];
-                    var filePath = HttpContext.Current.Server.MapPath("~/" + postedFile.FileName);
-                    postedFile.SaveAs(filePath);
-                    // NOTE: To store in memory use postedFile.InputStream
+                    var filePath = this.configBusinesslogic.GetConfigValue("TBoardPath") + postedFile.FileName;
+                    postedFile.SaveAs(filePath);                    
                 }
 
                 return Request.CreateResponse(HttpStatusCode.Created);

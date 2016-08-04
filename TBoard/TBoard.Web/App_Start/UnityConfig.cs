@@ -37,7 +37,9 @@ namespace TBoard.Web
             container.RegisterType<QuoteBusinessLogic, QuoteBusinessLogic>();
             container.RegisterType<QuoteRepository, QuoteRepository>();
             container.RegisterType<RatingRepository, RatingRepository>();
+            container.RegisterType<ConfigRepository, ConfigRepository>();
 
+            container.RegisterType<ConfigBusinessLogic, ConfigBusinessLogic>();
             container.RegisterType<RatingBusinessLogic, RatingBusinessLogic>();
             container.RegisterType<UserRepository, UserRepository>();
             container.RegisterType<CommunicationRepository, CommunicationRepository>();
