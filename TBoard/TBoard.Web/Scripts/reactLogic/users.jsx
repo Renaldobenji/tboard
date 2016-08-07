@@ -144,47 +144,62 @@ var UserManagement = React.createClass({
 
 
 /*Register Page*/
-var UserList = React.createClass({   
+var UserList = React.createClass({       
 
-    componentDidMount: function() {
+    getInitialState: function () {
+        return { data: [] }
+    },
 
-        $('#userTable').DataTable( {
-            ajax: {
-                    "url": 'api/User/GetByOrganization/' + this.props.OrganizationID
-                }
-                ,"columns": [
-                                { "data": "Username" },
-                                { "data": "FirstName" },
-                                { "data": "Surname" },
-                                { "data": "IDNumber" },
-                                { "data": "Created" },
-                                { "data": "IsApproved" }
-                            ]
-        } );
+    loadData: function () {
+        $.ajax({           
+            url: 'api/User/GetByOrganization/' + this.props.OrganizationID,
+            success: function (data) {
+                this.setState({ data: data.data });
+            }.bind(this)
+        })
+    },
+
+    componentWillMount: function () {
+        this.loadData();
     },
     	
 	render: function(){
         var navBarSyle= {
               marginBottom:0
-            };
-	    
+            };       
+
+        function actionsFormatter(cell, row) {
+            return <UserDetailsView UserID={row.UserID }/>;
+        }
         
 		return (
-	                <div className="col-lg-12">
-			            <table id="userTable" className="table table-striped table-bordered table-hover dataTable no-footer dtr-inline" width="100%" role="grid">
-                            <thead>
-                                <tr>
-                                    <th>Username</th>
-                                    <th>FirstName</th>
-                                    <th>Surname</th>
-                                    <th>ID Number</th>
-                                    <th>Created</th>
-                                    <th>IsApproved</th>
-                                </tr>
-                            </thead>
-                        </table>
-		            </div>
+                    <div className="col-lg-12">
+				        <BootstrapTable data={this.state.data} striped={true} hover={true} pagination={true} search={true}>
+                          <TableHeaderColumn isKey={true} dataField="FirstName" dataSort={true}>FirstName</TableHeaderColumn>
+                          <TableHeaderColumn dataField="Surname" dataSort={true}>Surname</TableHeaderColumn>
+                          <TableHeaderColumn dataField="IDNumber" dataSort={true}>IDNumber</TableHeaderColumn>
+                          <TableHeaderColumn dataField="Created" dataSort={true}>Created</TableHeaderColumn>
+                          <TableHeaderColumn dataField="IsApproved" dataSort={true}>IsApproved</TableHeaderColumn>                  
+                          <TableHeaderColumn dataFormat={actionsFormatter}>Detail</TableHeaderColumn>
+				        </BootstrapTable>
+			        </div>
                 
 		);
 	}
+});
+
+var UserDetailsView = React.createClass({
+    
+    handleClick: function () {
+        // Explicitly focus the text input using the raw DOM API.
+        //alert(this.props.reference);
+        routie('userdetail/' + this.props.UserID);
+    },
+
+    render: function () { 
+
+        return (
+				 <button className="btn btn-outline btn-warning btn-sm" onClick={this.handleClick}>View</button>
+		)
+}
 });

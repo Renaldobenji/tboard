@@ -29,6 +29,7 @@ namespace TBoard.Web.Controllers
         {
             var userArray = this.userBusinessLogic.FindBy(x => x.organizationID == id).Select(x => new
             {
+                UserID = x.userID,
                 Username = x.username,
                 FirstName = x.firstname,
                 Surname = x.surname,
@@ -64,6 +65,81 @@ namespace TBoard.Web.Controllers
                                                 {
                                                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                                                 });
+        }
+
+        [JWTTokenValidation]
+        [Route("api/User/GetUserInformation/{id}")]
+        public HttpResponseMessage GetUserInformation(int id)
+        {
+            var userArray = this.userBusinessLogic.FindBy(x => x.userID == id).Select(x => new
+            {
+                UserID = x.userID,
+                Username = x.username,
+                FirstName = x.firstname,
+                Surname = x.surname,
+                IDNumber = x.identificationNumber,
+                Created = x.created.ToString("yyyy-MM-dd"),
+                IsApproved = (x.isApproved ? "True" : "False")
+            }).FirstOrDefault();
+
+            var r = new
+            {
+                data = userArray
+            };
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(r))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            return resp;
+        }
+
+        [JWTTokenValidation]
+        [HttpGet]
+        [Route("api/User/DeactivateUser/{id}")]
+        public HttpResponseMessage DeactivateUser(int id)
+        {
+            var userObject = this.userBusinessLogic.FindBy(x => x.userID == id).FirstOrDefault();
+
+            userObject.isApproved = false;
+
+            this.userBusinessLogic.Update(userObject);
+            var r = new
+            {
+                data = "Successful"
+            };
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(r))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            return resp;
+        }
+
+        [JWTTokenValidation]
+        [HttpGet]
+        [Route("api/User/ApproveUser/{id}")]
+        public HttpResponseMessage ApproveUser(int id)
+        {
+            var userObject = this.userBusinessLogic.FindBy(x => x.userID == id).FirstOrDefault();
+
+            userObject.isApproved = true;
+
+            this.userBusinessLogic.Update(userObject);
+
+            var r = new
+            {
+                data = "Successful"
+            };
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(r))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            return resp;
         }
 
         // PUT api/<controller>/5

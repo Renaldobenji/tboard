@@ -189,3 +189,9 @@ routie('login/:returnURL', function (returnURL) {
 				React.createElement(login, { returnURL: returnURL }), document.getElementById('container')
 			);
 });
+
+routie('userdetail/:userID', function (userID) {
+    ReactDOM.render(
+				React.createElement(UserDetail, { userID: userID }), document.getElementById('container')
+			);
+});
