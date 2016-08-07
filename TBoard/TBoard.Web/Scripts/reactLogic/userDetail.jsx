@@ -90,11 +90,16 @@ var UserDetail = React.createClass({
 	                        </div>
                             <div className="row"> 
                                 <div className="col-md-9">
-                                    <UserInformation IsApproved={this.state.IsApproved} UserID={this.props.UserID} FirstName={this.state.FirstName} Surname={this.state.Surname} IDNumber={this.state.IDNumber} updateFirstName={this.updateFirstName} updateSurname={this.updateSurname} updateIDNumber={this.updateIDNumber}/>
+                                    <UserInformation IsApproved={this.state.IsApproved} UserID={this.props.userID} FirstName={this.state.FirstName} Surname={this.state.Surname} IDNumber={this.state.IDNumber} updateFirstName={this.updateFirstName} updateSurname={this.updateSurname} updateIDNumber={this.updateIDNumber}/>
                                 </div>
                                 <div className="col-md-3">
                                     <UserActions ActivateUser={this.ActivateUser} DeActivateUser={this.DeActivateUser} />
                                 </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-md-9">
+                                    <UserRFQContainer UserID={this.props.userID} />
+                                </div>                                
                             </div>
                         </div>		                
                     </div>  
@@ -102,6 +107,33 @@ var UserDetail = React.createClass({
 		);
 	}
 });
+
+
+var UserRFQContainer = React.createClass({
+
+    render: function() {
+
+        var navBarSyle= {
+            marginBottom:0
+        };
+
+        return (
+                <div className="panel panel-primary">
+                    <div className="panel-heading">
+                        <div className="row">
+                            <div className="col-xs-7">                                        
+                                User RFQ
+                            </div>                                   
+                        </div>
+                    </div>
+                    <div className="panel-body">                                
+                        <AllRFQList UserID={this.props.UserID} />
+                    </div>                    
+                </div>
+            )
+}
+});
+
 
 var UserInformation = React.createClass({
 
