@@ -6,7 +6,10 @@ var UserDetail = React.createClass({
             FirstName: "",
             Surname: "",
             IDNumber: "",
-            IsApproved: ""
+            IsApproved: "",
+            EmployeeNumber: "",
+            DepartmentCode: "",
+            UserID: this.props.userID
         };
     },
 
@@ -22,6 +25,8 @@ var UserDetail = React.createClass({
                 this.setState({ Surname: data.data.Surname });
                 this.setState({ IDNumber: data.data.IDNumber });
                 this.setState({ IsApproved: data.data.IsApproved });
+                this.setState({ EmployeeNumber: data.data.EmployeeNumber });
+                this.setState({ DepartmentCode: data.data.DepartmentCode });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error('api/RFQ/Cancel', status, err.toString());
@@ -67,6 +72,32 @@ var UserDetail = React.createClass({
     updateIDNumber: function (e) {
         this.setState({ IDNumber: e.target.value });
     },
+    updateDepartmentCode: function (e) {
+        this.setState({ DepartmentCode: e.target.value });
+        console.log(this.state.DepartmentCode);
+    },
+    updateEmployeeNumber: function (e) {
+        this.setState({ EmployeeNumber: e.target.value });
+        console.log(this.state.EmployeeNumber);
+    },
+
+    
+    updateUserInformation: function () {
+            console.log('POSTING FORM');
+            $.ajax({
+                url: 'api/User/Update',
+                type: 'POST',
+                dataType: 'json',
+                data: this.state,
+                cache: false,
+                success: function(data) {
+                    this.GetUserInformation();
+                }.bind(this),
+                error: function(xhr, status, err) {
+                    console.error('api/Registration/Post', status, err.toString());
+                }.bind(this)
+            });
+        },
 
 	render: function(){
         var navBarSyle= {
@@ -88,9 +119,10 @@ var UserDetail = React.createClass({
                                     </h1>
 		                        </div>
 	                        </div>
+                           
                             <div className="row"> 
                                 <div className="col-md-9">
-                                    <UserInformation IsApproved={this.state.IsApproved} UserID={this.props.userID} FirstName={this.state.FirstName} Surname={this.state.Surname} IDNumber={this.state.IDNumber} updateFirstName={this.updateFirstName} updateSurname={this.updateSurname} updateIDNumber={this.updateIDNumber}/>
+                                    <UserInformation updateUserInformation={this.updateUserInformation} updateDepartmentCode={this.updateDepartmentCode} updateEmployeeNumber={this.updateEmployeeNumber} EmployeeNumber={this.state.EmployeeNumber} DepartmentCode={this.state.DepartmentCode} IsApproved={this.state.IsApproved} UserID={this.props.userID} FirstName={this.state.FirstName} Surname={this.state.Surname} IDNumber={this.state.IDNumber} updateFirstName={this.updateFirstName} updateSurname={this.updateSurname} updateIDNumber={this.updateIDNumber}/>
                                 </div>
                                 <div className="col-md-3">
                                     <UserActions ActivateUser={this.ActivateUser} DeActivateUser={this.DeActivateUser} />
@@ -168,6 +200,14 @@ var UserInformation = React.createClass({
                         <div className="form-group">
                             <label>IsApproved</label>
                             <input className="form-control" value={this.props.IsApproved} placeholder="IDNumber" />
+                        </div>
+                        <div className="form-group">
+                            <label>Department Code</label>
+                            <input id="DepartmentCode" className="form-control" placeholder="Department Code" value={this.props.DepartmentCode} onChange={this.props.updateDepartmentCode} />
+                        </div>
+                        <div className="form-group">
+                            <label>Employee Number</label>
+                            <input id="EmployeeNumber" className="form-control" placeholder="Employee Number" value={this.props.EmployeeNumber} onChange={this.props.updateEmployeeNumber} />
                         </div>
                     </div>
                     <div className="panel-footer">

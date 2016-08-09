@@ -35,7 +35,9 @@ namespace TBoard.Web.Controllers
                 Surname = x.surname,
                 IDNumber = x.identificationNumber,
                 Created = x.created.ToString("yyyy-MM-dd"),
-                IsApproved = (x.isApproved ? "True" : "False")
+                IsApproved = (x.isApproved ? "True" : "False"),
+                DepartmentCode = x.departmentCode,
+                EmployeeNumber = x.employeeCode
             }).ToList();
 
             var r = new
@@ -58,13 +60,31 @@ namespace TBoard.Web.Controllers
             var orgID = Convert.ToInt32(formData.Get("OrganizationID"));
 
             var userResponse = userBusinessLogic.CreateUser(formData.Get("Username"), formData.Get("Name"),
-                        formData.Get("Surname"), formData.Get("Password"), formData.Get("Title"), formData.Get("IDNumber"), orgID);
+                        formData.Get("Surname"), formData.Get("Password"), formData.Get("Title"), formData.Get("IDNumber"), orgID, formData.Get("EmployeeNumber"), formData.Get("DepartmentCode"));
 
             return JsonConvert.SerializeObject(userResponse, Formatting.Indented,
                                                 new JsonSerializerSettings
                                                 {
                                                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                                                 });
+        }
+
+        [JWTTokenValidation]
+        [HttpPost]
+        [Route("api/User/Update")]
+        public void Update(FormDataCollection formData)
+        {
+            var id = Convert.ToInt32(formData.Get("UserID"));
+
+            var userObject = userBusinessLogic.FindBy(x => x.userID == id).First();
+
+            userObject.firstname = formData.Get("FirstName");
+            userObject.surname = formData.Get("Surname");
+            userObject.identificationNumber = formData.Get("IDNumber");
+            userObject.employeeCode = formData.Get("EmployeeNumber");
+            userObject.departmentCode = formData.Get("DepartmentCode");
+
+            userBusinessLogic.Update(userObject);
         }
 
         [JWTTokenValidation]
@@ -79,7 +99,9 @@ namespace TBoard.Web.Controllers
                 Surname = x.surname,
                 IDNumber = x.identificationNumber,
                 Created = x.created.ToString("yyyy-MM-dd"),
-                IsApproved = (x.isApproved ? "True" : "False")
+                IsApproved = (x.isApproved ? "True" : "False"),
+                DepartmentCode = x.departmentCode,
+                EmployeeNumber = x.employeeCode
             }).FirstOrDefault();
 
             var r = new

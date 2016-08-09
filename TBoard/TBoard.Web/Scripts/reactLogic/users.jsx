@@ -10,7 +10,9 @@ var UserManagement = React.createClass({
 						IDNumber : '',
                         Username : '',
                         Title : '',
-                        OrganizationID : ""
+                        OrganizationID: "",
+                        DepartmentCode: "",
+                        EmployeeNumber: ""
 					};
 
 	},
@@ -61,7 +63,15 @@ var UserManagement = React.createClass({
     updateTitle : function(e){
 		this.setState({Title : e.target.value});	
 		console.log(this.state.Title);
-	},
+    },
+    updateDepartmentCode: function (e) {
+        this.setState({ DepartmentCode: e.target.value });
+        console.log(this.state.DepartmentCode);
+    },
+    updateEmployeeNumber: function (e) {
+        this.setState({ EmployeeNumber: e.target.value });
+        console.log(this.state.EmployeeNumber);
+    },
     	
 	render: function(){
         var navBarSyle= {
@@ -127,6 +137,14 @@ var UserManagement = React.createClass({
                                                 <label>ID Number</label>
                                                 <input id="IDNumber" className="form-control" placeholder="ID Number" value={this.state.IDNumber} onChange={this.updateIDNumber}/>
                                             </div>
+                                            <div className="form-group">
+                                                <label>Department Code</label>
+                                                <input id="DepartmentCode" className="form-control" placeholder="Department Code" value={this.state.DepartmentCode} onChange={this.updateDepartmentCode} />
+                                            </div>
+                                            <div className="form-group">
+                                                <label>Employee Number</label>
+                                                <input id="EmployeeNumber" className="form-control" placeholder="Employee Number" value={this.state.EmployeeNumber} onChange={this.updateEmployeeNumber} />
+                                            </div>
 					                    </form>
 					                </div>
 					                <div className="modal-footer">
@@ -178,7 +196,9 @@ var UserList = React.createClass({
                           <TableHeaderColumn isKey={true} dataField="FirstName" dataSort={true}>FirstName</TableHeaderColumn>
                           <TableHeaderColumn dataField="Surname" dataSort={true}>Surname</TableHeaderColumn>
                           <TableHeaderColumn dataField="IDNumber" dataSort={true}>IDNumber</TableHeaderColumn>
-                          <TableHeaderColumn dataField="Created" dataSort={true}>Created</TableHeaderColumn>
+                          <TableHeaderColumn dataField="EmployeeNumber" dataSort={true}>EmployeeCode</TableHeaderColumn>
+                          <TableHeaderColumn dataField="DepartmentCode" dataSort={true}>DepartmentCode</TableHeaderColumn>
+                          <TableHeaderColumn dataField="Created" dataSort={true}>Created</TableHeaderColumn>                          
                           <TableHeaderColumn dataField="IsApproved" dataSort={true}>IsApproved</TableHeaderColumn>                  
                           <TableHeaderColumn dataFormat={actionsFormatter}>Detail</TableHeaderColumn>
 				        </BootstrapTable>

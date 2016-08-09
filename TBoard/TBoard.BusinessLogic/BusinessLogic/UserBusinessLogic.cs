@@ -52,7 +52,7 @@ namespace TBoard.BusinessLogic.BusinessLogic
             return response;
         }
 
-        public UserResponse CreateUser(string userName, string name, string surname, string password, string title, string idNumber, int organizationId)
+        public UserResponse CreateUser(string userName, string name, string surname, string password, string title, string idNumber, int organizationId, string employeeCode, string departmentCode)
         {
             UserResponse response = new UserResponse();
             string saltValue = "";
@@ -73,6 +73,8 @@ namespace TBoard.BusinessLogic.BusinessLogic
             newUser.failedPasswordAttemptCount = 0;
             newUser.lastLoginDate = DateTime.Now;
             newUser.organizationID = organizationId;
+            newUser.employeeCode = employeeCode;
+            newUser.departmentCode = departmentCode;
             newUser.created = DateTime.Now;
 
             this.Create(newUser);

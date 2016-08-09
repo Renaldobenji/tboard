@@ -64,7 +64,7 @@ namespace TBoard.Web.Controllers
                 {
                     userResponse = userBusinessLogic.CreateUser(formData.Get("Name"), formData.Get("Name"),
                         formData.Get("Surname"), formData.Get("Password"), "Mr", formData.Get("IDNumber"),
-                        org.organizationID);
+                        org.organizationID, "", "");
                 }
 
                 //Address Information

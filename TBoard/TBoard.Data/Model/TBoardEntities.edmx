@@ -289,6 +289,8 @@
           <Property Name="failedPasswordAttemptCount" Type="int" />
           <Property Name="created" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="updated" Type="datetime" Precision="0" />
+          <Property Name="employeeCode" Type="varchar" MaxLength="245" />
+          <Property Name="departmentCode" Type="varchar" MaxLength="245" />
         </EntityType>
         <Association Name="addType">
           <End Role="addresstype" Type="Self.addresstype" Multiplicity="0..1" />
@@ -807,6 +809,8 @@
           <Property Type="DateTime" Name="created" Nullable="false" Precision="0" />
           <Property Type="DateTime" Name="updated" Precision="0" />
           <NavigationProperty Name="rfqs" Relationship="TBoardModel.rfq2" FromRole="user" ToRole="rfq" />
+          <Property Name="employeeCode" Type="String" MaxLength="245" FixedLength="false" Unicode="false" />
+          <Property Name="departmentCode" Type="String" MaxLength="245" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="documentrequirement">
           <Key>
@@ -1245,6 +1249,8 @@
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="TBoardModel.user">
               <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="departmentCode" ColumnName="departmentCode" />
+                <ScalarProperty Name="employeeCode" ColumnName="employeeCode" />
                 <ScalarProperty Name="updated" ColumnName="updated" />
                 <ScalarProperty Name="created" ColumnName="created" />
                 <ScalarProperty Name="failedPasswordAttemptCount" ColumnName="failedPasswordAttemptCount" />
