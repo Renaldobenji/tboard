@@ -136,6 +136,14 @@ namespace TBoard.Web.Controllers
             }
         }
 
+        [HttpPost]
+        [JWTTokenValidation]
+        [Route("api/ExpertiseCategory/Add")]
+        public void Add(FormDataCollection formData)
+        {
+            this.expertiseCategoryBusinessLogic.AddUserExpertise(formData.Get("ExpertiseName"));
+        }
+
         // PUT api/<controller>/5
         public void Put(int id, [FromBody]string value)
         {

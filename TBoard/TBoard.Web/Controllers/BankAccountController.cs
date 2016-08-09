@@ -65,21 +65,22 @@ namespace TBoard.Web.Controllers
         [Route("api/BankAccount/{ownerType}/{ownerID}")]
         public HttpResponseMessage Get(string ownerType, string ownerID)
         {
-            bankaccountdetail bankDetails =
-                this.bankacountBusinessLogic.FindBy(x => x.owningType == ownerType && x.owningID == ownerID)
-                    .FirstOrDefault();
+           var bankDetails =
+                this.bankacountBusinessLogic.FindBy(x => x.owningType == ownerType && x.owningID == ownerID).Select(y => new
+                {
+                    AccountNumber = y.accountNumber,
+                    AccountName = y.accountName,
+                    BranchName = y.branchName,
+                    BranchCode = y.branchCode,
+                    BankAccountTypeID = y.bankAccountTypeID,
+                    BankAccountDetailID = y.bankAccountDetailID
+                });
 
             var response = new
             {
-                data = new
-                {
-                    AccountNumber = bankDetails.accountNumber,
-                    AccountName = bankDetails.accountName,
-                    BranchName = bankDetails.branchName,
-                    BranchCode = bankDetails.branchCode, 
-                    BankAccountTypeID = bankDetails.bankAccountTypeID
-                }
+                data = bankDetails
             };
+
             var resp = new HttpResponseMessage()
             {
                 Content = new StringContent(JsonConvert.SerializeObject(response, Formatting.None,
@@ -96,14 +97,11 @@ namespace TBoard.Web.Controllers
         // POST api/<controller>
         [JWTTokenValidation]
         public void Post(FormDataCollection formData)
-        {
-            string ownerType = formData.Get("OwnerType");
-            string owningID = formData.Get("OrganizationID");
-            var bankDetails = bankacountBusinessLogic.FindBy(x => x.owningType == ownerType && x.owningID == owningID).FirstOrDefault();
-            if (bankDetails == null)
+        {             
+            if (String.IsNullOrEmpty(formData.Get("BankAccountDetailID")))
             {
                 bankaccountdetail details = new bankaccountdetail();
-                details.owningType = ownerType;
+                details.owningType = formData.Get("OwnerType");
                 details.owningID = formData.Get("OrganizationID"); 
                 details.accountName = formData.Get("AccountName"); 
                 details.accountNumber = formData.Get("AccountNumber"); 
@@ -114,6 +112,8 @@ namespace TBoard.Web.Controllers
             }
             else
             {
+                long id = Convert.ToInt64(formData.Get("BankAccountDetailID"));
+                var bankDetails = bankacountBusinessLogic.FindBy(x => x.bankAccountDetailID == id).FirstOrDefault();
                 bankDetails.accountName = formData.Get("AccountName"); 
                 bankDetails.accountNumber = formData.Get("AccountNumber"); 
                 bankDetails.branchCode = formData.Get("BranchCode"); 

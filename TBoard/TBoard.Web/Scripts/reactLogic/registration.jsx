@@ -14,17 +14,17 @@ var RegisterType = React.createClass({
 							<div className="form-group">
 								<div className="radio">
 									<label>
-										<input type="radio" name="registrationOptions" id="registrationOptionsPrivateBuyer" value="PrivateBuyer" onChange={this.props.updateRegistrationTypeState}/> Private Buyer 9
+										<input type="radio" name="registrationOptions" id="registrationOptionsPrivateBuyer" value="PrivateBuyer" onChange={this.props.updateRegistrationTypeState}/> Private Buyer
 									</label>
 								</div>
 								<div className="radio">
 									<label>
-										<input type="radio" name="registrationOptions" id="registrationOptionsCorporateBuyer" value="CorporateBuyer" onChange={this.props.updateRegistrationTypeState}/> Corporate Buyer 9
+										<input type="radio" name="registrationOptions" id="registrationOptionsCorporateBuyer" value="CorporateBuyer" onChange={this.props.updateRegistrationTypeState}/> Corporate Buyer
 									</label>
 								</div>
 								<div className="radio">
 									<label>
-										<input type="radio" name="registrationOptions" id="registrationCorporateSeller" value="CorporateSeller" onChange={this.props.updateRegistrationTypeState}/> Corporate Seller 9
+										<input type="radio" name="registrationOptions" id="registrationCorporateSeller" value="CorporateSeller" onChange={this.props.updateRegistrationTypeState}/> Supplier
 									</label>
 								</div>
 							</div>
@@ -293,7 +293,7 @@ var RegisterPersonal = React.createClass({
 		return (
 			<div className="panel panel-primary">
 				<div className="panel-heading">
-					Personal Information
+					User Information
 				</div>
 				<div className="panel-body">
 					<form>

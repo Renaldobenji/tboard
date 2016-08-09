@@ -36,5 +36,15 @@ namespace TBoard.Data.Repository
 
             return var;
         }
+
+        public void AddUserExpertise(string expertiseName)
+        {
+            int UnknowSubCategoryId = this._dbContext.expertisecategories.Where(x => x.Name == "Unknown").Select(y => y.ExpertiseCategoryID).FirstOrDefault();
+            expertisesubcategory sub = new expertisesubcategory();
+            sub.Name = expertiseName;
+            sub.ExpertiseCategoryID = UnknowSubCategoryId;
+            this._dbContext.expertisesubcategories.Add(sub);
+            this._dbContext.SaveChanges();
+        }
     }
 }

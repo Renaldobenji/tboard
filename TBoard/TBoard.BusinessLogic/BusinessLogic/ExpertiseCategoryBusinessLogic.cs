@@ -23,5 +23,10 @@ namespace TBoard.BusinessLogic.BusinessLogic
         {
             return this.repository.GetExpertiseLike(q);
         }
+
+        public void AddUserExpertise(string expertiseName)
+        {
+            this.repository.AddUserExpertise(expertiseName);
+        }
     }
 }

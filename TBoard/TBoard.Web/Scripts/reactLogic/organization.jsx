@@ -26,7 +26,8 @@
             BankAccountType : [],
             SelectedBankAccountType : '',
             OEM: 'false',
-            UserID : ''
+            UserID: '',
+            bankDetailsList: []
         };
     },
 
@@ -133,21 +134,7 @@
           dataType: 'json',
           cache: false,
           success: function(data) {
-               if (data.data.AccountName != null)
-                this.setState({AccountName : data.data.AccountName});
-              
-              if (data.data.AccountNumber != null)
-                this.setState({AccountNumber : data.data.AccountNumber});
-              
-              if (data.data.BranchCode != null)
-                this.setState({BranchCode : data.data.BranchCode});
-              
-              if (data.data.BranchName != null)
-                this.setState({BranchName : data.data.BranchName});
-
-              if (data.data.BankAccountTypeID != null)
-                this.setState({SelectedBankAccountType : data.data.BankAccountTypeID});
-
+              this.setState({ bankDetailsList: data.data });
           }.bind(this),
           error: function(xhr, status, err) {
             console.error('api/BankAccount/ORG', status, err.toString());
@@ -236,7 +223,8 @@
                   dataType: 'json',
                   data: this.state,
                   cache: false,
-                  success: function(data) {
+                  success: function (data) {
+                      this.fetchBankDetails(this.state.OrganizationID);
                       alert("Success");
                   }.bind(this),
                   error: function(xhr, status, err) {
@@ -378,7 +366,7 @@
                                     </div>
 		                        </div>
                                 <div className="tab-pane fade" id="BankDetails">
-			                        <div className="col-lg-8">
+			                        <div className="col-lg-6">
                                         <br/>
                                         <OrganizationBankDetails accountName={this.state.AccountName} updateAccountName={this.updateAccountName}
 										                  accountNumber={this.state.AccountNumber} updateAccountNumber={this.updateAccountNumber}
@@ -387,12 +375,20 @@
 										                  accountType={this.state.AccountType} updateAccountType={this.updateAccountType}
 										                  bankDetailsPOST= {this.bankDetailsPOST} bankAccountTypes= {this.state.BankAccountType} updateBankAccountType= {this.updateBankAccountType} selectedBankAccountType= {this.state.SelectedBankAccountType} />
                                     </div>
+                                    <div className="col-lg-6">
+                                        <br />                                        
+                                        <OrganizationBankDetailsList bankDetailsList={this.state.bankDetailsList} BankAccountType={this.state.BankAccountType}/>
+                                    </div>
 		                        </div>
                                 <div className="tab-pane fade" id="Expertise">
 			                        <div className="col-lg-8">
                                         <br/>
                                         <OrganizationExpertise OrganizationID={this.state.OrganizationID}/>
                                     </div>
+                                    <div className="col-lg-4">
+                                        <br />
+                                        <UserExpertiseAdd />
+                                    </div>                                    
 		                        </div>
 	                        </div>
                             
@@ -539,7 +535,7 @@ var OrganizationBankDetails = React.createClass({
 		return (	
 		            <div className="panel panel-default">
 			            <div className="panel-heading">
-				            Bank Details
+				            Add Bank Details
 			            </div>
 			            <div className="panel-body">
 				            <form>
@@ -575,6 +571,38 @@ var OrganizationBankDetails = React.createClass({
 		            </div>
 		);
 	}
+});
+
+var OrganizationBankDetailsList = React.createClass({	
+    render: function () {
+        
+        function bankAccountTypeView(cell, row) {
+
+            if (row.BankAccountTypeID == 1)
+                return <div>Cheque</div>
+            else if (row.BankAccountTypeID == 2)
+                return <div>Savings</div>
+            else
+                return <div>Unknown</div>
+        }
+
+        return (	
+		            <div className="panel panel-default">
+			            <div className="panel-heading">
+				            Bank Details
+			            </div>
+			            <div className="panel-body">
+				            <BootstrapTable data={this.props.bankDetailsList} striped={true} hover={true} pagination={true} search={true}>
+                              <TableHeaderColumn isKey={true} dataField="AccountNumber">AccountNumber</TableHeaderColumn>
+                              <TableHeaderColumn dataField="AccountName">AccountName</TableHeaderColumn>
+                              <TableHeaderColumn dataField="BranchName">BranchName</TableHeaderColumn>
+                              <TableHeaderColumn dataField="BranchCode">BranchCode</TableHeaderColumn>                              
+                              <TableHeaderColumn dataFormat={bankAccountTypeView}>BankAccountType</TableHeaderColumn>                                
+				            </BootstrapTable>
+			            </div>                         
+		            </div>
+		);
+    }
 });
 
 
@@ -697,4 +725,64 @@ var OrganizationExpertise = React.createClass({
 		            </div>
 		);
 	}
+});
+
+var UserExpertiseAdd = React.createClass({
+
+    getInitialState: function () {
+        return {
+            ExpertiseName: ""           
+        };
+    },
+
+    ExpertiseNameChange: function (e) {
+        this.setState({ ExpertiseName: e.target.value });
+    },
+
+    AddExpertise: function () {
+        console.log('POSTING FORM');
+        $.ajax({
+            url: 'api/ExpertiseCategory/Add',
+            type: 'POST',
+            dataType: 'json',
+            data: this.state,
+            cache: false,
+            success: function (data) {
+                alert("Success");
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error('api/ExpertiseCategory/Add', status, err.toString());
+            }.bind(this)
+        });
+    },
+    render: function() {
+
+        var navBarSyle= {
+            marginBottom:0
+        };
+
+        return (
+                <div className="panel panel-primary">
+                    <div className="panel-heading">
+                        <div className="row">
+                            <div className="col-xs-7">                                        
+                                Add Expertise
+                            </div>                                   
+                        </div>
+                    </div>
+                    <div className="panel-body">  
+                        <p className="text-danger">If you cant find your expertise, please add it here:</p>                              
+                        <div className="form-group">
+                            <label>Name</label>
+                            <input className="form-control" value={this.state.ExpertiseName} onChange={this.ExpertiseNameChange} placeholder="Expertise" />
+                        </div>                        
+                    </div>
+                    <div className="panel-footer">
+                        <div className="text-right">                                    
+                            <button type="button" onClick={this.AddExpertise} className="btn btn-primary btn-md">Add</button>
+                        </div>
+                    </div>
+                </div>
+            )
+}
 });
