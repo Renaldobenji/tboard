@@ -9,6 +9,10 @@ var UserDetail = React.createClass({
             IsApproved: "",
             EmployeeNumber: "",
             DepartmentCode: "",
+            HomeNumber: "",
+            CellNumber: "",
+            OfficeNumber: "",
+            EmailAddress: "",
             UserID: this.props.userID
         };
     },
@@ -27,6 +31,12 @@ var UserDetail = React.createClass({
                 this.setState({ IsApproved: data.data.IsApproved });
                 this.setState({ EmployeeNumber: data.data.EmployeeNumber });
                 this.setState({ DepartmentCode: data.data.DepartmentCode });
+
+                this.setState({ HomeNumber: data.contactInformation.HomeNumber });
+                this.setState({ CellNumber: data.contactInformation.CellNumber });
+                this.setState({ OfficeNumber: data.contactInformation.OfficeNumber });
+                this.setState({ EmailAddress: data.contactInformation.Email });
+
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error('api/RFQ/Cancel', status, err.toString());
@@ -81,6 +91,23 @@ var UserDetail = React.createClass({
         console.log(this.state.EmployeeNumber);
     },
 
+    updateHomeNumber: function (e) {
+        this.setState({ HomeNumber: e.target.value });
+        console.log(this.state.HomeNumber);
+    },
+    updateOfficeNumber: function (e) {
+        this.setState({ OfficeNumber: e.target.value });
+        console.log(this.state.OfficeNumber);
+    },
+    updateCellNumber: function (e) {
+        this.setState({ CellNumber: e.target.value });
+        console.log(this.state.CellNumber);
+    },
+    updateEmailAddress: function (e) {
+        this.setState({ EmailAddress: e.target.value });
+        console.log(this.state.EmailAddress);
+    },
+
     
     updateUserInformation: function () {
             console.log('POSTING FORM');
@@ -97,7 +124,24 @@ var UserDetail = React.createClass({
                     console.error('api/Registration/Post', status, err.toString());
                 }.bind(this)
             });
-        },
+    },
+
+    updateContactInformation: function () {
+        console.log('POSTING FORM');
+        $.ajax({
+            url: 'api/User/Update/ContactInformation',
+            type: 'POST',
+            dataType: 'json',
+            data: this.state,
+            cache: false,
+            success: function (data) {
+                this.GetUserInformation();
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error('api/Registration/Post', status, err.toString());
+            }.bind(this)
+        });
+    },
 
 	render: function(){
         var navBarSyle= {
@@ -130,9 +174,17 @@ var UserDetail = React.createClass({
                             </div>
                             <div className="row">
                                 <div className="col-md-9">
+                                    <UserContactInformation UserID={this.props.userID} updateContactInformation={this.updateContactInformation} OfficeNumber={this.state.OfficeNumber}
+                                                            CellNumber={this.state.CellNumber} HomeNumber={this.state.HomeNumber} EmailAddress={this.state.EmailAddress}
+                                                            updateCellNumber={this.updateCellNumber} updateOfficeNumber={this.updateOfficeNumber} updateHomeNumber={this.updateHomeNumber} updateEmailAddress={this.updateEmailAddress}/>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-md-9">
                                     <UserRFQContainer UserID={this.props.userID} />
                                 </div>                                
                             </div>
+                            
                         </div>		                
                     </div>  
                 
@@ -247,3 +299,49 @@ var UserActions = React.createClass({
             )
 }
 });
+
+var UserContactInformation = React.createClass({
+
+    render: function() {
+
+        var navBarSyle= {
+            marginBottom:0
+        };
+
+        return (
+                <div className="panel panel-primary">
+                    <div className="panel-heading">
+                        <div className="row">
+                            <div className="col-xs-7">                                        
+                                Contact Information
+                            </div>                                   
+                        </div>
+                    </div>
+                    <div className="panel-body">
+                        <div className="form-group">
+                            <label>Cell Number</label>
+                            <input className="form-control" value={this.props.CellNumber} onChange={this.props.updateCellNumber} placeholder="Cell Number" />
+                        </div>
+                        <div className="form-group">
+                            <label>Office Number</label>
+                            <input className="form-control" value={this.props.OfficeNumber} onChange={this.props.updateOfficeNumber} placeholder="Office Number" />
+                        </div>
+                        <div className="form-group">
+                            <label>Home Number</label>
+                            <input className="form-control" value={this.props.HomeNumber} onChange={this.props.updateHomeNumber} placeholder="Home Number" />
+                        </div>
+                        <div className="form-group">
+                            <label>Email Address</label>
+                            <input className="form-control" value={this.props.EmailAddress} onChange={this.props.updateEmailAddress} placeholder="Email Address" />
+                        </div>                        
+                    </div>
+                    <div className="panel-footer">
+                        <div className="text-right">
+                            <button type="button" onClick={this.props.updateContactInformation} className="btn btn-primary btn-lg">Update</button>
+                        </div>
+                    </div>                
+                </div>
+            )
+}
+});
+

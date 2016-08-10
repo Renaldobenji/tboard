@@ -17,9 +17,11 @@ namespace TBoard.Web.Controllers
     public class UserController : ApiController
     {
         private UserBusinessLogic userBusinessLogic;
-        public UserController(UserBusinessLogic userBusinessLogic)
+        private CommunicationBusinessLogic communicationBusinessLogic;
+        public UserController(UserBusinessLogic userBusinessLogic, CommunicationBusinessLogic communicationBusinessLogic)
         {
             this.userBusinessLogic = userBusinessLogic;
+            this.communicationBusinessLogic = communicationBusinessLogic;
         }
 
         // GET api/<controller>/5
@@ -88,6 +90,67 @@ namespace TBoard.Web.Controllers
         }
 
         [JWTTokenValidation]
+        [HttpPost]
+        [Route("api/User/Update/ContactInformation")]
+        public void ContactInformation(FormDataCollection formData)
+        {
+            var id = Convert.ToInt32(formData.Get("UserID"));
+
+            var userObject = userBusinessLogic.FindBy(x => x.userID == id).First();           
+
+            addCommunicationBasedOnType(formData, formData.Get("UserID"), "CellNumber", "CELL");
+            addCommunicationBasedOnType(formData, formData.Get("UserID"), "HomeNumber", "HME");
+            addCommunicationBasedOnType(formData, formData.Get("UserID"), "OfficeNumber", "WRK");
+            addCommunicationBasedOnType(formData, formData.Get("UserID"), "EmailAddress", "EML");
+        }
+
+        private void addCommunicationBasedOnType(FormDataCollection formData, string userID, string formField, string communicationType)
+        {
+            if (!string.IsNullOrEmpty(formData.Get(formField)))
+            {               
+                this.addCommunication("PER", userID, formData.Get(formField), communicationType);
+            }
+        }
+
+        private void addCommunication(string owingType, string owningID, string communicationLine1,
+            string communicationType)
+        {           
+            communication comm = new communication();
+            comm.owningType = owingType;
+            comm.owningID = owningID;
+            comm.communicationLine1 = communicationLine1;
+            if (communicationType.Equals("CELL"))
+            {
+                comm.communicationTypeID = 1;
+            }
+            else if (communicationType.Equals("WRK"))
+            {
+                comm.communicationTypeID = 2;
+            }
+            else if (communicationType.Equals("HME"))
+            {
+                comm.communicationTypeID = 3;
+            }
+            else if (communicationType.Equals("EML"))
+            {
+                comm.communicationTypeID = 4;
+            }
+
+            var isExistObject = this.communicationBusinessLogic.FindBy(x => x.owningType == owingType && x.owningID == owningID && x.communicationTypeID == comm.communicationTypeID).FirstOrDefault();
+            if (isExistObject == null)
+            {
+                this.communicationBusinessLogic.Create(comm);
+            }
+            else
+            {
+                isExistObject.communicationLine1 = communicationLine1;
+                this.communicationBusinessLogic.Update(isExistObject);
+            }
+        }
+
+
+
+        [JWTTokenValidation]
         [Route("api/User/GetUserInformation/{id}")]
         public HttpResponseMessage GetUserInformation(int id)
         {
@@ -101,12 +164,21 @@ namespace TBoard.Web.Controllers
                 Created = x.created.ToString("yyyy-MM-dd"),
                 IsApproved = (x.isApproved ? "True" : "False"),
                 DepartmentCode = x.departmentCode,
-                EmployeeNumber = x.employeeCode
+                EmployeeNumber = x.employeeCode                
             }).FirstOrDefault();
 
+            var communication = this.communicationBusinessLogic.FindBy(x => x.owningType == "PER" && x.owningID == id.ToString()).ToList();
+
+            var contactInformation = new {
+                HomeNumber = communication.Where(x => x.communicationTypeID == 3).Select(y => y.communicationLine1).FirstOrDefault(),
+                CellNumber = communication.Where(x => x.communicationTypeID == 1).Select(y => y.communicationLine1).FirstOrDefault(),
+                OfficeNumber = communication.Where(x => x.communicationTypeID == 2).Select(y => y.communicationLine1).FirstOrDefault(),
+                Email = communication.Where(x => x.communicationTypeID == 4).Select(y => y.communicationLine1).FirstOrDefault()
+            };
             var r = new
             {
-                data = userArray
+                data = userArray,
+                contactInformation = contactInformation
             };
 
             var resp = new HttpResponseMessage()
