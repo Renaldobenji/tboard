@@ -57,7 +57,7 @@ namespace TBoard.Web.Attributes
             }
             catch (Exception ex)
             {
-                actionContext.Response = new System.Net.Http.HttpResponseMessage(System.Net.HttpStatusCode.Forbidden);
+                //actionContext.Response = new System.Net.Http.HttpResponseMessage(System.Net.HttpStatusCode.Forbidden);
             }            
         }
 

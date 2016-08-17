@@ -104,6 +104,14 @@ var RFQBidDetail = React.createClass({
     componentDidMount: function () {
         $('#SupplyTime').datetimepicker();
         $('#DeliveryTime').datetimepicker();
+
+        var timerId =
+          countdown(
+            this.props.ExpiryDate.substring(1, 10),
+            function (ts) {
+                $('#expiryTimer').html(ts.toString());
+            },
+            countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS);
     },
    
     WillYouPOST: function () {
@@ -202,9 +210,9 @@ var RFQBidDetail = React.createClass({
                         <div className="col-md-9 cta-contents">
                             <h1 className="cta-title">Its a Call To Action</h1>
                             <div className="cta-desc">
-                                <label>Expiry Date</label>
-                                <p>{this.props.ExpiryDate}</p>
-
+                                <label>Expiry Date</label>                                
+                                <h2 className="text-info" id="expiryTimer"></h2>
+                                <hr />
                                 <label>RFQ Detail</label>
                                 <p>{this.props.RFQDetails}</p>                                
                             </div>

@@ -451,6 +451,12 @@
         <Function Name="GetSubscribedOwnershipDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tboard">
           <Parameter Name="expertiseSubCategoryID" Type="int" Mode="In" />
         </Function>
+        <Function Name="sps_GetAllOrganizationInformation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tboard">
+          <Parameter Name="organizationID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sps_GetAllUserInformation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tboard">
+          <Parameter Name="userID" Type="int" Mode="In" />
+        </Function>
         <Function Name="sps_GetBidsForQuote" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tboard">
           <Parameter Name="rfqReference" Type="varchar" Mode="In" />
         </Function>
@@ -643,6 +649,12 @@
           </FunctionImport>
           <EntitySet Name="ratings" EntityType="TBoardModel.rating" />
           <EntitySet Name="configs" EntityType="TBoardModel.config" />
+          <FunctionImport Name="sps_GetAllOrganizationInformation" ReturnType="Collection(TBoardModel.sps_GetAllOrganizationInformation_Result)">
+            <Parameter Name="organizationID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sps_GetAllUserInformation" ReturnType="Collection(TBoardModel.sps_GetAllUserInformation_Result)">
+            <Parameter Name="userID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="address">
           <Key>
@@ -1147,6 +1159,30 @@
           <Property Name="name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="value" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
         </EntityType>
+        <ComplexType Name="sps_GetAllOrganizationInformation_Result" >
+          <Property Type="String" Name="name" Nullable="false" />
+          <Property Type="String" Name="tradingName" Nullable="false" />
+          <Property Type="String" Name="registrationNumber" Nullable="false" />
+          <Property Type="String" Name="vatNumber" Nullable="false" />
+          <Property Type="String" Name="taxNumber" Nullable="false" />
+          <Property Type="String" Name="addressLine1" Nullable="false" />
+          <Property Type="String" Name="accountName" Nullable="false" />
+          <Property Type="String" Name="accountNumber" Nullable="false" />
+          <Property Type="String" Name="branchCode" Nullable="false" />
+          <Property Type="String" Name="branchName" Nullable="false" />
+          <Property Type="String" Name="communicationLine1" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sps_GetAllUserInformation_Result" >
+          <Property Type="String" Name="firstname" Nullable="false" />
+          <Property Type="String" Name="surname" Nullable="false" />
+          <Property Type="String" Name="identificationNumber" Nullable="false" />
+          <Property Type="String" Name="employeeCode" Nullable="false" />
+          <Property Type="String" Name="departmentCode" Nullable="false" />
+          <Property Type="String" Name="addressLine1" Nullable="false" />
+          <Property Type="String" Name="accountNumber" Nullable="false" />
+          <Property Type="String" Name="branchCode" Nullable="false" />
+          <Property Type="String" Name="communicationLine1" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1499,6 +1535,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sps_GetAllOrganizationInformation" FunctionName="TBoardModel.Store.sps_GetAllOrganizationInformation">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TBoardModel.sps_GetAllOrganizationInformation_Result" />
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sps_GetAllUserInformation" FunctionName="TBoardModel.Store.sps_GetAllUserInformation">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TBoardModel.sps_GetAllUserInformation_Result" />
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

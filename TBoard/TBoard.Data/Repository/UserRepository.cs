@@ -20,5 +20,15 @@ namespace TBoard.Data.Repository
         {
             return this._dbContext.sps_GetRolesForUser(userID).ToList();
         }
+
+        public IList<sps_GetAllUserInformation_Result> GetUserInformation(int userID)
+        {
+            return this._dbContext.sps_GetAllUserInformation(userID).ToList();
+        }
+
+        public IList<sps_GetAllOrganizationInformation_Result> GetOrganizationInformation(int organizationID)
+        {
+            return this._dbContext.sps_GetAllOrganizationInformation(organizationID).ToList();
+        }
     }
 }

@@ -13,7 +13,6 @@ namespace TBoard.Data.Model
     using System.Data.Entity;
     using System.Data.Entity.Core.Objects;
     using System.Data.Entity.Infrastructure;
-
     using System.Linq;
 
     public partial class TBoardEntities : DbContext
@@ -108,6 +107,24 @@ namespace TBoard.Data.Model
                 new ObjectParameter("rfqReference", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sps_GetBidsForQuote_Result>("sps_GetBidsForQuote", rfqReferenceParameter);
+        }
+    
+        public virtual ObjectResult<sps_GetAllOrganizationInformation_Result> sps_GetAllOrganizationInformation(Nullable<int> organizationID)
+        {
+            var organizationIDParameter = organizationID.HasValue ?
+                new ObjectParameter("organizationID", organizationID) :
+                new ObjectParameter("organizationID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sps_GetAllOrganizationInformation_Result>("sps_GetAllOrganizationInformation", organizationIDParameter);
+        }
+    
+        public virtual ObjectResult<sps_GetAllUserInformation_Result> sps_GetAllUserInformation(Nullable<int> userID)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("userID", userID) :
+                new ObjectParameter("userID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sps_GetAllUserInformation_Result>("sps_GetAllUserInformation", userIDParameter);
         }
     }
 }

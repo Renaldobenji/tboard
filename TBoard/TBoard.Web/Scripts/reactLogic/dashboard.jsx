@@ -4,7 +4,8 @@
         return {
             UserID: 0,
             activeRFQTotal: 0,
-            activeBidsTotal: 0
+            activeBidsTotal: 0,
+            OrganizationID : 0
         };
     },
 
@@ -22,6 +23,7 @@
         var tokens = new TboardJWTToken();
         var decodedToken = tokens.getJWTToken();
         this.setState({ UserID: decodedToken.UserID });
+        this.setState({ OrganizationID: decodedToken.OrganizationID });
         this.loadData(decodedToken.UserID);
     },
 
@@ -43,16 +45,31 @@
 		                        </div>                
 	                        </div>  
                             <div className="row">
-		                        <div className="col-lg-3 col-md-6 col-md-offset-1">
+		                        <div className="col-lg-12">
+			                        <h3 className="page-header">Profile</h3>
+		                        </div>
+                            </div>  
+                            <div className="row">
+		                        <div className="col-md-3">
+			                        <OrganizationCompleteness UserID={this.state.UserID} OrganizationID={this.state.OrganizationID} />
+		                        </div>
+                            </div>  
+                            <div className="row">
+		                        <div className="col-lg-12">
+			                        <h3 className="page-header">Quotation Information</h3>
+		                        </div>
+                            </div>  
+                            <div className="row">
+		                        <div className="col-md-3">
 			                        <RFQActiveStatistics activeRFQTotal={this.state.activeRFQTotal}/>
 		                        </div>
-                                <div className="col-lg-3 col-md-6">
+                                <div className="col-md-3">
 			                        <RFQActiveBidsStatistics activeBidsTotal={this.state.activeBidsTotal}/>
                                 </div>
-                                <div className="col-lg-3 col-md-6">
+                                <div className="col-md-3">
 			                        <RFQCreateDashboard activeBidsTotal={this.state.activeBidsTotal} />
-                                </div>
-                            </div>  
+                                </div>                                
+                            </div>   
                     </div>
                 </div>
 
@@ -170,6 +187,61 @@ var RFQCreateDashboard = React.createClass({
                             </div>
                         </a>
                     </div>                       
+                    </div>
+            )
+}
+});
+
+var OrganizationCompleteness = React.createClass({
+
+    getInitialState: function () {
+        return {
+            OrganizationCompleteness: 0,
+            UserCompleteness: 0            
+        };
+    },
+
+    loadData: function (orgID) {
+        $.ajax({
+            url: 'api/User/OrganizationCompleteness/' + orgID,
+            success: function (data) {
+                this.setState({ OrganizationCompleteness: data.data });
+            }.bind(this)
+        });
+    },
+
+    componentWillMount: function () {
+        this.loadData(this.props.OrganizationID);
+    },
+
+    render: function() {
+
+        var navBarSyle= {
+            width: this.state.OrganizationCompleteness + "%"
+        };
+
+        return (
+                  <div> 
+                       <div className="panel panel-info">                        
+                        <div className="panel-body">
+                            <div className="row">
+                                <div className="col-xs-12 text-right">
+                                    <h5>My Profile</h5>
+                                    <div className="progress">
+                                    <div className="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style={navBarSyle}>
+                                        {this.state.OrganizationCompleteness}% Complete
+                                    </div>
+                                    </div>
+                                    <h5>My Organization</h5>
+                                   <div className="progress">
+                                    <div className="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style={navBarSyle}>
+                                        {this.state.OrganizationCompleteness}% Complete
+                                    </div>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>       
                     </div>
             )
 }

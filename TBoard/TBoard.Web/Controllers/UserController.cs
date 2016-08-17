@@ -236,6 +236,28 @@ namespace TBoard.Web.Controllers
             return resp;
         }
 
+        
+        [HttpGet]
+        [Route("api/User/OrganizationCompleteness/{id}")]
+        public HttpResponseMessage OrganizationCompleteness(int id)
+        {
+            var percComplete = this.userBusinessLogic.GetOrganizationCompleteness(id);
+            
+            var r = new
+            {
+                data = percComplete
+            };
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(r))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            return resp;
+        }
+
+
+
         // PUT api/<controller>/5
         public void Put(int id, [FromBody]string value)
         {

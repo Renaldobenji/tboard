@@ -222,6 +222,12 @@
     <Compile Include="Model\role.cs">
       <DependentUpon>TBoardEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\sps_GetAllOrganizationInformation_Result.cs">
+      <DependentUpon>TBoardEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\sps_GetAllUserInformation_Result.cs">
+      <DependentUpon>TBoardEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\sps_GetBidsForQuote_Result.cs">
       <DependentUpon>TBoardEntities.tt</DependentUpon>
     </Compile>

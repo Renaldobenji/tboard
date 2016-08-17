@@ -89,5 +89,86 @@ namespace TBoard.BusinessLogic.BusinessLogic
             return this.repository.GetRolesForUser(userID);
         }
 
+        public IList<sps_GetAllUserInformation_Result> GetUserInformation(int userID)
+        {
+            return this.repository.GetUserInformation(userID);
+        }
+
+        public decimal GetOrganizationCompleteness(int organizationID)
+        {
+            var information =  this.repository.GetOrganizationInformation(organizationID);
+            int totalCompleteness = 11;
+            int totalCompletenessTally = 0;
+
+            var check = information.Where(y => y.name != null).Select(x => x.name).FirstOrDefault();
+            if (!string.IsNullOrEmpty(check))
+            {
+                totalCompletenessTally++;
+            }
+
+            check = information.Where(y => y.accountName != null).Select(x => x.accountName).FirstOrDefault();
+            if (!string.IsNullOrEmpty(check))
+            {
+                totalCompletenessTally++;
+            }
+
+            check = information.Where(y => y.accountNumber != null).Select(x => x.accountNumber).FirstOrDefault();
+            if (!string.IsNullOrEmpty(check))
+            {
+                totalCompletenessTally++;
+            }
+
+            check = information.Where(y => y.addressLine1 != null).Select(x => x.addressLine1).FirstOrDefault();
+            if (!string.IsNullOrEmpty(check))
+            {
+                totalCompletenessTally++;
+            }
+
+            check = information.Where(y => y.branchCode != null).Select(x => x.branchCode).FirstOrDefault();
+            if (!string.IsNullOrEmpty(check))
+            {
+                totalCompletenessTally++;
+            }
+
+            check = information.Where(y => y.branchName != null).Select(x => x.branchName).FirstOrDefault();
+            if (!string.IsNullOrEmpty(check))
+            {
+                totalCompletenessTally++;
+            }
+
+            check = information.Where(y => y.communicationLine1 != null).Select(x => x.communicationLine1).FirstOrDefault();
+            if (!string.IsNullOrEmpty(check))
+            {
+                totalCompletenessTally++;
+            }
+
+            check = information.Where(y => y.registrationNumber != null).Select(x => x.registrationNumber).FirstOrDefault();
+            if (!string.IsNullOrEmpty(check))
+            {
+                totalCompletenessTally++;
+            }
+
+            check = information.Where(y => y.taxNumber != null).Select(x => x.taxNumber).FirstOrDefault();
+            if (!string.IsNullOrEmpty(check))
+            {
+                totalCompletenessTally++;
+            }
+
+            check = information.Where(y => y.tradingName != null).Select(x => x.tradingName).FirstOrDefault();
+            if (!string.IsNullOrEmpty(check))
+            {
+                totalCompletenessTally++;
+            }
+
+            check = information.Where(y => y.vatNumber != null).Select(x => x.vatNumber).FirstOrDefault();
+            if (!string.IsNullOrEmpty(check))
+            {
+                totalCompletenessTally++;
+            }
+
+            return (totalCompletenessTally / totalCompleteness) * 100;
+
+        }
+
     }
 }
