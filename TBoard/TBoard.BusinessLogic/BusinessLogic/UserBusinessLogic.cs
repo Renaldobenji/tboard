@@ -94,11 +94,75 @@ namespace TBoard.BusinessLogic.BusinessLogic
             return this.repository.GetUserInformation(userID);
         }
 
+        public decimal GetUserProfileCompleteness(int userID)
+        {
+            var information = this.repository.GetUserInformation(userID);
+            decimal totalCompleteness = 9;
+            decimal totalCompletenessTally = 0;
+
+            var check = information.Where(y => y.accountNumber != null).Select(x => x.accountNumber).FirstOrDefault();
+            if (!string.IsNullOrEmpty(check))
+            {
+                totalCompletenessTally++;
+            }
+
+            check = information.Where(y => y.addressLine1 != null).Select(x => x.addressLine1).FirstOrDefault();
+            if (!string.IsNullOrEmpty(check))
+            {
+                totalCompletenessTally++;
+            }
+
+            check = information.Where(y => y.branchCode != null).Select(x => x.branchCode).FirstOrDefault();
+            if (!string.IsNullOrEmpty(check))
+            {
+                totalCompletenessTally++;
+            }
+
+            check = information.Where(y => y.communicationLine1 != null).Select(x => x.communicationLine1).FirstOrDefault();
+            if (!string.IsNullOrEmpty(check))
+            {
+                totalCompletenessTally++;
+            }
+
+            check = information.Where(y => y.departmentCode != null).Select(x => x.departmentCode).FirstOrDefault();
+            if (!string.IsNullOrEmpty(check))
+            {
+                totalCompletenessTally++;
+            }
+
+            check = information.Where(y => y.employeeCode != null).Select(x => x.employeeCode).FirstOrDefault();
+            if (!string.IsNullOrEmpty(check))
+            {
+                totalCompletenessTally++;
+            }
+
+            check = information.Where(y => y.firstname != null).Select(x => x.firstname).FirstOrDefault();
+            if (!string.IsNullOrEmpty(check))
+            {
+                totalCompletenessTally++;
+            }
+
+            check = information.Where(y => y.identificationNumber != null).Select(x => x.identificationNumber).FirstOrDefault();
+            if (!string.IsNullOrEmpty(check))
+            {
+                totalCompletenessTally++;
+            }
+
+            check = information.Where(y => y.surname != null).Select(x => x.surname).FirstOrDefault();
+            if (!string.IsNullOrEmpty(check))
+            {
+                totalCompletenessTally++;
+            }
+
+            var perc = (totalCompletenessTally / totalCompleteness) * 100;
+            return perc;
+        }
+
         public decimal GetOrganizationCompleteness(int organizationID)
         {
             var information =  this.repository.GetOrganizationInformation(organizationID);
-            int totalCompleteness = 11;
-            int totalCompletenessTally = 0;
+            decimal totalCompleteness = 11;
+            decimal totalCompletenessTally = 0;
 
             var check = information.Where(y => y.name != null).Select(x => x.name).FirstOrDefault();
             if (!string.IsNullOrEmpty(check))

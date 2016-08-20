@@ -45,6 +45,9 @@
         <EntityTypeShape EntityType="TBoardModel.quote" Width="1.5" PointX="13.375" PointY="9.75" />
         <EntityTypeShape EntityType="TBoardModel.rating" Width="1.5" PointX="10.375" PointY="13.75" />
         <EntityTypeShape EntityType="TBoardModel.config" Width="1.5" PointX="10.375" PointY="0.75" />
+        <EntityTypeShape EntityType="TBoardModel.quotestatu" Width="1.5" PointX="15.625" PointY="8.125" />
+        <AssociationConnector Association="TBoardModel.a" />
+        <AssociationConnector Association="TBoardModel.b" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

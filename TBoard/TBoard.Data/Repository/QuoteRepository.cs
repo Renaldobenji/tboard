@@ -41,5 +41,21 @@ namespace TBoard.Data.Repository
                             select q).ToList();
             return myQuotes;
         }
+
+        public void AcceptBid(int userID, string rfqID, int quoteID)
+        {
+            rfq rfqInQuestion = this._dbContext.rfqs.Where(x => x.reference == rfqID).First();
+            rfqInQuestion.status = "ACCEPTED";           
+
+            quotestatu status = new quotestatu();
+            status.quoteID = quoteID;
+            status.userID = userID;
+            status.rfqID = rfqInQuestion.rfqID;
+            status.status = "ACCEPTED";
+            status.quoteStatusDateTime = DateTime.Now;
+            this._dbContext.quotestatus.Add(status);
+
+            this._dbContext.SaveChanges();
+        }
     }
 }

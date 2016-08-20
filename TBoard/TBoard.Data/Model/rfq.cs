@@ -14,6 +14,11 @@ namespace TBoard.Data.Model
     
     public partial class rfq
     {
+        public rfq()
+        {
+            this.quotestatus = new HashSet<quotestatu>();
+        }
+    
         public int rfqID { get; set; }
         public string reference { get; set; }
         public Nullable<int> userID { get; set; }
@@ -27,5 +32,6 @@ namespace TBoard.Data.Model
         public virtual expertisesubcategory expertisesubcategory { get; set; }
         public virtual rfqtype rfqtype { get; set; }
         public virtual user user { get; set; }
+        public virtual ICollection<quotestatu> quotestatus { get; set; }
     }
 }

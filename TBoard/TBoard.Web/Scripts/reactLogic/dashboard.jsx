@@ -201,23 +201,33 @@ var OrganizationCompleteness = React.createClass({
         };
     },
 
-    loadData: function (orgID) {
+    loadData: function (orgID, userID) {
         $.ajax({
             url: 'api/User/OrganizationCompleteness/' + orgID,
             success: function (data) {
                 this.setState({ OrganizationCompleteness: data.data });
             }.bind(this)
         });
+        $.ajax({
+            url: 'api/User/ProfileCompleteness/' + orgID,
+            success: function (data) {
+                this.setState({ UserCompleteness: data.data });
+            }.bind(this)
+        });
     },
 
     componentWillMount: function () {
-        this.loadData(this.props.OrganizationID);
+        this.loadData(this.props.OrganizationID, this.props.UserID);
     },
 
     render: function() {
 
-        var navBarSyle= {
+        var navBarSyleOrg= {
             width: this.state.OrganizationCompleteness + "%"
+        };
+
+        var navBarSyleUser = {
+            width: this.state.UserCompleteness + "%"
         };
 
         return (
@@ -228,13 +238,13 @@ var OrganizationCompleteness = React.createClass({
                                 <div className="col-xs-12 text-right">
                                     <h5>My Profile</h5>
                                     <div className="progress">
-                                    <div className="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style={navBarSyle}>
-                                        {this.state.OrganizationCompleteness}% Complete
+                                    <div className="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style={navBarSyleUser}>
+                                        {this.state.UserCompleteness}% Complete
                                     </div>
                                     </div>
                                     <h5>My Organization</h5>
                                    <div className="progress">
-                                    <div className="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style={navBarSyle}>
+                                    <div className="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style={navBarSyleOrg}>
                                         {this.state.OrganizationCompleteness}% Complete
                                     </div>
                                    </div>

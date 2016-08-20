@@ -12,21 +12,16 @@ namespace TBoard.Data.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class quote
+    public partial class quotestatu
     {
-        public quote()
-        {
-            this.quotestatus = new HashSet<quotestatu>();
-        }
-    
-        public int quoteID { get; set; }
-        public string rfqReference { get; set; }
+        public int quoteStatusID { get; set; }
+        public Nullable<int> rfqID { get; set; }
+        public Nullable<int> quoteID { get; set; }
+        public string status { get; set; }
+        public Nullable<System.DateTime> quoteStatusDateTime { get; set; }
         public Nullable<int> userID { get; set; }
-        public Nullable<System.DateTime> createdDate { get; set; }
-        public Nullable<decimal> amount { get; set; }
-        public Nullable<System.DateTime> supplyTime { get; set; }
-        public Nullable<System.DateTime> deliveryTime { get; set; }
     
-        public virtual ICollection<quotestatu> quotestatus { get; set; }
+        public virtual quote quote { get; set; }
+        public virtual rfq rfq { get; set; }
     }
 }

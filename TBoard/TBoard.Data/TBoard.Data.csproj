@@ -210,6 +210,9 @@
     <Compile Include="Model\quote.cs">
       <DependentUpon>TBoardEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\quotestatu.cs">
+      <DependentUpon>TBoardEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\rating.cs">
       <DependentUpon>TBoardEntities.tt</DependentUpon>
     </Compile>

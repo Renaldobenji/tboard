@@ -224,6 +224,17 @@
           <Property Name="supplyTime" Type="datetime" Precision="0" />
           <Property Name="deliveryTime" Type="datetime" Precision="0" />
         </EntityType>
+        <EntityType Name="quotestatus">
+          <Key>
+            <PropertyRef Name="quoteStatusID" />
+          </Key>
+          <Property Name="quoteStatusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rfqID" Type="int" />
+          <Property Name="quoteID" Type="int" />
+          <Property Name="status" Type="varchar" MaxLength="45" />
+          <Property Name="quoteStatusDateTime" Type="datetime" Precision="0" />
+          <Property Name="userID" Type="int" />
+        </EntityType>
         <EntityType Name="rating">
           <Key>
             <PropertyRef Name="ratingID" />
@@ -292,6 +303,18 @@
           <Property Name="employeeCode" Type="varchar" MaxLength="245" />
           <Property Name="departmentCode" Type="varchar" MaxLength="245" />
         </EntityType>
+        <Association Name="a">
+          <End Role="quote" Type="Self.quote" Multiplicity="0..1" />
+          <End Role="quotestatus" Type="Self.quotestatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="quote">
+              <PropertyRef Name="quoteID" />
+            </Principal>
+            <Dependent Role="quotestatus">
+              <PropertyRef Name="quoteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="addType">
           <End Role="addresstype" Type="Self.addresstype" Multiplicity="0..1" />
           <End Role="address" Type="Self.address" Multiplicity="*" />
@@ -301,6 +324,18 @@
             </Principal>
             <Dependent Role="address">
               <PropertyRef Name="addressTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="b">
+          <End Role="rfq" Type="Self.rfq" Multiplicity="0..1" />
+          <End Role="quotestatus" Type="Self.quotestatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rfq">
+              <PropertyRef Name="rfqID" />
+            </Principal>
+            <Dependent Role="quotestatus">
+              <PropertyRef Name="rfqID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -492,14 +527,23 @@
           <EntitySet Name="organization" EntityType="Self.organization" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="organizationtypes" EntityType="Self.organizationtypes" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="quote" EntityType="Self.quote" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="quotestatus" EntityType="Self.quotestatus" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="rating" EntityType="Self.rating" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="rfq" EntityType="Self.rfq" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="rfqtype" EntityType="Self.rfqtype" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="roles" EntityType="Self.roles" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="tboard" store:Type="Tables" />
+          <AssociationSet Name="a" Association="Self.a">
+            <End Role="quote" EntitySet="quote" />
+            <End Role="quotestatus" EntitySet="quotestatus" />
+          </AssociationSet>
           <AssociationSet Name="addType" Association="Self.addType">
             <End Role="addresstype" EntitySet="addresstype" />
             <End Role="address" EntitySet="address" />
+          </AssociationSet>
+          <AssociationSet Name="b" Association="Self.b">
+            <End Role="rfq" EntitySet="rfq" />
+            <End Role="quotestatus" EntitySet="quotestatus" />
           </AssociationSet>
           <AssociationSet Name="bankAcctype" Association="Self.bankAcctype">
             <End Role="bankaccounttype" EntitySet="bankaccounttype" />
@@ -650,11 +694,20 @@
           <EntitySet Name="ratings" EntityType="TBoardModel.rating" />
           <EntitySet Name="configs" EntityType="TBoardModel.config" />
           <FunctionImport Name="sps_GetAllOrganizationInformation" ReturnType="Collection(TBoardModel.sps_GetAllOrganizationInformation_Result)">
-            <Parameter Name="organizationID" Mode="In" Type="Int32" />
+          <Parameter Name="organizationID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sps_GetAllUserInformation" ReturnType="Collection(TBoardModel.sps_GetAllUserInformation_Result)">
-            <Parameter Name="userID" Mode="In" Type="Int32" />
+          <Parameter Name="userID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="quotestatus" EntityType="TBoardModel.quotestatu" />
+          <AssociationSet Name="a" Association="TBoardModel.a">
+            <End Role="quote" EntitySet="quotes" />
+            <End Role="quotestatu" EntitySet="quotestatus" />
+          </AssociationSet>
+          <AssociationSet Name="b" Association="TBoardModel.b">
+            <End Role="rfq" EntitySet="rfqs" />
+            <End Role="quotestatu" EntitySet="quotestatus" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="address">
           <Key>
@@ -978,6 +1031,7 @@
           <NavigationProperty Name="expertisesubcategory" Relationship="TBoardModel.rfq3" FromRole="rfq" ToRole="expertisesubcategory" />
           <NavigationProperty Name="rfqtype" Relationship="TBoardModel.rfq1" FromRole="rfq" ToRole="rfqtype" />
           <NavigationProperty Name="user" Relationship="TBoardModel.rfq2" FromRole="rfq" ToRole="user" />
+          <NavigationProperty Name="quotestatus" Relationship="TBoardModel.b" FromRole="rfq" ToRole="quotestatu" />
         </EntityType>
         <EntityType Name="rfqtype">
           <Key>
@@ -1119,6 +1173,7 @@
           <Property Name="amount" Type="Decimal" />
           <Property Name="supplyTime" Type="DateTime" />
           <Property Name="deliveryTime" Type="DateTime" />
+          <NavigationProperty Name="quotestatus" Relationship="TBoardModel.a" FromRole="quote" ToRole="quotestatu" />
         </EntityType>
         <ComplexType Name="sps_getRFQOwnerDetails_Result" >
           <Property Type="String" Name="reference" Nullable="false" />
@@ -1183,6 +1238,43 @@
           <Property Type="String" Name="branchCode" Nullable="false" />
           <Property Type="String" Name="communicationLine1" Nullable="false" />
         </ComplexType>
+        <EntityType Name="quotestatu">
+          <Key>
+            <PropertyRef Name="quoteStatusID" />
+          </Key>
+          <Property Name="quoteStatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rfqID" Type="Int32" />
+          <Property Name="quoteID" Type="Int32" />
+          <Property Name="status" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="quoteStatusDateTime" Type="DateTime" />
+          <Property Name="userID" Type="Int32" />
+          <NavigationProperty Name="quote" Relationship="TBoardModel.a" FromRole="quotestatu" ToRole="quote" />
+          <NavigationProperty Name="rfq" Relationship="TBoardModel.b" FromRole="quotestatu" ToRole="rfq" />
+        </EntityType>
+        <Association Name="a">
+          <End Type="TBoardModel.quote" Role="quote" Multiplicity="0..1" />
+          <End Type="TBoardModel.quotestatu" Role="quotestatu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="quote">
+              <PropertyRef Name="quoteID" />
+            </Principal>
+            <Dependent Role="quotestatu">
+              <PropertyRef Name="quoteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="b">
+          <End Type="TBoardModel.rfq" Role="rfq" Multiplicity="0..1" />
+          <End Type="TBoardModel.quotestatu" Role="quotestatu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rfq">
+              <PropertyRef Name="rfqID" />
+            </Principal>
+            <Dependent Role="quotestatu">
+              <PropertyRef Name="rfqID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1545,6 +1637,18 @@
               <ComplexTypeMapping TypeName="TBoardModel.sps_GetAllUserInformation_Result" />
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="quotestatus">
+            <EntityTypeMapping TypeName="TBoardModel.quotestatu">
+              <MappingFragment StoreEntitySet="quotestatus">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="quoteStatusDateTime" ColumnName="quoteStatusDateTime" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="quoteID" ColumnName="quoteID" />
+                <ScalarProperty Name="rfqID" ColumnName="rfqID" />
+                <ScalarProperty Name="quoteStatusID" ColumnName="quoteStatusID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

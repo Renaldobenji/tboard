@@ -165,6 +165,7 @@ namespace TBoard.Web.Controllers
                 data = new
                 {
                     reference = rfq.reference,
+                    status =rfq.status,
                     userName = rfq.user.username,
                     expertise = rfq.expertisesubcategory.Name,
                     rfqDetails = rfq.rfqDetails,
@@ -342,6 +343,31 @@ namespace TBoard.Web.Controllers
              var r = new
             {
                 data = quote
+            };
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(r))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return resp;
+        }
+
+        [HttpPost]
+        [JWTTokenValidation]
+        [Route("api/RFQ/AcceptQuote")]
+        public HttpResponseMessage AcceptQuote(FormDataCollection formData)
+        {
+            var RFQReference = formData.Get("RFQReference");
+            var QuoteID = Convert.ToInt32(formData.Get("QuoteID"));
+            var UserID = Convert.ToInt32(formData.Get("UserID"));
+
+            this.quoteBusinessLogic.AcceptBid(UserID, RFQReference, QuoteID);
+
+            var r = new
+            {
+                data = "Successful"
             };
 
             var resp = new HttpResponseMessage()

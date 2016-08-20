@@ -32,5 +32,10 @@ namespace TBoard.BusinessLogic.BusinessLogic
             return this.repository.GetMyActiveBids(userID);
         }
 
+        public void AcceptBid(int userID, string rfqID, int quoteID)
+        {
+            this.repository.AcceptBid(userID, rfqID, quoteID);
+        }
+
     }
 }

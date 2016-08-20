@@ -54,6 +54,7 @@ namespace TBoard.Data.Model
         public DbSet<quote> quotes { get; set; }
         public DbSet<rating> ratings { get; set; }
         public DbSet<config> configs { get; set; }
+        public DbSet<quotestatu> quotestatus { get; set; }
     
         public virtual ObjectResult<DocumentReq> sps_GetOutstandingDocumentRequirements(Nullable<int> organizationID)
         {

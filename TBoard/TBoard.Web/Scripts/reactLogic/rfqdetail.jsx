@@ -4,7 +4,9 @@
         return {            
             ExpiryDate: "",
             RFQDetails: "",
-            RFQReference: this.props.rfqreference
+            RFQReference: this.props.rfqreference,
+            UserID: "",
+            Status : ""
         };
     },
 
@@ -17,6 +19,7 @@
                     this.setState({ ExpiryDate: data.data.expiryDate });
                 }
                 this.setState({ RFQDetails: data.data.rfqDetails });
+                this.setState({ Status: data.data.status });
             }.bind(this)
         })
     },
@@ -65,8 +68,10 @@
 
     componentWillMount: function () {
         this.loadData();
-    },
-
+        var tokens = new TboardJWTToken();
+        var decodedToken = tokens.getJWTToken();
+        this.setState({ UserID: decodedToken.UserID });
+    },  
 
 	render: function() {
 
@@ -94,7 +99,7 @@
                             </div>
                         </div>
                         <div className="row">
-                            <RFQBidQuotes RFQReference={this.state.RFQReference} />
+                            {this.state.Status == "ACT" ? <RFQBidQuotes RFQReference={this.state.RFQReference} UserID={this.state.UserID }/> : null}
                          </div>
                       </div>
                   </div>
@@ -241,7 +246,7 @@ var RFQBidQuotes = React.createClass({
             data: data0,
             cache: false,
             success: function (data) {
-                this.setState({ data: data });
+                
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error('api/Rating', status, err.toString());
@@ -249,6 +254,24 @@ var RFQBidQuotes = React.createClass({
         });
     },
 
+    quoteAcceptClick: function () {
+       
+        var data0 = { UserID: this.props.UserID, QuoteID: $('#QuoteID').val(), RFQReference: this.props.RFQReference };
+
+        $.ajax({
+            url: 'api/RFQ/AcceptQuote',
+            type: 'POST',
+            dataType: 'json',
+            data: data0,
+            cache: false,
+            success: function (data) {
+                
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error('api/RFQ/AcceptQuote', status, err.toString());
+            }.bind(this)
+        });
+    },
     
     render: function () {
 
@@ -257,11 +280,11 @@ var RFQBidQuotes = React.createClass({
         }
         
         function actionsRateFormatter(cell, row) {
-            return <ActionsRate OrganizationID={row.OrganizationID}/>;
+            return <div><ActionsRate OrganizationID={row.OrganizationID} /><ActionsAcceptQuote  QuoteID={row.QuoteID} /></div>;
         }
 
         function actionsRateDisplayFormatter(cell, row) {
-            return <ActionsRateDisplay QuoteID={row.QuoteID} AVGRating={row.AverageRating }/>;
+            return <ActionsRateDisplay QuoteID={row.QuoteID} AVGRating={row.AverageRating } />;
         }
 
         return (
@@ -288,6 +311,28 @@ var RFQBidQuotes = React.createClass({
 				        </div>
 			        </div>
              </div>    
+            <div className="modal fade" id="myQuoteAccept" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			        <div className="modal-dialog">
+				        <div className="modal-content">
+					        <div className="modal-header">
+						        <button type="button" className="close" data-dismiss="modal" aria-hidden="true">×</button>
+						        <h4 className="modal-title" id="myModalLabel">Accept Quote</h4>
+					        </div>
+					        <div className="modal-body">
+                                    <div id="jRate"></div>
+                                    <input type="hidden" id="QuoteID"></input>
+                                    <div className="form-group">
+                                        <h2 className="modal-title" id="myModalLabel">Are you sure?</h2>
+                                    </div>
+
+					        </div>
+					        <div className="modal-footer">
+						        <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+						        <button type="submit" className="btn btn-primary" data-dismiss="modal" onClick={this.quoteAcceptClick}>Accept</button>
+					        </div>
+				        </div>
+			        </div>
+            </div>
 			<div className="col-lg-9">
                 <button className="btn btn-primary" data-toggle="modal" data-target="#myModal">
                     Order Quotes
@@ -355,6 +400,29 @@ var ActionsRate = React.createClass({
                  <div>  
                                               
 				    <button className="btn btn-outline btn-warning btn-sm" onClick={this.ratePostClick}>Rate</button>
+                 </div>
+		)
+}
+});
+
+var ActionsAcceptQuote = React.createClass({
+
+    acceptQuoteClick: function () {
+        // Explicitly focus the text input using the raw DOM API.
+        //alert(this.props.reference);
+        $('input[type="hidden"][id="QuoteID"]').remove();
+        var $hiddenInput = $('<input/>', { type: 'hidden', id: "QuoteID", value: this.props.QuoteID });
+        $hiddenInput.appendTo($('#myQuoteAccept'));
+        $('#myQuoteAccept').modal('show');
+
+    },
+
+    render: function () { 
+
+        return (
+                 <div>  
+                                              
+				    <button className="btn btn-outline btn-success btn-sm" onClick={this.acceptQuoteClick}>Accept</button>
                  </div>
 		)
 }

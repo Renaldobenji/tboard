@@ -245,7 +245,26 @@ namespace TBoard.Web.Controllers
             
             var r = new
             {
-                data = percComplete
+                data = Math.Round(percComplete)
+            };
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(r))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            return resp;
+        }
+
+        [HttpGet]
+        [Route("api/User/ProfileCompleteness/{id}")]
+        public HttpResponseMessage ProfileCompleteness(int id)
+        {
+            var percComplete = this.userBusinessLogic.GetUserProfileCompleteness(id);
+
+            var r = new
+            {
+                data = Math.Round(percComplete)
             };
 
             var resp = new HttpResponseMessage()
