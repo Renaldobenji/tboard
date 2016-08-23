@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TBoard.Data.Interfaces;
 using TBoard.Data.Model;
 using TBoard.Data.Repository;
+using static TBoard.Data.Repository.QuoteRepository;
 
 namespace TBoard.BusinessLogic.BusinessLogic
 {
@@ -37,5 +38,15 @@ namespace TBoard.BusinessLogic.BusinessLogic
             this.repository.AcceptBid(userID, rfqID, quoteID);
         }
 
+
+        public int GetAcceptedBidsCount(int userID)
+        {
+            return this.repository.GetAcceptedBidsCount(userID);
+        }
+
+        public IList<AcceptedBidDetails> GetAcceptedBids(int userID)
+        {
+            return this.repository.GetAcceptedBids(userID);
+        }
     }
 }

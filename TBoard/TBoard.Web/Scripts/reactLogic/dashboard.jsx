@@ -5,6 +5,7 @@
             UserID: 0,
             activeRFQTotal: 0,
             activeBidsTotal: 0,
+            acceptedQuotes: 0,
             OrganizationID : 0
         };
     },
@@ -15,6 +16,13 @@
             success: function (data) {                
                 this.setState({ activeRFQTotal: data.data.activeRFQTotal });
                 this.setState({ activeBidsTotal: data.data.activeBidsTotal });
+            }.bind(this)
+        });
+
+        $.ajax({
+            url: 'api/RFQ/GetAcceptedBidsCount/' + userID,
+            success: function (data) {
+                this.setState({ acceptedQuotes: data.data });
             }.bind(this)
         });
     },
@@ -66,6 +74,9 @@
                                 <div className="col-md-3">
 			                        <RFQActiveBidsStatistics activeBidsTotal={this.state.activeBidsTotal}/>
                                 </div>
+                                <div className="col-md-3">
+			                        <RFQAcceptedQuotes acceptedQuotes={this.state.acceptedQuotes} />
+                                </div>                                
                                 <div className="col-md-3">
 			                        <RFQCreateDashboard activeBidsTotal={this.state.activeBidsTotal} />
                                 </div>                                
@@ -140,6 +151,41 @@ var RFQActiveBidsStatistics = React.createClass({
                             </div>
                         </div>
                         <a href="#rfqmyactivebids">
+                            <div className="panel-footer">
+                                <span className="pull-left">View Details</span>
+                                <span className="pull-right"><i className="fa fa-arrow-circle-right"></i></span>
+                                <div className="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>                       
+                    </div>
+            )
+}
+});
+
+var RFQAcceptedQuotes = React.createClass({   
+
+    render: function() {
+
+        var navBarSyle= {
+            marginBottom:0
+        };
+
+        return (
+                  <div>                    
+                    <div className="panel panel-primary">
+                        <div className="panel-heading">
+                            <div className="row">
+                                <div className="col-xs-3">
+                                    <i className="fa fa-comments fa-5x"></i>
+                                </div>
+                                <div className="col-xs-9 text-right">
+                                    <div className="huge">{this.props.acceptedQuotes}</div>
+                                    <div>Accepted Quotes!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#myacceptedquotes">
                             <div className="panel-footer">
                                 <span className="pull-left">View Details</span>
                                 <span className="pull-right"><i className="fa fa-arrow-circle-right"></i></span>

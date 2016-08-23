@@ -35,7 +35,10 @@
                                     </li>   
                                     <li>
 			                            <a href="#rfqmyactivebids">My Bids</a>
-                                    </li>                            
+                                    </li>   
+                                     <li>
+			                            <a href="#myacceptedquotes">Accepted Quotes</a>
+                                     </li>                          
 	                            </ul>
                             </li>
                         </ul>

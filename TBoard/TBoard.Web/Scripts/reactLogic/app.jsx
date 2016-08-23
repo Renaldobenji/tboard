@@ -166,6 +166,13 @@ routie({
 				React.createElement(MyActiveBids, null), document.getElementById('container')
 			);
         }
+         ,
+        'myacceptedquotes': function () {
+            ReactDOM.render(
+				React.createElement(MyAcceptedQuotes, null), document.getElementById('container')
+			);
+        }
+    
 });
 
 routie('rfqdetail/:rfqreference', function (rfqreference) {

@@ -133,7 +133,7 @@
           <Property Name="from" Type="varchar" MaxLength="200" />
           <Property Name="to" Type="varchar" MaxLength="200" />
           <Property Name="subject" Type="varchar" MaxLength="500" />
-          <Property Name="body" Type="varchar" MaxLength="5000" />
+          <Property Name="body" Type="text" />
           <Property Name="createdDate" Type="datetime" Precision="0" />
           <Property Name="sentDate" Type="datetime" Precision="0" />
         </EntityType>
@@ -1087,7 +1087,7 @@
           <Property Type="String" Name="from" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="to" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="subject" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="body" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="body" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Type="DateTime" Name="createdDate" Precision="0" />
           <Property Type="DateTime" Name="sentDate" Precision="0" />
         </EntityType>

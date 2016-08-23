@@ -251,6 +251,9 @@
     <Content Include="Content\bootstrap\metismenu\metisMenu.min.js" />
     <Content Include="Content\bootstrap\sb-admin-2.css" />
     <Content Include="Content\bootstrap\timeline.css" />
+    <Resource Include="Content\EmailTemplates\bidaccepted.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -790,9 +793,11 @@
     <Content Include="Scripts\reactLogic\rfqbid.jsx" />
     <Content Include="Scripts\reactLogic\rfqmybids.jsx" />
     <Content Include="Scripts\reactLogic\userdetail.jsx" />
+    <Content Include="Scripts\reactLogic\acceptedquotes.jsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\EmailTemplates\images\" />
     <Folder Include="Models\" />
     <Folder Include="Response\" />
   </ItemGroup>

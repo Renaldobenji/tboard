@@ -265,7 +265,7 @@ var RFQBidQuotes = React.createClass({
             data: data0,
             cache: false,
             success: function (data) {
-                
+                location.reload();
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error('api/RFQ/AcceptQuote', status, err.toString());

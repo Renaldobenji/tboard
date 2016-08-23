@@ -10,6 +10,8 @@ using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.Data.Model;
 using System.Web.Http;
 using TBoard.Web.Attributes;
+using System.IO;
+using System.Web;
 
 namespace TBoard.Web.Controllers
 {
@@ -110,10 +112,17 @@ namespace TBoard.Web.Controllers
                 }
             };
 
+            var converted = JsonConvert.SerializeObject(r, Formatting.None,
+            new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+
             var resp = new HttpResponseMessage()
             {
-                Content = new StringContent(JsonConvert.SerializeObject(r))
+                Content = new StringContent(converted)
             };
+
             resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
             return resp;
@@ -347,7 +356,11 @@ namespace TBoard.Web.Controllers
 
             var resp = new HttpResponseMessage()
             {
-                Content = new StringContent(JsonConvert.SerializeObject(r))
+                Content = new StringContent(JsonConvert.SerializeObject(r, Formatting.None,
+                                               new JsonSerializerSettings
+                                               {
+                                                   ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                               }))
             };
             resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
@@ -363,11 +376,73 @@ namespace TBoard.Web.Controllers
             var QuoteID = Convert.ToInt32(formData.Get("QuoteID"));
             var UserID = Convert.ToInt32(formData.Get("UserID"));
 
-            this.quoteBusinessLogic.AcceptBid(UserID, RFQReference, QuoteID);
+            //this.quoteBusinessLogic.AcceptBid(UserID, RFQReference, QuoteID);
+
+            //Send Email
+            this.emailQueueBusinessLogic.SendEmail("bid@tboard.com","renaldobenji@gmail.com","Quote Accepted", createEmailBody(RFQReference));
 
             var r = new
             {
                 data = "Successful"
+            };
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(r))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return resp;
+        }
+
+        private string createEmailBody(string RFQReferencee)
+        {
+            string body = string.Empty;
+            //using streamreader for reading my htmltemplate   
+            using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Content/EmailTemplates/bidaccepted.html")))
+            {
+
+                body = reader.ReadToEnd();
+            }
+
+            body = body.Replace("{reference}", RFQReferencee); //replacing the required things            
+
+            return body;
+        }
+
+        [HttpGet]
+        [JWTTokenValidation]
+        [Route("api/RFQ/GetAcceptedQuotes/{userID}")]
+        public HttpResponseMessage GetAcceptedQuotes(int userID)
+        {
+
+            var data = this.quoteBusinessLogic.GetAcceptedBids(userID);
+
+            var r = new
+            {
+                data = data
+            };
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(r))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return resp;
+        }
+
+        [HttpGet]
+        [JWTTokenValidation]
+        [Route("api/RFQ/GetAcceptedBidsCount/{userID}")]
+        public HttpResponseMessage GetAcceptedBidsCount(int userID)
+        {
+
+            var data = this.quoteBusinessLogic.GetAcceptedBidsCount(userID);
+
+            var r = new
+            {
+                data = data
             };
 
             var resp = new HttpResponseMessage()
