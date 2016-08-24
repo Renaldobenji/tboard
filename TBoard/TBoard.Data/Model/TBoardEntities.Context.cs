@@ -127,5 +127,14 @@ namespace TBoard.Data.Model
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sps_GetAllUserInformation_Result>("sps_GetAllUserInformation", userIDParameter);
         }
+    
+        public virtual ObjectResult<sps_GetQuoteOwnerDetails_Result> sps_GetQuoteOwnerDetails(Nullable<int> quoteID)
+        {
+            var quoteIDParameter = quoteID.HasValue ?
+                new ObjectParameter("quoteID", quoteID) :
+                new ObjectParameter("quoteID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sps_GetQuoteOwnerDetails_Result>("sps_GetQuoteOwnerDetails", quoteIDParameter);
+        }
     }
 }

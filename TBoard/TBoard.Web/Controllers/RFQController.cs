@@ -215,10 +215,25 @@ namespace TBoard.Web.Controllers
             }
             //Send out email to all subscribed to that category
             foreach (var e in expertiseOwnership)
-            {
-                string emailBody = string.Format("The following quote has been created for your subscribed category: {0}. You can view information and bid here: {1}",rfq.reference, "http://tboard.azurewebsites.net/#rfqbid/"+ rfq.reference);
-                this.emailQueueBusinessLogic.SendEmail("admin@Tenderboard.co.za",e.communicationLine1,"Request for Quotation", emailBody);
+            {                
+                this.emailQueueBusinessLogic.SendEmail("admin@Tenderboard.co.za",e.communicationLine1,"Request for Quotation", createEmailBody(rfq.reference, "http://tboard.azurewebsites.net/#rfqbid/" + rfq.reference));
             } 
+        }
+
+        private string createEmailBody(string reference, string url)
+        {
+            string body = string.Empty;
+            //using streamreader for reading my htmltemplate   
+            using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Content/EmailTemplates/rfqrequest.html")))
+            {
+
+                body = reader.ReadToEnd();
+            }
+
+            body = body.Replace("{reference}", reference); //replacing the required things     
+            body = body.Replace("{url}", url); //replacing the required things            
+
+            return body;
         }
 
         [HttpPost]
@@ -264,7 +279,7 @@ namespace TBoard.Web.Controllers
 
             //This will need to send out an email
             var rfqOwner = this.quoteBusinessLogic.GetQuoteOwnerDetails(rfqReference).SingleOrDefault();
-            this.emailQueueBusinessLogic.SendEmail("admin@Tenderboard.co.za", rfqOwner.communicationLine1, "Hi, please see quote from supplier", "Hi, please see quote from supplier");            
+            this.emailQueueBusinessLogic.SendEmail("admin@Tenderboard.co.za", rfqOwner.communicationLine1, "TenderBoard - Quotation Recieved", createBidEmailBody("URL"));            
 
             var r = new
             {
@@ -278,6 +293,20 @@ namespace TBoard.Web.Controllers
             resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
             return resp;
+        }
+
+        private string createBidEmailBody(string url)
+        {
+            string body = string.Empty;
+            //using streamreader for reading my htmltemplate   
+            using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Content/EmailTemplates/rfqbid.html")))
+            {
+                body = reader.ReadToEnd();
+            }
+
+            body = body.Replace("{url}", url);           
+
+            return body;
         }
 
         [HttpGet]
@@ -376,10 +405,14 @@ namespace TBoard.Web.Controllers
             var QuoteID = Convert.ToInt32(formData.Get("QuoteID"));
             var UserID = Convert.ToInt32(formData.Get("UserID"));
 
-            //this.quoteBusinessLogic.AcceptBid(UserID, RFQReference, QuoteID);
+            this.quoteBusinessLogic.AcceptBid(UserID, RFQReference, QuoteID);
 
+            var alertInformation = this.quoteBusinessLogic.GetQuoteOwnerDetails(QuoteID);
             //Send Email
-            this.emailQueueBusinessLogic.SendEmail("bid@tboard.com","renaldobenji@gmail.com","Quote Accepted", createEmailBody(RFQReference));
+            foreach (var det in alertInformation)
+            {
+                this.emailQueueBusinessLogic.SendEmail("bid@tboard.com", det.communicationLine1, "Quote Accepted", createEmailBody(RFQReference));
+            }            
 
             var r = new
             {

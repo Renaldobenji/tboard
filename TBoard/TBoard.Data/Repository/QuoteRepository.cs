@@ -89,6 +89,11 @@ namespace TBoard.Data.Repository
                     select qs).Count();                   
         }
 
+        public IList<sps_GetQuoteOwnerDetails_Result> GetQuoteOwnerDetails(int quoteID)
+        {
+            return this._dbContext.sps_GetQuoteOwnerDetails(quoteID).ToList();
+        }
+
         public class AcceptedBidDetails
         {
             public string quoteStatusDateTime { get; set; }

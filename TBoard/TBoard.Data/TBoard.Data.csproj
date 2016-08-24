@@ -234,6 +234,9 @@
     <Compile Include="Model\sps_GetBidsForQuote_Result.cs">
       <DependentUpon>TBoardEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\sps_GetQuoteOwnerDetails_Result.cs">
+      <DependentUpon>TBoardEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\sps_getRFQOwnerDetails_Result.cs">
       <DependentUpon>TBoardEntities.tt</DependentUpon>
     </Compile>

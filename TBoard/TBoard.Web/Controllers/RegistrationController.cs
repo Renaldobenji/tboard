@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
+using System.Web;
 using System.Web.Http;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.BusinessLogic.Responses;
@@ -74,10 +76,9 @@ namespace TBoard.Web.Controllers
                 addCommunicationBasedOnType(formData, org, userResponse, "CellNumber", "CELL");
                 addCommunicationBasedOnType(formData, org, userResponse, "HomeNumber", "HME");
                 addCommunicationBasedOnType(formData, org, userResponse, "OfficeNumber", "WRK");
-                addCommunicationBasedOnType(formData, org, userResponse, "Email", "EML");
+                addCommunicationBasedOnType(formData, org, userResponse, "Email", "EML");                               
 
-                string emailBody = String.Format("Thank you for Registering, Please login using the following username:{0} and password:{1}", formData.Get("Name"), formData.Get("Password"));
-                this.emailQueueBusinessLogic.SendEmail("admin@Tenderboard.co.za", formData.Get("Email"), "Registration Complete", emailBody);
+                this.emailQueueBusinessLogic.SendEmail("admin@Tenderboard.co.za", formData.Get("Email"), "Registration Complete", createEmailBody(formData.Get("Name"), formData.Get("Password")));
             }
             catch (DbEntityValidationException e)
             {
@@ -98,6 +99,22 @@ namespace TBoard.Web.Controllers
             }
 
             return "";
+        }
+
+        private string createEmailBody(string username, string password)
+        {
+            string body = string.Empty;
+            //using streamreader for reading my htmltemplate   
+            using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Content/EmailTemplates/registration.html")))
+            {
+
+                body = reader.ReadToEnd();
+            }
+
+            body = body.Replace("{username}", username); //replacing the required things     
+            body = body.Replace("{password}", password); //replacing the required things            
+
+            return body;
         }
 
         private void addAddressInformation(FormDataCollection formData, organization org, UserResponse userResponse)

@@ -498,6 +498,9 @@
         <Function Name="sps_GetOutstandingDocumentRequirements" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tboard">
           <Parameter Name="organizationID" Type="int" Mode="In" />
         </Function>
+        <Function Name="sps_GetQuoteOwnerDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tboard">
+          <Parameter Name="quoteID" Type="int" Mode="In" />
+        </Function>
         <Function Name="sps_getRFQOwnerDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tboard">
           <Parameter Name="rfqReference" Type="varchar" Mode="In" />
         </Function>
@@ -708,6 +711,9 @@
             <End Role="rfq" EntitySet="rfqs" />
             <End Role="quotestatu" EntitySet="quotestatus" />
           </AssociationSet>
+          <FunctionImport Name="sps_GetQuoteOwnerDetails" ReturnType="Collection(TBoardModel.sps_GetQuoteOwnerDetails_Result)">
+            <Parameter Name="quoteID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="address">
           <Key>
@@ -1275,6 +1281,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="sps_GetQuoteOwnerDetails_Result" >
+          <Property Type="String" Name="communicationLine1" Nullable="false" />
+          <Property Type="String" Name="firstname" Nullable="false" />
+          <Property Type="String" Name="surname" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1649,6 +1660,11 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sps_GetQuoteOwnerDetails" FunctionName="TBoardModel.Store.sps_GetQuoteOwnerDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TBoardModel.sps_GetQuoteOwnerDetails_Result" />
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
