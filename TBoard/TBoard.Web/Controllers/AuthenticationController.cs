@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens;
@@ -21,13 +23,15 @@ namespace TBoard.Web.Controllers
         private IAuthenticationService authService;
         private PasswordHasher passwordHasher;
         private UserBusinessLogic userBusinessLogic;
+        private ConfigBusinessLogic configBusinessLogic;
 
-        public AuthenticationController(IAuthenticationService authService, UserBusinessLogic userBusinessLogic)
+        public AuthenticationController(IAuthenticationService authService, UserBusinessLogic userBusinessLogic, ConfigBusinessLogic configBusinessLogic)
         {
             this.authService = authService;
             this.passwordHasher = new PasswordHasher();
             this.userBusinessLogic = userBusinessLogic;
-        }
+            this.configBusinessLogic = configBusinessLogic;
+        }        
 
         [HttpGet]
         [Route("api/Authentication/{username}/{password}")]
@@ -109,6 +113,56 @@ namespace TBoard.Web.Controllers
             Console.ReadLine();
             */
 
+        }
+
+        [HttpGet]
+        [Route("api/Authentication/DocumentStorage")]        
+        public HttpResponseMessage DocumentStorage()
+        {
+
+            try
+            {
+                var storageDetails = this.configBusinessLogic.GetConfigValue("StorageConnectionString");
+                CloudStorageAccount storageAccount = CloudStorageAccount.Parse(storageDetails);
+
+                // Create the blob client.
+                CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+
+                // Retrieve reference to a previously created container.
+                CloudBlobContainer container = blobClient.GetContainerReference("tboardblogcontainer");                
+
+                var httpRequest = System.Web.HttpContext.Current.Request;
+                if (httpRequest.Files.Count > 0)
+                {
+                    foreach (string file in httpRequest.Files)
+                    {
+                        var guiidName = new Guid().ToString();                        
+
+                        // Retrieve reference to a blob named "myblob".
+                        CloudBlockBlob blockBlob = container.GetBlockBlobReference(guiidName);
+                        // NOTE: To store in memory use postedFile.InputStream
+                        blockBlob.UploadFromStream(httpRequest.Files[file].InputStream);
+
+                        using (TBoardEntities entities = new TBoardEntities())
+                        {
+                            entities.documents.Add(new document()
+                            {
+                                organizationID = Convert.ToInt32(httpRequest.Form["OrganizationID"]),
+                                dateCreated = DateTime.Now,
+                                documentTypeID = Convert.ToInt32(httpRequest.Form["DocumentType"]),
+                                documentPath = guiidName
+                            });
+                            entities.SaveChanges();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
         private user validateUser(string username, string password)

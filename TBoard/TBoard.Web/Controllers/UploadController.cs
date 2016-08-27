@@ -1,9 +1,13 @@
-﻿using System;
+﻿using Microsoft.Azure;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.Data.Model;
@@ -12,7 +16,7 @@ using TBoard.Web.Attributes;
 namespace TBoard.Web.Controllers
 {
     public class UploadController : Controller
-    {
+    {        
         //
         // GET: /Upload/
         [JWTTokenValidation]
@@ -38,32 +42,55 @@ namespace TBoard.Web.Controllers
         [JWTTokenValidation]
         public HttpResponseMessage PostForm()
         {
-            var httpRequest = System.Web.HttpContext.Current.Request;
-            if (httpRequest.Files.Count > 0)
+            try
             {
-                foreach (string file in httpRequest.Files)
+                string storageDetails;
+                using (TBoardEntities entities = new TBoardEntities())
                 {
-                    var postedFile = httpRequest.Files[file];
-                    var filePath = System.Web.HttpContext.Current.Server.MapPath("~/" + postedFile.FileName);
-                    postedFile.SaveAs(filePath);
-                    // NOTE: To store in memory use postedFile.InputStream
+                    storageDetails = entities.configs.Where(x => x.name == "StorageConnectionString").Select(y => y.value).FirstOrDefault();
+                }
 
-                    using (TBoardEntities entities = new TBoardEntities())
+                CloudStorageAccount storageAccount = CloudStorageAccount.Parse(storageDetails);
+
+                // Create the blob client.
+                CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+
+                // Retrieve reference to a previously created container.
+                CloudBlobContainer container = blobClient.GetContainerReference("tboardblogcontainer");
+
+                var httpRequest = System.Web.HttpContext.Current.Request;
+                if (httpRequest.Files.Count > 0)
+                {
+                    foreach (string file in httpRequest.Files)
                     {
-                        entities.documents.Add(new document()
+                        var guiidName = string.Format("{0}.{1}", Guid.NewGuid().ToString(), httpRequest.Files[file].FileName.Split('.')[1]);
+
+                        // Retrieve reference to a blob named "myblob".
+                        CloudBlockBlob blockBlob = container.GetBlockBlobReference(guiidName);
+                        // NOTE: To store in memory use postedFile.InputStream
+                        blockBlob.UploadFromStream(httpRequest.Files[file].InputStream);
+
+                        using (TBoardEntities entities = new TBoardEntities())
                         {
-                            organizationID = Convert.ToInt32(httpRequest.Form["OrganizationID"]),
-                            dateCreated = DateTime.Now,
-                            documentTypeID = Convert.ToInt32(httpRequest.Form["DocumentType"]),
-                            documentPath = filePath
-                        });
-                        entities.SaveChanges();
+                            entities.documents.Add(new document()
+                            {
+                                organizationID = Convert.ToInt32(httpRequest.Form["OrganizationID"]),
+                                dateCreated = DateTime.Now,
+                                documentTypeID = Convert.ToInt32(httpRequest.Form["DocumentType"]),
+                                documentPath = guiidName
+                            });
+                            entities.SaveChanges();
+                        }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
             return new HttpResponseMessage(HttpStatusCode.OK);
-        }
+        }        
 
         public class UploadViewModel
         {
