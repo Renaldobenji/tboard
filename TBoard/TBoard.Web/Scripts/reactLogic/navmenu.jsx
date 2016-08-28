@@ -32,13 +32,16 @@
                                     </li>	
                                     <li>
 			                            <a href="#rfqallrequest">All Requests</a>
+                                    </li> 
+                                    <li>
+			                            <a href="#myacceptedquotes">Accepted Quotes</a>
                                     </li>   
                                     <li>
 			                            <a href="#rfqmyactivebids">My Bids</a>
                                     </li>   
                                      <li>
-			                            <a href="#myacceptedquotes">Accepted Quotes</a>
-                                     </li>                          
+			                            <a href="#bidswon">Bids Won</a>
+                                     </li>                                                               
 	                            </ul>
                             </li>
                         </ul>

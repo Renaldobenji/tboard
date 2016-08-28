@@ -467,11 +467,55 @@ namespace TBoard.Web.Controllers
 
         [HttpGet]
         [JWTTokenValidation]
+        [Route("api/RFQ/GetBidsWon/{userID}")]
+        public HttpResponseMessage GetBidsWon(int userID)
+        {
+
+            var data = this.quoteBusinessLogic.GetBidsWon(userID);
+
+            var r = new
+            {
+                data = data
+            };
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(r))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return resp;
+        }
+
+        [HttpGet]
+        [JWTTokenValidation]
         [Route("api/RFQ/GetAcceptedBidsCount/{userID}")]
         public HttpResponseMessage GetAcceptedBidsCount(int userID)
         {
 
             var data = this.quoteBusinessLogic.GetAcceptedBidsCount(userID);
+
+            var r = new
+            {
+                data = data
+            };
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(r))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return resp;
+        }
+
+        [HttpGet]
+        [JWTTokenValidation]
+        [Route("api/RFQ/GetBidsWonCount/{userID}")]
+        public HttpResponseMessage GetBidsWonCount(int userID)
+        {
+
+            var data = this.quoteBusinessLogic.GetBidsWonCount(userID);
 
             var r = new
             {

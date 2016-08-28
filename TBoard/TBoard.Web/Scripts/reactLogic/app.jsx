@@ -172,6 +172,12 @@ routie({
 				React.createElement(MyAcceptedQuotes, null), document.getElementById('container')
 			);
         }
+        ,
+        'bidswon': function () {
+            ReactDOM.render(
+				React.createElement(BidsWon, null), document.getElementById('container')
+			);
+        }
     
 });
 

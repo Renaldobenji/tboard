@@ -44,9 +44,19 @@ namespace TBoard.BusinessLogic.BusinessLogic
             return this.repository.GetAcceptedBidsCount(userID);
         }
 
+        public int GetBidsWonCount(int userID)
+        {
+            return this.repository.GetBidsWonCount(userID);
+        }
+
         public IList<AcceptedBidDetails> GetAcceptedBids(int userID)
         {
             return this.repository.GetAcceptedBids(userID);
+        }
+
+        public IList<AcceptedBidDetails> GetBidsWon(int userID)
+        {
+            return this.repository.GetBidsWon(userID);
         }
 
         public IList<sps_GetQuoteOwnerDetails_Result> GetQuoteOwnerDetails(int quoteID)

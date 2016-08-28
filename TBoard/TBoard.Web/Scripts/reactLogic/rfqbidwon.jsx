@@ -1,4 +1,4 @@
-﻿var MyAcceptedQuotes = React.createClass({
+﻿var BidsWon = React.createClass({
     getInitialState: function () {
         return {
             UserID: ""
@@ -26,24 +26,24 @@
                     <div id="page-wrapper">
 	                        <div className="row">
 		                        <div className="col-lg-12">
-			                        <h1 className="page-header">Accepted Quotes</h1>                                   
+			                        <h1 className="page-header">Bids Won</h1>                                   
 		                        </div>                
 	                        </div> 
                             <div className="row">
                                 <div className="panel panel-info">
                                     <div className="panel-heading">
-                                        Accepted Quotes
+                                        Bids Won
                                     </div>
                                     <div className="panel-body">
                                         <h4 className="text-success">Congratulations</h4>
-                                        <p>Thank you for taking the first step of purchasing your product, please follow through and proceed with payment.</p>
+                                        <p>You have successfully tendered for a quote, please await further instruction.</p>
                                         <p>Regards</p>
                                         <p>TenderBoard Team</p>
                                     </div>                                    
                                 </div>
                             </div> 
                             <div className="row">
-                                <MyAcceptedQuotesList UserID={this.state.UserID} />
+                                <MyBidWonList UserID={this.state.UserID} />
                             </div>
                     </div>
                 </div>                      
@@ -51,7 +51,7 @@
 	}
 });
 
-var MyAcceptedQuotesList = React.createClass({   
+var MyBidWonList = React.createClass({   
     
 
     getInitialState: function () {
@@ -60,7 +60,7 @@ var MyAcceptedQuotesList = React.createClass({
 
     loadData: function () {
         $.ajax({           
-            url: 'api/RFQ/GetAcceptedQuotes/' + this.props.UserID,
+            url: 'api/RFQ/GetBidsWon/' + this.props.UserID,
             success: function (data) {
                 this.setState({ data: data.data });
             }.bind(this)

@@ -81,12 +81,43 @@ namespace TBoard.Data.Repository
             return data;
         }
 
+        public IList<AcceptedBidDetails> GetBidsWon(int userID)
+        {
+            var data = (from qs in this._dbContext.quotestatus
+                        join rfqs in this._dbContext.rfqs on qs.rfqID equals rfqs.rfqID
+                        join q in this._dbContext.quotes on qs.quoteID equals q.quoteID
+                        join u in this._dbContext.users on qs.userID equals u.userID
+                        where qs.status == "Accepted" && qs.userID == userID
+                        select new AcceptedBidDetails()
+                        {
+                            quoteStatusDateTime = qs.quoteStatusDateTime.ToString(),
+                            name = u.firstname + " " + u.surname,
+                            reference = rfqs.reference,
+                            dateCreated = rfqs.dateCreated.ToString(),
+                            amount = q.amount.ToString(),
+                            deliveryTime = q.deliveryTime.ToString(),
+                            supplyTime = q.supplyTime.ToString(),
+                            rfqID = rfqs.rfqID.ToString(),
+                            quoteID = q.quoteID.ToString()
+                        }).ToList();
+
+            return data;
+        }
+
         public int GetAcceptedBidsCount(int userID)
         {
             return (from qs in this._dbContext.quotestatus
                         join u in this._dbContext.users on qs.userID equals u.userID
                         where qs.status == "Accepted" && u.userID == userID
                     select qs).Count();                   
+        }
+
+        public int GetBidsWonCount(int userID)
+        {
+            return (from qs in this._dbContext.quotestatus
+                    join u in this._dbContext.users on qs.userID equals u.userID
+                    where qs.status == "Accepted" && qs.userID == userID
+                    select qs).Count();
         }
 
         public IList<sps_GetQuoteOwnerDetails_Result> GetQuoteOwnerDetails(int quoteID)
