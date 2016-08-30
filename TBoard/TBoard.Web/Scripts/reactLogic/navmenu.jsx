@@ -28,19 +28,19 @@
 			                            <a href="#rfqrequest">Request</a>
 		                            </li>	
                                     <li>
-			                            <a href="#rfqmyrequest">Active Requests</a>
+			                            <a href="#rfqmyrequest">Active Requests <span className="menuCircle">2</span></a>
                                     </li>	
                                     <li>
-			                            <a href="#rfqallrequest">All Requests</a>
+			                            <a href="#rfqallrequest">All Requests <span className="menuCircle">4</span></a>
                                     </li> 
                                     <li>
-			                            <a href="#myacceptedquotes">Accepted Quotes</a>
+			                            <a href="#myacceptedquotes">Accepted Quotes <span className="menuCircle">6</span></a>
                                     </li>   
                                     <li>
-			                            <a href="#rfqmyactivebids">My Bids</a>
+			                            <a href="#rfqmyactivebids">My Bids <span className="menuCircle">1</span></a>
                                     </li>   
                                      <li>
-			                            <a href="#bidswon">Bids Won</a>
+			                            <a href="#bidswon">Bids Won <span className="menuCircle">6</span></a>
                                      </li>                                                               
 	                            </ul>
                             </li>
