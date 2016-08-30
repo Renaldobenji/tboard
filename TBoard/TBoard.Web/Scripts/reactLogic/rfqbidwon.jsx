@@ -74,7 +74,7 @@ var MyBidWonList = React.createClass({
     render: function () {
 
         function actionsFormatter(cell, row) {
-            return <ActionsRFQBID reference={row.reference}/>;
+            return <ActionsRFQPay reference={row.reference}/>;
         }
 
         return (
@@ -94,18 +94,18 @@ var MyBidWonList = React.createClass({
     }
 });
 
-var ActionsRFQBID = React.createClass({
+var ActionsRFQPay = React.createClass({
     
     handleClick: function () {
         // Explicitly focus the text input using the raw DOM API.
         //alert(this.props.reference);
-        routie('rfqbid/' + this.props.reference);
+        routie('rfqpay/' + this.props.reference);
     },
 
     render: function () { 
 
         return (
-				 <button className="btn btn-outline btn-warning btn-sm" onClick={this.handleClick}>View</button>
+				 <button className="btn btn-outline btn-warning btn-sm" onClick={this.handleClick}>Pay</button>
 		)
 }
 });

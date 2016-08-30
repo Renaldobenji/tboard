@@ -74,7 +74,7 @@ var MyAcceptedQuotesList = React.createClass({
     render: function () {
 
         function actionsFormatter(cell, row) {
-            return <ActionsRFQBID reference={row.reference}/>;
+            return <ActionsRFQPays reference={row.reference}/>;
         }
 
         return (
@@ -87,25 +87,25 @@ var MyAcceptedQuotesList = React.createClass({
                   <TableHeaderColumn dataField="amount" dataSort={true}>amount</TableHeaderColumn>
                   <TableHeaderColumn dataField="deliveryTime" dataSort={true}>deliveryTime</TableHeaderColumn>     
                   <TableHeaderColumn dataField="supplyTime" dataSort={true}>supplyTime</TableHeaderColumn>                                    
-                  <TableHeaderColumn dataFormat={actionsFormatter}>View</TableHeaderColumn>
+                  <TableHeaderColumn dataFormat={actionsFormatter}>Actions</TableHeaderColumn>
 				</BootstrapTable>
 			</div>
 		)
     }
 });
 
-var ActionsRFQBID = React.createClass({
+var ActionsRFQPays = React.createClass({
     
     handleClick: function () {
         // Explicitly focus the text input using the raw DOM API.
         //alert(this.props.reference);
-        routie('rfqbid/' + this.props.reference);
+        routie('rfqpay/' + this.props.reference);
     },
 
     render: function () { 
 
         return (
-				 <button className="btn btn-outline btn-warning btn-sm" onClick={this.handleClick}>View</button>
+				 <button className="btn btn-outline btn-warning btn-sm" onClick={this.handleClick}>Pay</button>
 		)
 }
 });

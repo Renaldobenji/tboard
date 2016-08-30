@@ -197,6 +197,12 @@ routie('rfqbid/:rfqreference', function (rfqreference) {
 			);
 });
 
+routie('rfqpay/:rfqreference', function (rfqreference) {
+    ReactDOM.render(
+				React.createElement(RfqPay, { rfqreference: rfqreference }), document.getElementById('container')
+			);
+});
+
 routie('login/:returnURL', function (returnURL) {
     ReactDOM.render(
 				React.createElement(login, { returnURL: returnURL }), document.getElementById('container')

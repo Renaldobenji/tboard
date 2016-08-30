@@ -1,0 +1,155 @@
+﻿var RfqPay = React.createClass({
+
+    getInitialState: function () {
+        return {            
+            ExpiryDate: "",
+            RFQDetails: "",
+            RFQReference: this.props.rfqreference,
+            UserID: "",
+            Status : ""
+        };
+    },
+
+    loadData: function () {
+        $.ajax({
+            url: 'api/RFQ/Detail/' + this.props.rfqreference,
+            success: function (data) {
+                if (data.data.expiryDate != null)
+                    {
+                    this.setState({ ExpiryDate: data.data.expiryDate });
+                }
+                this.setState({ RFQDetails: data.data.rfqDetails });
+                this.setState({ Status: data.data.status });
+            }.bind(this)
+        })
+    },
+
+    componentWillMount: function () {
+        this.loadData();
+        var tokens = new TboardJWTToken();
+        var decodedToken = tokens.getJWTToken();
+        this.setState({ UserID: decodedToken.UserID });
+    },  
+
+	render: function() {
+
+        var navBarSyle= {
+              marginBottom:0
+            };
+		return (	
+                <div>		
+				    <nav className="navbar navbar-default navbar-static-top" role="navigation" style={navBarSyle}>
+	                    <NavHeader />
+                        <NavMenu />
+                    </nav>
+                    <div id="page-wrapper">
+	                        <div className="row">
+		                        <div className="col-lg-12">
+			                        <h1 className="page-header">RFQ Payment Information ({this.props.rfqreference})</h1>
+		                        </div>
+	                        </div>
+                        <div className="row">
+		                   <div className="col-md-9">
+                            <RFQPayDetail  ExpiryDate={this.state.ExpiryDate} RFQDetails={this.state.RFQDetails} updateExpiryDate={this.updateExpiryDate} updateRFQDetails={this.updateRFQDetails}/>
+		                   </div>
+                            <div className="col-md-3">
+                                <RFQPaymentActions />
+                            </div>                           
+                        </div> 
+                        <div className="row">
+		                   <div className="col-md-9">
+                            <RFQPayBankInformation reference={this.props.rfqreference}/>
+		                   </div>
+                        </div>                         
+                      </div>                    
+                  </div>
+            )
+	}
+});
+
+var RFQPayDetail = React.createClass({
+
+    render: function() {
+
+        var navBarSyle= {
+            marginBottom:0
+        };
+
+        return (
+                <div className="panel panel-primary">
+                    <div className="panel-heading">
+                        <div className="row">
+                            <div className="col-xs-7">                                        
+                                RFQ Details
+                            </div>                                   
+                        </div>
+                    </div>
+                    <div className="panel-body">                                
+                        <div className="form-group">
+                            <label>Expiry Date</label>
+                            <input id="expiryDate" className="form-control" value={this.props.ExpiryDate} onChange={this.props.updateExpiryDate} placeholder="Expiry date of quotation" />
+                        </div>
+                        <div className="form-group">
+                            <label>Quotation Details</label>
+                            <textarea className="form-control" rows="5" value={this.props.RFQDetails} onChange={this.props.updateRFQDetails} placeholder="Details for your quotation"></textarea>
+                        </div>
+                    </div>                    
+                </div>
+            )
+}
+});
+
+var RFQPayBankInformation = React.createClass({
+
+    render: function() {
+
+        var navBarSyle= {
+            marginBottom:0
+        };
+
+        return (
+                <div className="panel panel-info">
+                    <div className="panel-heading">
+                        <div className="row">
+                            <div className="col-xs-7">                                        
+                                Banking Information
+                            </div>                                   
+                        </div>
+                    </div>
+                    <div className="panel-body">                                
+                        <div>Bank:                          <h4 className="text-primary">Standard Bank</h4></div>                           
+                        <div>Account Number:                                                 <h4 className="text-primary">12345678</h4></div>   
+                        <div>Branch Code:                                                 <h4 className="text-primary">015001</h4></div>
+                        <div>Reference:                                                 <h4 className="text-primary">{this.props.reference}</h4></div>                                                                                                        
+                    </div>                    
+                </div>
+            )
+}
+});
+
+var RFQPaymentActions = React.createClass({
+
+    render: function() {
+
+        var navBarSyle= {
+            marginBottom:0
+        };
+
+        return (
+                <div className="panel panel-primary">
+                    <div className="panel-heading">
+                        <div className="row">
+                            <div className="col-xs-7">                                        
+                                Actions
+                            </div>                                   
+                        </div>
+                    </div>
+                    <div className="panel-body">                                
+                        <div className="form-group">
+                            <button type="button" className="btn btn btn-primary btn-lg btn-block">Payment Complete</button>
+                        </div>                        
+                    </div>                    
+                </div>
+            )
+}
+});

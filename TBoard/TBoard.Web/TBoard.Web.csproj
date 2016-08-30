@@ -280,6 +280,7 @@
     <Content Include="Content\bootstrap\sb-admin-2.css" />
     <Content Include="Content\bootstrap\timeline.css" />
     <Content Include="Scripts\reactLogic\rfqbidwon.jsx" />
+    <Content Include="Scripts\reactLogic\rfqpay.jsx" />
     <Resource Include="Content\EmailTemplates\bidaccepted.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
