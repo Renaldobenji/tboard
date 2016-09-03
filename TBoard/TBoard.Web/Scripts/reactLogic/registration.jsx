@@ -38,8 +38,39 @@ var RegisterType = React.createClass({
 /*Register Page*/
 var RegisterComplete = React.createClass({	
 	render: function(){
-		return (			
-			<button type="button" className="btn btn-success btn-lg btn-block" onClick={this.props.registerUserPOST}>Register</button>		
+	    return (
+            <div>
+                <div className="panel panel-info">
+                        <div className="panel-heading">
+                            Registration 
+                        </div>
+                        <div className="panel-body">
+                            <h3>Congratulations, you almost there!!!</h3>
+
+                            <p>Please confirm your details</p>
+                            <div className="text-center">
+                            <p>RegistrationType: <span className="lead text-success">{this.props.RegistrationType}</span></p>
+                            <p>Name: <span className="lead text-success">{this.props.Name}</span></p>
+                            <p>Surname: <span className="lead text-success">{this.props.Surname}</span></p>
+                            <p>IDNumber: <span className="lead text-success">{this.props.IDNumber}</span></p>
+                            <p>OrganizationName: <span className="lead text-success">{this.props.OrganizationName}</span></p>
+                            <p>CellNumber: <span className="lead text-success">{this.props.CellNumber}</span></p>
+                            <p>HomeNumber: <span className="lead text-success">{this.props.HomeNumber}</span></p>
+                            <p>OfficeNumber: <span className="lead text-success">{this.props.OfficeNumber}</span></p>
+                            <p>Email: <span className="lead text-success">{this.props.Email}</span></p>
+                            <p>AddressLine1: <span className="lead text-success">{this.props.AddressLine1}</span></p>
+                            <p>AddressLine2: <span className="lead text-success">{this.props.AddressLine2}</span></p>
+                            <p>AddressLine3: <span className="lead text-success">{this.props.AddressLine3}</span></p>
+                            <p>AddressLine4: <span className="lead text-success">{this.props.AddressLine4}</span></p>
+                            <p>AddressLine5: <span className="lead text-success">{this.props.AddressLine5}</span></p>
+                            <p>PostalCode: <span className="lead text-success">{this.props.PostalCode}</span></p>
+                            </div>
+                        </div>
+                        <div className="panel-footer text-right">
+                            <button type="button" className="btn btn-success btn-lg" onClick={this.props.registerUserPOST }>Register</button>	
+                        </div>
+                </div>			    	
+            </div>           
 		);
 	}
 });
@@ -65,7 +96,10 @@ var Register = React.createClass({
 						AddressLine3 : '',
 						AddressLine4 : '',
 						AddressLine5 : '',
-						PostalCode : ''
+						PostalCode: '',
+						percent: -1,
+						autoIncrement: true,
+						intervalTime: 200
 					};
 
 	},
@@ -103,8 +137,17 @@ var Register = React.createClass({
 	    }
 	},
 
+	startWithAutoIncrement: function () {
+	    this.setState({
+	        percent: 0,
+	        autoIncrement: true,
+	        intervalTime: (Math.random() * 1000)
+	    });
+	},
+
     registerUserPOST : function() {
         console.log('POSTING FORM');
+        this.startWithAutoIncrement();
         $.ajax({
                   url: 'api/Registration/Post',
                   type: 'POST',
@@ -184,6 +227,9 @@ var Register = React.createClass({
 	    return (
 
 			<div className="container">
+                <ProgressBar percent={this.state.percent}
+                             autoIncrement={this.state.autoIncrement}
+                             intervalTime={this.state.intervalTime} />
 				<div className="row">
                     <div className="col-lg-12">
                     <section>
@@ -272,8 +318,23 @@ var Register = React.createClass({
                                             <li><button type="button" className="btn btn-primary btn-info-full next-step">Save and continue</button></li>
                                         </ul>
                                     </div>
-                                    <div className="tab-pane" role="tabpanel" id="complete">
-                                        <RegisterComplete registerUserPOST={this.registerUserPOST} />
+                                    <div className="tab-pane" role="tabpanel" id="complete">                                       
+                                        <RegisterComplete RegistrationType={this.state.RegistrationType} 
+                                                          Name={this.state.Name} 
+                                                          Surname={this.state.Surname} 
+                                                          IDNumber={this.state.IDNumber} 
+                                                          OrganizationName={this.state.OrganizationName} 
+                                                          CellNumber={this.state.CellNumber} 
+                                                          HomeNumber={this.state.HomeNumber} 
+                                                          OfficeNumber={this.state.OfficeNumber} 
+                                                          Email={this.state.Email} 
+                                                          AddressLine1={this.state.AddressLine1} 
+                                                          AddressLine2={this.state.AddressLine2} 
+                                                          AddressLine3={this.state.AddressLine3} 
+                                                          AddressLine4={this.state.AddressLine4} 
+                                                          AddressLine5={this.state.AddressLine5} 
+                                                          PostalCode={this.state.PostalCode} 
+                                                          registerUserPOST={this.registerUserPOST} />
                                     </div>
                                     <div className="clearfix"></div>
                                 </div>

@@ -53,8 +53,14 @@ namespace TBoard.Web.Controllers
                         org.name = formData.Get("OrganizationName");
                         org.organizationTypeID = 2;
                     }
-                    if (org != null)
-                        this.organizationBusinessLogic.Create(org);
+                    else
+                    {
+                        org = new organization();
+                        org.name = formData.Get("Name");
+                        org.organizationTypeID = 2;
+                    }
+
+                    this.organizationBusinessLogic.Create(org);
                 }
 
                 if (org == null)

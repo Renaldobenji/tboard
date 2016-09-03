@@ -279,6 +279,8 @@
     <Content Include="Content\bootstrap\metismenu\metisMenu.min.js" />
     <Content Include="Content\bootstrap\sb-admin-2.css" />
     <Content Include="Content\bootstrap\timeline.css" />
+    <Content Include="Content\progress-bar.css" />
+    <Content Include="Scripts\react-progress-bar-plus.js" />
     <Content Include="Scripts\reactLogic\rfqbidwon.jsx" />
     <Content Include="Scripts\reactLogic\rfqpay.jsx" />
     <Resource Include="Content\EmailTemplates\bidaccepted.html">
