@@ -38,8 +38,7 @@ namespace TBoard.Web.Controllers
         public HttpResponseMessage Authenticate(string username, string password)
         {           
             var user = validateUser(username, password);
-
-            throw new Exception("Testing Elmah");
+            
             var userRoles = this.userBusinessLogic.GetRolesForUser(user.userID);
 
             var plainTextSecurityKey = "Tboard Secret what do you mean 128 bits, i cant even spell that";
