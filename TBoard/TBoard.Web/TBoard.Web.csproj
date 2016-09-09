@@ -277,6 +277,8 @@
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap-tour-standalone.min.css" />
+    <Content Include="Content\bootstrap-tour.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap\bootstrap-theme.css" />
@@ -293,6 +295,9 @@
     <Content Include="Content\bootstrap\sb-admin-2.css" />
     <Content Include="Content\bootstrap\timeline.css" />
     <Content Include="Content\progress-bar.css" />
+    <Content Include="Content\trip.min.css" />
+    <Content Include="Scripts\bootstrap-tour-standalone.min.js" />
+    <Content Include="Scripts\bootstrap-tour.min.js" />
     <Content Include="Scripts\react-progress-bar-plus.js" />
     <Content Include="Scripts\reactLogic\rfqbidwon.jsx" />
     <Content Include="Scripts\reactLogic\rfqpay.jsx" />
@@ -811,6 +816,7 @@
     <Content Include="Scripts\select2\js\select2.full.min.js" />
     <Content Include="Scripts\select2\js\select2.js" />
     <Content Include="Scripts\select2\js\select2.min.js" />
+    <Content Include="Scripts\trip.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
