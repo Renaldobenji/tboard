@@ -471,20 +471,33 @@ namespace TBoard.Web.Controllers
         public HttpResponseMessage GetBidsWon(int userID)
         {
 
-            var data = this.quoteBusinessLogic.GetBidsWon(userID);
-
-            var r = new
+            try
             {
-                data = data
-            };
+                var data = this.quoteBusinessLogic.GetBidsWon(userID);
 
-            var resp = new HttpResponseMessage()
+                var r = new
+                {
+                    data = data
+                };
+
+                var resp = new HttpResponseMessage()
+                {
+                    Content = new StringContent(JsonConvert.SerializeObject(r))
+                };
+                resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+                return resp;
+            }
+            catch (Exception ex)
             {
-                Content = new StringContent(JsonConvert.SerializeObject(r))
-            };
-            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                var resp = new HttpResponseMessage()
+                {
+                    Content = new StringContent(JsonConvert.SerializeObject(ex.ToString()))
+                };
+                resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            return resp;
+                return resp;
+            }
         }
 
         [HttpGet]
@@ -514,21 +527,33 @@ namespace TBoard.Web.Controllers
         [Route("api/RFQ/GetBidsWonCount/{userID}")]
         public HttpResponseMessage GetBidsWonCount(int userID)
         {
-
-            var data = this.quoteBusinessLogic.GetBidsWonCount(userID);
-
-            var r = new
+            try
             {
-                data = data
-            };
+                var data = this.quoteBusinessLogic.GetBidsWonCount(userID);
 
-            var resp = new HttpResponseMessage()
+                var r = new
+                {
+                    data = data
+                };
+
+                var resp = new HttpResponseMessage()
+                {
+                    Content = new StringContent(JsonConvert.SerializeObject(r))
+                };
+                resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+                return resp;
+            }
+            catch (Exception ex)
             {
-                Content = new StringContent(JsonConvert.SerializeObject(r))
-            };
-            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                var resp = new HttpResponseMessage()
+                {
+                    Content = new StringContent(JsonConvert.SerializeObject(ex.ToString()))
+                };
+                resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            return resp;
+                return resp;
+            }
         }
 
         [HttpPost]

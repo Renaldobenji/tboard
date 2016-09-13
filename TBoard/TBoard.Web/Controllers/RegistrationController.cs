@@ -46,15 +46,15 @@ namespace TBoard.Web.Controllers
                         org = new organization();
                         org.name = formData.Get("OrganizationName");
                         org.organizationTypeID = 1;
+                        this.organizationBusinessLogic.Create(org);
                     }
                     else if (formData.Get("RegistrationType").Equals("CorporateSeller"))
                     {
                         org = new organization();
                         org.name = formData.Get("OrganizationName");
                         org.organizationTypeID = 2;
-                    }
-                    if (org != null)
                         this.organizationBusinessLogic.Create(org);
+                    } 
                 }
 
                 if (org == null)

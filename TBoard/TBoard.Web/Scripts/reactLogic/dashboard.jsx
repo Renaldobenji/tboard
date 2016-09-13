@@ -7,7 +7,7 @@
             activeBidsTotal: 0,
             acceptedQuotes: 0,
             OrganizationID: 0,
-            bidsWonCount : 0
+            bidsWonCount: 0
         };
     },
 
@@ -47,7 +47,26 @@
 
         var navBarSyle= {
               marginBottom:0
-            };
+        };
+
+        var tripToShowNavigation = new Trip([
+                                  { sel: $("#UserProfileStats"), content: "This gives you an idea in percentage of how complete your profile is with us!", position: "n" },
+                                  { sel: $("#RFQActiveStatisticsTour"), content: "Details and count of your current active requests.", position: "n", expose: true },
+                                  { sel: $("#BidsActiveStatisticsTour"), content: "Details and count of your current quotes.", position: "n", expose: true },
+                                  { sel: $("#AcceptedQuotesStatisticsTour"), content: "Details and count of your current accepted quotes.", position: "n", expose: true },
+                                  { sel: $("#BidsWonStatisticsTour"), content: "Congratulations, your bid on a request has been accepted, you can view your details here.", position: "n", expose: true },
+                                  { sel: $("#CreateRFQStatisticsTour"), content: "You are now ready to start create requests, go ahead and enjoy.", position: "n", expose: true }
+                                        ], {
+                                            showNavigation: true,
+                                            showCloseBox: true,
+                                            delay: -1
+                                        });
+
+        $("#tourbutton").on("click", function () {
+            tripToShowNavigation.start();
+        });
+
+
 		return (	
                 <div>		
 				    <nav className="navbar navbar-default navbar-static-top" role="navigation" style={navBarSyle}>
@@ -57,7 +76,7 @@
                     <div id="page-wrapper">
 	                        <div className="row">
 		                        <div className="col-lg-12">
-			                        <h1 className="page-header">Dashboard</h1>
+			                        <h1 className="page-header">Dashboard 			                        <button id="tourbutton" type="button" className="btn btn-outline btn-default">Take a Tour</button></h1>
 		                        </div>                
 	                        </div>  
                             <div className="row">
@@ -66,7 +85,7 @@
 		                        </div>
                             </div>  
                             <div className="row">
-		                        <div className="col-md-3">
+		                        <div className="col-md-3" id="UserProfileStats">
 			                        <OrganizationCompleteness UserID={this.state.UserID} OrganizationID={this.state.OrganizationID} />
 		                        </div>
                             </div>  
@@ -76,21 +95,21 @@
 		                        </div>
                             </div>  
                             <div className="row">
-		                        <div className="col-md-3">
+		                        <div className="col-md-3" id="RFQActiveStatisticsTour">
 			                        <RFQActiveStatistics activeRFQTotal={this.state.activeRFQTotal}/>
 		                        </div>
-                                <div className="col-md-3">
+                                <div className="col-md-3" id="BidsActiveStatisticsTour">
 			                        <RFQActiveBidsStatistics activeBidsTotal={this.state.activeBidsTotal}/>
                                 </div>
-                                <div className="col-md-3">
+                                <div className="col-md-3" id="AcceptedQuotesStatisticsTour">
 			                        <RFQAcceptedQuotes acceptedQuotes={this.state.acceptedQuotes} />
                                 </div>                                
-                                <div className="col-md-3">
+                                <div className="col-md-3" id="CreateRFQStatisticsTour">
 			                        <RFQCreateDashboard activeBidsTotal={this.state.activeBidsTotal} />
                                 </div>                                
                             </div>  
                             <div className="row">
-		                        <div className="col-md-3">
+		                        <div className="col-md-3" id="BidsWonStatisticsTour">
 			                        <BidsWonCountStatistics bidsWonCount={this.state.bidsWonCount} />
 		                        </div>                               
                             </div>                         
