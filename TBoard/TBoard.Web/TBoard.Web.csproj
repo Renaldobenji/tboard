@@ -279,6 +279,14 @@
     <Content Include="Content\bootstrap\metismenu\metisMenu.min.js" />
     <Content Include="Content\bootstrap\sb-admin-2.css" />
     <Content Include="Content\bootstrap\timeline.css" />
+    <Content Include="Images\logos\icon.png" />
+    <Content Include="Images\logos\icon_1.png" />
+    <Content Include="Images\logos\Logo 01.png" />
+    <Content Include="Images\logos\Logo 01_1.png" />
+    <Content Include="Images\logos\Logo 02.png" />
+    <Content Include="Images\logos\Logo 02_1.png" />
+    <Content Include="Images\logos\Logo Name.png" />
+    <Content Include="Images\logos\Logo Name_1.png" />
     <Content Include="Scripts\reactLogic\rfqbidwon.jsx" />
     <Content Include="Scripts\reactLogic\rfqpay.jsx" />
     <Resource Include="Content\EmailTemplates\bidaccepted.html">

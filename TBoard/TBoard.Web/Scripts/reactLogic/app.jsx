@@ -62,10 +62,11 @@
 
   render: function() {
     return (
-			<div className="container">
+			<div className="container">                
 				<div className="row">
 					<div className="col-md-4 col-md-offset-4">
-						<div className="login-panel panel panel-default">
+                        <img className="login-logo" src="../../Images/logos/Logo 01.png" width="100%" height="200px" />
+						<div className="login-panel panel panel-default">                            
 							<div className="panel-heading">
 								<h3 className="panel-title">Please Sign In</h3>
 							</div>

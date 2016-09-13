@@ -211,7 +211,11 @@ body {
 }
 
 .login-panel {
-    margin-top: 25%;
+    margin-top: 10%;
+}
+
+.login-logo {
+    margin-top: 20px;
 }
 
 .flot-chart {
