@@ -15,8 +15,8 @@
 			                    <span className="icon-bar"></span>
 			                    <span className="icon-bar"></span>
 			                    <span className="icon-bar"></span>
-		                    </button>
-		                    <a className="navbar-brand" href="index.html">Tender Board</a>
+		                    </button>		                    
+                            <img className="dashboardLogo" src="../../Images/logos/icon.png" height="45px" width="45px"/>
 	                    </div>
 
                         <ul className="nav navbar-top-links navbar-right">                
