@@ -76,7 +76,7 @@
                     <div id="page-wrapper">
 	                        <div className="row">
 		                        <div className="col-lg-12">
-			                        <h1 className="page-header"><img src="../../Images/logos/Logo 02.png" height="70px" width="450px" /><button id="tourbutton" type="button" className="btn btn-outline btn-default">Take a Tour</button></h1>
+			                        <h1 className="page-header"><img src="../../Images/logos/Logo 02.png" height="70px" width="450px" />&nbsp;&nbsp;<button id="tourbutton" type="button" className="btn btn-outline btn-default">Take a Tour</button></h1>
 		                        </div>                
 	                        </div>  
                             <div className="row">
@@ -325,7 +325,7 @@ var OrganizationCompleteness = React.createClass({
             }.bind(this)
         });
         $.ajax({
-            url: 'api/User/ProfileCompleteness/' + orgID,
+            url: 'api/User/ProfileCompleteness/' + userID,
             success: function (data) {
                 this.setState({ UserCompleteness: data.data });
             }.bind(this)

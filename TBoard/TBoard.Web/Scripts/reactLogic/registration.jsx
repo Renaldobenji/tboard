@@ -50,6 +50,7 @@ var RegisterComplete = React.createClass({
                             <p>Please confirm your details</p>
                             <div className="text-center">
                             <p>RegistrationType: <span className="lead text-success">{this.props.RegistrationType}</span></p>
+                            <p>Username: <span className="lead text-success">{this.props.Username}</span></p>
                             <p>Name: <span className="lead text-success">{this.props.Name}</span></p>
                             <p>Surname: <span className="lead text-success">{this.props.Surname}</span></p>
                             <p>IDNumber: <span className="lead text-success">{this.props.IDNumber}</span></p>
@@ -99,7 +100,8 @@ var Register = React.createClass({
 						PostalCode: '',
 						percent: -1,
 						autoIncrement: true,
-						intervalTime: 200
+						intervalTime: 200,
+                        Username: ""
 					};
 
 	},
@@ -145,6 +147,14 @@ var Register = React.createClass({
 	    });
 	},
 
+	stopWithAutoIncrement: function () {
+	    this.setState({
+	        percent: 0,
+	        autoIncrement: false,
+	        intervalTime: (Math.random() * 1000)
+	    });
+	},
+
     registerUserPOST : function() {
         console.log('POSTING FORM');
         this.startWithAutoIncrement();
@@ -154,9 +164,18 @@ var Register = React.createClass({
                   dataType: 'json',
                   data: this.state,
                   cache: false,
-                  success: function(data) {
-                      alert("Registration Complete");
-                      window.location.href = '../'; //one level up
+                  success: function (data) {
+                      if (data.success == "True")
+                      {
+                          alert("Registration Complete");
+                          window.location.href = '../'; //one level up
+                      }
+                      else
+                      {
+                          this.stopWithAutoIncrement();
+                          alert(data.errorMessage);
+                      }
+                      
                   }.bind(this),
                   error: function(xhr, status, err) {
                     console.error('api/Registration/Post', status, err.toString());
@@ -170,6 +189,9 @@ var Register = React.createClass({
 	},
 	updateNameState : function(e){
 		this.setState({Name : e.target.value});		
+	},
+	updateUsername: function (e) {
+	    this.setState({ Username: e.target.value });
 	},
 	updateSurnameState : function(e){
 		this.setState({Surname : e.target.value});		
@@ -285,7 +307,7 @@ var Register = React.createClass({
                                         </ul>
                                     </div>
                                     <div className="tab-pane" role="tabpanel" id="step2">
-                                        <RegisterPersonal name={this.state.Name} updateName={this.updateNameState}
+                                        <RegisterPersonal Username={this.state.Username} updateUsername={this.updateUsername} name={this.state.Name} updateName={this.updateNameState}
                                                           surname={this.state.Surname} updateSurname={this.updateSurnameState}
                                                           password={this.state.Password} updatePassword={this.updatePasswordState}
                                                           confirmPassword={this.state.ConfirmPassword} updateConfirmPassword={this.updatePasswordConfirmState}
@@ -321,6 +343,7 @@ var Register = React.createClass({
                                     <div className="tab-pane" role="tabpanel" id="complete">                                       
                                         <RegisterComplete RegistrationType={this.state.RegistrationType} 
                                                           Name={this.state.Name} 
+                                                          Username={this.state.Username} 
                                                           Surname={this.state.Surname} 
                                                           IDNumber={this.state.IDNumber} 
                                                           OrganizationName={this.state.OrganizationName} 
@@ -358,6 +381,10 @@ var RegisterPersonal = React.createClass({
 				</div>
 				<div className="panel-body">
 					<form>
+                        <div className="form-group">
+                            <label>Username</label>
+                            <input id="Username" className="form-control" placeholder="Username" value={this.props.Username} onChange={this.props.updateUsername} />
+                        </div>
 						<div className="form-group">
                             <label>Name</label>
                             <input id="Name" className="form-control" placeholder="Name" value={this.props.name} onChange={this.props.updateName} />

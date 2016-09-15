@@ -39,6 +39,27 @@ namespace TBoard.Web.Controllers
         {           
             var user = validateUser(username, password);
             
+            if (user == null)
+            {
+                var errRe = new
+                {
+                    authenicated = "false",
+                    errorMessage = "Username or Password Incorrect"
+                };
+
+                var errresp = new HttpResponseMessage()
+                {
+                    Content = new StringContent(JsonConvert.SerializeObject(errRe, Formatting.None,
+                                                    new JsonSerializerSettings
+                                                    {
+                                                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                                    }))
+                };
+
+                errresp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                return errresp;
+            }
+
             var userRoles = this.userBusinessLogic.GetRolesForUser(user.userID);
 
             var plainTextSecurityKey = "Tboard Secret what do you mean 128 bits, i cant even spell that";
@@ -168,6 +189,9 @@ namespace TBoard.Web.Controllers
         private user validateUser(string username, string password)
         {
             var user = this.userBusinessLogic.FindBy(x => x.username == username).FirstOrDefault();
+
+            if (user == null)
+                return null;
 
             bool userValidated = PasswordHasher.ValidatePassword(password, user.passwordSalt, user.password);
 

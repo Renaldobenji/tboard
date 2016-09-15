@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.IO;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Http;
 using TBoard.BusinessLogic.BusinessLogic;
@@ -31,12 +33,34 @@ namespace TBoard.Web.Controllers
             this.emailQueueBusinessLogic = emailQueueBusinessLogic;
         }
         // POST api/<controller>
-        public string Post(FormDataCollection formData)
+        public HttpResponseMessage Post(FormDataCollection formData)
         {
             UserResponse userResponse = null;
             organization org = null;
             try
             {
+                string username = formData.Get("Username");
+                var user = this.userBusinessLogic.FindBy(x => x.username == username).FirstOrDefault();
+                if (user != null)
+                {
+                    var err = new
+                    {
+                        success = "False",
+                        errorMessage = "Username already exist, please change your username before you can continue"
+                    };
+
+                    var errr = new HttpResponseMessage()
+                    {
+                        Content = new StringContent(JsonConvert.SerializeObject(err, Formatting.None,
+                                                        new JsonSerializerSettings
+                                                        {
+                                                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                                        }))
+                    };
+
+                    errr.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                    return errr;
+                }
 
                 //Create Organization first
                 if (!string.IsNullOrEmpty(formData.Get("OrganizationName")))
@@ -59,12 +83,12 @@ namespace TBoard.Web.Controllers
 
                 if (org == null)
                 {
-                    userResponse = userBusinessLogic.CreateUser(formData.Get("Name"), formData.Get("Name"),
+                    userResponse = userBusinessLogic.CreateUser(formData.Get("Username"), formData.Get("Name"),
                         formData.Get("Surname"), formData.Get("Password"), "Mr", formData.Get("IDNumber"));
                 }
                 else
                 {
-                    userResponse = userBusinessLogic.CreateUser(formData.Get("Name"), formData.Get("Name"),
+                    userResponse = userBusinessLogic.CreateUser(formData.Get("Username"), formData.Get("Name"),
                         formData.Get("Surname"), formData.Get("Password"), "Mr", formData.Get("IDNumber"),
                         org.organizationID, "", "");
                 }
@@ -78,7 +102,7 @@ namespace TBoard.Web.Controllers
                 addCommunicationBasedOnType(formData, org, userResponse, "OfficeNumber", "WRK");
                 addCommunicationBasedOnType(formData, org, userResponse, "Email", "EML");                               
 
-                this.emailQueueBusinessLogic.SendEmail("admin@Tenderboard.co.za", formData.Get("Email"), "Registration Complete", createEmailBody(formData.Get("Name"), formData.Get("Password")));
+                this.emailQueueBusinessLogic.SendEmail("admin@Tenderboard.co.za", formData.Get("Email"), "Registration Complete", createEmailBody(formData.Get("Username"), formData.Get("Password")));
             }
             catch (DbEntityValidationException e)
             {
@@ -98,7 +122,22 @@ namespace TBoard.Web.Controllers
                 throw;
             }
 
-            return "";
+            var errRe = new
+            {
+                success = "True"               
+            };
+
+            var errresp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(errRe, Formatting.None,
+                                                new JsonSerializerSettings
+                                                {
+                                                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                                }))
+            };
+
+            errresp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            return errresp;
         }
 
         private string createEmailBody(string username, string password)
