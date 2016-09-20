@@ -58,8 +58,9 @@
         });
     },
 
-    updateExpertiseSubCategoryID: function (e) {        
+    updateExpertiseSubCategoryID: function (e,a) {        
         this.setState({ ExpertiseSubCategoryID: e });
+        this.setState({ ExpiryDate: a });
         },
 
 	render: function() {
@@ -84,8 +85,8 @@
                         <div id="step1">
                             <RFQRequestType quoteTypeClick={this.quoteTypeClick} />  
                         </div>
-                        <div id="step2">
-                            <RFQRequestDetail PostRFQ={this.PostRFQ} ExpiryDate={this.state.ExpiryDate} RFQDetails={this.state.RFQDetails} updateExpiryDate={this.updateExpiryDate} updateRFQDetails={this.updateRFQDetails} cancelClick={this.cancelClick} ExpertiseSubCategoryID={this.state.ExpertiseSubCategoryID} updateExpertiseSubCategoryID={this.updateExpertiseSubCategoryID}/>                           
+                        <div id="step2">                           
+                            <RFQRequestDetail QuoteType={this.state.QuoteType} UserID={this.state.UserID}  OrganizationID={this.state.OrganizationID}  PostRFQ={this.PostRFQ} ExpiryDate={this.state.ExpiryDate} RFQDetails={this.state.RFQDetails} updateExpiryDate={this.updateExpiryDate} updateRFQDetails={this.updateRFQDetails} cancelClick={this.cancelClick} ExpertiseSubCategoryID={this.state.ExpertiseSubCategoryID} updateExpertiseSubCategoryID={this.updateExpertiseSubCategoryID}/>                           
                         </div>
                      </div>
                 </div>     
@@ -185,11 +186,39 @@ var RFQRequestDetail = React.createClass({
 
     buttonClick: function () {
         var userCat = $('#category').val();
-        this.props.updateExpertiseSubCategoryID(userCat);
-        this.props.PostRFQ();
+        var datePicker = $('#expiryDate').val();
+        var rfqDetails = $('#rfqDetails').val();
+        
+        var form = {
+            QuoteType : this.props.QuoteType,
+            ExpertiseSubCategoryID : userCat,
+            ExpiryDate : datePicker,
+            RFQDetails: rfqDetails,
+            UserID : this.props.UserID,
+            OrganizationID : this.props.OrganizationID
+        }        
+        
+        console.log('POSTING FORM');
+        $.ajax({
+            url: 'api/RFQ/Post',
+            type: 'POST',
+            dataType: 'json',
+            data: form,
+            cache: false,
+            success: function (data) {
+                alert("Success");
+                window.location.href = '../'; //one level up
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error('api/RFQ/Post', status, err.toString());
+            }.bind(this)
+        });
     },
 
+   
     componentDidMount: function () {
+
+        $('#expiryDate').datetimepicker();
 
         function formatRepo (repo) {
             if (repo.loading) return repo.text;
@@ -256,12 +285,17 @@ var RFQRequestDetail = React.createClass({
                                     </select>                                 
                                 </div>
                                 <div className="form-group">
-                                    <label>Expiry Date</label>
-                                    <input id="expiryDate" className="form-control" value={this.props.ExpiryDate} onChange={this.props.updateExpiryDate} placeholder="Expiry date of quotation" />
+                                    <label>Expiry Date</label>                                    
+                                    <div className='input-group date' id='SupplyTime'>
+                                        <input type='text' id='expiryDate' className="form-control" placeholder="Expiry Date" />
+                                        <span className="input-group-addon">
+                                            <span className="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
                                 </div>
                                 <div className="form-group">
                                     <label>Quotation Details</label>
-                                    <textarea className="form-control" rows="5" value={this.props.RFQDetails} onChange={this.props.updateRFQDetails} placeholder="Details for your quotation"></textarea>
+                                    <textarea id="rfqDetails" className="form-control" rows="5" value={this.props.RFQDetails} onChange={this.props.updateRFQDetails} placeholder="Details for your quotation"></textarea>
                                 </div>
                             </div>
                             <div className="panel-footer">
