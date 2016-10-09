@@ -21,6 +21,17 @@ namespace TBoard.Data.Repository
             return this._dbContext.sps_GetRolesForUser(userID).ToList();
         }
 
+        public void AddUserToGroup(int userID, string groupCode)
+        {
+            groupmembership mem = new groupmembership();
+            mem.fromDate = DateTime.Now;
+            mem.groupCode = groupCode;
+            mem.userID = userID;
+
+            this._dbContext.groupmemberships.Add(mem);
+            this._dbContext.SaveChanges();
+        }
+
         public IList<sps_GetAllUserInformation_Result> GetUserInformation(int userID)
         {
             return this._dbContext.sps_GetAllUserInformation(userID).ToList();

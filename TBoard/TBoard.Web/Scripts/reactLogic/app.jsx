@@ -4,12 +4,31 @@
         return {
             Username: "Renaldo",
             Password: "Renaldo",
-            JWSToken: ""
+            JWSToken: "",
+            percent: -1,
+            autoIncrement: true,
+            intervalTime: 200
         };
     },
 
   registerClick: function(event) {
 		routie('register');
+  },
+
+  startWithAutoIncrement: function () {
+      this.setState({
+          percent: 0,
+          autoIncrement: true,
+          intervalTime: (Math.random() * 1000)
+      });
+  },
+
+  stopWithAutoIncrement: function () {
+      this.setState({
+          percent: 0,
+          autoIncrement: false,
+          intervalTime: (Math.random() * 1000)
+      });
   },
 
   
@@ -26,11 +45,13 @@
   },
   
   authenticateGET: function () {
+      this.startWithAutoIncrement();
       $.ajax({
           url: 'api/Authentication/'+this.state.Username+'/'+this.state.Password,
           dataType: 'json',
           cache: false,
           success: function (result) {
+              this.stopWithAutoIncrement();
               if (result.authenicated == "true"){
                 this.setState({ JWSToken: result.data });
                 var sJWT = this.state.JWSToken;
@@ -62,7 +83,10 @@
 
   render: function() {
     return (
-			<div className="container">                
+			<div className="container">   
+                <ProgressBar percent={this.state.percent}
+                             autoIncrement={this.state.autoIncrement}
+                             intervalTime={this.state.intervalTime} />             
 				<div className="row">
 					<div className="col-md-4 col-md-offset-4">
                         <img className="login-logo" src="../../Images/logos/Logo 01.png" width="100%" height="200px" />

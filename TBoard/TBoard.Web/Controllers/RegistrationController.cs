@@ -93,6 +93,8 @@ namespace TBoard.Web.Controllers
                         org.organizationID, "", "");
                 }
 
+                userBusinessLogic.AddUserToGroup(userResponse.UserID, formData.Get("RegistrationType"));
+
                 //Address Information
                 this.addAddressInformation(formData, org, userResponse);
 

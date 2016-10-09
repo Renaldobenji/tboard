@@ -89,6 +89,11 @@ namespace TBoard.BusinessLogic.BusinessLogic
             return this.repository.GetRolesForUser(userID);
         }
 
+        public void AddUserToGroup(int userID, string groupCode)
+        {
+            this.repository.AddUserToGroup(userID, groupCode);
+        }
+
         public IList<sps_GetAllUserInformation_Result> GetUserInformation(int userID)
         {
             return this.repository.GetUserInformation(userID);
