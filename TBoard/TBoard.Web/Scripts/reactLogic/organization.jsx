@@ -786,3 +786,355 @@ var UserExpertiseAdd = React.createClass({
             )
 }
 });
+
+
+var PersonalDetails = React.createClass({
+    getInitialState: function() {
+        return {
+            Name: '',
+            TradingName: '',
+            RegistrationNumber: '',
+            VatNumber: '',
+            TaxNumber: '',
+            OrganizationID: '',
+            CellNumber : '',
+            HomeNumber : '',
+            OfficeNumber : '',
+            Email : '',
+            AddressLine1 : '',
+            AddressLine2 : '',
+            AddressLine3 : '',
+            AddressLine4 : '',
+            AddressLine5 : '',
+            PostalCode : '',
+            AddressID : '',
+            OwnerType : 'ORG',
+            AccountName: '',
+            AccountNumber : '',
+            BranchCode : '',
+            BranchName : '',
+            BankAccountType : [],
+            SelectedBankAccountType : '',
+            OEM: 'false',
+            UserID: '',
+            bankDetailsList: []
+        };
+    },
+
+    componentWillMount: function () {
+        var tokens = new TboardJWTToken();
+        var decodedToken = tokens.getJWTToken();
+        this.setState({ OrganizationID: decodedToken.OrganizationID });
+        this.setState({ UserID: decodedToken.UserID });
+    },
+
+    fetchAddressDetails: function (UserID) {
+        $.ajax({
+            url: 'api/Address/PER/' + UserID,
+            dataType: 'json',
+            cache: false,
+            success: function(data) {
+                var obj = $.parseJSON(data);
+                if (obj.addressLine1 != null)
+                    this.setState({AddressLine1 : obj.addressLine1});
+              
+                if (obj.addressLine2 != null)
+                    this.setState({AddressLine2 : obj.addressLine2});
+              
+                if (obj.addressLine3 != null)
+                    this.setState({AddressLine3 : obj.addressLine3});
+              
+                if (obj.addressLine4 != null)
+                    this.setState({AddressLine4 : obj.addressLine4});
+              
+                if (obj.addressLine5 != null)
+                    this.setState({AddressLine5 : obj.addressLine5});
+              
+                if (obj.postalCode != null)
+                    this.setState({PostalCode : obj.postalCode});
+
+                if (obj.addressID != null)
+                    this.setState({AddressID : obj.addressID});
+
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error('api/Address/ORG/', status, err.toString());
+            }.bind(this)
+        });
+    },
+
+    fetchContactDetails: function(orgID) {
+        $.ajax({
+            url: 'api/Communication/PER/' + orgID,
+            dataType: 'json',
+            cache: false,
+            success: function(data) {
+                var obj = $.parseJSON(data);
+              
+                if (obj.Home != null)
+                    this.setState({HomeNumber : obj.Home});
+              
+                if (obj.CellPhone != null)
+                    this.setState({CellNumber : obj.CellPhone});
+              
+                if (obj.WorkPhone != null)
+                    this.setState({OfficeNumber : obj.WorkPhone});
+              
+                if (obj.Email != null)
+                    this.setState({Email : obj.Email});
+
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error('api/Address/ORG/', status, err.toString());
+            }.bind(this)
+        });
+    },
+
+    fetchBankDetails: function(orgID) {
+        $.ajax({
+            url: 'api/BankAccount/PER/' + orgID,
+            dataType: 'json',
+            cache: false,
+            success: function(data) {
+                this.setState({ bankDetailsList: data.data });
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error('api/BankAccount/ORG', status, err.toString());
+            }.bind(this)
+        });
+    },
+
+    fetchAccountTypes: function() {
+        $.ajax({
+            url: 'api/BankAccount/BankAccountTypes/',
+            dataType: 'json',
+            cache: false,
+            success: function(data) {
+                this.setState({ BankAccountType: data.data });
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error('api/Address/ORG/', status, err.toString());
+            }.bind(this)
+        });
+    },
+
+    componentDidMount: function() {        
+        this.fetchAddressDetails(this.state.UserID);
+        this.fetchContactDetails(this.state.UserID);
+        this.fetchAccountTypes();
+        this.fetchBankDetails(this.state.UserID);
+    },
+    
+    registerUserPOST : function() {
+        console.log('POSTING FORM');
+        $.ajax({
+            url: 'api/Organization/Post',
+            type: 'POST',
+            dataType: 'json',
+            data: this.state,
+            cache: false,
+            success: function(data) {
+                alert("Success");
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error('api/Organization/Post', status, err.toString());
+            }.bind(this)
+        });
+    },
+
+    addressPOST : function() {
+        console.log('POSTING FORM');
+        $.ajax({
+            url: 'api/Address/Post',
+            type: 'POST',
+            dataType: 'json',
+            data: this.state,
+            cache: false,
+            success: function(data) {
+                alert("Success");
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error('api/Organization/Post', status, err.toString());
+            }.bind(this)
+        });
+    },
+
+    contactPOST : function() {
+        console.log('POSTING FORM');
+        $.ajax({
+            url: 'api/Communication/PostOrganization',
+            type: 'POST',
+            dataType: 'json',
+            data: this.state,
+            cache: false,
+            success: function(data) {
+                alert("Success");
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error('api/Organization/Post', status, err.toString());
+            }.bind(this)
+        });
+    },
+
+    bankDetailsPOST : function() {
+        console.log('POSTING FORM');
+        $.ajax({
+            url: 'api/BankAccount/Post',
+            type: 'POST',
+            dataType: 'json',
+            data: this.state,
+            cache: false,
+            success: function (data) {
+                this.fetchBankDetails(this.state.OrganizationID);
+                alert("Success");
+            }.bind(this),
+            error: function(xhr, status, err) {
+                console.error('api/BankAccount/Post', status, err.toString());
+            }.bind(this)
+        });
+    },
+
+    updateBankAccountType : function(e){
+        this.setState({SelectedBankAccountType : e.target.value});		
+    },
+    updateName : function(e){
+        this.setState({Name : e.target.value});		
+    },
+    updateTradingName : function(e){
+        this.setState({TradingName : e.target.value});		
+    },
+    updateRegistrationNumber : function(e){
+        this.setState({RegistrationNumber : e.target.value});		
+    },
+    updateVatNumber : function(e){
+        this.setState({VatNumber : e.target.value});		
+    },
+    updateTaxNumber : function(e){
+        this.setState({TaxNumber : e.target.value});		
+    },
+    updateAddLine1 : function(e){
+        this.setState({AddressLine1 : e.target.value});		
+    },
+    updateAddLine2 : function(e){
+        this.setState({AddressLine2 : e.target.value});		
+    },
+    updateAddLine3 : function(e){
+        this.setState({AddressLine3 : e.target.value});	
+        console.log(this.state.AddressLine3);		
+    },
+    updateAddLine4 : function(e){
+        this.setState({AddressLine4 : e.target.value});		
+    },
+    updateAddLine5 : function(e){
+        this.setState({AddressLine5 : e.target.value});	
+        console.log(this.state.AddressLine5);		
+    },
+    updatePostalCode : function(e){
+        this.setState({PostalCode : e.target.value});	
+        console.log(this.state.PostalCode);		
+    },updateCellNumberState : function(e){
+        this.setState({CellNumber : e.target.value});	
+        console.log(this.state.CellNumber);			
+    },
+    updateHomeNumberState : function(e){
+        this.setState({HomeNumber : e.target.value});		
+    },
+    updateOfficeNumberState : function(e){
+        this.setState({OfficeNumber : e.target.value});		
+    },
+    updateEmailState : function(e){
+        this.setState({Email : e.target.value});
+        console.log(this.state.Email);		
+    },
+    updateAccountName : function(e){
+        this.setState({AccountName : e.target.value});
+        console.log(this.state.AccountName);		
+    },
+    updateAccountNumber : function(e){
+        this.setState({AccountNumber : e.target.value});
+        console.log(this.state.AccountNumber);		
+    },
+    updateBranchCode : function(e){
+        this.setState({BranchCode : e.target.value});
+        console.log(this.state.BranchCode);		
+    },
+    updateBranchName : function(e){
+        this.setState({BranchName : e.target.value});
+        console.log(this.state.BranchName);		
+    },
+    updateOEM : function(e){
+        this.setState({OEM : e.target.value});
+        console.log(this.state.OEM);		
+    },
+
+    render: function() {
+        var navBarSyle= {
+            marginBottom:0
+        };
+
+        return (	
+                <div>		
+				    <nav className="navbar navbar-default navbar-static-top" role="navigation" style={navBarSyle}>
+	                    <NavHeader />
+                        <NavMenu />
+                    </nav>
+                    <div id="page-wrapper">
+	                    <div className="row">
+		                    <div className="col-lg-12">
+			                    <h1 className="page-header">Personal Details</h1>
+		                    </div>                
+	                    </div>
+                        <div className="row"> 
+                            <ul className="nav nav-tabs">		                       
+		                        <li className="active"><a href="#Contact" data-toggle="tab" aria-expanded="false">Contact</a>
+		                        </li>
+		                        <li className=""><a href="#Address" data-toggle="tab" aria-expanded="false">Address</a>
+		                        </li>
+                                <li className=""><a href="#BankDetails" data-toggle="tab" aria-expanded="false">Bank Details</a>
+		                        </li>                                
+	                        </ul>	
+	                        <div className="tab-content">		                       
+                                <div className="tab-pane fade active in" id="Contact">
+                                    <div className="col-lg-8">
+                                        <br/>
+                                        <OrganizationContact 
+                                        cellNumber={this.state.CellNumber} updateCellNumber={this.updateCellNumberState}
+                                        homeNumber={this.state.HomeNumber} updateHomeNumber={this.updateHomeNumberState}
+                                        officeNumber={this.state.OfficeNumber} updateOfficeNumber={this.updateOfficeNumberState}
+                                        email={this.state.Email} updateEmail={this.updateEmailState} contactPOST= {this.contactPOST} />
+                                    </div>
+                                </div>
+<div className="tab-pane fade" id="Address">
+    <div className="col-lg-8">
+        <br/>
+        <OrganizationAddress addressLine1={this.state.AddressLine1} updateAddressLine1={this.updateAddLine1}
+addressLine2={this.state.AddressLine2} updateAddressLine2={this.updateAddLine2}
+addressLine3={this.state.AddressLine3} updateAddressLine3={this.updateAddLine3}
+addressLine4={this.state.AddressLine4} updateAddressLine4={this.updateAddLine4}
+addressLine5={this.state.AddressLine5} updateAddressLine5={this.updateAddLine5}
+postalCode={this.state.PostalCode} updatePostalCode={this.updatePostalCode} addressPOST= {this.addressPOST} />
+</div>
+</div>
+<div className="tab-pane fade" id="BankDetails">
+    <div className="col-lg-6">
+        <br/>
+        <OrganizationBankDetails accountName={this.state.AccountName} updateAccountName={this.updateAccountName}
+accountNumber={this.state.AccountNumber} updateAccountNumber={this.updateAccountNumber}
+branchCode={this.state.BranchCode} updateBranchCode={this.updateBranchCode}
+branchName={this.state.BranchName} updateBranchName={this.updateBranchName}
+accountType={this.state.AccountType} updateAccountType={this.updateAccountType}
+bankDetailsPOST= {this.bankDetailsPOST} bankAccountTypes= {this.state.BankAccountType} updateBankAccountType= {this.updateBankAccountType} selectedBankAccountType= {this.state.SelectedBankAccountType} />
+</div>
+<div className="col-lg-6">
+    <br />                                        
+    <OrganizationBankDetailsList bankDetailsList={this.state.bankDetailsList} BankAccountType={this.state.BankAccountType}/>
+</div>
+</div>
+</div>
+                            
+</div>
+</div>
+</div>       
+            )
+}
+});

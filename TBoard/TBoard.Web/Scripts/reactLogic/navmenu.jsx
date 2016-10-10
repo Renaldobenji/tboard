@@ -7,7 +7,8 @@
             activeBidsTotal: 0,
             acceptedQuotes: 0,
             OrganizationID: 0,
-            bidsWonCount: 0
+            bidsWonCount: 0,
+            roles: []
         };
     },
 
@@ -40,6 +41,7 @@
         var decodedToken = tokens.getJWTToken();
         this.setState({ UserID: decodedToken.UserID });
         this.setState({ OrganizationID: decodedToken.OrganizationID });
+        this.setState({ roles: decodedToken.role });
         this.loadData(decodedToken.UserID);
     },
 
@@ -51,20 +53,8 @@
                             <li>
                                 <a href="#dashboard" className="active"><i className="fa fa-dashboard fa-fw"></i> Dashboard</a>
                             </li>
-                            <li>
-	                            <a><i className="fa fa-bar-chart-o fa-fw"></i> Organization<span className="fa arrow"></span></a>
-	                            <ul className="nav nav-second-level">
-		                            <li>
-			                            <a href="#organization">Details</a>
-		                            </li>
-		                            <li>
-			                            <a href="#document">Documents</a>
-		                            </li>
-		                            <li>
-			                            <a href="#users">Users</a>
-		                            </li>
-	                            </ul>	
-                            </li>
+                            { this.state.roles.indexOf("CorporateBuyer") > -1 || this.state.roles.indexOf("CorporateSeller") > -1 ? <OrganizationMenu /> : <PersonalMenu /> }
+                            
                             <li>
 	                            <a><i className="fa fa-bar-chart-o fa-fw"></i> Quotation<span className="fa arrow"></span></a>
 	                            <ul className="nav nav-second-level">
@@ -93,4 +83,55 @@
                 </div>
             )
 	}
+});
+
+
+var OrganizationMenu = React.createClass({
+
+   
+    render: function() {
+
+        var navBarSyle= {
+            marginBottom:0
+        };
+
+        return (
+               <li>
+	                <a><i className="fa fa-bar-chart-o fa-fw"></i> Organization<span className="fa arrow"></span></a>
+	                <ul className="nav nav-second-level">
+		                <li>
+			                <a href="#organization">Details</a>
+		                </li>
+		                <li>
+			                <a href="#document">Documents</a>
+		                </li>
+		                <li>
+			                <a href="#users">Users</a>
+		                </li>
+	                </ul>
+                </li>
+            )
+}
+});
+
+var PersonalMenu = React.createClass({
+
+   
+    render: function() {
+
+        var navBarSyle= {
+            marginBottom:0
+        };
+
+        return (
+               <li>
+	                <a><i className="fa fa-bar-chart-o fa-fw"></i> Person Details<span className="fa arrow"></span></a>
+	                <ul className="nav nav-second-level">
+		                <li>
+			                <a href="#personalDetails">Details</a>
+		                </li>		                
+	                </ul>
+                </li>
+            )
+}
 });

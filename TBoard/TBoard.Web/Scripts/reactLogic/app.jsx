@@ -154,7 +154,13 @@ routie({
 			ReactDOM.render(
 				React.createElement(Organization, null), document.getElementById('container')
 			);
-		}
+        }
+        ,
+        'personalDetails': function () {
+            ReactDOM.render(
+				React.createElement(PersonalDetails, null), document.getElementById('container')
+			);
+        }
         ,
         'users': function(){
 			ReactDOM.render(
