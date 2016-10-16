@@ -333,6 +333,9 @@
 		                        </li>
                                 <li className=""><a href="#BankDetails" data-toggle="tab" aria-expanded="false">Bank Details</a>
 		                        </li>
+                                <li className="">
+                                <a href="#Custodian" data-toggle="tab" aria-expanded="false">Custodian</a>
+                                </li>                                
                                 <li className=""><a href="#Expertise" data-toggle="tab" aria-expanded="false">Expertise</a>
 		                        </li>
 	                        </ul>	
@@ -380,6 +383,13 @@
                                         <OrganizationBankDetailsList bankDetailsList={this.state.bankDetailsList} BankAccountType={this.state.BankAccountType}/>
                                     </div>
 		                        </div>
+                                
+                                <div className="tab-pane fade" id="Custodian">
+			                        <div className="col-lg-8">
+                                        <br />
+                                        <CustodianDetails OrganizationID={this.state.OrganizationID} />
+			                        </div>                                   
+                                </div>
                                 <div className="tab-pane fade" id="Expertise">
 			                        <div className="col-lg-8">
                                         <br/>
@@ -571,6 +581,125 @@ var OrganizationBankDetails = React.createClass({
 		            </div>
 		);
 	}
+});
+
+var CustodianDetails = React.createClass({
+
+    getInitialState: function () {
+        return {
+            name: "",
+            surname: "",
+            jobTitle: "",
+            landline: "",
+            email: "",
+            companyNumber: "",
+            cell: "",
+            organizationID : this.props.OrganizationID
+        };
+    },
+
+    updatename: function (e) {
+        this.setState({ name: e.target.value });       
+    },
+    updatesurname: function (e) {
+        this.setState({ surname: e.target.value });       
+    },
+    updatejobTitle: function (e) {
+        this.setState({ jobTitle: e.target.value });        
+    },
+    updatelandline: function (e) {
+        this.setState({ landline: e.target.value });        
+    },
+    updateemail: function (e) {
+        this.setState({ email: e.target.value });       
+    },
+    updatecompanyNumber: function (e) {
+        this.setState({ companyNumber: e.target.value });       
+    },
+    updatecell: function (e) {
+        this.setState({ cell: e.target.value });       
+    },
+
+    custodianDetailsPOST: function () {
+        console.log('POSTING FORM');
+        $.ajax({
+            url: 'api/Organization/SaveCustodianDetails',
+            type: 'POST',
+            dataType: 'json',
+            data: this.state,
+            cache: false,
+            success: function (data) {               
+                alert("Success");
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error('api/Organization/SaveCustodianDetails', status, err.toString());
+            }.bind(this)
+        });
+    },
+
+    loadData: function () {
+        $.ajax({
+            url: 'api/Organization/CustodianDetails/' + this.props.OrganizationID,
+            success: function (data) {
+                this.setState({ name: data[0].name });
+                this.setState({ surname: data[0].surname });
+                this.setState({ jobTitle: data[0].jobTitle });
+                this.setState({ landline: data[0].landline });
+                this.setState({ email: data[0].email });
+                this.setState({ companyNumber: data[0].companyNumber });
+                this.setState({ cell: data[0].cell });
+            }.bind(this)
+        })
+    },
+
+    componentWillMount: function () {
+        this.loadData();
+    },
+
+    render: function(){
+        return (	
+		            <div className="panel panel-default">
+			            <div className="panel-heading">
+				            Custodian Details
+			            </div>
+			            <div className="panel-body">
+				            <form>
+						        <div className="form-group">
+                                    <label>Name</label>
+                                    <input id="Name" className="form-control" placeholder="Name" value={this.state.name} onChange={this.updatename}/>
+                                </div>
+						        <div className="form-group">
+                                    <label>surname</label>
+                                    <input id="surname" className="form-control" placeholder="surname" value={this.state.surname} onChange={this.updatesurname}/>
+                                </div>
+						        <div className="form-group">
+                                    <label>jobTitle</label>
+                                    <input id="jobTitle" className="form-control" placeholder="jobTitle" value={this.state.jobTitle} onChange={this.updatejobTitle}/>
+                                </div>
+						        <div className="form-group">
+                                    <label>landline</label>
+                                    <input id="landline" className="form-control" placeholder="landline" value={this.state.landline} onChange={this.updatelandline}/>
+                                </div>	
+                                <div className="form-group">
+                                    <label>email</label>
+                                    <input id="email" className="form-control" placeholder="email" value={this.state.email} onChange={this.updateemail} />
+                                </div>	
+                                <div className="form-group">
+                                    <label>companyNumber</label>
+                                    <input id="companyNumber" className="form-control" placeholder="companyNumber" value={this.state.companyNumber} onChange={this.updatecompanyNumber} />
+                                </div>	 
+                                <div className="form-group">
+                                    <label>cell</label>
+                                    <input id="cell" className="form-control" placeholder="cell" value={this.state.cell} onChange={this.updatecell} />
+                                </div>	                                   			
+					        </form>
+			            </div> 
+                        <div className="panel-footer text-right">
+                            <button type="button" className="btn btn-primary" onClick={this.custodianDetailsPOST} >Save</button>
+                        </div>
+		            </div>
+		);
+    }
 });
 
 var OrganizationBankDetailsList = React.createClass({	
@@ -1104,32 +1233,32 @@ var PersonalDetails = React.createClass({
                                         email={this.state.Email} updateEmail={this.updateEmailState} contactPOST= {this.contactPOST} />
                                     </div>
                                 </div>
-<div className="tab-pane fade" id="Address">
-    <div className="col-lg-8">
-        <br/>
-        <OrganizationAddress addressLine1={this.state.AddressLine1} updateAddressLine1={this.updateAddLine1}
-addressLine2={this.state.AddressLine2} updateAddressLine2={this.updateAddLine2}
-addressLine3={this.state.AddressLine3} updateAddressLine3={this.updateAddLine3}
-addressLine4={this.state.AddressLine4} updateAddressLine4={this.updateAddLine4}
-addressLine5={this.state.AddressLine5} updateAddressLine5={this.updateAddLine5}
-postalCode={this.state.PostalCode} updatePostalCode={this.updatePostalCode} addressPOST= {this.addressPOST} />
-</div>
-</div>
-<div className="tab-pane fade" id="BankDetails">
-    <div className="col-lg-6">
-        <br/>
-        <OrganizationBankDetails accountName={this.state.AccountName} updateAccountName={this.updateAccountName}
-accountNumber={this.state.AccountNumber} updateAccountNumber={this.updateAccountNumber}
-branchCode={this.state.BranchCode} updateBranchCode={this.updateBranchCode}
-branchName={this.state.BranchName} updateBranchName={this.updateBranchName}
-accountType={this.state.AccountType} updateAccountType={this.updateAccountType}
-bankDetailsPOST= {this.bankDetailsPOST} bankAccountTypes= {this.state.BankAccountType} updateBankAccountType= {this.updateBankAccountType} selectedBankAccountType= {this.state.SelectedBankAccountType} />
-</div>
-<div className="col-lg-6">
-    <br />                                        
-    <OrganizationBankDetailsList bankDetailsList={this.state.bankDetailsList} BankAccountType={this.state.BankAccountType}/>
-</div>
-</div>
+                                <div className="tab-pane fade" id="Address">
+                                    <div className="col-lg-8">
+                                        <br/>
+                                        <OrganizationAddress addressLine1={this.state.AddressLine1} updateAddressLine1={this.updateAddLine1}
+                                addressLine2={this.state.AddressLine2} updateAddressLine2={this.updateAddLine2}
+                                addressLine3={this.state.AddressLine3} updateAddressLine3={this.updateAddLine3}
+                                addressLine4={this.state.AddressLine4} updateAddressLine4={this.updateAddLine4}
+                                addressLine5={this.state.AddressLine5} updateAddressLine5={this.updateAddLine5}
+                                postalCode={this.state.PostalCode} updatePostalCode={this.updatePostalCode} addressPOST= {this.addressPOST} />
+                                </div>
+                                </div>
+                                <div className="tab-pane fade" id="BankDetails">
+                                    <div className="col-lg-6">
+                                        <br/>
+                                        <OrganizationBankDetails accountName={this.state.AccountName} updateAccountName={this.updateAccountName}
+                                accountNumber={this.state.AccountNumber} updateAccountNumber={this.updateAccountNumber}
+                                branchCode={this.state.BranchCode} updateBranchCode={this.updateBranchCode}
+                                branchName={this.state.BranchName} updateBranchName={this.updateBranchName}
+                                accountType={this.state.AccountType} updateAccountType={this.updateAccountType}
+                                bankDetailsPOST= {this.bankDetailsPOST} bankAccountTypes= {this.state.BankAccountType} updateBankAccountType= {this.updateBankAccountType} selectedBankAccountType= {this.state.SelectedBankAccountType} />
+                                </div>
+                                <div className="col-lg-6">
+                                    <br />                                        
+                                    <OrganizationBankDetailsList bankDetailsList={this.state.bankDetailsList} BankAccountType={this.state.BankAccountType}/>
+                                </div>
+                                </div>
 </div>
                             
 </div>

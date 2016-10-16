@@ -18,5 +18,20 @@ namespace TBoard.BusinessLogic.BusinessLogic
         {
             this.repository = repository;
         }
+
+        public IList<custodian> GetCustodianDetails(int organizationID)
+        {
+           return this.repository.GetCustodianDetails(organizationID);
+        }
+
+        public void SaveCustodianDetails(custodian custodian)
+        {
+            this.repository.SaveCustodianDetails(custodian);
+        }
+
+        public void UpdateCustodianDetails(custodian custodian)
+        {
+            this.repository.UpdateCustodianDetails(custodian);
+        }
     }
 }

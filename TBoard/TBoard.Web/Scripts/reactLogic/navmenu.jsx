@@ -53,31 +53,27 @@
                             <li>
                                 <a href="#dashboard" className="active"><i className="fa fa-dashboard fa-fw"></i> Dashboard</a>
                             </li>
-                            { this.state.roles.indexOf("CorporateBuyer") > -1 || this.state.roles.indexOf("CorporateSeller") > -1 ? <OrganizationMenu /> : <PersonalMenu /> }
-                            
-                            <li>
-	                            <a><i className="fa fa-bar-chart-o fa-fw"></i> Quotation<span className="fa arrow"></span></a>
-	                            <ul className="nav nav-second-level">
-		                            <li>
-			                            <a href="#rfqrequest">Request</a>
-		                            </li>	
-                                    <li>
-			                            <a href="#rfqmyrequest">Active Requests <span className="menuCircle">{this.state.activeRFQTotal}</span></a>
-                                    </li>	
-                                    <li>
-			                            <a href="#rfqallrequest">All Requests</a>
-                                    </li> 
-                                    <li>
-			                            <a href="#myacceptedquotes">Accepted Quotes <span className="menuCircle">{this.state.acceptedQuotes}</span></a>
-                                    </li>   
-                                    <li>
-			                            <a href="#rfqmyactivebids">My Bids <span className="menuCircle">{this.state.activeBidsTotal}</span></a>
-                                    </li>   
-                                     <li>
-			                            <a href="#bidswon">Bids Won <span className="menuCircle">{this.state.bidsWonCount}</span></a>
-                                     </li>                                                               
-	                            </ul>
+                            { this.state.roles.indexOf("CorporateBuyer") > -1 || this.state.roles.indexOf("CorporateSeller") > -1 ?  <OrganizationMenu/> : null }
+                            { this.state.roles.indexOf("PrivateBuyer") > -1  ?  <PersonalMenu /> : null }   
+                             <li>
+                                 <a><i className="fa fa-bar-chart-o fa-fw"></i> Orders<span className="fa arrow"></span></a>
+                                 <ul className="nav nav-second-level">                                 
+                                  <li>
+			                            <a href="#rfqrequest">Request For Quote</a>
+                                  </li>
+                                 <li>
+			                           <a href="#rfqmyrequest">Pending Orders <span className="menuCircle">{this.state.activeRFQTotal}</span></a>
+                                 </li>
+                                <li>
+			                            <a href="#myacceptedquotes">Accepted Orders <span className="menuCircle">{this.state.acceptedQuotes}</span></a>
+                                </li>
+                                <li>
+			                            <a href="#rfqallrequest">All Orders</a>
+                                </li>
+                                </ul>
                             </li>
+                            { this.state.roles.indexOf("CorporateBuyer") > -1 || this.state.roles.indexOf("PrivateBuyer") > -1 ?
+                            <MyBidsMenu activeBidsTotal={this.state.activeBidsTotal}  bidsWonCount={this.state.bidsWonCount}/> : null }                           
                         </ul>
                     </div>                
                 </div>
@@ -85,6 +81,30 @@
 	}
 });
 
+var MyBidsMenu = React.createClass({
+
+   
+    render: function() {
+
+        var navBarSyle= {
+            marginBottom:0
+        };
+
+        return (
+              <li>
+	            <a><i className="fa fa-bar-chart-o fa-fw"></i> My Bids<span className="fa arrow"></span></a>
+	            <ul className="nav nav-second-level">
+                    <li>
+			            <a href="#rfqmyactivebids">Bids <span className="menuCircle">{this.props.activeBidsTotal}</span></a>
+                    </li>   
+                    <li>
+			        <a href="#bidswon">Bids Won <span className="menuCircle">{this.props.bidsWonCount}</span></a>
+                    </li>                                                               
+	            </ul>
+            </li>
+            )
+}
+});
 
 var OrganizationMenu = React.createClass({
 

@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.Data.Model;
 using TBoard.Web.Attributes;
+using System.Net.Http.Headers;
 
 namespace TBoard.Web.Controllers
 {
@@ -51,14 +52,51 @@ namespace TBoard.Web.Controllers
             this.organizationBusinessLogic.Update(org);
         }
 
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
+        [JWTTokenValidation]
+        [HttpGet]
+        [Route("api/Organization/CustodianDetails/{organizationID}")]
+        public HttpResponseMessage GetCustodianDetails(int organizationID)
         {
+            var custodianDetail = this.organizationBusinessLogic.GetCustodianDetails(organizationID).Take(1);
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(custodianDetail))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return resp;
         }
 
-        // DELETE api/<controller>/5
-        public void Delete(int id)
+        [JWTTokenValidation]
+        [Route("api/Organization/SaveCustodianDetails")]
+        public void SaveCustodianDetails(FormDataCollection formData)
         {
+            var custodianDetail = this.organizationBusinessLogic.GetCustodianDetails(Convert.ToInt32(formData.Get("organizationID"))).FirstOrDefault();
+            if (custodianDetail == null)
+            {
+                var custodian = new custodian();
+                custodian.name = formData.Get("name");
+                custodian.surname = formData.Get("surname");
+                custodian.jobTitle = formData.Get("jobTitle");
+                custodian.landline = formData.Get("landline");
+                custodian.email = formData.Get("email");
+                custodian.companyNumber = formData.Get("companyNumber");
+                custodian.cell = formData.Get("cell");
+                custodian.organizationID = Convert.ToInt32(formData.Get("organizationID"));
+                this.organizationBusinessLogic.SaveCustodianDetails(custodian);
+            }
+            else
+            {
+                custodianDetail.name = formData.Get("name");
+                custodianDetail.surname = formData.Get("surname");
+                custodianDetail.jobTitle = formData.Get("jobTitle");
+                custodianDetail.landline = formData.Get("landline");
+                custodianDetail.email = formData.Get("email");
+                custodianDetail.companyNumber = formData.Get("companyNumber");
+                custodianDetail.cell = formData.Get("cell");
+                this.organizationBusinessLogic.UpdateCustodianDetails(custodianDetail);
+            }
         }
     }
 }

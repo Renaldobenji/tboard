@@ -99,6 +99,20 @@
           <Property Name="name" Type="varchar" MaxLength="200" />
           <Property Name="value" Type="varchar" MaxLength="5000" />
         </EntityType>
+        <EntityType Name="custodian">
+          <Key>
+            <PropertyRef Name="custodianID" />
+          </Key>
+          <Property Name="custodianID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="150" />
+          <Property Name="surname" Type="varchar" MaxLength="150" />
+          <Property Name="jobTitle" Type="varchar" MaxLength="45" />
+          <Property Name="companyNumber" Type="varchar" MaxLength="150" />
+          <Property Name="email" Type="varchar" MaxLength="150" />
+          <Property Name="landline" Type="varchar" MaxLength="45" />
+          <Property Name="cell" Type="varchar" MaxLength="45" />
+          <Property Name="organizationID" Type="int" />
+        </EntityType>
         <EntityType Name="documentrequirements">
           <Key>
             <PropertyRef Name="documentRequirementsID" />
@@ -517,6 +531,7 @@
           <EntitySet Name="communication" EntityType="Self.communication" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="communicationtype" EntityType="Self.communicationtype" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="config" EntityType="Self.config" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="custodian" EntityType="Self.custodian" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="documentrequirements" EntityType="Self.documentrequirements" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="documents" EntityType="Self.documents" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="documenttypes" EntityType="Self.documenttypes" Schema="tboard" store:Type="Tables" />
@@ -712,8 +727,9 @@
             <End Role="quotestatu" EntitySet="quotestatus" />
           </AssociationSet>
           <FunctionImport Name="sps_GetQuoteOwnerDetails" ReturnType="Collection(TBoardModel.sps_GetQuoteOwnerDetails_Result)">
-            <Parameter Name="quoteID" Mode="In" Type="Int32" />
+          <Parameter Name="quoteID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="custodians" EntityType="TBoardModel.custodian" />
         </EntityContainer>
         <EntityType Name="address">
           <Key>
@@ -1286,6 +1302,20 @@
           <Property Type="String" Name="firstname" Nullable="false" />
           <Property Type="String" Name="surname" Nullable="false" />
         </ComplexType>
+        <EntityType Name="custodian">
+          <Key>
+            <PropertyRef Name="custodianID" />
+          </Key>
+          <Property Name="custodianID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="surname" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="jobTitle" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="companyNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="landline" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="cell" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="organizationID" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1665,6 +1695,21 @@
               <ComplexTypeMapping TypeName="TBoardModel.sps_GetQuoteOwnerDetails_Result" />
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="custodians">
+            <EntityTypeMapping TypeName="TBoardModel.custodian">
+              <MappingFragment StoreEntitySet="custodian">
+                <ScalarProperty Name="organizationID" ColumnName="organizationID" />
+                <ScalarProperty Name="cell" ColumnName="cell" />
+                <ScalarProperty Name="landline" ColumnName="landline" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="companyNumber" ColumnName="companyNumber" />
+                <ScalarProperty Name="jobTitle" ColumnName="jobTitle" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="custodianID" ColumnName="custodianID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

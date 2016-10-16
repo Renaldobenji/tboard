@@ -15,5 +15,22 @@ namespace TBoard.Data.Repository
         {
             
         }
+
+        public IList<custodian> GetCustodianDetails(int organizationID)
+        {
+            return this._dbContext.custodians.Where(x => x.organizationID == organizationID).ToList();
+        }
+
+        public void SaveCustodianDetails(custodian custodian)
+        {
+            this._dbContext.custodians.Add(custodian);
+            this.Save();
+        }
+
+        public void UpdateCustodianDetails(custodian custodian)
+        {
+            this._dbContext.Entry(custodian).State = EntityState.Modified;
+            this.Save();
+        }
     }
 }
