@@ -502,6 +502,40 @@ namespace TBoard.Web.Controllers
 
         [HttpGet]
         [JWTTokenValidation]
+        [Route("api/RFQ/GetBidsLost/{userID}")]
+        public HttpResponseMessage GetBidsLost(int userID)
+        {
+            try
+            {
+                var data = this.quoteBusinessLogic.GetBidsLost(userID);
+
+                var r = new
+                {
+                    data = data
+                };
+
+                var resp = new HttpResponseMessage()
+                {
+                    Content = new StringContent(JsonConvert.SerializeObject(r))
+                };
+                resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+                return resp;
+            }
+            catch (Exception ex)
+            {
+                var resp = new HttpResponseMessage()
+                {
+                    Content = new StringContent(JsonConvert.SerializeObject(ex.ToString()))
+                };
+                resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+                return resp;
+            }
+        }
+
+        [HttpGet]
+        [JWTTokenValidation]
         [Route("api/RFQ/GetAcceptedBidsCount/{userID}")]
         public HttpResponseMessage GetAcceptedBidsCount(int userID)
         {

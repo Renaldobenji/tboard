@@ -104,6 +104,28 @@ namespace TBoard.Data.Repository
             return data;
         }
 
+        public IList<AcceptedBidDetails> GetBidsLost(int userID)
+        {
+            var data = (from qs in this._dbContext.quotestatus
+                        join rfqs in this._dbContext.rfqs on qs.rfqID equals rfqs.rfqID
+                        join q in this._dbContext.quotes on qs.quoteID equals q.quoteID
+                        where qs.status == "Accepted" && qs.userID != userID 
+                              && q.userID == userID
+                        select new AcceptedBidDetails()
+                        {
+                            quoteStatusDateTime = qs.quoteStatusDateTime.ToString(),
+                            reference = rfqs.reference,
+                            dateCreated = rfqs.dateCreated.ToString(),
+                            amount = q.amount.ToString(),
+                            deliveryTime = q.deliveryTime.ToString(),
+                            supplyTime = q.supplyTime.ToString(),
+                            rfqID = rfqs.rfqID.ToString(),
+                            quoteID = q.quoteID.ToString()
+                        }).ToList();
+
+            return data;
+        }
+
         public int GetAcceptedBidsCount(int userID)
         {
             return (from qs in this._dbContext.quotestatus

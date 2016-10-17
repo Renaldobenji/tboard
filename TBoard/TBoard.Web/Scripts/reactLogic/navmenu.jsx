@@ -99,7 +99,10 @@ var MyBidsMenu = React.createClass({
                     </li>   
                     <li>
 			        <a href="#bidswon">Bids Won <span className="menuCircle">{this.props.bidsWonCount}</span></a>
-                    </li>                                                               
+                    </li> 
+                    <li>
+			        <a href="#bidslost">Bids Lost</a>
+                    </li>                                                                                
 	            </ul>
             </li>
             )

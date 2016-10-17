@@ -209,6 +209,12 @@ routie({
 				React.createElement(BidsWon, null), document.getElementById('container')
 			);
         }
+        ,
+        'bidslost': function () {
+            ReactDOM.render(
+				React.createElement(BidsLost, null), document.getElementById('container')
+			);
+        }
     
 });
 

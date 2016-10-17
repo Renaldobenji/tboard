@@ -306,6 +306,7 @@
     <Content Include="Scripts\react-progress-bar-plus.js" />
     <Content Include="Scripts\reactLogic\rfqbidwon.jsx" />
     <Content Include="Scripts\reactLogic\rfqpay.jsx" />
+    <Content Include="Scripts\reactLogic\rfqbidlost.jsx" />
     <Resource Include="Content\EmailTemplates\bidaccepted.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
