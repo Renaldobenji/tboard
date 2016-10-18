@@ -25,12 +25,37 @@ namespace TBoard.Web.Controllers
         [Route("api/Communication/{ownerType}/{ownerID}")]
         public string Get(string ownerType, string ownerID)
         {
+            var home =
+                this.communicationBusinessLogic.FindBy(
+                    x =>
+                        x.owningType == ownerType && x.owningID == ownerID &&
+                        x.communicationtype.communicationTypeTLA == "HME").FirstOrDefault()?.communicationLine1;
+
+            var cell =
+                this.communicationBusinessLogic.FindBy(
+                    x =>
+                        x.owningType == ownerType && x.owningID == ownerID &&
+                        x.communicationtype.communicationTypeTLA == "CELL").FirstOrDefault()?.communicationLine1;
+
+            var work =
+                this.communicationBusinessLogic.FindBy(
+                    x =>
+                        x.owningType == ownerType && x.owningID == ownerID &&
+                        x.communicationtype.communicationTypeTLA == "WRK").FirstOrDefault()?.communicationLine1;
+
+            var email =
+                this.communicationBusinessLogic.FindBy(
+                    x =>
+                        x.owningType == ownerType && x.owningID == ownerID &&
+                        x.communicationtype.communicationTypeTLA == "EML").FirstOrDefault()?.communicationLine1;
+
+
             var com = new
             {
-                Home = this.communicationBusinessLogic.FindBy(x => x.owningType == ownerType && x.owningID == ownerID && x.communicationtype.communicationTypeTLA == "HME").FirstOrDefault().communicationLine1,
-                CellPhone = this.communicationBusinessLogic.FindBy(x => x.owningType == ownerType && x.owningID == ownerID && x.communicationtype.communicationTypeTLA == "CELL").FirstOrDefault().communicationLine1,
-                WorkPhone = this.communicationBusinessLogic.FindBy(x => x.owningType == ownerType && x.owningID == ownerID && x.communicationtype.communicationTypeTLA == "WRK").FirstOrDefault().communicationLine1,
-                Email = this.communicationBusinessLogic.FindBy(x => x.owningType == ownerType && x.owningID == ownerID && x.communicationtype.communicationTypeTLA == "EML").FirstOrDefault().communicationLine1,
+                Home = home,
+                CellPhone = cell,
+                WorkPhone = work,
+                Email = email,
             };
 
             return JsonConvert.SerializeObject(com, Formatting.Indented,

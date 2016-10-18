@@ -53,8 +53,8 @@
                             <li>
                                 <a href="#dashboard" className="active"><i className="fa fa-dashboard fa-fw"></i> Dashboard</a>
                             </li>
-                            { this.state.roles.indexOf("CorporateBuyer") > -1 || this.state.roles.indexOf("CorporateSeller") > -1 ?  <OrganizationMenu/> : null }
-                            { this.state.roles.indexOf("PrivateBuyer") > -1  ?  <PersonalMenu /> : null }   
+                            { this.state.roles.indexOf("CanViewOrganizationMenu") > -1 || this.state.roles.indexOf("CorporateBuyer") > -1 || this.state.roles.indexOf("CorporateSeller") > -1 ? <OrganizationMenu/> : null }
+                            { this.state.roles.indexOf("CanViewPersonalMenu") > -1 || this.state.roles.indexOf("PrivateBuyer") > -1  ?  <PersonalMenu /> : null }   
                              <li>
                                  <a><i className="fa fa-bar-chart-o fa-fw"></i> Orders<span className="fa arrow"></span></a>
                                  <ul className="nav nav-second-level">                                 
@@ -72,7 +72,7 @@
                                 </li>
                                 </ul>
                             </li>
-                            { this.state.roles.indexOf("CorporateBuyer") > -1 || this.state.roles.indexOf("PrivateBuyer") > -1 ?
+                            { this.state.roles.indexOf("CanViewBidsMenu") > -1 ||  this.state.roles.indexOf("CorporateBuyer") > -1 || this.state.roles.indexOf("PrivateBuyer") > -1 ?
                             <MyBidsMenu activeBidsTotal={this.state.activeBidsTotal}  bidsWonCount={this.state.bidsWonCount}/> : null }                           
                         </ul>
                     </div>                

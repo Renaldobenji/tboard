@@ -9,7 +9,8 @@ var UserManagement = React.createClass({
 						ConfirmPassword : '',
 						IDNumber : '',
                         Username : '',
-                        Title : '',
+                        Title: '',
+                        Email: '',
                         OrganizationID: "",
                         DepartmentCode: "",
                         EmployeeNumber: ""
@@ -42,7 +43,10 @@ var UserManagement = React.createClass({
 
     updateName : function(e){
 		this.setState({Name : e.target.value});		
-	},
+    },
+    updateEmail: function (e) {
+        this.setState({ Email: e.target.value });
+    },
 	updateSurname : function(e){
 		this.setState({Surname : e.target.value});		
 	},
@@ -144,6 +148,10 @@ var UserManagement = React.createClass({
                                             <div className="form-group">
                                                 <label>Employee Number</label>
                                                 <input id="EmployeeNumber" className="form-control" placeholder="Employee Number" value={this.state.EmployeeNumber} onChange={this.updateEmployeeNumber} />
+                                            </div>
+                                            <div className="form-group">
+                                                <label>Email</label>
+                                                <input id="Email" className="form-control" placeholder="Email" value={this.state.Email} onChange={this.updateEmail} />
                                             </div>
 					                    </form>
 					                </div>

@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
+using System.Web;
 using System.Web.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using TBoard.BusinessLogic.BusinessLogic;
+using TBoard.BusinessLogic.Responses;
 using TBoard.Data.Model;
 using TBoard.Web.Attributes;
 
@@ -18,10 +21,12 @@ namespace TBoard.Web.Controllers
     {
         private UserBusinessLogic userBusinessLogic;
         private CommunicationBusinessLogic communicationBusinessLogic;
-        public UserController(UserBusinessLogic userBusinessLogic, CommunicationBusinessLogic communicationBusinessLogic)
+        private EmailQueueBusinessLogic emailQueueBusinessLogic;
+        public UserController(UserBusinessLogic userBusinessLogic, CommunicationBusinessLogic communicationBusinessLogic, EmailQueueBusinessLogic emailQueueBusinessLogic)
         {
             this.userBusinessLogic = userBusinessLogic;
             this.communicationBusinessLogic = communicationBusinessLogic;
+            this.emailQueueBusinessLogic = emailQueueBusinessLogic;
         }
 
         // GET api/<controller>/5
@@ -64,11 +69,35 @@ namespace TBoard.Web.Controllers
             var userResponse = userBusinessLogic.CreateUser(formData.Get("Username"), formData.Get("Name"),
                         formData.Get("Surname"), formData.Get("Password"), formData.Get("Title"), formData.Get("IDNumber"), orgID, formData.Get("EmployeeNumber"), formData.Get("DepartmentCode"));
 
+            userBusinessLogic.AddUserToGroup(userResponse.UserID, "SubordinateAccess");
+
+            if (!formData.Get("Email").Equals(""))
+            {
+                this.emailQueueBusinessLogic.SendEmail("admin@Tenderboard.co.za", formData.Get("Email"), "Registration Complete", createEmailBody(formData.Get("Username"), formData.Get("Password")));
+            }
+
             return JsonConvert.SerializeObject(userResponse, Formatting.Indented,
                                                 new JsonSerializerSettings
                                                 {
                                                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                                                 });
+        }
+        
+
+        private string createEmailBody(string username, string password)
+        {
+            string body = string.Empty;
+            //using streamreader for reading my htmltemplate   
+            using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Content/EmailTemplates/registration.html")))
+            {
+
+                body = reader.ReadToEnd();
+            }
+
+            body = body.Replace("{username}", username); //replacing the required things     
+            body = body.Replace("{password}", password); //replacing the required things            
+
+            return body;
         }
 
         [JWTTokenValidation]
