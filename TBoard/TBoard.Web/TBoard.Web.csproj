@@ -307,6 +307,7 @@
     <Content Include="Scripts\reactLogic\rfqbidwon.jsx" />
     <Content Include="Scripts\reactLogic\rfqpay.jsx" />
     <Content Include="Scripts\reactLogic\rfqbidlost.jsx" />
+    <Content Include="Scripts\reactLogic\reports.jsx" />
     <Resource Include="Content\EmailTemplates\bidaccepted.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

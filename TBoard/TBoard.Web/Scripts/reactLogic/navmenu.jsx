@@ -73,7 +73,8 @@
                                 </ul>
                             </li>
                             { this.state.roles.indexOf("CanViewBidsMenu") > -1 ||  this.state.roles.indexOf("CorporateBuyer") > -1 || this.state.roles.indexOf("PrivateBuyer") > -1 ?
-                            <MyBidsMenu activeBidsTotal={this.state.activeBidsTotal}  bidsWonCount={this.state.bidsWonCount}/> : null }                           
+                            <MyBidsMenu activeBidsTotal={this.state.activeBidsTotal}  bidsWonCount={this.state.bidsWonCount}/> : null }    
+                            <ReportsMenu />                       
                         </ul>
                     </div>                
                 </div>
@@ -153,6 +154,28 @@ var PersonalMenu = React.createClass({
 		                <li>
 			                <a href="#personalDetails">Details</a>
 		                </li>		                
+	                </ul>
+                </li>
+            )
+}
+});
+
+var ReportsMenu = React.createClass({
+
+   
+    render: function() {
+
+        var navBarSyle= {
+            marginBottom:0
+        };
+
+        return (
+               <li>
+	                <a><i className="fa fa-bar-chart-o fa-fw"></i>Reports<span className="fa arrow"></span></a>
+	                <ul className="nav nav-second-level">
+		                <li>
+			                <a href="#report">Expenditure</a>
+		                </li>                                         
 	                </ul>
                 </li>
             )

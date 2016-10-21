@@ -215,6 +215,12 @@ routie({
 				React.createElement(BidsLost, null), document.getElementById('container')
 			);
         }
+         ,
+        'report': function () {
+            ReactDOM.render(
+				React.createElement(ReportFilter, null), document.getElementById('container')
+			);
+        }
     
 });
 
