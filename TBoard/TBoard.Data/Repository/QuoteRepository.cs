@@ -147,6 +147,11 @@ namespace TBoard.Data.Repository
             return this._dbContext.sps_GetQuoteOwnerDetails(quoteID).ToList();
         }
 
+        public IList<sps_GetQuoteHistory_Result> sps_GetQuoteHistory(int userID, string qStatus, string startDate, string endDate)
+        {
+            return this._dbContext.sps_GetQuoteHistory(userID,qStatus,startDate,endDate).ToList();
+        }
+
         public class AcceptedBidDetails
         {
             public string quoteStatusDateTime { get; set; }

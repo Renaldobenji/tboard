@@ -13,7 +13,6 @@ namespace TBoard.Data.Model
     using System.Data.Entity;
     using System.Data.Entity.Core.Objects;
     using System.Data.Entity.Infrastructure;
-
     using System.Linq;
 
     public partial class TBoardEntities : DbContext
@@ -137,6 +136,27 @@ namespace TBoard.Data.Model
                 new ObjectParameter("quoteID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sps_GetQuoteOwnerDetails_Result>("sps_GetQuoteOwnerDetails", quoteIDParameter);
+        }
+    
+        public virtual ObjectResult<sps_GetQuoteHistory_Result> sps_GetQuoteHistory(Nullable<int> userID, string qStatus, string startDate, string endDate)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("userID", userID) :
+                new ObjectParameter("userID", typeof(int));
+    
+            var qStatusParameter = qStatus != null ?
+                new ObjectParameter("qStatus", qStatus) :
+                new ObjectParameter("qStatus", typeof(string));
+    
+            var startDateParameter = startDate != null ?
+                new ObjectParameter("startDate", startDate) :
+                new ObjectParameter("startDate", typeof(string));
+    
+            var endDateParameter = endDate != null ?
+                new ObjectParameter("endDate", endDate) :
+                new ObjectParameter("endDate", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sps_GetQuoteHistory_Result>("sps_GetQuoteHistory", userIDParameter, qStatusParameter, startDateParameter, endDateParameter);
         }
     }
 }

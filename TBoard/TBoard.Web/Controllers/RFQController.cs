@@ -534,6 +534,54 @@ namespace TBoard.Web.Controllers
             }
         }
 
+        [HttpPost]
+        [JWTTokenValidation]
+        [Route("api/RFQ/GetQuoteHistory")]
+        public HttpResponseMessage GetQuoteHistory(FormDataCollection formData)
+        {
+            try
+            {
+                var userID = Convert.ToInt32(formData.Get("userID"));
+                var status = formData.Get("status");
+                var startDate = Convert.ToDateTime(formData.Get("startDate").Substring(0,10)).ToString("yyyy/MM/dd");
+                var endDate = Convert.ToDateTime(formData.Get("endDate").Substring(0, 10)).ToString("yyyy/MM/dd");
+
+                var dataResult = this.quoteBusinessLogic.sps_GetQuoteHistory(userID, status, startDate, endDate);
+
+
+                var data = dataResult.Select(y => new
+                {
+                    reference = y.rfqReference,
+                    createdDate = y.createdDate,
+                    quoteStatusDateTime = y.quoteStatusDateTime,
+                    amount = y.amount
+                });
+
+                var r = new
+                {
+                    data = data
+                };
+
+                var resp = new HttpResponseMessage()
+                {
+                    Content = new StringContent(JsonConvert.SerializeObject(r))
+                };
+                resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+                return resp;
+            }
+            catch (Exception ex)
+            {
+                var resp = new HttpResponseMessage()
+                {
+                    Content = new StringContent(JsonConvert.SerializeObject(ex.ToString()))
+                };
+                resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+                return resp;
+            }
+        }
+
         [HttpGet]
         [JWTTokenValidation]
         [Route("api/RFQ/GetAcceptedBidsCount/{userID}")]

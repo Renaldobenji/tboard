@@ -68,5 +68,10 @@ namespace TBoard.BusinessLogic.BusinessLogic
         {
             return this.repository.GetQuoteOwnerDetails(quoteID);
         }
+
+        public IList<sps_GetQuoteHistory_Result> sps_GetQuoteHistory(int userID, string qStatus, string startDate, string endDate)
+        {
+            return this.repository.sps_GetQuoteHistory(userID, qStatus, startDate, endDate);
+        }
     }
 }

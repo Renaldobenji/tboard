@@ -512,6 +512,12 @@
         <Function Name="sps_GetOutstandingDocumentRequirements" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tboard">
           <Parameter Name="organizationID" Type="int" Mode="In" />
         </Function>
+        <Function Name="sps_GetQuoteHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tboard">
+          <Parameter Name="userID" Type="int" Mode="In" />
+          <Parameter Name="qStatus" Type="varchar" Mode="In" />
+          <Parameter Name="startDate" Type="varchar" Mode="In" />
+          <Parameter Name="endDate" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="sps_GetQuoteOwnerDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tboard">
           <Parameter Name="quoteID" Type="int" Mode="In" />
         </Function>
@@ -730,6 +736,12 @@
           <Parameter Name="quoteID" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="custodians" EntityType="TBoardModel.custodian" />
+          <FunctionImport Name="sps_GetQuoteHistory" ReturnType="Collection(TBoardModel.sps_GetQuoteHistory_Result)">
+            <Parameter Name="userID" Mode="In" Type="Int32" />
+            <Parameter Name="qStatus" Mode="In" Type="String" />
+            <Parameter Name="startDate" Mode="In" Type="String" />
+            <Parameter Name="endDate" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="address">
           <Key>
@@ -1316,6 +1328,12 @@
           <Property Name="cell" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="organizationID" Type="Int32" />
         </EntityType>
+        <ComplexType Name="sps_GetQuoteHistory_Result" >
+          <Property Type="String" Name="rfqReference" Nullable="false" />
+          <Property Type="DateTime" Name="createdDate" Nullable="false" />
+          <Property Type="Decimal" Name="amount" Nullable="false" />
+          <Property Type="DateTime" Name="quoteStatusDateTime" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1710,6 +1728,11 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sps_GetQuoteHistory" FunctionName="TBoardModel.Store.sps_GetQuoteHistory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TBoardModel.sps_GetQuoteHistory_Result" />
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
