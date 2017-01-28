@@ -293,7 +293,59 @@
     <Content Include="Content\bootstrap\timeline.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\progress-bar.css" />
+    <Content Include="Content\runkeeper\css\jquery.mmenu.all.css" />
+    <Content Include="Content\runkeeper\css\slider-style.css" />
+    <Content Include="Content\runkeeper\css\style.css" />
+    <Content Include="Content\runkeeper\fonts\opensans_light_macroman\stylesheet.css" />
+    <Content Include="Content\runkeeper\fonts\opensans_regular_macroman\stylesheet.css" />
+    <Content Include="Content\runkeeper\fonts\opensans_semibold_macroman\stylesheet.css" />
+    <Content Include="Content\runkeeper\images\app-divices.jpg" />
+    <Content Include="Content\runkeeper\images\arrow.png" />
+    <Content Include="Content\runkeeper\images\big-btns.png" />
+    <Content Include="Content\runkeeper\images\c1.png" />
+    <Content Include="Content\runkeeper\images\c2.png" />
+    <Content Include="Content\runkeeper\images\c3.png" />
+    <Content Include="Content\runkeeper\images\c4.png" />
+    <Content Include="Content\runkeeper\images\dual-divice.png" />
+    <Content Include="Content\runkeeper\images\fav-icon.png" />
+    <Content Include="Content\runkeeper\images\footer-icons.png" />
+    <Content Include="Content\runkeeper\images\grids-border.png" />
+    <Content Include="Content\runkeeper\images\icons.png" />
+    <Content Include="Content\runkeeper\images\lap-img.png" />
+    <Content Include="Content\runkeeper\images\login.png" />
+    <Content Include="Content\runkeeper\images\nav-icon.png" />
+    <Content Include="Content\runkeeper\images\shoe-img.png" />
+    <Content Include="Content\runkeeper\images\slide-pagenat.png" />
+    <Content Include="Content\runkeeper\images\slider.jpg" />
+    <Content Include="Content\runkeeper\images\test-people1.png" />
+    <Content Include="Content\runkeeper\images\test-people2.png" />
+    <Content Include="Content\runkeeper\images\test-people3.png" />
+    <Content Include="Content\runkeeper\images\user.png" />
+    <Content Include="Content\runkeeper\images\watch-img.png" />
+    <Content Include="Content\runkeeper\js\jquery.cslider.js" />
+    <Content Include="Content\runkeeper\js\jquery.flexisel.js" />
+    <Content Include="Content\runkeeper\js\jquery.min.js" />
+    <Content Include="Content\runkeeper\js\jquery.mmenu.js" />
+    <Content Include="Content\runkeeper\js\login.js" />
+    <Content Include="Content\runkeeper\js\modernizr.custom.28468.js" />
     <Content Include="Content\trip.min.css" />
+    <Content Include="fonts\opensans_light_macroman\stylesheet.css" />
+    <Content Include="fonts\opensans_regular_macroman\stylesheet.css" />
+    <Content Include="fonts\opensans_semibold_macroman\stylesheet.css" />
+    <Content Include="Images\app-divices.jpg" />
+    <Content Include="Images\arrow.png" />
+    <Content Include="Images\big-btns.png" />
+    <Content Include="Images\c1.png" />
+    <Content Include="Images\c2.png" />
+    <Content Include="Images\c3.png" />
+    <Content Include="Images\c4.png" />
+    <Content Include="Images\dual-divice.png" />
+    <Content Include="Images\fav-icon.png" />
+    <Content Include="Images\footer-icons.png" />
+    <Content Include="Images\grids-border.png" />
+    <Content Include="Images\icons.png" />
+    <Content Include="Images\lap-img.png" />
+    <Content Include="Images\login.png" />
     <Content Include="Images\logos\icon.png" />
     <Content Include="Images\logos\icon_1.png" />
     <Content Include="Images\logos\Logo 01.png" />
@@ -302,12 +354,15 @@
     <Content Include="Images\logos\Logo 02_1.png" />
     <Content Include="Images\logos\Logo Name.png" />
     <Content Include="Images\logos\Logo Name_1.png" />
+    <Content Include="Images\nav-icon.png" />
     <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\react-progress-bar-plus.js" />
     <Content Include="Scripts\reactLogic\rfqbidwon.jsx" />
     <Content Include="Scripts\reactLogic\rfqpay.jsx" />
     <Content Include="Scripts\reactLogic\rfqbidlost.jsx" />
     <Content Include="Scripts\reactLogic\reports.jsx" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Features.cshtml" />
     <Resource Include="Content\EmailTemplates\bidaccepted.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -688,6 +743,25 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Images\logos.zip" />
+    <Content Include="fonts\opensans_light_macroman\OpenSans-Light-webfont.eot" />
+    <Content Include="fonts\opensans_light_macroman\OpenSans-Light-webfont.ttf" />
+    <Content Include="fonts\opensans_light_macroman\OpenSans-Light-webfont.woff" />
+    <Content Include="fonts\opensans_regular_macroman\OpenSans-Regular-webfont.eot" />
+    <Content Include="fonts\opensans_regular_macroman\OpenSans-Regular-webfont.ttf" />
+    <Content Include="fonts\opensans_regular_macroman\OpenSans-Regular-webfont.woff" />
+    <Content Include="fonts\opensans_semibold_macroman\OpenSans-Semibold-webfont.eot" />
+    <Content Include="fonts\opensans_semibold_macroman\OpenSans-Semibold-webfont.ttf" />
+    <Content Include="fonts\opensans_semibold_macroman\OpenSans-Semibold-webfont.woff" />
+    <Content Include="Content\runkeeper\fonts\opensans_light_macroman\OpenSans-Light-webfont.eot" />
+    <Content Include="Content\runkeeper\fonts\opensans_light_macroman\OpenSans-Light-webfont.ttf" />
+    <Content Include="Content\runkeeper\fonts\opensans_light_macroman\OpenSans-Light-webfont.woff" />
+    <Content Include="Content\runkeeper\fonts\opensans_regular_macroman\OpenSans-Regular-webfont.eot" />
+    <Content Include="Content\runkeeper\fonts\opensans_regular_macroman\OpenSans-Regular-webfont.ttf" />
+    <Content Include="Content\runkeeper\fonts\opensans_regular_macroman\OpenSans-Regular-webfont.woff" />
+    <Content Include="Content\runkeeper\fonts\opensans_semibold_macroman\OpenSans-Semibold-webfont.eot" />
+    <Content Include="Content\runkeeper\fonts\opensans_semibold_macroman\OpenSans-Semibold-webfont.ttf" />
+    <Content Include="Content\runkeeper\fonts\opensans_semibold_macroman\OpenSans-Semibold-webfont.woff" />
     <None Include="Properties\PublishProfiles\TBoard File.pubxml" />
     <None Include="Properties\PublishProfiles\TBoard.pubxml" />
     <Content Include="Scripts\bootstap\bower_components\datatables-responsive\js\dataTables.responsive.js" />
@@ -828,6 +902,11 @@
     <Content Include="Scripts\select2\js\select2.js" />
     <Content Include="Scripts\select2\js\select2.min.js" />
     <Content Include="Scripts\trip.min.js" />
+    <Content Include="Views\Home\about.html" />
+    <Content Include="Views\Home\features.html" />
+    <Content Include="Views\Home\index.html">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -854,9 +933,13 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Index.cshtml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Upload\Index.cshtml" />
     <Content Include="Scripts\reactLogic\rfqcreate.jsx" />
     <Content Include="Scripts\reactLogic\rfqmine.jsx" />
