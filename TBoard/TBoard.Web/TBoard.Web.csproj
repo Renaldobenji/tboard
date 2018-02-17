@@ -247,6 +247,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Attributes\JWTTokenValidationAttribute.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Controllers\RatingController.cs" />
     <Compile Include="Controllers\AddressController.cs" />
@@ -355,6 +356,14 @@
     <Content Include="Images\logos\Logo Name.png" />
     <Content Include="Images\logos\Logo Name_1.png" />
     <Content Include="Images\nav-icon.png" />
+    <Content Include="Images\shoe-img.png" />
+    <Content Include="Images\slide-pagenat.png" />
+    <Content Include="Images\slider.jpg" />
+    <Content Include="Images\test-people1.png" />
+    <Content Include="Images\test-people2.png" />
+    <Content Include="Images\test-people3.png" />
+    <Content Include="Images\user.png" />
+    <Content Include="Images\watch-img.png" />
     <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\react-progress-bar-plus.js" />
     <Content Include="Scripts\reactLogic\rfqbidwon.jsx" />
@@ -363,6 +372,7 @@
     <Content Include="Scripts\reactLogic\reports.jsx" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Features.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
     <Resource Include="Content\EmailTemplates\bidaccepted.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
