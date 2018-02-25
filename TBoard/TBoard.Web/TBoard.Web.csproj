@@ -16,7 +16,7 @@
     <AssemblyName>TBoard.Web</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -293,6 +293,7 @@
     <Content Include="Content\bootstrap\sb-admin-2.css" />
     <Content Include="Content\bootstrap\timeline.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\pnotify.custom.min.css" />
     <Content Include="Content\progress-bar.css" />
     <Content Include="Content\runkeeper\css\jquery.mmenu.all.css" />
     <Content Include="Content\runkeeper\css\slider-style.css" />
@@ -365,6 +366,9 @@
     <Content Include="Images\user.png" />
     <Content Include="Images\watch-img.png" />
     <Content Include="Scripts\jquery.min.js" />
+    <Content Include="Scripts\notify.min.js" />
+    <Content Include="Scripts\pnotify.custom.min.css" />
+    <Content Include="Scripts\pnotify.custom.min.js" />
     <Content Include="Scripts\react-progress-bar-plus.js" />
     <Content Include="Scripts\reactLogic\rfqbidwon.jsx" />
     <Content Include="Scripts\reactLogic\rfqpay.jsx" />
@@ -996,7 +1000,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>56039</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:56039/</IISUrl>
+          <IISUrl>http://localhost/TBoard.Web</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

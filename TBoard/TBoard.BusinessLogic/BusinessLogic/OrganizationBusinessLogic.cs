@@ -19,6 +19,12 @@ namespace TBoard.BusinessLogic.BusinessLogic
             this.repository = repository;
         }
 
+        public organization GetOrganization(int organizationID)
+        {
+           return this.repository.GetOrganization(organizationID);
+           
+        }
+
         public IList<custodian> GetCustodianDetails(int organizationID)
         {
            return this.repository.GetCustodianDetails(organizationID);

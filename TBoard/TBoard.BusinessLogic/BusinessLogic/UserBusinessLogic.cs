@@ -58,28 +58,37 @@ namespace TBoard.BusinessLogic.BusinessLogic
             string saltValue = "";
             var passwordHash = PasswordHasher.HashPassword(password, ref saltValue, new HMACMD5());
 
-            user newUser = new user();
-            newUser.username = userName;
-            newUser.firstname = name;
-            newUser.surname = surname;
-            newUser.password = passwordHash;
-            newUser.passwordSalt = saltValue;
-            newUser.title = title;
-            newUser.identificationNumber = idNumber;
-            newUser.isApproved = true;
-            newUser.lastActivityDate = DateTime.Now;
-            newUser.lastPasswordChange = DateTime.Now;
-            newUser.isLockedOut = "false";
-            newUser.failedPasswordAttemptCount = 0;
-            newUser.lastLoginDate = DateTime.Now;
-            newUser.organizationID = organizationId;
-            newUser.employeeCode = employeeCode;
-            newUser.departmentCode = departmentCode;
-            newUser.created = DateTime.Now;
+            try
+            {
+                user newUser = new user();
+                newUser.username = userName;
+                newUser.firstname = name;
+                newUser.surname = surname;
+                newUser.password = passwordHash;
+                newUser.passwordSalt = saltValue;
+                newUser.title = title;
+                newUser.identificationNumber = idNumber;
+                newUser.isApproved = true;
+                newUser.lastActivityDate = DateTime.Now;
+                newUser.lastPasswordChange = DateTime.Now;
+                newUser.isLockedOut = "false";
+                newUser.failedPasswordAttemptCount = 0;
+                newUser.lastLoginDate = DateTime.Now;
+                newUser.organizationID = organizationId;
+                newUser.employeeCode = employeeCode;
+                newUser.departmentCode = departmentCode;
+                newUser.created = DateTime.Now;
 
-            this.Create(newUser);
+                this.Create(newUser);
 
-            response.UserID = newUser.userID;
+                response.UserID = newUser.userID;
+                response.IsSuccessful = true;
+            }
+            catch(Exception ex)
+            {
+                response.IsSuccessful = false;
+                response.ErrorMessage = ex.Message;
+            }           
 
             return response;
         }

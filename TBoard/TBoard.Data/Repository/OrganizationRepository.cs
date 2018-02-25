@@ -16,6 +16,11 @@ namespace TBoard.Data.Repository
             
         }
 
+        public organization GetOrganization(int organizationID)
+        {
+            return this._dbContext.organizations.Where(x => x.organizationID == organizationID).FirstOrDefault();
+        }
+
         public IList<custodian> GetCustodianDetails(int organizationID)
         {
             return this._dbContext.custodians.Where(x => x.organizationID == organizationID).ToList();

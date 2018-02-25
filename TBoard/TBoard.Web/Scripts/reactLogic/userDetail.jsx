@@ -49,7 +49,16 @@ var UserDetail = React.createClass({
             url: 'api/User/ApproveUser/' + this.props.userID,
             success: function (data) {
                 this.GetUserInformation();
-                alert("Success");
+                var opts = {
+                    title: "Success",
+                    text: "That thing that you were trying to do worked.",
+                    addclass: "stack-bottomright",
+                    type: "success",
+                    nonblock: {
+                        nonblock: true
+                    }
+                };
+                new PNotify(opts);
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error('api/RFQ/Cancel', status, err.toString());
@@ -63,7 +72,16 @@ var UserDetail = React.createClass({
             url: 'api/User/DeActivateUser/' + this.props.userID,
             success: function (data) {
                 this.GetUserInformation();
-                alert("Success");
+                var opts = {
+                    title: "Success",
+                    text: "That thing that you were trying to do worked.",
+                    addclass: "stack-bottomright",
+                    type: "success",
+                    nonblock: {
+                        nonblock: true
+                    }
+                };
+                new PNotify(opts);
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error('api/RFQ/Cancel', status, err.toString());
@@ -119,6 +137,16 @@ var UserDetail = React.createClass({
                 cache: false,
                 success: function(data) {
                     this.GetUserInformation();
+                    var opts = {
+                        title: "Success",
+                        text: "That thing that you were trying to do worked.",
+                        addclass: "stack-bottomright",
+                        type: "success",
+                        nonblock: {
+                            nonblock: true
+                        }
+                    };
+                    new PNotify(opts);
                 }.bind(this),
                 error: function(xhr, status, err) {
                     console.error('api/Registration/Post', status, err.toString());
@@ -136,6 +164,16 @@ var UserDetail = React.createClass({
             cache: false,
             success: function (data) {
                 this.GetUserInformation();
+                var opts = {
+                    title: "Success",
+                    text: "That thing that you were trying to do worked.",
+                    addclass: "stack-bottomright",
+                    type: "success",
+                    nonblock: {
+                        nonblock: true
+                    }
+                };
+                new PNotify(opts);
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error('api/Registration/Post', status, err.toString());

@@ -30,7 +30,7 @@
 
     updateRFQDetails: function (e) {
         this.setState({ RFQDetails: e.target.value });
-    },
+    },   
 
     updateRFQPost: function () {
         console.log('POSTING FORM');
@@ -41,7 +41,16 @@
             data: this.state,
             cache: false,
             success: function (data) {
-                alert("Success");
+                var opts = {
+                    title: "Success",
+                    text: "That thing that you were trying to do worked.",
+                    addclass: "stack-bottomright",
+                    type: "success",
+                    nonblock: {
+                        nonblock: true
+                    }
+                };
+                new PNotify(opts);
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error('api/RFQ/Update', status, err.toString());
@@ -58,7 +67,16 @@
             data: this.state,
             cache: false,
             success: function (data) {
-                alert("Success");
+                var opts = {
+                    title: "Success",
+                    text: "That thing that you were trying to do worked.",
+                    addclass: "stack-bottomright",
+                    type: "success",
+                    nonblock: {
+                        nonblock: true
+                    }
+                };
+                new PNotify(opts);
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error('api/RFQ/Cancel', status, err.toString());
@@ -108,6 +126,11 @@
 });
 
 var RFQUpdateDetail = React.createClass({
+
+    componentDidMount: function () {
+
+        $('#expiryDate').datetimepicker();
+    },
 
     render: function() {
 
@@ -208,6 +231,16 @@ var RFQBidQuotes = React.createClass({
             cache: false,
             success: function (data) {
                 this.setState({ data: data });
+                var opts = {
+                    title: "Success",
+                    text: "That thing that you were trying to do worked.",
+                    addclass: "stack-bottomright",
+                    type: "success",
+                    nonblock: {
+                        nonblock: true
+                    }
+                };
+                new PNotify(opts);
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error('api/RFQ/QuoteBids/Order', status, err.toString());
@@ -246,7 +279,16 @@ var RFQBidQuotes = React.createClass({
             data: data0,
             cache: false,
             success: function (data) {
-                
+                var opts = {
+                    title: "Success",
+                    text: "That thing that you were trying to do worked.",
+                    addclass: "stack-bottomright",
+                    type: "success",
+                    nonblock: {
+                        nonblock: true
+                    }
+                };
+                new PNotify(opts);
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error('api/Rating', status, err.toString());
@@ -265,6 +307,16 @@ var RFQBidQuotes = React.createClass({
             data: data0,
             cache: false,
             success: function (data) {
+                var opts = {
+                    title: "Success",
+                    text: "That thing that you were trying to do worked.",
+                    addclass: "stack-bottomright",
+                    type: "success",
+                    nonblock: {
+                        nonblock: true
+                    }
+                };
+                new PNotify(opts);
                 location.reload();
             }.bind(this),
             error: function (xhr, status, err) {

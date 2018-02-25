@@ -50,7 +50,16 @@
             data: this.state,
             cache: false,
             success: function (data) {
-                alert("Success");
+                var opts = {
+                    title: "Success",
+                    text: "That thing that you were trying to do worked.",
+                    addclass: "stack-bottomright",
+                    type: "success",
+                    nonblock: {
+                        nonblock: true
+                    }
+                };
+                new PNotify(opts);
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error('api/RFQ/Post', status, err.toString());
@@ -206,8 +215,14 @@ var RFQRequestDetail = React.createClass({
             data: form,
             cache: false,
             success: function (data) {
-                alert("Success");
-                window.location.href = '../'; //one level up
+                var opts = {
+                    title: "Success",
+                    text: "That thing that you were trying to do worked.",
+                    addclass: "stack-bottomright",
+                    type: "success"                    
+                };
+                new PNotify(opts);
+                routie('dashboard');
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error('api/RFQ/Post', status, err.toString());

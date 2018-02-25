@@ -1221,8 +1221,8 @@
           <Property Type="String" Name="FirstName" Nullable="false" />
           <Property Type="String" Name="Surname" Nullable="false" />
           <Property Type="Decimal" Name="Amount" Nullable="false" />
-          <Property Type="DateTime" Name="SupplyTime" Nullable="false" />
-          <Property Type="DateTime" Name="DeliveryTime" Nullable="false" />
+          <Property Type="DateTime" Name="SupplyTime" Nullable="true" />
+          <Property Type="DateTime" Name="DeliveryTime" Nullable="true" />
           <Property Type="String" Name="name" Nullable="false" />
           <Property Type="Boolean" Name="oem" Nullable="false" />
           <Property Type="Int32" Name="OrganizationID" Nullable="false" />

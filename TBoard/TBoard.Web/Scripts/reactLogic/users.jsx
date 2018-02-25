@@ -33,7 +33,16 @@ var UserManagement = React.createClass({
                   data: this.state,
                   cache: false,
                   success: function(data) {
-                      alert(data);
+                      var opts = {
+                          title: "Success",
+                          text: "That thing that you were trying to do worked.",
+                          addclass: "stack-bottomright",
+                          type: "success",
+                          nonblock: {
+                              nonblock: true
+                          }
+                      };
+                      new PNotify(opts);
                   }.bind(this),
                   error: function(xhr, status, err) {
                     console.error('api/Registration/Post', status, err.toString());

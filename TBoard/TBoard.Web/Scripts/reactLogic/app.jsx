@@ -122,17 +122,23 @@ routie({
     '': function () {
             var tokens = new TboardJWTToken();
             var result = tokens.IsLoggedIn();
+
+            $(document).ajaxStart(function () {
+                $.LoadingOverlay("show", "rgba(255, 255, 255, 0.8)", document.getElementById('container'));
+            });
+            $(document).ajaxStop(function () {
+                $.LoadingOverlay("hide");
+            });            
             if (result == true)
             {
-                routie('dashboard');
+                routie('dashboard'); 
             }
             else
             {
                 ReactDOM.render(
 				React.createElement(login, null), document.getElementById('container')
 			);
-            }
-			
+            } 			
 		},
 		'register': function(){
 			ReactDOM.render(

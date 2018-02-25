@@ -17,8 +17,8 @@ namespace TBoard.Data.Model
         public string FirstName { get; set; }
         public string Surname { get; set; }
         public decimal Amount { get; set; }
-        public System.DateTime SupplyTime { get; set; }
-        public System.DateTime DeliveryTime { get; set; }
+        public Nullable<System.DateTime> SupplyTime { get; set; }
+        public Nullable<System.DateTime> DeliveryTime { get; set; }
         public string name { get; set; }
         public bool oem { get; set; }
         public int OrganizationID { get; set; }

@@ -140,7 +140,17 @@ var RFQBidDetail = React.createClass({
                 this.setState({ MyLatestBidAmount: data.data.amount });
                 this.setState({ MyLatestBidDate: data.data.createdDate.substring(0, 10) });
                 this.props.bidPost();
-                alert("Success");
+                var opts = {
+                    title: "Success",
+                    text: "That thing that you were trying to do worked.",
+                    addclass: "stack-bottomright",
+                    type: "success",
+                    nonblock: {
+                        nonblock: true
+                    }
+                };
+                new PNotify(opts);
+                routie('rfqmyactivebids');
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error('api/RFQ/Quote', status, err.toString());

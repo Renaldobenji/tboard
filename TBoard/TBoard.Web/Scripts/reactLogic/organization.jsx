@@ -31,7 +31,7 @@
         };
     },
 
-    componentWillMount: function () {
+    componentWillMount: function () {       
         var tokens = new TboardJWTToken();
         var decodedToken = tokens.getJWTToken();
         this.setState({ OrganizationID: decodedToken.OrganizationID });
@@ -156,7 +156,8 @@
         });
     },
 
-    componentDidMount: function() {
+    componentDidMount: function () {
+       
         this.fetchOrgDetails(this.state.OrganizationID);
         this.fetchAddressDetails(this.state.OrganizationID);
         this.fetchContactDetails(this.state.OrganizationID);
@@ -173,7 +174,16 @@
                   data: this.state,
                   cache: false,
                   success: function(data) {
-                      alert("Success");
+                      var opts = {
+                          title: "Success",
+                          text: "That thing that you were trying to do worked.",
+                          addclass: "stack-bottomright",
+                          type: "success",
+                          nonblock: {
+                              nonblock: true
+                          }
+                      };
+                      new PNotify(opts);
                   }.bind(this),
                   error: function(xhr, status, err) {
                     console.error('api/Organization/Post', status, err.toString());
@@ -190,7 +200,17 @@
                   data: this.state,
                   cache: false,
                   success: function(data) {
-                      alert("Success");
+                      var opts = {
+                          title: "Success",
+                          text: "That thing that you were trying to do worked.",
+                          addclass: "stack-bottomright",
+                          type: "success",
+                          nonblock: {
+                              nonblock: true
+                          }
+                      };
+                      new PNotify(opts);
+                      
                   }.bind(this),
                   error: function(xhr, status, err) {
                     console.error('api/Organization/Post', status, err.toString());
@@ -207,7 +227,16 @@
                   data: this.state,
                   cache: false,
                   success: function(data) {
-                      alert("Success");
+                      var opts = {
+                          title: "Success",
+                          text: "That thing that you were trying to do worked.",
+                          addclass: "stack-bottomright",
+                          type: "success",
+                          nonblock: {
+                              nonblock: true
+                          }
+                      };
+                      new PNotify(opts);
                   }.bind(this),
                   error: function(xhr, status, err) {
                     console.error('api/Organization/Post', status, err.toString());
@@ -225,7 +254,16 @@
                   cache: false,
                   success: function (data) {
                       this.fetchBankDetails(this.state.OrganizationID);
-                      alert("Success");
+                      var opts = {
+                          title: "Success",
+                          text: "That thing that you were trying to do worked.",
+                          addclass: "stack-bottomright",
+                          type: "success",
+                          nonblock: {
+                              nonblock: true
+                          }
+                      };
+                      new PNotify(opts);
                   }.bind(this),
                   error: function(xhr, status, err) {
                     console.error('api/BankAccount/Post', status, err.toString());
@@ -629,7 +667,16 @@ var CustodianDetails = React.createClass({
             data: this.state,
             cache: false,
             success: function (data) {               
-                alert("Success");
+                var opts = {
+                    title: "Success",
+                    text: "That thing that you were trying to do worked.",
+                    addclass: "stack-bottomright",
+                    type: "success",
+                    nonblock: {
+                        nonblock: true
+                    }
+                };
+                new PNotify(opts);
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error('api/Organization/SaveCustodianDetails', status, err.toString());
@@ -827,7 +874,16 @@ var OrganizationExpertise = React.createClass({
                   data: postData,
                   cache: false,
                   success: function(data) {
-                      alert("Success");
+                      var opts = {
+                          title: "Success",
+                          text: "That thing that you were trying to do worked.",
+                          addclass: "stack-bottomright",
+                          type: "success",
+                          nonblock: {
+                              nonblock: true
+                          }
+                      };
+                      new PNotify(opts);
                   }.bind(this),
                   error: function(xhr, status, err) {
                     console.error('api/Organization/Post', status, err.toString());
@@ -877,7 +933,16 @@ var UserExpertiseAdd = React.createClass({
             data: this.state,
             cache: false,
             success: function (data) {
-                alert("Success");
+                var opts = {
+                    title: "Success",
+                    text: "That thing that you were trying to do worked.",
+                    addclass: "stack-bottomright",
+                    type: "success",
+                    nonblock: {
+                        nonblock: true
+                    }
+                };
+                new PNotify(opts);
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error('api/ExpertiseCategory/Add', status, err.toString());
@@ -1063,7 +1128,16 @@ var PersonalDetails = React.createClass({
             data: this.state,
             cache: false,
             success: function(data) {
-                alert("Success");
+                var opts = {
+                    title: "Success",
+                    text: "That thing that you were trying to do worked.",
+                    addclass: "stack-bottomright",
+                    type: "success",
+                    nonblock: {
+                        nonblock: true
+                    }
+                };
+                new PNotify(opts);
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error('api/Organization/Post', status, err.toString());
@@ -1080,7 +1154,16 @@ var PersonalDetails = React.createClass({
             data: this.state,
             cache: false,
             success: function(data) {
-                alert("Success");
+                var opts = {
+                    title: "Success",
+                    text: "That thing that you were trying to do worked.",
+                    addclass: "stack-bottomright",
+                    type: "success",
+                    nonblock: {
+                        nonblock: true
+                    }
+                };
+                new PNotify(opts);
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error('api/Organization/Post', status, err.toString());
@@ -1097,7 +1180,16 @@ var PersonalDetails = React.createClass({
             data: this.state,
             cache: false,
             success: function(data) {
-                alert("Success");
+                var opts = {
+                    title: "Success",
+                    text: "That thing that you were trying to do worked.",
+                    addclass: "stack-bottomright",
+                    type: "success",
+                    nonblock: {
+                        nonblock: true
+                    }
+                };
+                new PNotify(opts);
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error('api/Organization/Post', status, err.toString());
@@ -1115,7 +1207,16 @@ var PersonalDetails = React.createClass({
             cache: false,
             success: function (data) {
                 this.fetchBankDetails(this.state.OrganizationID);
-                alert("Success");
+                var opts = {
+                    title: "Success",
+                    text: "That thing that you were trying to do worked.",
+                    addclass: "stack-bottomright",
+                    type: "success",
+                    nonblock: {
+                        nonblock: true
+                    }
+                };
+                new PNotify(opts);
             }.bind(this),
             error: function(xhr, status, err) {
                 console.error('api/BankAccount/Post', status, err.toString());

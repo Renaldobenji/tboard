@@ -25,7 +25,7 @@ namespace TBoard.Web.Controllers
         [JWTTokenValidation]
         public string Get(int id)
         {
-            organization org = this.organizationBusinessLogic.FindBy(x => x.organizationID == id).FirstOrDefault();
+            organization org = this.organizationBusinessLogic.GetOrganization(id);
             if (org == null)
                 return "";
 
