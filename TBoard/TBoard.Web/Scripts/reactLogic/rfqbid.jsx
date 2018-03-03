@@ -8,6 +8,8 @@
             UserID: "",
             MyLatestBidAmount: 0,
             MyLatestBidDate: "N/A",
+            HighestBidAmount: 0,
+            HighestBidDate: "N/A",
             NewBidAmount: 0,
             SupplyTime: "",
             DeliveryTime : ""
@@ -38,6 +40,21 @@
                 if (data.data.createdDate != null) {
                     this.setState({ MyLatestBidDate: data.data.createdDate.substring(0, 10) });
                 }                
+            }.bind(this)
+        });
+
+        $.ajax({
+            url: 'api/RFQ/HighestQuote/' + this.props.rfqreference + '/' + userID,
+            success: function (data) {
+                if (data.data == null) {
+                    return;
+                }
+                if (data.data.amount != null) {
+                    this.setState({ HighestBidAmount: data.data.amount });
+                }
+                if (data.data.createdDate != null) {
+                    this.setState({ HighestBidDate: data.data.createdDate.substring(0, 10) });
+                }
             }.bind(this)
         });
     },
@@ -90,8 +107,12 @@
                             <RFQBidDetail UserID={this.state.UserID} RFQReference={this.state.RFQReference} ExpiryDate={this.state.ExpiryDate} RFQDetails={this.state.RFQDetails} bidPost={this.updateloadData} updateBidAmount={this.updateBidAmount} updateSupplyTime={this.updateSupplyTime} updateDeliveryTime={this.updateDeliveryTime}/>
 		                   </div> 
                             <div className="col-md-3">
-                            <RFQMyDids MyLatestBidAmount={this.state.MyLatestBidAmount} MyLatestBidDate={this.state.MyLatestBidDate}/>
-                            </div>                           
+                                <RFQMyDids MyLatestBidAmount={this.state.MyLatestBidAmount} MyLatestBidDate={this.state.MyLatestBidDate}/>
+                            </div>   
+                            <div className="col-md-3">
+                                <HighestBids HighestBidAmount={this.state.HighestBidAmount} HighestBidDate={this.state.HighestBidDate} />
+                            </div>   
+                                                    
                         </div>                        
                     </div>
                   </div>
@@ -253,6 +274,31 @@ var RFQMyDids = React.createClass({
                          <h1 className="text-primary">{this.props.MyLatestBidDate}</h1>
                          <h3>My Highest Bid</h3>
                          <h1 className="text-primary">R{this.props.MyLatestBidAmount}</h1>        
+                    </div>                                      
+                </div>
+
+                    
+                </div>
+            )
+}
+});
+
+var HighestBids = React.createClass({
+
+    render: function() {
+
+        var navBarSyle= {
+            marginBottom:0
+        };
+
+        return (
+                <div>
+                <div className="panel panel-default">                    
+                    <div className="panel-body text-center">
+                         <h3>Bid Date</h3>
+                         <h1 className="text-primary">{this.props.HighestBidDate}</h1>
+                         <h3>Highest Bid</h3>
+                         <h1 className="text-primary">R{this.props.HighestBidAmount}</h1>        
                     </div>                                      
                 </div>
 

@@ -36,6 +36,11 @@ namespace TBoard.Data.Repository
             return this._dbContext.sps_GetBidsForQuote(rfqReference).ToList();
         }
 
+        public IList<sps_GetHighestBidsForQuote_Result> GetHighestRFQBids(string rfqReference)
+        {
+            return this._dbContext.sps_GetHighestBidsForQuote(rfqReference).ToList();
+        }
+
         public int MyActiveRFQ(int userID)
         {
             return this._dbContext.rfqs.Where(x => x.userID == userID && x.status == "ACT").Count();

@@ -12,9 +12,9 @@ namespace TBoard.Data.Model
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using System.Data.Entity.Core.Objects;   
+    using System.Data.Entity.Core.Objects;
     using System.Linq;
-    
+
     public partial class TBoardEntities : DbContext
     {
         public TBoardEntities()
@@ -157,6 +157,15 @@ namespace TBoard.Data.Model
                 new ObjectParameter("endDate", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sps_GetQuoteHistory_Result>("sps_GetQuoteHistory", userIDParameter, qStatusParameter, startDateParameter, endDateParameter);
+        }
+    
+        public virtual ObjectResult<sps_GetHighestBidsForQuote_Result> sps_GetHighestBidsForQuote(string rfqReference)
+        {
+            var rfqReferenceParameter = rfqReference != null ?
+                new ObjectParameter("rfqReference", rfqReference) :
+                new ObjectParameter("rfqReference", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sps_GetHighestBidsForQuote_Result>("sps_GetHighestBidsForQuote", rfqReferenceParameter);
         }
     }
 }

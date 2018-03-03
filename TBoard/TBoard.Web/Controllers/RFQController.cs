@@ -396,6 +396,32 @@ namespace TBoard.Web.Controllers
             return resp;
         }
 
+        [HttpGet]
+        [JWTTokenValidation]
+        [Route("api/RFQ/HighestQuote/{rfqReference}/{userID}")]
+        public HttpResponseMessage QuotehighestBid(string rfqReference, string userID)
+        {
+            var userIDInt = Convert.ToInt32(userID);
+            var quote = this.rfqBusinessLogic.GetHighestRFQBids(rfqReference).OrderByDescending(x => x.amount).FirstOrDefault();
+
+            var r = new
+            {
+                data = quote
+            };
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(r, Formatting.None,
+                                               new JsonSerializerSettings
+                                               {
+                                                   ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                               }))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return resp;
+        }
+
         [HttpPost]
         [JWTTokenValidation]
         [Route("api/RFQ/AcceptQuote")]

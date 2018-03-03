@@ -39,6 +39,12 @@ namespace TBoard.BusinessLogic.BusinessLogic
         {
             return this.repository.GetRFQBids(rfqReference);
         }
+
+        public IList<sps_GetHighestBidsForQuote_Result> GetHighestRFQBids(string rfqReference)
+        {
+            return this.repository.GetHighestRFQBids(rfqReference);
+        }
+
         public int MyActiveRFQ(int userID)
         {
             return this.repository.MyActiveRFQ(userID);

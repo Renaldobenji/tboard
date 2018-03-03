@@ -509,6 +509,9 @@
         <Function Name="sps_GetBidsForQuote" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tboard">
           <Parameter Name="rfqReference" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="sps_GetHighestBidsForQuote" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tboard">
+          <Parameter Name="rfqReference" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="sps_GetOutstandingDocumentRequirements" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tboard">
           <Parameter Name="organizationID" Type="int" Mode="In" />
         </Function>
@@ -741,6 +744,9 @@
             <Parameter Name="qStatus" Mode="In" Type="String" />
             <Parameter Name="startDate" Mode="In" Type="String" />
             <Parameter Name="endDate" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sps_GetHighestBidsForQuote" ReturnType="Collection(TBoardModel.sps_GetHighestBidsForQuote_Result)">
+            <Parameter Name="rfqReference" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="address">
@@ -1334,6 +1340,10 @@
           <Property Type="Decimal" Name="amount" Nullable="false" />
           <Property Type="DateTime" Name="quoteStatusDateTime" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="sps_GetHighestBidsForQuote_Result" >
+          <Property Type="DateTime" Name="createdDate" Nullable="false" />
+          <Property Type="Decimal" Name="amount" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1731,6 +1741,11 @@
           <FunctionImportMapping FunctionImportName="sps_GetQuoteHistory" FunctionName="TBoardModel.Store.sps_GetQuoteHistory">
             <ResultMapping>
               <ComplexTypeMapping TypeName="TBoardModel.sps_GetQuoteHistory_Result" />
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sps_GetHighestBidsForQuote" FunctionName="TBoardModel.Store.sps_GetHighestBidsForQuote">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TBoardModel.sps_GetHighestBidsForQuote_Result" />
             </ResultMapping>
           </FunctionImportMapping>
         </EntityContainerMapping>
