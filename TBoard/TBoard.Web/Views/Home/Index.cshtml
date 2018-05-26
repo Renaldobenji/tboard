@@ -1,371 +1,393 @@
-﻿
-<!--<script src="@Url.Content("~/Scripts/reactlogic/app.jsx")" type="text/babel"></script>-->
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
-<!DOCTYPE HTML>
-<html>
-  <head>
-    <title>Runkeeper Website Template | Home :: w3layouts</title>   
-    <link href="@Url.Content("~/Content/runkeeper/css/style.css")" rel='stylesheet' type='text/css' />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="shortcut icon" type="image/x-icon" href="images/fav-icon.png" />     
-      <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-      </script>
-      <!---strat-slider---->
-      <script type="text/javascript" src="@Url.Content("~/Content/runkeeper/js/jquery.min.js")"></script>
-      <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/runkeeper/css/slider-style.css")" />
-      <script type="text/javascript" src="@Url.Content("~/Content/runkeeper/js/modernizr.custom.28468.js")"></script>
-      <!---//strat-slider---->     
-      <!-----768px-menu----->
-      <link type="text/css" rel="stylesheet" href="@Url.Content("~/Content/runkeeper/css/jquery.mmenu.all.css")" />
-      <script type="text/javascript" src="@Url.Content("~/Content/runkeeper/js/jquery.mmenu.js")"></script>
-      <script type="text/javascript">
-        //	The menu on the left
-        $(function() {
-        $('nav#menu-left').mmenu();
-        });
-      </script>
-      <!-----//768px-menu----->
-    </head>
-  <body>
-    <!---start-wrap---->
-    <!------start-768px-menu---->
-    <div id="page">
-      <div id="header">
-        <a class="navicon" href="#menu-left"> </a>
-      </div>
-      <nav id="menu-left">
-        <ul>
-          <li>
-            @Html.ActionLink("Home", "Index")
-            </li>
-            <li>
-            @Html.ActionLink("About", "About")
-            </li>
-            <li>
-            @Html.ActionLink("Features", "Features")
-            </li>
-          <div class="clear"> </div>
-        </ul>
-      </nav>
-    </div>
-    <!------start-768px-menu---->
-    <!---start-header---->
-    <div class="header">
-      <div class="wrap">
-        <div class="header-left">
-          <div class="logo">
-             <img src="images/logos/Logo 02.png" width="500px" height="80px" title="watch" />
-          </div>
-        </div>
-        <div class="header-right">
-          <div class="top-nav">
-            <ul>
-                <li>
-                @Html.ActionLink("Home", "Index")
-                </li>
-                <li>
-                @Html.ActionLink("About", "About")
-                </li>
-                <li>
-                @Html.ActionLink("Features", "Features")
-                </li>
-            </ul>
-          </div>
-          <div class="sign-ligin-btns">
-            <ul>
-              <li id="signupContainer">               
-                <a class="login" id="loginButton" href="/Admin">               
-                  <span>
-                    <i>Signup</i>
-                  </span>
-                </a>
-                <div class="clear"> </div>
-                <div id="signupBox">
-                  <form id="signupForm">
-                    <fieldset id="signupbody">
-                      <fieldset>
-                        <label for="email">
-                          Email Address <span>*</span>
-                        </label>
-                        <input type="text" name="email" id="signupemail" />
-                      </fieldset>
-                      <fieldset>
-                        <label for="password">
-                          Choose Password <span>*</span>
-                        </label>
-                        <input type="password" name="password" id="signuppassword" />
-                      </fieldset>
-                      <fieldset>
-                        <label for="password">
-                          Confirm Password <span>*</span>
-                        </label>
-                        <input type="password" name="password" id="signuppassword1" />
-                      </fieldset>
-                      <input type="submit" id="signup" value="Register Now!" />
-                    </fieldset>
-                  </form>
-                </div>
-                <!-- Login Ends Here -->
-              </li>
-              <li id="loginContainer">
-                <a class="login" id="loginButton"  href="/Admin">
-                  <span>
-                    <i>Login</i>
-                  </span>
-                  </i>
-                </a>
-                <div class="clear"> </div>
-                <div id="loginBox">
-                  <form id="loginForm">
-                    <fieldset id="body">
-                      <fieldset>
-                        <label for="email">Email Address</label>
-                        <input type="text" name="email" id="email" />
-                      </fieldset>
-                      <fieldset>
-                        <label for="password">Password</label>
-                        <input type="password" name="password" id="password" />
-                      </fieldset>
-                      <label class="remeber" for="checkbox">
-                        <input type="checkbox" id="checkbox" />Remember me
-                      </label>
-                      <input type="submit" id="login" value="login" />
-                    </fieldset>
-                    <span>
-                      <a href="#">Forgot your password?</a>
-                    </span>
-                  </form>
-                </div>
-                <!-- Login Ends Here -->
-              </li>
-              <div class="clear"> </div>
-            </ul>
-          </div>
-          <div class="clear"> </div>
-        </div>
-        <div class="clear"> </div>
-      </div>
-    </div>
-    <!---//End-header---->
-    <!----start-banner---->
-    <div class="text-slider">
-      <div class="wrap">
-        <!---start-da-slider----->
-        <div id="da-slider" class="da-slider">
-          <div class="da-slide">
-            <h2>Log Your Runs</h2>
-            <p> Track your Progress Compete with your Friends</p>
-            <a href="about.html" class="da-link">Find out More</a>
-          </div>
-          <div class="da-slide">
-            <h2>Log Your Runs</h2>
-            <p> Track your Progress Compete with your Friends</p>
-            <a href="about.html" class="da-link">Find out More</a>
-          </div>
-          <div class="da-slide">
-            <h2>Log Your Runs</h2>
-            <p> Track your Progress Compete with your Friends</p>
-            <a href="about.html" class="da-link">Find out More</a>
-          </div>
-          <div class="da-slide">
-            <h2>Log Your Runs</h2>
-            <p> Track your Progress Compete with your Friends</p>
-            <a href="about.html" class="da-link">Find out More</a>
-          </div>
-          <div class="da-slide">
-            <h2>Log Your Runs</h2>
-            <p> Track your Progress Compete with your Friends</p>
-            <a href="about.html" class="da-link">Find out More</a>
-          </div>
-          <nav class="da-arrows">
-            <span class="da-arrows-prev"> </span>
-            <span class="da-arrows-next"> </span>
-          </nav>
-        </div>
-        <script type="text/javascript" src="@Url.Content("~/Content/runkeeper/js/jquery.cslider.js")"></script>
-        <script type="text/javascript">
-          $(function() {
-          $('#da-slider').cslider({
-          autoplay	: true,
-          bgincrement	: 450
-          });
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" type="image/png" href="~/Images/Logo01.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TenderBoard</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <script src="@Url.Content("~/Content/Ndzali/jquery.js")"></script>
+    <script src="@Url.Content("~/Content/Ndzali/bootstrap.js")"></script>
+    <link href="@Url.Content("~/Content/Ndzali/css.css")" rel="stylesheet"/>
+    <script src="@Url.Content("~/Content/Ndzali/modernizr.js")"></script>
 
-          });
-        </script>
-      </div>
+</head>
+<body>
+
+    <div id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+        <nav id="menu" class="navbar navbar-default">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>                    
+                    <a class="navbar-brand page-scroll" href="/">
+                        <img src="~/Images/Logo01.png" style="width:120px" />                      
+                    </a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/Home/Register" class="page-scroll">Register</a></li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+        
+<div>
+    <header id="header">
+        <div class="intro">
+            <div class="container">
+                <div class="row">
+                    <div class="intro-text">
+                        <h2>Cloud Based Procurement Platform</h2>
+                        <p>Efficiently manage your day-to-day purchasing</p>
+                        <a href="#contact" class="btn btn-custom btn-lg page-scroll" style="margin-bottom: 90px;" target="_self">Enquire Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- About Section -->
+    <div id="about">
+        <div class="container">
+            <div class="section-title text-center center">
+                <h2>About Us</h2>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md8">
+                    <div class="about-text">
+                        <p>
+                            Tenderboard is a cloud-based procurement platform designed to reduce costs and streamline
+                            processes for both the private and corporate sectors. Efficiently manage your day-to-day
+                            purchasing and gain control over your spending through our online bidding, analysis, and
+                            award functionality. With tools powerful enough for the procurement professional yet simple
+                            enough for the casual user, the time has come to efficiently engage suppliers in competitive
+                            bidding events to drive down costs and diversify the supply chain. Streamline requisitions,
+                            sourcing, purchase orders, invoicing, and payments and routinely save weeks in the procuring
+                            lifecycle to complete the procurement of goods and services.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <!---//End-da-slider----->
-    <!----//End-banner---->
-    <!----start-content--->
-    <div class="content">
-      <div class="wrap">
-        <!--- start-top-grids---->
-        <div class="top-grids">
-          <div class="top-grid">
-            <div class="product-pic frist-product-pic">
-              <img src="images/watch-img.png" title="watch" />
+
+    <div id="benefits">
+        <div class="container">
+            <div class="section-title text-center center">
+                <h2>Benefits</h2>
             </div>
-            <span>
-              <label>1</label>
-            </span>
-            <div class="border"> </div>
-            <a href="#">Get a GPS Device</a>
-          </div>
-          <div class="top-grid">
-            <div class="product-pic">
-              <img src="images/shoe-img.png" title="shoe" />
+            <div class="row">
+                <div class="col-xs-12 col-md8">
+                    <div class="col-md-4">
+                        <div class="benefit">
+                            <img src="~/Images/Icon1.png" />
+                            <h3 class="feature-title">
+                                Cost Saving
+                            </h3>
+                            <p>
+                                Our time slashing and easy-to-use
+                                system is guaranteed to save you
+                                money.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="benefit">
+                            <img src="~/Images/icon2.png" />
+                            <h3 class="feature-title">
+                                Efficiency
+                            </h3>
+                            <p>
+                                Improve your purchasing process
+                                efficiency with our customizable
+                                purchasing functionalities
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="benefit">
+                            <img src="~/Images/Icon3.png" />
+                            <h3 class="feature-title">
+                                Tracebility
+                            </h3>
+                            <p>
+                                Track and report all transactions of
+                                buyers and suppliers from our
+                                detailed reporting tools
+                            </p>
+                        </div>
+
+                    </div>
+                    <div class="col-md-3">
+                        <div class="benefit">
+                            <p></p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="benefit">
+                            <img src="~/Images/Icon5.png" />
+                            <h3 class="feature-title">
+                                Security
+                            </h3>
+                            <p>
+                                All Tenderboard’s solutions are
+                                built on the secure Tenderboard
+                                platform which meets the highest
+                                security standards.
+                            </p>
+                        </div>
+
+                    </div>
+                    <div class="col-md-3">
+                        <div class="benefit">
+                            <img src="~/Images/Icon4.png" />
+                            <h3 class="feature-title">
+                                Transperency
+                            </h3>
+                            <p>
+                                Increase transparency and prevent
+                                overspending in a fair and trusted
+                                environment
+                            </p>
+                        </div>
+
+                    </div>
+                    <div class="col-md-3">
+                        <div class="benefit">
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <span>
-              <label>2</label>
-            </span>
-            <div class="border hide"> </div>
-            <a href="#">Go for a run</a>
-          </div>
-          <div class="top-grid hide">
-            <div class="product-pic">
-              <img src="images/lap-img.png" title="laptop" />
-            </div>
-            <span>
-              <label>3</label>
-            </span>
-            <a href="#">View your results</a>
-          </div>
-          <div class="clear"> </div>
         </div>
-      </div>
-      <!--- start-top-grids---->
-      <!---start-mid-grids--->
-      <div class="mid-grids">
-        <div class="wrap">
-          <div class="mid-grids-left">
-            <img src="images/app-divices.jpg" title="divices" />
-            <span> </span>
-          </div>
-          <div class="mid-grids-right">
-            <h3>
-              Get <span>Runkeeper</span> for your mobile
-            </h3>
-            <p>
-              The Runkeeper app is available for both i<big>OS</big> and <big>Android</big> devices.
-            </p>
-            <ul class="fea">
-              <li>
-                <a href="#">
-                  <i>Log</i> your runs
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i>Track</i> your Progress
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  Get a <i>Virtual trainer</i>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i>Complete</i> with your friends
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i>Share</i> your routes
-                </a>
-              </li>
-            </ul>
-            <div class="big-btns">
-              <ul>
-                <li>
-                  <a class="and" href="#"> </a>
-                </li>
-                <li>
-                  <a class="iphone" href="#"> </a>
-                </li>
-                <div class="clear"> </div>
-              </ul>
-            </div>
-          </div>
-          <div class="clear"> </div>
-        </div>
-      </div>
-      <!---//End-mid-grids--->
-      <!---start-bottom-footer-grids---->
-      <div class="footer-grids">
-        <div class="wrap">
-          <div class="footer-grid">
-            <h3>Quick Links</h3>
-            <ul>
-              <li>
-                <a href="#">Home</a>
-              </li>
-              <li>
-                <a href="#">About Features</a>
-              </li>
-              <li>
-                <a href="#">Login</a>
-              </li>
-              <li>
-                <a href="#">Sign Up</a>
-              </li>
-            </ul>
-          </div>
-          <div class="footer-grid">
-            <h3>More</h3>
-            <ul>
-              <li>
-                <a href="#">FAQ</a>
-              </li>
-              <li>
-                <a href="#">Support</a>
-              </li>
-              <li>
-                <a href="#">Privacy Policy</a>
-              </li>
-              <li>
-                <a href="#">Terms and Conditions</a>
-              </li>
-            </ul>
-          </div>
-          <div class="footer-grid">
-            <h3>Connect With Us</h3>
-            <ul class="social-icons">
-              <li>
-                <a class="facebook" href="#"> </a>
-              </li>
-              <li>
-                <a class="twitter" href="#"> </a>
-              </li>
-              <li>
-                <a class="youtube" href="#"> </a>
-              </li>
-            </ul>
-            <p class="copy-right">
-              Template by <a href="#">W3layouts</a>
-            </p>
-          </div>
-          <div class="footer-grid">
-            <h3>Newsletter</h3>
-            <p>Subscribe to our newsletter to keep up-to-date with all the latest news.</p>
-            <form>
-              <input type="text" class="text" value="Your Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Your Name';}">
-                <input type="text" class="text" value="Your Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Your Email';}">
-                  <input type="submit" value="subscribe" />
-                </form>
-          </div>
-          <div class="clear"> </div>
-        </div>
-      </div>
-      <!---//End-bottom-footer-grids---->
     </div>
-    <!----//End-content--->
-    <!---//End-wrap---->
-  </body>
+
+    <div id="features">
+        <div class="container">
+            <div class="section-title text-center center">
+                <h2 style="color:white">Features</h2>
+            </div>
+            <div class="row">
+
+                <div class="feature">
+                    <div class="feature-number">
+                        <div class="feature-number-circle">
+                            <span>1</span>
+                        </div>
+                        <p>Cloud based </p>
+                        <p>  technology</p>
+                    </div>
+                    <div class="feature-number">
+                        <div class="feature-number-circle">
+                            <span>2</span>
+                        </div>
+                        <p>
+                            Customized
+                        </p>
+                        <p>
+                            solutions
+                        </p>
+                    </div>
+
+                    <div class="feature-number">
+                        <div class="feature-number-circle">
+                            <span>3</span>
+                        </div>
+                        <p>
+                            User
+                        </p>
+                        <p>
+                            Friendly
+                        </p>
+                    </div>
+
+                    <div class="feature-number">
+                        <div class="feature-number-circle">
+                            <span>4</span>
+                        </div>
+                        <p>
+                            Vendor
+                        </p>
+                        <p>
+                            verification
+                        </p>
+                    </div>
+
+                    <div class="feature-number">
+                        <div class="feature-number-circle">
+                            <span>5</span>
+                        </div>
+                        <p>
+                            PCI-DSS
+                        </p>
+                        <p>
+                            Level 1 secured
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div id="contact" class="text-center">
+        <div class="container">
+            <div class="section-title center">
+                <h2>Get In Touch With Us</h2>
+            </div>
+            <div class="col-md-8 col-md-offset-2">
+<form action="/" enctype="multipart/form-data" id="contactForm" method="post"><input name="__RequestVerificationToken" type="hidden" value="lF38gYCtiwqZeb2oKwGB1uUjdR7Q4Gw8NF7b0Ga-5_vdru9zaxaw5BEknE7YWnhxPFptNdIFjTzMWcljEXYITTDq-d5HRS7LetBraMKhfDE1" />            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input class="form-control" id="Name" name="Name" placeholder="Name" required="required" type="text" value="" />
+                        <p class="help-block text-danger"></p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input class="form-control" id="Email" name="Email" placeholder="Email" required="required" type="email" value="" />
+
+                        <p class="help-block text-danger"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" cols="20" id="Message" name="Message" placeholder="Message" required="required" rows="2">
+</textarea>
+                <p class="help-block text-danger"></p>
+            </div>
+            <div id="success"></div>
+            <button type="submit" class="btn btn-custom btn-lg" value="Send">Send Message</button>
+</form>                <div id="data">
+                    <div class="alert alert-success fade in">
+                        Thank you for contacting us.
+                        <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<script>
+
+    
+    $('#data').addClass("hideData");
+
+    $('#contactForm').submit(function () {
+        $('#data').removeClass("hideData");
+        $('#data').addClass("showData");
+        return true;
+    });
+</script>
+
+<style>
+
+    .feature {
+        position: relative;
+        top: 50%;
+        /*transform: translateY(-50%);*/
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex: 0 1 auto;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+    }
+
+    .feature-number {
+        flex: 0 0 auto;
+        flex-basis: 100%;
+        max-width: 100%;
+        text-align: center;
+    }
+
+   
+
+    .feature-number-circle {
+        border: 5px solid white;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin: 0 auto;
+        margin-bottom: .2em;
+    }
+
+    .feature-number span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        text-align: center;
+        color: white;
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: .5rem;
+    }
+
+    #data {
+        font-size: 18px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        padding: 30px;
+        box-sizing: border-box;
+        display: block;
+    }
+
+    .showData {
+        opacity: 0.95;
+        z-index: 999;
+        transition: opacity 0.75s ease-in-out;
+        -moz-transition: opacity 0.75s ease-in-out;
+        -webkit-transition: opacity 0.75s ease-in-out;
+    }
+
+    .hideData {
+        opacity: 0;
+        z-index: -999;
+    }
+
+     @@media (min-width: 500px) {
+        .feature-number {
+            flex-basis: 50%;
+            max-width: 50%;
+        }
+    }
+
+    @@media (min-width: 800px) {
+        .feature-number {
+            flex-basis: 20%;
+            max-width: 20%;
+        }
+    }
+
+</style>
+    </div>
+
+    
+
+    <div id="footer">
+        <div class="container text-center">
+            <div class="fnav">
+                
+            </div>
+        </div>
+    </div>
+</body>
 </html>
-
+<style>
+    .input-group-addon {
+        width: 0%;
+    }
+</style>

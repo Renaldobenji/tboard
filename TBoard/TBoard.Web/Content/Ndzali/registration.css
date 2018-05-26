@@ -1,0 +1,319 @@
+﻿.wizard {
+    margin: 20px auto;
+    background: #fff;
+}
+
+    .wizard .nav-tabs {
+        position: relative;
+        margin: 10px auto;
+        margin-bottom: 0;
+        border-bottom-color: #e0e0e0;
+    }
+
+    .wizard > div.wizard-inner {
+        position: relative;
+    }
+
+.connecting-line {
+    height: 2px;
+    background: #e0e0e0;
+    position: absolute;
+    width: 80%;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: 50%;
+    z-index: 1;
+}
+
+.wizard .nav-tabs > li.active > a, .wizard .nav-tabs > li.active > a:hover, .wizard .nav-tabs > li.active > a:focus {
+    color: #555555;
+    cursor: default;
+    border: 0;
+    border-bottom-color: transparent;
+}
+
+span.round-tab {
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    display: inline-block;
+    border-radius: 100px;
+    background: #fff;
+    border: 2px solid #e0e0e0;
+    z-index: 2;
+    position: absolute;
+    left: 0;
+    text-align: center;
+    font-size: 25px;
+}
+
+    span.round-tab i {
+        color: #555555;
+    }
+
+.wizard li.active span.round-tab {
+    background: #fff;
+    border: 2px solid #0194EB;
+}
+
+    .wizard li.active span.round-tab i {
+        color: #0194EB;
+    }
+
+span.round-tab:hover {
+    color: #333;
+    border: 2px solid #333;
+}
+
+.wizard .nav-tabs > li {
+    width: 20%;
+}
+
+.wizard li:after {
+    content: " ";
+    position: absolute;
+    left: 46%;
+    opacity: 0;
+    margin: 0 auto;
+    bottom: 0px;
+    border: 5px solid transparent;
+    border-bottom-color: #0194EB;
+    transition: 0.1s ease-in-out;
+}
+
+.wizard li.active:after {
+    content: " ";
+    position: absolute;
+    left: 46%;
+    opacity: 1;
+    margin: 0 auto;
+    bottom: 0px;
+    border: 10px solid transparent;
+    border-bottom-color: #0194EB;
+}
+
+.wizard .nav-tabs > li a {
+    width: 70px;
+    height: 70px;
+    margin: 20px auto;
+    border-radius: 100%;
+    padding: 0;
+}
+
+    .wizard .nav-tabs > li a:hover {
+        background: transparent;
+    }
+
+.wizard .tab-pane {
+    position: relative;
+    padding-top: 50px;
+}
+
+.wizard h3 {
+    margin-top: 0;
+}
+
+@media( max-width : 585px ) {
+
+    .wizard {
+        width: 90%;
+        height: auto !important;
+    }
+
+    span.round-tab {
+        font-size: 16px;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+    }
+
+    .wizard .nav-tabs > li a {
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+    }
+
+    .wizard li.active:after {
+        content: " ";
+        position: absolute;
+        left: 35%;
+    }
+}
+
+.bs-calltoaction {
+    position: relative;
+    width: auto;
+    padding: 15px 25px;
+    border: 1px solid black;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+    .bs-calltoaction > .row {
+        display: table;
+        width: calc(100% + 30px);
+    }
+
+        .bs-calltoaction > .row > [class^="col-"],
+        .bs-calltoaction > .row > [class*=" col-"] {
+            float: none;
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+.cta-contents {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.cta-title {
+    margin: 0 auto 15px;
+    padding: 0;
+}
+
+.cta-desc {
+    padding: 0;
+}
+
+    .cta-desc p:last-child {
+        margin-bottom: 0;
+    }
+
+.cta-button {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+@media (max-width: 991px) {
+    .bs-calltoaction > .row {
+        display: block;
+        width: auto;
+    }
+
+        .bs-calltoaction > .row > [class^="col-"],
+        .bs-calltoaction > .row > [class*=" col-"] {
+            float: none;
+            display: block;
+            vertical-align: middle;
+            position: relative;
+        }
+
+    .cta-contents {
+        text-align: center;
+    }
+}
+
+
+
+.bs-calltoaction.bs-calltoaction-default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+.bs-calltoaction.bs-calltoaction-primary {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+}
+
+.bs-calltoaction.bs-calltoaction-info {
+    color: #fff;
+    background-color: #5bc0de;
+    border-color: #46b8da;
+}
+
+.bs-calltoaction.bs-calltoaction-success {
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+
+.bs-calltoaction.bs-calltoaction-warning {
+    color: #fff;
+    background-color: #f0ad4e;
+    border-color: #eea236;
+}
+
+.bs-calltoaction.bs-calltoaction-danger {
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}
+
+    .bs-calltoaction.bs-calltoaction-primary .cta-button .btn,
+    .bs-calltoaction.bs-calltoaction-info .cta-button .btn,
+    .bs-calltoaction.bs-calltoaction-success .cta-button .btn,
+    .bs-calltoaction.bs-calltoaction-warning .cta-button .btn,
+    .bs-calltoaction.bs-calltoaction-danger .cta-button .btn {
+        border-color: #fff;
+    }
+
+blockquote {
+    border-left: none
+}
+
+.quote-badge {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.quote-box {
+    overflow: hidden;
+    margin-top: -50px;
+    padding-top: -100px;
+    border-radius: 17px;
+    background-color: #4ADFCC;
+    margin-top: 25px;
+    color: white;
+    width: 325px;
+    box-shadow: 2px 2px 2px 2px #E0E0E0;
+}
+
+.quotation-mark {
+    margin-top: -10px;
+    font-weight: bold;
+    font-size: 100px;
+    color: white;
+    font-family: "Times New Roman", Georgia, Serif;
+}
+
+.quote-text {
+    font-size: 19px;
+    margin-top: -65px;
+}
+#reg {
+    font-size: 18px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    box-sizing: border-box;
+    display: block;
+}
+#reg2 {
+    font-size: 18px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    box-sizing: border-box;
+    display: block;
+}
+
+.showData {
+    opacity: 0.95;
+    z-index: 999;
+    transition: opacity 0.75s ease-in-out;
+    -moz-transition: opacity 0.75s ease-in-out;
+    -webkit-transition: opacity 0.75s ease-in-out;
+}
+
+.hideData {
+    opacity: 0;
+    z-index: -999;
+}
+
