@@ -247,6 +247,26 @@ var Register = React.createClass({
 
 	render: function () {
 	    return (
+            
+            <div>
+            <div id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+                <nav id="menu" className="navbar navbar-default">
+                    <div className="container">                
+                        <div className="navbar-header">
+                            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span className="sr-only">Toggle navigation</span> <span className="icon-bar"></span> <span className="icon-bar"></span> <span className="icon-bar"></span> </button>
+                            <a className="navbar-brand page-scroll" href="/">
+                                <img src="/Images/Logo01.png" style={{width:120}} />
+                            </a>
+                        </div>               
+                        <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul className="nav navbar-nav navbar-right">
+                                <li><a href="/Admin" className="page-scroll">Register</a></li>
+                            </ul>
+                        </div>               
+                    </div>           
+                </nav>
+            </div>
+
 
 			<div className="container">
                 <ProgressBar percent={this.state.percent}
@@ -340,23 +360,23 @@ var Register = React.createClass({
                                             <li><button type="button" className="btn btn-primary btn-info-full next-step">Save and continue</button></li>
                                         </ul>
                                     </div>
-                                    <div className="tab-pane" role="tabpanel" id="complete">                                       
-                                        <RegisterComplete RegistrationType={this.state.RegistrationType} 
-                                                          Name={this.state.Name} 
-                                                          Username={this.state.Username} 
-                                                          Surname={this.state.Surname} 
-                                                          IDNumber={this.state.IDNumber} 
-                                                          OrganizationName={this.state.OrganizationName} 
-                                                          CellNumber={this.state.CellNumber} 
-                                                          HomeNumber={this.state.HomeNumber} 
-                                                          OfficeNumber={this.state.OfficeNumber} 
-                                                          Email={this.state.Email} 
-                                                          AddressLine1={this.state.AddressLine1} 
-                                                          AddressLine2={this.state.AddressLine2} 
-                                                          AddressLine3={this.state.AddressLine3} 
-                                                          AddressLine4={this.state.AddressLine4} 
-                                                          AddressLine5={this.state.AddressLine5} 
-                                                          PostalCode={this.state.PostalCode} 
+                                    <div className="tab-pane" role="tabpanel" id="complete">
+                                        <RegisterComplete RegistrationType={this.state.RegistrationType}
+                                                          Name={this.state.Name}
+                                                          Username={this.state.Username}
+                                                          Surname={this.state.Surname}
+                                                          IDNumber={this.state.IDNumber}
+                                                          OrganizationName={this.state.OrganizationName}
+                                                          CellNumber={this.state.CellNumber}
+                                                          HomeNumber={this.state.HomeNumber}
+                                                          OfficeNumber={this.state.OfficeNumber}
+                                                          Email={this.state.Email}
+                                                          AddressLine1={this.state.AddressLine1}
+                                                          AddressLine2={this.state.AddressLine2}
+                                                          AddressLine3={this.state.AddressLine3}
+                                                          AddressLine4={this.state.AddressLine4}
+                                                          AddressLine5={this.state.AddressLine5}
+                                                          PostalCode={this.state.PostalCode}
                                                           registerUserPOST={this.registerUserPOST} />
                                     </div>
                                     <div className="clearfix"></div>
@@ -364,125 +384,164 @@ var Register = React.createClass({
 
                         </div>
                     </section>
-                        </div>
-                    </div>							
+                    </div>
+				</div>
 			</div>
+            </div>
 		);
 	}
 });
 
 
-var RegisterPersonal = React.createClass({	
+var RegisterPersonal = React.createClass({
 	render: function(){
 		return (
 			<div className="panel panel-primary">
 				<div className="panel-heading">
-					User Information
+				    User Information
 				</div>
 				<div className="panel-body">
-					<form>
+                    <div class="card">
+                            <form>
                         <div className="form-group">
-                            <label>Username</label>
-                            <input id="Username" className="form-control" placeholder="Username" value={this.props.Username} onChange={this.props.updateUsername} />
+                            <label label for="Username" className="col-sm-3 control-label">Username</label>
+                            <div className="col-sm-9" style={{margin:"inherit"}}>                                        
+                                <input id="Username" className="form-control" placeholder="Username" value={this.props.Username} onChange={this.props.updateUsername} />
+                            </div>                            
                         </div>
 						<div className="form-group">
-                            <label>Name</label>
-                            <input id="Name" className="form-control" placeholder="Name" value={this.props.name} onChange={this.props.updateName} />
-                        </div>
+                            <label label for="Name" className="col-sm-3 control-label">Name</label>
+                            <div className="col-sm-9" style={{margin:"inherit"}}>
+	                            <input id="Name" className="form-control" placeholder="Name" value={this.props.name} onChange={this.props.updateName} />
+                            </div>
+						</div>
 						<div className="form-group">
-                            <label>Surname</label>
-                            <input id="Surname" className="form-control" placeholder="Surname" value={this.props.surname} onChange={this.props.updateSurname}/>
-                        </div>
+                            <label label for="Surname" className="col-sm-3 control-label">Surname</label>
+<div className="col-sm-9" style={{margin:"inherit"}}>
+	<input id="Surname" className="form-control" placeholder="Surname" value={this.props.surname} onChange={this.props.updateSurname} />
+</div>
+						</div>
 						<div className="form-group">
-                            <label>Password</label>
-                            <input id="Password" className="form-control" placeholder="Password" value={this.props.password} onChange={this.props.updatePassword}/>
-                        </div>
+                            <label label for="Password" className="col-sm-3 control-label">Password</label>
+<div className="col-sm-9" style={{margin:"inherit"}}>
+	<input id="Password" className="form-control" placeholder="Password" value={this.props.password} onChange={this.props.updatePassword} />
+</div>
+						</div>
 						<div className="form-group">
-                            <label>Confirm Password</label>
-                            <input id="ConfirmPassword" className="form-control" placeholder="Confirm Password" value={this.props.confirmPassword} onChange={this.props.updateConfirmPassword}/>
-                        </div>
+                            <label label for="ConfirmPassword" className="col-sm-3 control-label">Confirm Password</label>
+<div className="col-sm-9" style={{margin:"inherit"}}>
+	<input id="ConfirmPassword" className="form-control" placeholder="Confirm Password" value={this.props.confirmPassword} onChange={this.props.updateConfirmPassword} />
+</div>
+						</div>
 						<div className="form-group">
-                            <label>ID Number</label>
-                            <input id="IDNumber" className="form-control" placeholder="ID Number" value={this.props.idNumber} onChange={this.props.updateIDNumber}/>
-                        </div>
+                           <label label for="IDNumber" className="col-sm-3 control-label">IDNumber</label>
+<div className="col-sm-9" style={{margin:"inherit"}}>
+	<input id="IDNumber" className="form-control" placeholder="ID Number" value={this.props.idNumber} onChange={this.props.updateIDNumber} />
+</div>
+						</div>
 						<div className="form-group">
-                            <label>*Organization Name</label>
-                            <input id="CompanyName" className="form-control" placeholder="Company Name" value={this.props.orgName} onChange={this.props.updateOrgName}/>
-                        </div>
-					</form>
-				</div>						
+                <label label for="CompanyName" className="col-sm-3 control-label">CompanyName</label>
+<div className="col-sm-9" style={{margin:"inherit"}}>
+	<input id="CompanyName" className="form-control" placeholder="Company Name" value={this.props.orgName} onChange={this.props.updateOrgName} />
+</div>
+						</div>
+                            </form>
+                    </div>
+					
+                    </div>
 			</div>
 		);
 	}
 });
 
-var RegisterContactDetails = React.createClass({		
+var RegisterContactDetails = React.createClass({
 	render: function(){
 		return (
 			<div className="panel panel-primary">
 				<div className="panel-heading">
-					Contact Information
+				    Contact Information
 				</div>
 				<div className="panel-body">
 					<form>
 						<div className="form-group">
-                            <label>Cell Number</label>
-                            <input id="CellNumber" className="form-control" placeholder="Cell Number" value={this.props.cellNumber} onChange={this.props.updateCellNumber}/>
-                        </div>
+	 <label label for="CellNumber" className="col-sm-3 control-label">Cell Number</label>
+	<div className="col-sm-9" style={{margin:"inherit"}}>
+		<input id="CellNumber" className="form-control" placeholder="Cell Number" value={this.props.cellNumber} onChange={this.props.updateCellNumber} />
+	</div>
+
+						</div>
 						<div className="form-group">
-                            <label>Home Number</label>
-                            <input id="HomeNumber" className="form-control" placeholder="Home Number" value={this.props.homeNumber} onChange={this.props.updateHomeNumber}/>
-                        </div>
+                             <label label for="HomeNumber" className="col-sm-3 control-label">Home Number</label>
+<div className="col-sm-9" style={{margin:"inherit"}}>
+	<input id="HomeNumber" className="form-control" placeholder="Home Number" value={this.props.homeNumber} onChange={this.props.updateHomeNumber} />
+</div>
+						</div>
 						<div className="form-group">
-                            <label>Office Number</label>
-                            <input id="WorkNumber" className="form-control" placeholder="Work Number" value={this.props.officeNumber} onChange={this.props.updateOfficeNumber}/>
-                        </div>
+                             <label label for="WorkNumber" className="col-sm-3 control-label">Work Number</label>
+<div className="col-sm-9" style={{margin:"inherit"}}>
+	<input id="WorkNumber" className="form-control" placeholder="Work Number" value={this.props.officeNumber} onChange={this.props.updateOfficeNumber} />
+</div>
+						</div>
 						<div className="form-group" style={{display : this.props.email}}>
-                            <label>Email</label>
-                            <input id="Email" className="form-control" placeholder="Email" value={this.props.email} onChange={this.props.updateEmail}/>
-                        </div>						
+                             <label label for="Email" className="col-sm-3 control-label">Email</label>
+<div className="col-sm-9" style={{margin:"inherit"}}>
+	<input id="Email" className="form-control" placeholder="Email" value={this.props.email} onChange={this.props.updateEmail} />
+</div>
+						</div>
 					</form>
-				</div>						
+				</div>
 			</div>
 		);
 	}
 });
 
-var RegisterAddress = React.createClass({	
+var RegisterAddress = React.createClass({
     render: function(){
         return (
 			<div className="panel panel-primary">
 				<div className="panel-heading">
-					Address Information
+				    Address Information
 				</div>
 				<div className="panel-body">
 					<form>
 						<div className="form-group">
-                            <label>Address Line 1</label>
-                            <input id="AddressLine1" className="form-control" placeholder="Address Line 1" value={this.props.addressLine1} onChange={this.props.updateAddressLine1}/>
-                        </div>
+                             <label label for="AddressLine1" className="col-sm-3 control-label">AddressLine1</label>
+<div className="col-sm-9" style={{margin:"inherit"}}>
+	<input id="AddressLine1" className="form-control" placeholder="Address Line 1" value={this.props.addressLine1} onChange={this.props.updateAddressLine1} />
+</div>
+						</div>
 						<div className="form-group">
-                            <label>Address Line 2</label>
-                            <input id="AddressLine2" className="form-control" placeholder="Address Line 2" value={this.props.addressLine2} onChange={this.props.updateAddressLine2}/>
-                        </div>
+                           <label label for="AddressLine2" className="col-sm-3 control-label">AddressLine2</label>
+<div className="col-sm-9" style={{margin:"inherit"}}>
+	<input id="AddressLine2" className="form-control" placeholder="Address Line 2" value={this.props.addressLine2} onChange={this.props.updateAddressLine2} />
+</div>
+						</div>
 						<div className="form-group">
-                            <label>Address Line 3</label>
-                            <input id="AddressLine3" className="form-control" placeholder="Address Line 3" value={this.props.addressLine3} onChange={this.props.updateAddressLine3}/>
-                        </div>
+                           <label label for="AddressLine3" className="col-sm-3 control-label">AddressLine3</label>
+<div className="col-sm-9" style={{margin:"inherit"}}>
+	<input id="AddressLine3" className="form-control" placeholder="Address Line 3" value={this.props.addressLine3} onChange={this.props.updateAddressLine3} />
+</div>
+						</div>
 						<div className="form-group">
-                            <label>Address Line 4</label>
-                            <input id="AddressLine4" className="form-control" placeholder="Address Line 4" value={this.props.addressLine4} onChange={this.props.updateAddressLine4}/>
-                        </div>
+                            <label label for="AddressLine4" className="col-sm-3 control-label">AddressLine4</label>
+<div className="col-sm-9" style={{margin:"inherit"}}>
+	<input id="AddressLine4" className="form-control" placeholder="Address Line 4" value={this.props.addressLine4} onChange={this.props.updateAddressLine4} />
+</div>
+						</div>
 						<div className="form-group">
-                            <label>Address Line 5</label>
-                            <input id="AddressLine5" className="form-control" placeholder="Address Line 5" value={this.props.addressLine5} onChange={this.props.updateAddressLine5}/>
-                        </div>
+                           <label label for="AddressLine5" className="col-sm-3 control-label">AddressLine5</label>
+<div className="col-sm-9" style={{margin:"inherit"}}>
+	<input id="AddressLine5" className="form-control" placeholder="Address Line 5" value={this.props.addressLine5} onChange={this.props.updateAddressLine5} />
+</div>
+						</div>
 						<div className="form-group">
-                            <label>Postal Code</label>
-                            <input id="PostalCode" className="form-control" placeholder="Postal Code" value={this.props.postalCode} onChange={this.props.updatePostalCode}/>
-                        </div>
+                            <label label for="PostalCode" className="col-sm-3 control-label">Postal Code</label>
+<div className="col-sm-9" style={{margin:"inherit"}}>
+	<input id="PostalCode" className="form-control" placeholder="Postal Code" value={this.props.postalCode} onChange={this.props.updatePostalCode} />
+</div>
+						</div>
 					</form>
-				</div>						
+				</div>
 			</div>
 		);
     }
