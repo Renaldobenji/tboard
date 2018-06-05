@@ -247,6 +247,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Attributes\JWTTokenValidationAttribute.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Controllers\ActivationController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Controllers\RatingController.cs" />
@@ -402,6 +403,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Features.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Activation\Index.cshtml" />
     <Resource Include="Content\EmailTemplates\bidaccepted.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

@@ -145,6 +145,7 @@ namespace TBoard.Web.Controllers
         private string createEmailBody(string username, string password)
         {
             string body = string.Empty;
+            string activationPath = System.Configuration.ConfigurationManager.AppSettings["ActivationPath"];
             //using streamreader for reading my htmltemplate   
             using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Content/EmailTemplates/registration.html")))
             {
@@ -153,7 +154,9 @@ namespace TBoard.Web.Controllers
             }
 
             body = body.Replace("{username}", username); //replacing the required things     
-            body = body.Replace("{password}", password); //replacing the required things            
+            body = body.Replace("{password}", password); //replacing the required things       
+            body = body.Replace("{activationURL}", activationPath); //replacing the required things       
+            
 
             return body;
         }

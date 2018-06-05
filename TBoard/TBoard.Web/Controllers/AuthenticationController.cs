@@ -188,7 +188,7 @@ namespace TBoard.Web.Controllers
 
         private user validateUser(string username, string password)
         {
-            var user = this.userBusinessLogic.FindBy(x => x.username == username).FirstOrDefault();
+            var user = this.userBusinessLogic.FindBy(x => x.username == username && x.isApproved == true).FirstOrDefault();
 
             if (user == null)
                 return null;

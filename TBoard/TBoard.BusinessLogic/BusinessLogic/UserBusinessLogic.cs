@@ -68,7 +68,7 @@ namespace TBoard.BusinessLogic.BusinessLogic
                 newUser.passwordSalt = saltValue;
                 newUser.title = title;
                 newUser.identificationNumber = idNumber;
-                newUser.isApproved = true;
+                newUser.isApproved = false;
                 newUser.lastActivityDate = DateTime.Now;
                 newUser.lastPasswordChange = DateTime.Now;
                 newUser.isLockedOut = "false";

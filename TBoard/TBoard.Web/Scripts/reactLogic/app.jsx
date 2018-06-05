@@ -2,8 +2,8 @@
 
     getInitialState: function () {
         return {
-            Username: "Renaldo",
-            Password: "Renaldo",
+            Username: "",
+            Password: "",
             JWSToken: "",
             percent: -1,
             autoIncrement: true,
