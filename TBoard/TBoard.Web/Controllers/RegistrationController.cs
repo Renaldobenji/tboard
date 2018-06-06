@@ -155,7 +155,7 @@ namespace TBoard.Web.Controllers
 
             body = body.Replace("{username}", username); //replacing the required things     
             body = body.Replace("{password}", password); //replacing the required things       
-            body = body.Replace("{activationURL}", activationPath); //replacing the required things       
+            body = body.Replace("{activationURL}", activationPath + "?name=" + username); //replacing the required things       
             
 
             return body;

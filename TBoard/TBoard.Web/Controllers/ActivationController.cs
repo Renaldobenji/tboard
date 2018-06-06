@@ -26,7 +26,8 @@ namespace TBoard.Web.Controllers
 
             using (TBoardEntities entities = new TBoardEntities())
             {
-                var user = entities.users.Where(x => x.username == Request.QueryString["name"]).FirstOrDefault();
+                string name = Request.QueryString["name"];
+                var user = entities.users.Where(x => x.username == name).FirstOrDefault();
                 user.isApproved = true;
                 entities.SaveChanges();
                 return View();
