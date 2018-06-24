@@ -86,8 +86,7 @@ var MyBidWonList = React.createClass({
                   <TableHeaderColumn dataField="dateCreated" dataSort={true}>dateCreated</TableHeaderColumn> 
                   <TableHeaderColumn dataField="amount" dataSort={true}>amount</TableHeaderColumn>
                   <TableHeaderColumn dataField="deliveryTime" dataSort={true}>deliveryTime</TableHeaderColumn>     
-                  <TableHeaderColumn dataField="supplyTime" dataSort={true}>supplyTime</TableHeaderColumn>                                    
-                  <TableHeaderColumn dataFormat={actionsFormatter}>View</TableHeaderColumn>
+                  <TableHeaderColumn dataField="supplyTime" dataSort={true}>supplyTime</TableHeaderColumn>
 				</BootstrapTable>
 			</div>
 		)
@@ -99,13 +98,13 @@ var ActionsRFQPay = React.createClass({
     handleClick: function () {
         // Explicitly focus the text input using the raw DOM API.
         //alert(this.props.reference);
-        routie('rfqpay/' + this.props.reference);
+        //routie('rfqdetail/' + this.props.reference);
     },
 
     render: function () { 
 
         return (
-				 <button className="btn btn-outline btn-warning btn-sm" onClick={this.handleClick}>Pay</button>
+				 <button className="btn btn-outline btn-warning btn-sm" onClick={this.handleClick}>View</button>
 		)
 }
 });

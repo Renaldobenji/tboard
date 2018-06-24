@@ -1232,7 +1232,7 @@
           <Property Type="String" Name="name" Nullable="false" />
           <Property Type="Boolean" Name="oem" Nullable="false" />
           <Property Type="Int32" Name="OrganizationID" Nullable="false" />
-          <Property Type="Decimal" Name="AverageRating" Nullable="false" />
+          <Property Type="Decimal" Name="AverageRating" Nullable="true" />
           <Property Type="Int32" Name="QuoteID" Nullable="false" />
         </ComplexType>
         <EntityType Name="rating">

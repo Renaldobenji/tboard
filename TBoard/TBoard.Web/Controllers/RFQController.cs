@@ -21,13 +21,15 @@ namespace TBoard.Web.Controllers
         private ExpertiseOwnershipBusinessLogic expertiseOwnershipBusinessLogic;
         private EmailQueueBusinessLogic emailQueueBusinessLogic;
         private QuoteBusinessLogic quoteBusinessLogic;
+        private ConfigBusinessLogic configBusinessLogic;
 
-        public RFQController(RFQBusinessLogic addressBusinessLogic, ExpertiseOwnershipBusinessLogic expertiseOwnershipBusinessLogic, EmailQueueBusinessLogic emailQueueBusinessLogic, QuoteBusinessLogic quoteBusinessLogic)
+        public RFQController(RFQBusinessLogic addressBusinessLogic, ExpertiseOwnershipBusinessLogic expertiseOwnershipBusinessLogic, EmailQueueBusinessLogic emailQueueBusinessLogic, QuoteBusinessLogic quoteBusinessLogic, ConfigBusinessLogic configBusinessLogic)
         {
             this.rfqBusinessLogic = addressBusinessLogic;
             this.expertiseOwnershipBusinessLogic = expertiseOwnershipBusinessLogic;
             this.emailQueueBusinessLogic = emailQueueBusinessLogic;
             this.quoteBusinessLogic = quoteBusinessLogic;
+            this.configBusinessLogic = configBusinessLogic;
         }
 
         public IEnumerable<string> Get()
@@ -216,7 +218,7 @@ namespace TBoard.Web.Controllers
             //Send out email to all subscribed to that category
             foreach (var e in expertiseOwnership)
             {                
-                this.emailQueueBusinessLogic.SendEmail("admin@Tenderboard.co.za",e.communicationLine1,"Request for Quotation", createEmailBody(rfq.reference, "http://tboard.azurewebsites.net/#rfqbid/" + rfq.reference));
+                this.emailQueueBusinessLogic.SendEmail("admin@Tenderboard.co.za",e.communicationLine1,"Request for Quotation", createEmailBody(rfq.reference, "http://tboard.azurewebsites.net/admin#rfqbid/" + rfq.reference));
             } 
         }
 
@@ -278,8 +280,10 @@ namespace TBoard.Web.Controllers
             this.quoteBusinessLogic.Create(q);
 
             //This will need to send out an email
+            
             var rfqOwner = this.quoteBusinessLogic.GetQuoteOwnerDetails(rfqReference).SingleOrDefault();
-            this.emailQueueBusinessLogic.SendEmail("admin@Tenderboard.co.za", rfqOwner.communicationLine1, "TenderBoard - Quotation Recieved", createBidEmailBody("URL"));            
+           
+            this.emailQueueBusinessLogic.SendEmail("admin@Tenderboard.co.za", rfqOwner.communicationLine1, "TenderBoard - Quotation Recieved", createEmailBody("http://tboard.azurewebsites.net/Admin#rfqdetail/" + rfqReference));            
 
             var r = new
             {
@@ -315,6 +319,27 @@ namespace TBoard.Web.Controllers
         public HttpResponseMessage QuoteBids(string rfqReference)
         {
             var result = JsonConvert.SerializeObject(rfqBusinessLogic.GetRFQBids(rfqReference));
+
+            var r = new
+            {
+                data = result
+            };
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(result)
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return resp;
+        }
+
+        [HttpGet]
+        [JWTTokenValidation]
+        [Route("api/RFQ/BankDetails")]
+        public HttpResponseMessage BankDetails()
+        {
+            var result = JsonConvert.SerializeObject(configBusinessLogic.GetConfigValue("BankingDetails"));
 
             var r = new
             {
@@ -454,6 +479,39 @@ namespace TBoard.Web.Controllers
             return resp;
         }
 
+        [HttpPost]
+        [JWTTokenValidation]
+        [Route("api/RFQ/PayQuote")]
+        public HttpResponseMessage PayQuote(FormDataCollection formData)
+        {
+            var RFQReference = formData.Get("RFQReference");
+            var QuoteID = Convert.ToInt32(formData.Get("QuoteID"));
+            var UserID = Convert.ToInt32(formData.Get("UserID"));
+
+            this.quoteBusinessLogic.PayBid(UserID, RFQReference, QuoteID);
+
+            var alertInformation = this.quoteBusinessLogic.GetQuoteOwnerDetails(QuoteID);
+            //Send Email
+            foreach (var det in alertInformation)
+            {
+                this.emailQueueBusinessLogic.SendEmail("bid@tboard.com", det.communicationLine1, "Quote Paid", createEmailBodyPaid(RFQReference));
+                this.emailQueueBusinessLogic.SendEmail("bid@tboard.com", "admin@tboard.com", "Quote Paid", createEmailBodyPaid(RFQReference));
+            }
+
+            var r = new
+            {
+                data = "Successful"
+            };
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(r))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return resp;
+        }
+
         private string createEmailBody(string RFQReferencee)
         {
             string body = string.Empty;
@@ -463,8 +521,24 @@ namespace TBoard.Web.Controllers
 
                 body = reader.ReadToEnd();
             }
+           
+            body = body.Replace("{reference}", RFQReferencee); //replacing the required things              
+            body = body.Replace("{url}", string.Format("http://tboard.azurewebsites.net/admin#rfqpay/{0}", RFQReferencee)); //replacing the required things                   
 
-            body = body.Replace("{reference}", RFQReferencee); //replacing the required things            
+            return body;
+        }
+
+        private string createEmailBodyPaid(string RFQReferencee)
+        {
+            string body = string.Empty;
+            //using streamreader for reading my htmltemplate   
+            using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Content/EmailTemplates/quotepaid.html")))
+            {
+
+                body = reader.ReadToEnd();
+            }          
+            body = body.Replace("{reference}", RFQReferencee); //replacing the required things              
+            body = body.Replace("{url}", string.Format("http://tboard.azurewebsites.net/Admin#rfqdetail/{0}", RFQReferencee)); //replacing the required things                   
 
             return body;
         }

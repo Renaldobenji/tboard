@@ -607,7 +607,7 @@ var OrganizationBankDetails = React.createClass({
                                     <label>Account Type</label>
                                     <select className="form-control" value={this.props.selectedBankAccountType} onChange={this.props.updateBankAccountType}>
                                         {this.props.bankAccountTypes.map(function(obj){
-                                            return <option value={obj.Key} >{obj.BankAccountTypeCode}</option>;
+                                            return <option key={obj.Key} value={obj.Key} >{obj.BankAccountTypeCode}</option>;
                                           })}
                                     </select>
                                 </div>					

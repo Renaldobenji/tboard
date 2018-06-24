@@ -126,13 +126,22 @@ var RFQBidDetail = React.createClass({
         $('#SupplyTime').datetimepicker();
         $('#DeliveryTime').datetimepicker();
 
-        var timerId =
-          countdown(
-            this.props.ExpiryDate.substring(1, 10),
-            function (ts) {
-                $('#expiryTimer').html(ts.toString());
-            },
-            countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS);
+        $.ajax({
+            url: 'api/RFQ/Detail/' + this.props.RFQReference,
+            success: function (data) {
+                if (data.data.expiryDate != null) {
+                    var datad = data.data.expiryDate.substring(0, 10);
+                    var timerId =
+                      countdown(new Date(datad),
+                        function (ts) {
+                            $('#expiryTimer').html(ts.toString());
+                        },
+                        countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS);
+                            }               
+            }.bind(this)
+        });
+
+        
     },
    
     WillYouPOST: function () {

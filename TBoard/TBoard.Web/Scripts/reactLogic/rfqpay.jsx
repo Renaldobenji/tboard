@@ -6,7 +6,10 @@
             RFQDetails: "",
             RFQReference: this.props.rfqreference,
             UserID: "",
-            Status : ""
+            Status: "",
+            BankName: "",
+            AccountNumber: "",
+            BranchCode: ""
         };
     },
 
@@ -20,6 +23,16 @@
                 }
                 this.setState({ RFQDetails: data.data.rfqDetails });
                 this.setState({ Status: data.data.status });
+            }.bind(this)
+        })
+
+        $.ajax({
+            url: 'api/RFQ/BankDetails',
+            success: function (data) {
+                var array = data.split(',');
+                this.setState({ BankName: array[0] });
+                this.setState({ AccountNumber: array[1] });
+                this.setState({ BranchCode: array[2] });
             }.bind(this)
         })
     },
@@ -58,7 +71,7 @@
                         </div> 
                         <div className="row">
 		                   <div className="col-md-9">
-                            <RFQPayBankInformation reference={this.props.rfqreference}/>
+                            <RFQPayBankInformation BankName = {this.state.BankName} AccountNumber = {this.state.AccountNumber} BranchCode = {this.state.BranchCode} reference={this.props.rfqreference}/>
 		                   </div>
                         </div>                         
                       </div>                    
@@ -117,9 +130,9 @@ var RFQPayBankInformation = React.createClass({
                         </div>
                     </div>
                     <div className="panel-body">                                
-                        <div>Bank:                          <h4 className="text-primary">Standard Bank</h4></div>                           
-                        <div>Account Number:                                                 <h4 className="text-primary">12345678</h4></div>   
-                        <div>Branch Code:                                                 <h4 className="text-primary">015001</h4></div>
+                        <div>Bank:                          <h4 className="text-primary">{this.props.BankName}</h4></div>                           
+                        <div>Account Number:                                                 <h4 className="text-primary">{this.props.AccountNumber}</h4></div>   
+                        <div>Branch Code:                                                 <h4 className="text-primary">{this.props.BranchCode}</h4></div>
                         <div>Reference:                                                 <h4 className="text-primary">{this.props.reference}</h4></div>                                                                                                        
                     </div>                    
                 </div>

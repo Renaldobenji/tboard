@@ -58,13 +58,29 @@ namespace TBoard.Data.Repository
             this._dbContext.SaveChanges();
         }
 
+        public void PayBid(int userID, string rfqID, int quoteID)
+        {
+            rfq rfqInQuestion = this._dbContext.rfqs.Where(x => x.reference == rfqID).First();
+            rfqInQuestion.status = "PAID";
+
+            quotestatu status = new quotestatu();
+            status.quoteID = quoteID;
+            status.userID = userID;
+            status.rfqID = rfqInQuestion.rfqID;
+            status.status = "PAID";
+            status.quoteStatusDateTime = DateTime.Now;
+            this._dbContext.quotestatus.Add(status);
+
+            this._dbContext.SaveChanges();
+        }
+
         public IList<AcceptedBidDetails> GetAcceptedBids(int userID)
         {
             var data = (from qs in this._dbContext.quotestatus
                         join rfqs in this._dbContext.rfqs on qs.rfqID equals rfqs.rfqID
                         join q in this._dbContext.quotes on qs.quoteID equals q.quoteID
                         join u in this._dbContext.users on qs.userID equals u.userID
-                        where qs.status == "Accepted" && u.userID == userID
+                        where qs.status == "Accepted" && rfqs.userID == userID
                         select new AcceptedBidDetails()
                         {
                             quoteStatusDateTime = qs.quoteStatusDateTime.ToString(),
@@ -129,9 +145,9 @@ namespace TBoard.Data.Repository
         public int GetAcceptedBidsCount(int userID)
         {
             return (from qs in this._dbContext.quotestatus
-                        join u in this._dbContext.users on qs.userID equals u.userID
-                        where qs.status == "Accepted" && u.userID == userID
-                    select qs).Count();                   
+                    join rfqs in this._dbContext.rfqs on qs.rfqID equals rfqs.rfqID                   
+                        where qs.status == "Accepted" && rfqs.userID == userID
+                    select qs).Count();           
         }
 
         public int GetBidsWonCount(int userID)

@@ -72,7 +72,7 @@
                                 </li>
                                 </ul>
                             </li>
-                            { this.state.roles.indexOf("CanViewBidsMenu") > -1 ||  this.state.roles.indexOf("CorporateBuyer") > -1 || this.state.roles.indexOf("PrivateBuyer") > -1 ?
+                            { this.state.roles.indexOf("CanViewBidsMenu") > -1 || this.state.roles.indexOf("CorporateSeller") > -1  ?
                             <MyBidsMenu activeBidsTotal={this.state.activeBidsTotal}  bidsWonCount={this.state.bidsWonCount}/> : null }    
                             <ReportsMenu />                       
                         </ul>

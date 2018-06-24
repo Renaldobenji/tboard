@@ -301,7 +301,7 @@ var RFQRequestDetail = React.createClass({
                                 </div>
                                 <div className="form-group">
                                     <label>Expiry Date</label>                                    
-                                    <div className='input-group date' id='SupplyTime'>
+                                    <div className='input-group date' id='SupplyTime' style={{display: "block"}}>
                                         <input type='text' id='expiryDate' className="form-control" placeholder="Expiry Date" />
                                         <span className="input-group-addon">
                                             <span className="glyphicon glyphicon-calendar"></span>
