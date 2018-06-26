@@ -484,13 +484,13 @@ namespace TBoard.Web.Controllers
         [Route("api/RFQ/PayQuote")]
         public HttpResponseMessage PayQuote(FormDataCollection formData)
         {
-            var RFQReference = formData.Get("RFQReference");
-            var QuoteID = Convert.ToInt32(formData.Get("QuoteID"));
+            var RFQReference = formData.Get("reference");            
             var UserID = Convert.ToInt32(formData.Get("UserID"));
 
-            this.quoteBusinessLogic.PayBid(UserID, RFQReference, QuoteID);
+            var quoteid = this.quoteBusinessLogic.GetQuoteID(RFQReference);
+            this.quoteBusinessLogic.PayBid(UserID, RFQReference, (int)quoteid);
 
-            var alertInformation = this.quoteBusinessLogic.GetQuoteOwnerDetails(QuoteID);
+            var alertInformation = this.quoteBusinessLogic.GetQuoteOwnerDetails((int)quoteid).Distinct();
             //Send Email
             foreach (var det in alertInformation)
             {

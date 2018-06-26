@@ -66,7 +66,7 @@
                             <RFQPayDetail  ExpiryDate={this.state.ExpiryDate} RFQDetails={this.state.RFQDetails} updateExpiryDate={this.updateExpiryDate} updateRFQDetails={this.updateRFQDetails}/>
 		                   </div>
                             <div className="col-md-3">
-                                <RFQPaymentActions />
+                                <RFQPaymentActions reference={this.props.rfqreference} userid={this.state.UserID} />
                             </div>                           
                         </div> 
                         <div className="row">
@@ -142,6 +142,36 @@ var RFQPayBankInformation = React.createClass({
 
 var RFQPaymentActions = React.createClass({
 
+    handleClick: function () {
+        
+        var form = {
+            reference: this.props.reference,
+            userid: this.props.userid
+        }
+
+        console.log('POSTING FORM');
+        $.ajax({
+            url: 'api/RFQ/PayQuote',
+            type: 'POST',
+            dataType: 'json',
+            data: form,
+            cache: false,
+            success: function (data) {
+                var opts = {
+                    title: "Success",
+                    text: "Quote Successfully Paid.",
+                    addclass: "stack-bottomright",
+                    type: "success"
+                };
+                new PNotify(opts);
+                routie('dashboard');
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error('api/RFQ/PayQuote', status, err.toString());
+            }.bind(this)
+        });
+    },
+
     render: function() {
 
         var navBarSyle= {
@@ -159,7 +189,7 @@ var RFQPaymentActions = React.createClass({
                     </div>
                     <div className="panel-body">                                
                         <div className="form-group">
-                            <button type="button" className="btn btn btn-primary btn-lg btn-block">Payment Complete</button>
+                            <button type="button" onClick={this.handleClick} className="btn btn btn-primary btn-lg btn-block">Payment Complete</button>
                         </div>                        
                     </div>                    
                 </div>

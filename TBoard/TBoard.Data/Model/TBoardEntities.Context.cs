@@ -13,8 +13,8 @@ namespace TBoard.Data.Model
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
-    using System.Linq;
-
+   
+    
     public partial class TBoardEntities : DbContext
     {
         public TBoardEntities()

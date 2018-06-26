@@ -74,13 +74,23 @@ namespace TBoard.Data.Repository
             this._dbContext.SaveChanges();
         }
 
+        public int? GetQuoteID(string rfqReference)
+        {
+            var data = (from qs in this._dbContext.quotestatus
+                        join rfqs in this._dbContext.rfqs on qs.rfqID equals rfqs.rfqID                        
+                        where qs.status == "Accepted" && rfqs.reference == rfqReference
+                        select qs.quoteID).FirstOrDefault();
+
+            return data;
+        }
+
         public IList<AcceptedBidDetails> GetAcceptedBids(int userID)
         {
             var data = (from qs in this._dbContext.quotestatus
                         join rfqs in this._dbContext.rfqs on qs.rfqID equals rfqs.rfqID
                         join q in this._dbContext.quotes on qs.quoteID equals q.quoteID
                         join u in this._dbContext.users on qs.userID equals u.userID
-                        where qs.status == "Accepted" && rfqs.userID == userID
+                        where rfqs.userID == userID && rfqs.status == "ACCEPTED"
                         select new AcceptedBidDetails()
                         {
                             quoteStatusDateTime = qs.quoteStatusDateTime.ToString(),
@@ -91,7 +101,8 @@ namespace TBoard.Data.Repository
                             deliveryTime = q.deliveryTime.ToString(),
                             supplyTime = q.supplyTime.ToString(),
                             rfqID = rfqs.rfqID.ToString(),
-                            quoteID = q.quoteID.ToString()
+                            quoteID = q.quoteID.ToString(),
+                            status = qs.status
                         }).ToList();
 
             return data;
@@ -146,7 +157,7 @@ namespace TBoard.Data.Repository
         {
             return (from qs in this._dbContext.quotestatus
                     join rfqs in this._dbContext.rfqs on qs.rfqID equals rfqs.rfqID                   
-                        where qs.status == "Accepted" && rfqs.userID == userID
+                        where rfqs.userID == userID && rfqs.status == "ACCEPTED"
                     select qs).Count();           
         }
 
@@ -178,7 +189,8 @@ namespace TBoard.Data.Repository
             public string deliveryTime { get; set; }
             public string supplyTime { get; set; }
             public string rfqID { get; set; }
-            public string quoteID { get; set; }            
+            public string quoteID { get; set; }
+            public string status { get; set; }
 
         }
 

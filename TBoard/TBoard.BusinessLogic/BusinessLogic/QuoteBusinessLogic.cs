@@ -43,6 +43,10 @@ namespace TBoard.BusinessLogic.BusinessLogic
             this.repository.PayBid(userID, rfqID, quoteID);
         }
 
+        public int? GetQuoteID(string rfqReference)
+        {
+            return this.repository.GetQuoteID(rfqReference);
+        }
 
         public int GetAcceptedBidsCount(int userID)
         {
