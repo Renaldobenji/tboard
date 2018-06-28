@@ -62,6 +62,28 @@ namespace TBoard.Web.Controllers
                     return errr;
                 }
 
+                if (string.IsNullOrEmpty(formData.Get("Password")) || string.IsNullOrEmpty(formData.Get("ConfirmPassword")) || (formData.Get("Password") != formData.Get("ConfirmPassword")))
+                {
+                    var err = new
+                    {
+                        success = "False",
+                        errorMessage = "Password is either blank or confirms do not match, please try again"
+                    };
+
+                    var errr = new HttpResponseMessage()
+                    {
+                        Content = new StringContent(JsonConvert.SerializeObject(err, Formatting.None,
+                                                        new JsonSerializerSettings
+                                                        {
+                                                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                                        }))
+                    };
+
+                    errr.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                    return errr;
+                }
+                 
+
                 //Create Organization first
                 if (!string.IsNullOrEmpty(formData.Get("OrganizationName")))
                 {

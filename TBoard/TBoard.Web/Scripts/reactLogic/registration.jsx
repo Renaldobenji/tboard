@@ -67,7 +67,9 @@ var RegisterComplete = React.createClass({
                             <p>PostalCode: <span className="lead text-success">{this.props.PostalCode}</span></p>
                             </div>
                         </div>
-                        <div className="panel-footer text-right">
+                       
+                        <div className="panel-footer text-right">                           
+                            <label className="form-check-label" for="exampleCheck1"  style={{"padding-right": '10px'}}>By clicking Register, you agree to our Terms and that you have read our Data Use Policy, including our Cookie Use.</label>
                             <button type="button" className="btn btn-success btn-lg" onClick={this.props.registerUserPOST }>Register</button>	
                         </div>
                 </div>			    	
