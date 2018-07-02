@@ -85,10 +85,14 @@
     },
 
     componentWillMount: function () {
-        this.loadData();
         var tokens = new TboardJWTToken();
-        var decodedToken = tokens.getJWTToken();
-        this.setState({ UserID: decodedToken.UserID });
+        var loggedIn = tokens.IsLoggedIn();
+        if (loggedIn == true) {
+            var decodedToken = tokens.getJWTToken();
+            this.setState({ UserID: decodedToken.UserID });
+            this.loadData();
+        }
+        
     },  
 
 	render: function() {

@@ -215,10 +215,12 @@ namespace TBoard.Web.Controllers
                 this.emailQueueBusinessLogic.SendEmail("admin@Tenderboard.co.za", "admin@Tenderboard.co.za", "Request for Quotation", string.Format("There is no organization available to serve this request: {0}", rfq.reference));
                 return;
             }
+
+            var sitURL = configBusinessLogic.GetConfigValue("SiteURL");
             //Send out email to all subscribed to that category
             foreach (var e in expertiseOwnership)
             {                
-                this.emailQueueBusinessLogic.SendEmail("admin@Tenderboard.co.za",e.communicationLine1,"Request for Quotation", createEmailBody(rfq.reference, "http://tboard.azurewebsites.net/admin#rfqbid/" + rfq.reference));
+                this.emailQueueBusinessLogic.SendEmail("admin@Tenderboard.co.za",e.communicationLine1,"Request for Quotation", createEmailBody(rfq.reference, sitURL + "admin#rfqbid/" + rfq.reference));
             } 
         }
 
@@ -282,8 +284,9 @@ namespace TBoard.Web.Controllers
             //This will need to send out an email
             
             var rfqOwner = this.quoteBusinessLogic.GetQuoteOwnerDetails(rfqReference).SingleOrDefault();
-           
-            this.emailQueueBusinessLogic.SendEmail("admin@Tenderboard.co.za", rfqOwner.communicationLine1, "TenderBoard - Quotation Recieved", createEmailBody("http://tboard.azurewebsites.net/Admin#rfqdetail/" + rfqReference));            
+
+            var sitURL = configBusinessLogic.GetConfigValue("SiteURL");
+            this.emailQueueBusinessLogic.SendEmail("admin@Tenderboard.co.za", rfqOwner.communicationLine1, "TenderBoard - Quotation Recieved", createEmailBody(sitURL+ "Admin#rfqdetail/" + rfqReference));            
 
             var r = new
             {
@@ -521,9 +524,9 @@ namespace TBoard.Web.Controllers
 
                 body = reader.ReadToEnd();
             }
-           
+            var sitURL = configBusinessLogic.GetConfigValue("SiteURL");
             body = body.Replace("{reference}", RFQReferencee); //replacing the required things              
-            body = body.Replace("{url}", string.Format("http://tboard.azurewebsites.net/admin#rfqpay/{0}", RFQReferencee)); //replacing the required things                   
+            body = body.Replace("{url}", string.Format(sitURL+ "admin#rfqpay/{0}", RFQReferencee)); //replacing the required things                   
 
             return body;
         }
@@ -536,9 +539,10 @@ namespace TBoard.Web.Controllers
             {
 
                 body = reader.ReadToEnd();
-            }          
+            }
+            var sitURL = configBusinessLogic.GetConfigValue("SiteURL");
             body = body.Replace("{reference}", RFQReferencee); //replacing the required things              
-            body = body.Replace("{url}", string.Format("http://tboard.azurewebsites.net/Admin#rfqdetail/{0}", RFQReferencee)); //replacing the required things                   
+            body = body.Replace("{url}", string.Format(sitURL + "admin#rfqdetail/{0}", RFQReferencee)); //replacing the required things                   
 
             return body;
         }

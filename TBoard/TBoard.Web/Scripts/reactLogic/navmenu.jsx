@@ -36,13 +36,16 @@
         });
     },
 
-    componentWillMount: function () {
+    componentWillMount: function () {        
         var tokens = new TboardJWTToken();
-        var decodedToken = tokens.getJWTToken();
-        this.setState({ UserID: decodedToken.UserID });
-        this.setState({ OrganizationID: decodedToken.OrganizationID });
-        this.setState({ roles: decodedToken.role });
-        this.loadData(decodedToken.UserID);
+        var loggedIn = tokens.IsLoggedIn();
+        if (loggedIn == true) {
+            var decodedToken = tokens.getJWTToken();
+            this.setState({ UserID: decodedToken.UserID });
+            this.setState({ OrganizationID: decodedToken.OrganizationID });
+            this.setState({ roles: decodedToken.role });
+            this.loadData(decodedToken.UserID);
+        }       
     },
 
 	render: function(){
