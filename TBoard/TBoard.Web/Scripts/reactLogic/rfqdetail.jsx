@@ -376,11 +376,28 @@ var RFQBidQuotes = React.createClass({
 					        </div>
 					        <div className="modal-body">
                                     <div id="jRate"></div>
-                                    <input type="hidden" id="QuoteID"></input>
+                                    <input type="hidden" id="QuoteID"></input>                                    
                                     <div className="form-group">
                                         <h2 className="modal-title" id="myModalLabel">Are you sure?</h2>
                                     </div>
-
+                                 <div className="panel panel-default">
+	                                <div className="panel-heading">
+	                                   Add ons
+	                                </div>
+	                                <div className="panel-body">
+		                                <div class="list-group">
+	                                        <a href="#" className="list-group-item">
+		                                        <input type="checkbox" />  Contract aggreement required
+	                                        </a>
+	                                        <a href="#" className="list-group-item">
+		                                         <input type="checkbox" />  Do you need finance, insurance?
+	                                        </a>
+	                                        <a href="#" className="list-group-item">
+		                                        <input type="checkbox" />  Do you require Delivery?
+	                                        </a>
+		                                </div>
+	                                </div>
+                                 </div>   
 					        </div>
 					        <div className="modal-footer">
 						        <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>

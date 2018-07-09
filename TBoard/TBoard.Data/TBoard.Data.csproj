@@ -204,6 +204,9 @@
     <Compile Include="Model\grouprolemapping.cs">
       <DependentUpon>TBoardEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\metadata.cs">
+      <DependentUpon>TBoardEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\organization.cs">
       <DependentUpon>TBoardEntities.tt</DependentUpon>
     </Compile>

@@ -40,6 +40,6 @@ namespace TBoard.Data.Repository
         public IList<sps_GetAllOrganizationInformation_Result> GetOrganizationInformation(int organizationID)
         {
             return this._dbContext.sps_GetAllOrganizationInformation(organizationID).ToList();
-        }
+        }       
     }
 }

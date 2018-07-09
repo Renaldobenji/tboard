@@ -49,5 +49,20 @@ namespace TBoard.BusinessLogic.BusinessLogic
         {
             return this.repository.MyActiveRFQ(userID);
         }
+
+        public List<metadata> GetMetaData(string rfqReference, List<string> metaDataNames)
+        {
+            return this.repository.GetMetaData(rfqReference, metaDataNames);
+        }
+
+        public void AddMetaData(string rfqReference, string metaDataName, string metaDataValue)
+        {
+            this.repository.AddMetaData(rfqReference, metaDataName, metaDataValue);
+        }
+
+        public void AddMetaData(string rfqReference, List<metadata> metaData)
+        {
+            this.repository.AddMetaData(rfqReference, metaData);
+        }
     }
 }

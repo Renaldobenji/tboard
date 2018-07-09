@@ -45,5 +45,45 @@ namespace TBoard.Data.Repository
         {
             return this._dbContext.rfqs.Where(x => x.userID == userID && x.status == "ACT").Count();
         }
+
+        public void AddMetaData(string rfqReference, string metaDataName, string metaDataValue)
+        {
+            this._dbContext.metadatas.Add(new metadata()
+            {
+                ownerType = "RFQ",
+                ownerTypeID = rfqReference,
+                dateCreated = DateTime.Now,
+                dateUpdated = DateTime.Now,
+                metaDataName = metaDataName,
+                metaDataValue = metaDataValue
+            });
+            this._dbContext.SaveChanges();
+        }
+
+        public void AddMetaData(string rfqReference, List<metadata> metaData)
+        {
+            foreach (var meta in metaData)
+            {
+                this._dbContext.metadatas.Add(new metadata()
+                {
+                    ownerType = "RFQ",
+                    ownerTypeID = rfqReference,
+                    dateCreated = DateTime.Now,
+                    dateUpdated = DateTime.Now,
+                    metaDataName = meta.metaDataName,
+                    metaDataValue = meta.metaDataValue
+                });
+                this._dbContext.SaveChanges();
+            }
+            
+        }
+
+        public List<metadata> GetMetaData(string rfqReference, List<string> metaDataNames)
+        {
+            var result = (from metadata in this._dbContext.metadatas
+                          where metaDataNames.Contains(metadata.metaDataName) && metadata.ownerTypeID == rfqReference && metadata.ownerType == "RFQ" select metadata).ToList();
+
+            return result;
+        }
     }
 }

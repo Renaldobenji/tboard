@@ -205,6 +205,18 @@
           <Property Name="groupDescription" Type="varchar" MaxLength="100" />
           <Property Name="groupStatus" Type="varchar" MaxLength="45" Nullable="false" />
         </EntityType>
+        <EntityType Name="metadata">
+          <Key>
+            <PropertyRef Name="metadataID" />
+          </Key>
+          <Property Name="metadataID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ownerType" Type="varchar" MaxLength="45" />
+          <Property Name="ownerTypeID" Type="varchar" MaxLength="45" />
+          <Property Name="dateCreated" Type="datetime" Precision="0" />
+          <Property Name="dateUpdated" Type="datetime" Precision="0" />
+          <Property Name="metaDataName" Type="varchar" MaxLength="100" />
+          <Property Name="metaDataValue" Type="varchar" MaxLength="500" />
+        </EntityType>
         <EntityType Name="organization">
           <Key>
             <PropertyRef Name="organizationID" />
@@ -551,6 +563,7 @@
           <EntitySet Name="groupmembership" EntityType="Self.groupmembership" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="grouprolemapping" EntityType="Self.grouprolemapping" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="groups" EntityType="Self.groups" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="metadata" EntityType="Self.metadata" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="organization" EntityType="Self.organization" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="organizationtypes" EntityType="Self.organizationtypes" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="quote" EntityType="Self.quote" Schema="tboard" store:Type="Tables" />
@@ -746,8 +759,9 @@
             <Parameter Name="endDate" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sps_GetHighestBidsForQuote" ReturnType="Collection(TBoardModel.sps_GetHighestBidsForQuote_Result)">
-            <Parameter Name="rfqReference" Mode="In" Type="String" />
+          <Parameter Name="rfqReference" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="metadatas" EntityType="TBoardModel.metadata" />
         </EntityContainer>
         <EntityType Name="address">
           <Key>
@@ -1344,6 +1358,18 @@
           <Property Type="DateTime" Name="createdDate" Nullable="false" />
           <Property Type="Decimal" Name="amount" Nullable="false" />
         </ComplexType>
+        <EntityType Name="metadata">
+          <Key>
+            <PropertyRef Name="metadataID" />
+          </Key>
+          <Property Name="metadataID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ownerType" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="ownerTypeID" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="dateCreated" Type="DateTime" />
+          <Property Name="dateUpdated" Type="DateTime" />
+          <Property Name="metaDataName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="metaDataValue" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1748,6 +1774,19 @@
               <ComplexTypeMapping TypeName="TBoardModel.sps_GetHighestBidsForQuote_Result" />
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="metadatas">
+            <EntityTypeMapping TypeName="TBoardModel.metadata">
+              <MappingFragment StoreEntitySet="metadata">
+                <ScalarProperty Name="metaDataValue" ColumnName="metaDataValue" />
+                <ScalarProperty Name="metaDataName" ColumnName="metaDataName" />
+                <ScalarProperty Name="dateUpdated" ColumnName="dateUpdated" />
+                <ScalarProperty Name="dateCreated" ColumnName="dateCreated" />
+                <ScalarProperty Name="ownerTypeID" ColumnName="ownerTypeID" />
+                <ScalarProperty Name="ownerType" ColumnName="ownerType" />
+                <ScalarProperty Name="metadataID" ColumnName="metadataID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
