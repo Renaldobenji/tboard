@@ -13,8 +13,7 @@ namespace TBoard.Data.Model
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
-   
-    
+
     public partial class TBoardEntities : DbContext
     {
         public TBoardEntities()
@@ -56,6 +55,8 @@ namespace TBoard.Data.Model
         public DbSet<config> configs { get; set; }
         public DbSet<quotestatu> quotestatus { get; set; }
         public DbSet<custodian> custodians { get; set; }
+        public DbSet<metadata> metadatas { get; set; }
+        public DbSet<organizationmapping> organizationmappings { get; set; }
     
         public virtual ObjectResult<DocumentReq> sps_GetOutstandingDocumentRequirements(Nullable<int> organizationID)
         {

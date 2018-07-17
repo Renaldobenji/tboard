@@ -230,6 +230,15 @@
           <Property Name="organizationTypeID" Type="int" />
           <Property Name="oem" Type="bit" />
         </EntityType>
+        <EntityType Name="organizationmapping">
+          <Key>
+            <PropertyRef Name="organizationMappingID" />
+          </Key>
+          <Property Name="organizationMappingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="organizationID" Type="int" />
+          <Property Name="userID" Type="int" />
+          <Property Name="created" Type="datetime" Precision="0" />
+        </EntityType>
         <EntityType Name="organizationtypes">
           <Key>
             <PropertyRef Name="organizationTypeID" />
@@ -565,6 +574,7 @@
           <EntitySet Name="groups" EntityType="Self.groups" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="metadata" EntityType="Self.metadata" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="organization" EntityType="Self.organization" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="organizationmapping" EntityType="Self.organizationmapping" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="organizationtypes" EntityType="Self.organizationtypes" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="quote" EntityType="Self.quote" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="quotestatus" EntityType="Self.quotestatus" Schema="tboard" store:Type="Tables" />
@@ -762,6 +772,7 @@
           <Parameter Name="rfqReference" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="metadatas" EntityType="TBoardModel.metadata" />
+          <EntitySet Name="organizationmappings" EntityType="TBoardModel.organizationmapping" />
         </EntityContainer>
         <EntityType Name="address">
           <Key>
@@ -1370,6 +1381,15 @@
           <Property Name="metaDataName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="metaDataValue" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="organizationmapping">
+          <Key>
+            <PropertyRef Name="organizationMappingID" />
+          </Key>
+          <Property Name="organizationMappingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="organizationID" Type="Int32" />
+          <Property Name="userID" Type="Int32" />
+          <Property Name="created" Type="DateTime" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1784,6 +1804,16 @@
                 <ScalarProperty Name="ownerTypeID" ColumnName="ownerTypeID" />
                 <ScalarProperty Name="ownerType" ColumnName="ownerType" />
                 <ScalarProperty Name="metadataID" ColumnName="metadataID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="organizationmappings">
+            <EntityTypeMapping TypeName="TBoardModel.organizationmapping">
+              <MappingFragment StoreEntitySet="organizationmapping">
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="organizationID" ColumnName="organizationID" />
+                <ScalarProperty Name="organizationMappingID" ColumnName="organizationMappingID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

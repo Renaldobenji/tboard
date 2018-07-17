@@ -210,6 +210,9 @@
     <Compile Include="Model\organization.cs">
       <DependentUpon>TBoardEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\organizationmapping.cs">
+      <DependentUpon>TBoardEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\organizationtype.cs">
       <DependentUpon>TBoardEntities.tt</DependentUpon>
     </Compile>

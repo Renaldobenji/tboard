@@ -15,11 +15,13 @@ namespace TBoard.BusinessLogic.BusinessLogic
     public class UserBusinessLogic : BusinessLogic<user>
     {
         private UserRepository repository;
+        private OrganizationRepository orgRepository;
 
-        public UserBusinessLogic(IUnitOfWork unitOfWork, UserRepository repository)
+        public UserBusinessLogic(IUnitOfWork unitOfWork, UserRepository repository, OrganizationRepository orgRepository)
             : base(unitOfWork, repository)
         {
             this.repository = repository;
+            this.orgRepository = orgRepository;
         }
 
 
@@ -47,7 +49,7 @@ namespace TBoard.BusinessLogic.BusinessLogic
 
             this.Create(newUser);
 
-            response.UserID = newUser.userID;
+            response.UserID = newUser.userID;            
 
             return response;
         }
@@ -82,6 +84,10 @@ namespace TBoard.BusinessLogic.BusinessLogic
                 this.Create(newUser);
 
                 response.UserID = newUser.userID;
+
+                if (organizationId != 0)
+                { this.orgRepository.MapUserToOrganization(organizationId, newUser.userID); }                
+
                 response.IsSuccessful = true;
             }
             catch(Exception ex)

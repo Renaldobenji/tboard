@@ -16,6 +16,26 @@ namespace TBoard.Data.Repository
             
         }
 
+        public void MapUserToOrganization(int organizationID, int userID)
+        {
+            this._dbContext.organizationmappings.Add(new organizationmapping()
+            {
+                created = DateTime.Now,
+                organizationID = organizationID,
+                userID = userID
+            });
+            this._dbContext.SaveChanges();
+        }
+
+        public List<organization> GetUserOrganiztions(int userID)
+        {
+            var result = (from orgMap in this._dbContext.organizationmappings
+                          join org in this._dbContext.organizations on orgMap.organizationID equals org.organizationID
+                          select org).ToList();
+
+            return result;
+        }
+
         public organization GetOrganization(int organizationID)
         {
             return this._dbContext.organizations.Where(x => x.organizationID == organizationID).FirstOrDefault();
