@@ -458,8 +458,9 @@ namespace TBoard.Web.Controllers
             var RFQReference = formData.Get("RFQReference");
             var QuoteID = Convert.ToInt32(formData.Get("QuoteID"));
             var UserID = Convert.ToInt32(formData.Get("UserID"));
+            var MetaData = formData.Get("MetaData");
 
-            this.quoteBusinessLogic.AcceptBid(UserID, RFQReference, QuoteID);
+            this.quoteBusinessLogic.AcceptBid(UserID, RFQReference, QuoteID, MetaData);            
 
             var alertInformation = this.quoteBusinessLogic.GetQuoteOwnerDetails(QuoteID);
             //Send Email

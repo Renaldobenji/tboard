@@ -42,7 +42,7 @@ namespace TBoard.Data.Repository
             return myQuotes;
         }
 
-        public void AcceptBid(int userID, string rfqID, int quoteID)
+        public void AcceptBid(int userID, string rfqID, int quoteID, string metaData)
         {
             rfq rfqInQuestion = this._dbContext.rfqs.Where(x => x.reference == rfqID).First();
             rfqInQuestion.status = "ACCEPTED";           
@@ -55,7 +55,24 @@ namespace TBoard.Data.Repository
             status.quoteStatusDateTime = DateTime.Now;
             this._dbContext.quotestatus.Add(status);
 
-            this._dbContext.SaveChanges();
+            if (!string.IsNullOrEmpty(metaData))
+            {
+                var items = metaData.Split(',');
+                foreach (var i in items)
+                {
+                    this._dbContext.metadatas.Add(new metadata()
+                    {
+                        ownerType = "QUOTE",
+                        ownerTypeID = quoteID.ToString(),
+                        dateCreated = DateTime.Now,
+                        dateUpdated = DateTime.Now,
+                        metaDataName = i,
+                        metaDataValue = "TRUE"
+                    });
+                }
+            }
+
+            //this._dbContext.SaveChanges();
         }
 
         public void PayBid(int userID, string rfqID, int quoteID)

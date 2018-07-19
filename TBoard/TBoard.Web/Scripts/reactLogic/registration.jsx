@@ -168,9 +168,8 @@ var Register = React.createClass({
                   cache: false,
                   success: function (data) {
                       if (data.success == "True")
-                      {
-                          alert("Registration Complete");
-                          window.location.href = '../'; //one level up
+                      {                          
+                          window.location.href = '/RegistrationComplete/Index'; //one level up
                       }
                       else
                       {

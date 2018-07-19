@@ -302,7 +302,18 @@ var RFQBidQuotes = React.createClass({
 
     quoteAcceptClick: function () {
        
-        var data0 = { UserID: this.props.UserID, QuoteID: $('#QuoteID').val(), RFQReference: this.props.RFQReference };
+        var chkArray = [];
+
+        /* look for all checkboes that have a class 'chk' attached to it and check if it was checked */
+        $(".AcceptQuoteMetaData:checked").each(function () {
+            chkArray.push($(this).val());
+        });
+
+        /* we join the array separated by the comma */
+        var selected;
+        selected = chkArray.join(',');
+
+        var data0 = { UserID: this.props.UserID, QuoteID: $('#QuoteID').val(), RFQReference: this.props.RFQReference, MetaData: selected };
 
         $.ajax({
             url: 'api/RFQ/AcceptQuote',
@@ -386,15 +397,11 @@ var RFQBidQuotes = React.createClass({
 	                                </div>
 	                                <div className="panel-body">
 		                                <div class="list-group">
-	                                        <a href="#" className="list-group-item">
-		                                        <input type="checkbox" />  Contract aggreement required
-	                                        </a>
-	                                        <a href="#" className="list-group-item">
-		                                         <input type="checkbox" />  Do you need finance, insurance?
-	                                        </a>
-	                                        <a href="#" className="list-group-item">
-		                                        <input type="checkbox" />  Do you require Delivery?
-	                                        </a>
+	                                        <input type="checkbox" className="AcceptQuoteMetaData" value="Contract"/>  Contract aggreement required?
+                                            <br/>
+	                                        <input type="checkbox" className="AcceptQuoteMetaData" value="Finance"/>  Do you need finance, insurance?
+                                            <br />
+	                                        <input type="checkbox" className="AcceptQuoteMetaData" value="Delivery"/>  Do you require Delivery?
 		                                </div>
 	                                </div>
                                  </div>   
