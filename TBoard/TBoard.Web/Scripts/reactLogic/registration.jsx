@@ -14,17 +14,17 @@ var RegisterType = React.createClass({
 							<div className="form-group">
 								<div className="checkbox">
 									<label>
-										<input type="checkbox" name="registrationOptions" id="registrationOptionsPrivateBuyer" value="PrivateBuyer" onChange={this.props.updateRegistrationTypeState}/> Private Buyer
+										<input type="checkbox" className="registrationOptions" name="registrationOptions" value="PrivateBuyer" onChange={this.props.updateRegistrationTypeState}/> Private Buyer
 									</label>
 								</div>
 								<div className="checkbox">
 									<label>
-										<input type="checkbox" name="registrationOptions" id="registrationOptionsCorporateBuyer" value="CorporateBuyer" onChange={this.props.updateRegistrationTypeState}/> Corporate Buyer
+										<input type="checkbox" className="registrationOptions" name="registrationOptions" value="CorporateBuyer" onChange={this.props.updateRegistrationTypeState}/> Corporate Buyer
 									</label>
 								</div>
 								<div className="checkbox">
 									<label>
-										<input type="checkbox" name="registrationOptions" id="registrationCorporateSeller" value="CorporateSeller" onChange={this.props.updateRegistrationTypeState}/> Supplier
+										<input type="checkbox" className="registrationOptions" name="registrationOptions" value="CorporateSeller" onChange={this.props.updateRegistrationTypeState}/> Supplier
 									</label>
 								</div>
 							</div>
@@ -185,8 +185,21 @@ var Register = React.createClass({
             });
     },
 		
-	updateRegistrationTypeState : function(e){
-		this.setState({RegistrationType : e.currentTarget.value});	
+    updateRegistrationTypeState: function (e) {
+
+        /* declare an checkbox array */
+        var chkArray = [];
+
+        /* look for all checkboes that have a class 'chk' attached to it and check if it was checked */
+        $(".registrationOptions:checked").each(function () {
+            chkArray.push($(this).val());
+        });
+
+        /* we join the array separated by the comma */
+        var selected;
+        selected = chkArray.join(',');
+        
+        this.setState({ RegistrationType: selected });
 		console.log(this.state.RegistrationType);	
 	},
 	updateNameState : function(e){

@@ -293,6 +293,7 @@
     <Content Include="Content\bootstrap\metismenu\metisMenu.min.js" />
     <Content Include="Content\bootstrap\sb-admin-2.css" />
     <Content Include="Content\bootstrap\timeline.css" />
+    <Content Include="Content\EmailTemplates\quotepaid.html" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Images\Banner.jpg" />
     <Content Include="Content\Images\Cloudbased.png" />

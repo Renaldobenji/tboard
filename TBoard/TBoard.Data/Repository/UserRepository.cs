@@ -23,12 +23,15 @@ namespace TBoard.Data.Repository
 
         public void AddUserToGroup(int userID, string groupCode)
         {
-            groupmembership mem = new groupmembership();
-            mem.fromDate = DateTime.Now;
-            mem.groupCode = groupCode;
-            mem.userID = userID;
-
-            this._dbContext.groupmemberships.Add(mem);
+            var group = groupCode.Split(',');
+            foreach (var g in group)
+            {
+                groupmembership mem = new groupmembership();
+                mem.fromDate = DateTime.Now;
+                mem.groupCode = g;
+                mem.userID = userID;
+                this._dbContext.groupmemberships.Add(mem);               
+            }
             this._dbContext.SaveChanges();
         }
 

@@ -13,6 +13,8 @@ using System.Web.Http;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.BusinessLogic.Responses;
 using TBoard.Data.Model;
+using TBoard.Data.Interfaces;
+using TBoard.Data.Repository;
 
 namespace TBoard.Web.Controllers
 {
@@ -23,14 +25,16 @@ namespace TBoard.Web.Controllers
         private UserBusinessLogic userBusinessLogic;
         private OrganizationBusinessLogic organizationBusinessLogic;
         private EmailQueueBusinessLogic emailQueueBusinessLogic;
+        private IUnitOfWork unitOfWork;
 
-        public RegistrationController(CommunicationBusinessLogic communicationBusinessLogic, AddressBusinessLogic addressBusinessLogic, UserBusinessLogic userBusinessLogic, OrganizationBusinessLogic organizationBusinessLogic, EmailQueueBusinessLogic emailQueueBusinessLogic)
+        public RegistrationController(IUnitOfWork unitOfWork, CommunicationBusinessLogic communicationBusinessLogic, AddressBusinessLogic addressBusinessLogic, UserBusinessLogic userBusinessLogic, OrganizationBusinessLogic organizationBusinessLogic, EmailQueueBusinessLogic emailQueueBusinessLogic)
         {
             this.communicationBusinessLogic = communicationBusinessLogic;
             this.addressBusinessLogic = addressBusinessLogic;
             this.userBusinessLogic = userBusinessLogic;
             this.organizationBusinessLogic = organizationBusinessLogic;
             this.emailQueueBusinessLogic = emailQueueBusinessLogic;
+            this.unitOfWork = unitOfWork;
         }
         // POST api/<controller>
         public HttpResponseMessage Post(FormDataCollection formData)
@@ -87,14 +91,14 @@ namespace TBoard.Web.Controllers
                 //Create Organization first
                 if (!string.IsNullOrEmpty(formData.Get("OrganizationName")))
                 {
-                    if (formData.Get("RegistrationType").Equals("CorporateBuyer"))
+                    if (formData.Get("RegistrationType").Contains("CorporateBuyer"))
                     {
                         org = new organization();
                         org.name = formData.Get("OrganizationName");
                         org.organizationTypeID = 1;
                         this.organizationBusinessLogic.Create(org);
                     }
-                    else if (formData.Get("RegistrationType").Equals("CorporateSeller"))
+                    else if (formData.Get("RegistrationType").Contains("CorporateSeller"))
                     {
                         org = new organization();
                         org.name = formData.Get("OrganizationName");

@@ -16,12 +16,14 @@ namespace TBoard.BusinessLogic.BusinessLogic
     {
         private UserRepository repository;
         private OrganizationRepository orgRepository;
+        private IUnitOfWork unitOfWork;
 
         public UserBusinessLogic(IUnitOfWork unitOfWork, UserRepository repository, OrganizationRepository orgRepository)
             : base(unitOfWork, repository)
         {
             this.repository = repository;
             this.orgRepository = orgRepository;
+            this.unitOfWork = unitOfWork;
         }
 
 
@@ -107,6 +109,7 @@ namespace TBoard.BusinessLogic.BusinessLogic
         public void AddUserToGroup(int userID, string groupCode)
         {
             this.repository.AddUserToGroup(userID, groupCode);
+            
         }
 
         public IList<sps_GetAllUserInformation_Result> GetUserInformation(int userID)
