@@ -53,6 +53,24 @@ namespace TBoard.Web.Controllers
         }
 
         [JWTTokenValidation]
+        [Route("api/Organization/Create")]
+        public void CreateOrganization(FormDataCollection formData)
+        {
+            int userID = Convert.ToInt32(formData.Get("UserID"));
+
+            organization org = new organization();
+            org.name = formData.Get("Name");
+            org.registrationNumber = formData.Get("RegistrationNumber");
+            org.taxNumber = formData.Get("TaxNumber");
+            org.tradingName = formData.Get("TradingName");
+            org.vatNumber = formData.Get("VatNumber");
+            org.oem = (formData.Get("oem").ToLower().Equals("true") ? true : false);
+            this.organizationBusinessLogic.Create(org);
+
+            this.organizationBusinessLogic.MapUserToOrganization(org.organizationID, userID);
+        }
+
+        [JWTTokenValidation]
         [HttpGet]
         [Route("api/Organization/CustodianDetails/{organizationID}")]
         public HttpResponseMessage GetCustodianDetails(int organizationID)

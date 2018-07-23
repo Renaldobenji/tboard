@@ -27,7 +27,13 @@
             SelectedBankAccountType : '',
             OEM: 'false',
             UserID: '',
-            bankDetailsList: []
+            bankDetailsList: [],
+            CreateOrgName: '',
+            CreateOrgTradingName: '',
+            CreateOrgRegistrationNumber: '',
+            CreateOrgVatNumber: '',
+            CreateOrgTaxNumber: '',
+            CreateOrgOEM: 'false',
         };
     },
 
@@ -495,6 +501,162 @@ var OrganizationDetails = React.createClass({
 		);
 	}
 });
+
+
+/*Register Page*/
+var CreateOrganization = React.createClass({
+
+    getInitialState: function () {
+        return {
+            Name: '',
+            TradingName: '',
+            RegistrationNumber: '',
+            VatNumber: '',
+            TaxNumber: '',
+            OrganizationID: '',
+            CellNumber: '',
+            HomeNumber: '',
+            OfficeNumber: '',
+            Email: '',
+            AddressLine1: '',
+            AddressLine2: '',
+            AddressLine3: '',
+            AddressLine4: '',
+            AddressLine5: '',
+            PostalCode: '',
+            AddressID: '',
+            OwnerType: 'ORG',
+            AccountName: '',
+            AccountNumber: '',
+            BranchCode: '',
+            BranchName: '',
+            BankAccountType: [],
+            SelectedBankAccountType: '',
+            OEM: 'false',
+            UserID: '',
+            bankDetailsList: [],            
+        };
+    },
+
+    componentWillMount: function () {
+        var tokens = new TboardJWTToken();
+        var decodedToken = tokens.getJWTToken();        
+        this.setState({ UserID: decodedToken.UserID });
+    },    
+   
+    CreateOrgPOST: function () {
+        console.log('POSTING FORM');
+        $.ajax({
+            url: 'api/Organization/Create',
+            type: 'POST',
+            dataType: 'json',
+            data: this.state,
+            cache: false,
+            success: function (data) {
+                var opts = {
+                    title: "Success",
+                    text: "That thing that you were trying to do worked.",
+                    addclass: "stack-bottomright",
+                    type: "success",
+                    nonblock: {
+                        nonblock: true
+                    }
+                };
+                new PNotify(opts);
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error('api/Organization/Post', status, err.toString());
+            }.bind(this)
+        });
+    },
+   
+    updateName: function (e) {
+        this.setState({ Name: e.target.value });
+    },
+    updateTradingName: function (e) {
+        this.setState({ TradingName: e.target.value });
+    },
+    updateRegistrationNumber: function (e) {
+        this.setState({ RegistrationNumber: e.target.value });
+    },
+    updateVatNumber: function (e) {
+        this.setState({ VatNumber: e.target.value });
+    },
+    updateTaxNumber: function (e) {
+        this.setState({ TaxNumber: e.target.value });
+    },
+    updateOEM: function (e) {
+        this.setState({ OEM: e.target.value });
+        console.log(this.state.OEM);
+    },
+
+    render: function () {
+        var navBarSyle = {
+            marginBottom: 0
+        };
+
+
+        return (
+
+                              <div>
+	<nav className="navbar navbar-default navbar-static-top" role="navigation" style={navBarSyle}>
+		<NavHeader />
+		<NavMenu />
+	</nav>
+	<div id="page-wrapper">
+        <div className="row">
+		                    <div className="col-lg-12">
+			                    <h1 className="page-header">Create Organization</h1>
+		                    </div>
+        </div>
+                        <div className="row">
+		<div className="panel panel-default">
+			<div className="panel-heading">
+			    Create Organization
+			</div>
+			<div className="panel-body">
+				<form>
+					<div className="form-group">
+						<label>Name</label>
+						<input id="Name" className="form-control" placeholder="Name" value={this.state.Name} onChange={this.updateName} />
+					</div>
+					<div className="form-group">
+						<label>Trading Name</label>
+						<input id="TradingName" className="form-control" placeholder="Trading Name" value={this.state.TradingName} onChange={this.updateTradingName} />
+					</div>
+					<div className="form-group">
+						<label>Registration Number</label>
+						<input id="RegistrationNumber" className="form-control" placeholder="Registration Number" value={this.state.RegistrationNumber} onChange={this.updateRegistrationNumber} />
+					</div>
+					<div className="form-group">
+						<label>Vat Number</label>
+						<input id="VatNumber" className="form-control" placeholder="Vat Number" value={this.state.VatNumber} onChange={this.updateVatNumber} />
+					</div>
+					<div className="form-group">
+						<label>Tax Number</label>
+						<input id="TaxNumber" className="form-control" placeholder="Tax Number" value={this.state.TaxNumber} onChange={this.updateTaxNumber} />
+					</div>
+					<div className="form-group">
+						<label>OEM</label>
+						<select className="form-control" value={this.state.OEM} onChange={this.updateOEM}>
+							<option value='false'>False</option>
+							<option value='true'>True</option>
+						</select>
+					</div>
+				</form>
+			</div>
+			<div className="panel-footer text-right">
+				<button type="button" className="btn btn-primary" onClick={this.CreateOrgPOST}>Create</button>
+			</div>
+		</div>
+                            </div>
+
+                        </div>
+               </div>  
+		);
+    }
+});
+
 
 /*Register Page*/
 var OrganizationAddress = React.createClass({	

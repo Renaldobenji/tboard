@@ -135,6 +135,9 @@ var OrganizationMenu = React.createClass({
 		                <li>
 			                <a href="#users">Users</a>
 		                </li>
+                         <li>
+			                <a href="#orgCreate">Create</a>
+                         </li>
 	                </ul>
                 </li>
             )

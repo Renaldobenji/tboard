@@ -25,6 +25,11 @@ namespace TBoard.BusinessLogic.BusinessLogic
            
         }
 
+        public void MapUserToOrganization(int organizationID, int userID)
+        {
+            this.repository.MapUserToOrganization(organizationID, userID);
+        }
+
         public List<organization> GetUserOrganiztions(int userID)
         {
             return this.repository.GetUserOrganiztions(userID);

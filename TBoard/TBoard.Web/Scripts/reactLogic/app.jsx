@@ -227,6 +227,12 @@ routie({
 				React.createElement(ReportFilter, null), document.getElementById('container')
 			);
         }
+        ,
+        'orgCreate': function () {
+            ReactDOM.render(
+				React.createElement(CreateOrganization, null), document.getElementById('container')
+			);
+        }
     
 });
 

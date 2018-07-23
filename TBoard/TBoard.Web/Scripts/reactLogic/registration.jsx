@@ -52,8 +52,7 @@ var RegisterComplete = React.createClass({
                             <p>RegistrationType: <span className="lead text-success">{this.props.RegistrationType}</span></p>
                             <p>Username: <span className="lead text-success">{this.props.Username}</span></p>
                             <p>Name: <span className="lead text-success">{this.props.Name}</span></p>
-                            <p>Surname: <span className="lead text-success">{this.props.Surname}</span></p>
-                            <p>IDNumber: <span className="lead text-success">{this.props.IDNumber}</span></p>
+                            <p>Surname: <span className="lead text-success">{this.props.Surname}</span></p>                            
                             <p>OrganizationName: <span className="lead text-success">{this.props.OrganizationName}</span></p>
                             <p>CellNumber: <span className="lead text-success">{this.props.CellNumber}</span></p>
                             <p>HomeNumber: <span className="lead text-success">{this.props.HomeNumber}</span></p>
@@ -159,6 +158,30 @@ var Register = React.createClass({
 
     registerUserPOST : function() {
         console.log('POSTING FORM');
+
+        //check for mandatory fields
+        var manfields = '';
+        if (this.state.Surname == '')
+        {
+            manfields += "Surname, "
+        }
+        if (this.state.Password == '') {
+            manfields += "Password, "
+        }
+        if (this.state.ConfirmPassword == '')
+        {
+            manfields += "ConfirmPassword, "
+        }
+        if (this.state.Username == '') {
+            manfields += "Username"
+        }       
+
+        if (manfields != '')
+        {
+            alert("Please fill in the following missing fields " + manfields);
+            return;
+        }
+
         this.startWithAutoIncrement();
         $.ajax({
                   url: 'api/Registration/Post',
@@ -460,13 +483,7 @@ var RegisterPersonal = React.createClass({
 <div className="col-sm-9" style={{margin:"inherit"}}>
 	<input id="ConfirmPassword" className="form-control" placeholder="Confirm Password" value={this.props.confirmPassword} onChange={this.props.updateConfirmPassword} />
 </div>
-						</div>
-						<div className="form-group">
-                           <label label for="IDNumber" className="col-sm-3 control-label">IDNumber</label>
-<div className="col-sm-9" style={{margin:"inherit"}}>
-	<input id="IDNumber" className="form-control" placeholder="ID Number" value={this.props.idNumber} onChange={this.props.updateIDNumber} />
-</div>
-						</div>
+						</div>						
 						<div className="form-group">
                 <label label for="CompanyName" className="col-sm-3 control-label">CompanyName</label>
 <div className="col-sm-9" style={{margin:"inherit"}}>
