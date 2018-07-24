@@ -116,5 +116,38 @@ namespace TBoard.Web.Controllers
                 this.organizationBusinessLogic.UpdateCustodianDetails(custodianDetail);
             }
         }
+
+        [JWTTokenValidation]
+        [HttpGet]
+        [Route("api/Organization/GetUserOrganizations/{userID}")]
+        public HttpResponseMessage GetUserOrganizations(int userID)
+        {
+            var userOrg = this.organizationBusinessLogic.GetUserOrganiztions(userID);
+
+
+            var response = new
+            {
+                data = from x in userOrg
+                       select new
+                       {
+                           Key = x.organizationID,
+                           Name = x.name
+                       }
+            };
+
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(response, Formatting.Indented,
+                                                new JsonSerializerSettings
+                                                {
+                                                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                                }))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return resp;
+        }
+               
     }
 }

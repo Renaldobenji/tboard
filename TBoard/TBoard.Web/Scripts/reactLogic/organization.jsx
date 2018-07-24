@@ -23,7 +23,8 @@
             AccountNumber : '',
             BranchCode : '',
             BranchName : '',
-            BankAccountType : [],
+            BankAccountType: [],
+            UserOrg: [],
             SelectedBankAccountType : '',
             OEM: 'false',
             UserID: '',
@@ -77,28 +78,55 @@
           url: 'api/Address/ORG/' + orgID,
           dataType: 'json',
           cache: false,
-          success: function(data) {
+          success: function (data) {
+
+              if (data == "null")
+              {
+                  this.setState({ AddressLine1: "" });
+                  this.setState({ AddressLine2: "" });
+                  this.setState({ AddressLine3: "" });
+                  this.setState({ AddressLine4: "" });
+                  this.setState({ AddressLine5: "" });
+                  this.setState({ PostalCode: "" });
+                  this.setState({ AddressID: "" });
+                  return;
+              }
+
               var obj = $.parseJSON(data);
               if (obj.addressLine1 != null)
-                this.setState({AddressLine1 : obj.addressLine1});
+                  this.setState({ AddressLine1: obj.addressLine1 });
+              else
+                  this.setState({ AddressLine1: "" });
               
               if (obj.addressLine2 != null)
-                this.setState({AddressLine2 : obj.addressLine2});
+                  this.setState({ AddressLine2: obj.addressLine2 });
+              else
+                  this.setState({ AddressLine2: "" });
               
               if (obj.addressLine3 != null)
-                this.setState({AddressLine3 : obj.addressLine3});
+                  this.setState({ AddressLine3: obj.addressLine3 });
+              else
+                  this.setState({ AddressLine3: "" });
               
               if (obj.addressLine4 != null)
-                this.setState({AddressLine4 : obj.addressLine4});
+                  this.setState({ AddressLine4: obj.addressLine4 });
+              else
+                  this.setState({ AddressLine4: "" });
               
               if (obj.addressLine5 != null)
-                this.setState({AddressLine5 : obj.addressLine5});
+                  this.setState({ AddressLine5: obj.addressLine5 });
+              else
+                  this.setState({ AddressLine5: "" });
               
               if (obj.postalCode != null)
-                this.setState({PostalCode : obj.postalCode});
+                  this.setState({ PostalCode: obj.postalCode });
+              else
+                  this.setState({ PostalCode: "" });
 
              if (obj.addressID != null)
-                this.setState({AddressID : obj.addressID});
+                 this.setState({ AddressID: obj.addressID });
+             else
+                 this.setState({ AddressID: "" });
 
           }.bind(this),
           error: function(xhr, status, err) {
@@ -116,16 +144,24 @@
               var obj = $.parseJSON(data);
               
                if (obj.Home != null)
-                this.setState({HomeNumber : obj.Home});
+                   this.setState({ HomeNumber: obj.Home });
+              else
+                   this.setState({ HomeNumber: "" });
               
               if (obj.CellPhone != null)
-                this.setState({CellNumber : obj.CellPhone});
+                  this.setState({ CellNumber: obj.CellPhone });
+              else
+                  this.setState({ CellNumber: "" });
               
               if (obj.WorkPhone != null)
-                this.setState({OfficeNumber : obj.WorkPhone});
+                  this.setState({ OfficeNumber: obj.WorkPhone });
+              else
+                  this.setState({ OfficeNumber: "" });
               
               if (obj.Email != null)
-                this.setState({Email : obj.Email});
+                  this.setState({ Email: obj.Email });
+              else
+                  this.setState({ Email: "" });
 
           }.bind(this),
           error: function(xhr, status, err) {
@@ -162,6 +198,20 @@
         });
     },
 
+    fetchUserOrganization: function (userID) {
+        $.ajax({
+            url: 'api/Organization/GetUserOrganizations/' + userID,
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+                this.setState({ UserOrg: data.data });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error('api/Organization/GetUserOrganizations/', status, err.toString());
+            }.bind(this)
+        });
+    },
+
     componentDidMount: function () {
        
         this.fetchOrgDetails(this.state.OrganizationID);
@@ -169,6 +219,7 @@
         this.fetchContactDetails(this.state.OrganizationID);
         this.fetchAccountTypes();
         this.fetchBankDetails(this.state.OrganizationID);
+        this.fetchUserOrganization(this.state.UserID);
     },
     
     registerUserPOST : function() {
@@ -350,10 +401,30 @@
 		console.log(this.state.OEM);		
 	},
 
+	updateOrganizationID: function (e) {	    
+
+	    var filtered = this.state.UserOrg.filter(function (el) {
+	        return el.Name === e.target.value;
+	    });
+
+	    var orgKey = filtered[0].Key;
+	    this.setState({ OrganizationID: orgKey });
+	    console.log(this.state.OrganizationID);
+
+	    this.fetchOrgDetails(orgKey);
+	    this.fetchAddressDetails(orgKey);
+	    this.fetchContactDetails(orgKey);	    
+	    this.fetchBankDetails(orgKey);
+	},
+
 	render: function() {
         var navBarSyle= {
               marginBottom:0
-            };
+        };
+
+        let optionItems = this.state.UserOrg.map((planet) =>
+            <option key={planet.Key }>{planet.Name}</option>
+            );
 
 		return (	
                 <div>		
@@ -367,6 +438,18 @@
 			                    <h1 className="page-header">Organization Details</h1>
 		                    </div>                
 	                    </div>
+
+                        <div className="row">	
+                            <form>	                   
+                            <div className="form-group">
+                                    <label>Organization</label>
+                                   <select className="form-control" onChange={this.updateOrganizationID}>
+                                       {optionItems}                                       
+                                   </select> 
+                            </div>	
+                            </form>
+                        </div>
+
                         <div className="row"> 
                             <ul className="nav nav-tabs">
 		                        <li className="active"><a href="#Details" data-toggle="tab" aria-expanded="true">Details</a>
@@ -820,6 +903,13 @@ var CustodianDetails = React.createClass({
         this.setState({ cell: e.target.value });       
     },
 
+    componentDidUpdate(prevProps) {
+        // Typical usage (don't forget to compare props):
+        if (this.props.OrganizationID !== prevProps.OrganizationID) {
+            this.loadData();
+        }
+    },
+
     custodianDetailsPOST: function () {
         console.log('POSTING FORM');
         $.ajax({
@@ -850,6 +940,7 @@ var CustodianDetails = React.createClass({
         $.ajax({
             url: 'api/Organization/CustodianDetails/' + this.props.OrganizationID,
             success: function (data) {
+                if (data.length > 0){
                 this.setState({ name: data[0].name });
                 this.setState({ surname: data[0].surname });
                 this.setState({ jobTitle: data[0].jobTitle });
@@ -857,6 +948,7 @@ var CustodianDetails = React.createClass({
                 this.setState({ email: data[0].email });
                 this.setState({ companyNumber: data[0].companyNumber });
                 this.setState({ cell: data[0].cell });
+                }
             }.bind(this)
         })
     },
@@ -973,6 +1065,13 @@ var OrganizationExpertise = React.createClass({
 	    this.fetchUserCategories(this.props.OrganizationID);
 	},
 
+	componentDidUpdate(prevProps) {
+	    // Typical usage (don't forget to compare props):
+	    if (this.props.OrganizationID !== prevProps.OrganizationID) {
+	        this.fetchUserCategories(this.props.OrganizationID);
+	    }
+	},
+
 	fetchUserCategories1 : function(org) {
 	    
         $.ajax({
@@ -1015,7 +1114,7 @@ var OrganizationExpertise = React.createClass({
 					$select.trigger('change');
                   }.bind(this),
                   error: function(xhr, status, err) {
-                    console.error('api/Organization/Post', status, err.toString());
+                      console.error('api/ExpertiseCategory/GetExpertiseCategory/ORG', status, err.toString());
                   }.bind(this)
             });
     },

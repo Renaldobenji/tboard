@@ -31,6 +31,7 @@ namespace TBoard.Data.Repository
         {
             var result = (from orgMap in this._dbContext.organizationmappings
                           join org in this._dbContext.organizations on orgMap.organizationID equals org.organizationID
+                          where orgMap.userID == userID
                           select org).ToList();
 
             return result;

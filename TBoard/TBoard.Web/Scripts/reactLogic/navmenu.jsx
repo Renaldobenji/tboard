@@ -126,6 +126,9 @@ var OrganizationMenu = React.createClass({
                <li>
 	                <a><i className="fa fa-bar-chart-o fa-fw"></i> Organization<span className="fa arrow"></span></a>
 	                <ul className="nav nav-second-level">
+                        <li>
+			                <a href="#orgCreate">Create</a>
+                        </li>
 		                <li>
 			                <a href="#organization">Details</a>
 		                </li>
@@ -134,10 +137,7 @@ var OrganizationMenu = React.createClass({
 		                </li>
 		                <li>
 			                <a href="#users">Users</a>
-		                </li>
-                         <li>
-			                <a href="#orgCreate">Create</a>
-                         </li>
+		                </li>                         
 	                </ul>
                 </li>
             )
