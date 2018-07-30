@@ -156,6 +156,16 @@ var Register = React.createClass({
 	    });
 	},
 
+	validateEmail: function (sEmail) {
+	    var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+	    if (filter.test(sEmail)) {
+	        return true;
+	    }
+	    else {
+	        return false;
+	    }
+	},
+
     registerUserPOST : function() {
         console.log('POSTING FORM');
 
@@ -179,6 +189,12 @@ var Register = React.createClass({
         if (manfields != '')
         {
             alert("Please fill in the following missing fields " + manfields);
+            return;
+        }
+
+        if (!this.validateEmail(this.state.Username))
+        {
+            alert("Please enter valid email address");
             return;
         }
 
@@ -229,6 +245,7 @@ var Register = React.createClass({
 	},
 	updateUsername: function (e) {
 	    this.setState({ Username: e.target.value });
+	    this.setState({ Email: e.target.value });
 	},
 	updateSurnameState : function(e){
 		this.setState({Surname : e.target.value});		
@@ -455,9 +472,9 @@ var RegisterPersonal = React.createClass({
                     <div class="card">
                             <form>
                         <div className="form-group">
-                            <label label for="Username" className="col-sm-3 control-label">Username</label>
+                            <label label for="Username" className="col-sm-3 control-label">Email</label>
                             <div className="col-sm-9" style={{margin:"inherit"}}>                                        
-                                <input id="Username" className="form-control" placeholder="Username" value={this.props.Username} onChange={this.props.updateUsername} />
+                                <input id="Username" className="form-control" placeholder="Email" value={this.props.Username} onChange={this.props.updateUsername} />
                             </div>                            
                         </div>
 						<div className="form-group">
@@ -526,13 +543,7 @@ var RegisterContactDetails = React.createClass({
 <div className="col-sm-9" style={{margin:"inherit"}}>
 	<input id="WorkNumber" className="form-control" placeholder="Work Number" value={this.props.officeNumber} onChange={this.props.updateOfficeNumber} />
 </div>
-						</div>
-						<div className="form-group" style={{display : this.props.email}}>
-                             <label label for="Email" className="col-sm-3 control-label">Email</label>
-<div className="col-sm-9" style={{margin:"inherit"}}>
-	<input id="Email" className="form-control" placeholder="Email" value={this.props.email} onChange={this.props.updateEmail} />
-</div>
-						</div>
+						</div>						
 					</form>
 				</div>
 			</div>

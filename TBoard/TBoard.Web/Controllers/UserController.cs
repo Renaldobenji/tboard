@@ -73,7 +73,7 @@ namespace TBoard.Web.Controllers
 
             if (!formData.Get("Email").Equals(""))
             {
-                this.emailQueueBusinessLogic.SendEmail("admin@Tenderboard.co.za", formData.Get("Email"), "Registration Complete", createEmailBody(formData.Get("Username"), formData.Get("Password")));
+                this.emailQueueBusinessLogic.SendEmail("support@tenderboard.co.za", formData.Get("Email"), "Registration Complete", createEmailBody(formData.Get("Username"), formData.Get("Password")));
             }
 
             return JsonConvert.SerializeObject(userResponse, Formatting.Indented,

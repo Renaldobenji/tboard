@@ -212,7 +212,7 @@ namespace TBoard.Web.Controllers
             if (expertiseOwnership.Count.Equals(0))
             {
                 //Send email to admin
-                this.emailQueueBusinessLogic.SendEmail("admin@Tenderboard.co.za", "admin@Tenderboard.co.za", "Request for Quotation", string.Format("There is no organization available to serve this request: {0}", rfq.reference));
+                this.emailQueueBusinessLogic.SendEmail("support@tenderboard.co.za", "support@tenderboard.co.za", "Request for Quotation", string.Format("There is no organization available to serve this request: {0}", rfq.reference));
                 return;
             }
 
@@ -220,7 +220,7 @@ namespace TBoard.Web.Controllers
             //Send out email to all subscribed to that category
             foreach (var e in expertiseOwnership)
             {                
-                this.emailQueueBusinessLogic.SendEmail("admin@Tenderboard.co.za",e.communicationLine1,"Request for Quotation", createEmailBody(rfq.reference, sitURL + "admin#rfqbid/" + rfq.reference));
+                this.emailQueueBusinessLogic.SendEmail("support@tenderboard.co.za", e.communicationLine1,"Request for Quotation", createEmailBody(rfq.reference, sitURL + "admin#rfqbid/" + rfq.reference));
             } 
         }
 
@@ -286,7 +286,7 @@ namespace TBoard.Web.Controllers
             var rfqOwner = this.quoteBusinessLogic.GetQuoteOwnerDetails(rfqReference).SingleOrDefault();
 
             var sitURL = configBusinessLogic.GetConfigValue("SiteURL");
-            this.emailQueueBusinessLogic.SendEmail("admin@Tenderboard.co.za", rfqOwner.communicationLine1, "TenderBoard - Quotation Recieved", createEmailBody(sitURL+ "Admin#rfqdetail/" + rfqReference));            
+            this.emailQueueBusinessLogic.SendEmail("support@tenderboard.co.za", rfqOwner.communicationLine1, "TenderBoard - Quotation Recieved", createEmailBody(sitURL+ "Admin#rfqdetail/" + rfqReference));            
 
             var r = new
             {
@@ -498,8 +498,8 @@ namespace TBoard.Web.Controllers
             //Send Email
             foreach (var det in alertInformation)
             {
-                this.emailQueueBusinessLogic.SendEmail("bid@tboard.com", det.communicationLine1, "Quote Paid", createEmailBodyPaid(RFQReference));
-                this.emailQueueBusinessLogic.SendEmail("bid@tboard.com", "admin@tboard.com", "Quote Paid", createEmailBodyPaid(RFQReference));
+                this.emailQueueBusinessLogic.SendEmail("accounts@tenderboard.co.za", det.communicationLine1, "Quote Paid", createEmailBodyPaid(RFQReference));
+                this.emailQueueBusinessLogic.SendEmail("accounts@tenderboard.co.za", "accounts@tenderboard.co.za", "Quote Paid", createEmailBodyPaid(RFQReference));
             }
 
             var r = new

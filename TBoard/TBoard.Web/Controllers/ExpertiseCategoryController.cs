@@ -28,6 +28,8 @@ namespace TBoard.Web.Controllers
         [JWTTokenValidation]
         public HttpResponseMessage Get()
         {
+
+            
             var expertiseList = expertiseCategoryBusinessLogic.GetAll().ToList().SelectMany(x => x.expertisesubcategories).Select(y => new
             {
                 SubCategoryName = string.Format("{0} - {1}", y.expertisecategory.Name, y.Name),
@@ -81,9 +83,11 @@ namespace TBoard.Web.Controllers
             }
             else
             {
+                IList < string > array = new List<string>();
+               
                 var resp = new HttpResponseMessage()
                 {
-                    Content = new StringContent("{data:[]}")
+                    Content = new StringContent(JsonConvert.SerializeObject(array))
                 };
                 resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 return resp;

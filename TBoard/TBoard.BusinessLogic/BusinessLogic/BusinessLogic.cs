@@ -59,7 +59,7 @@ namespace TBoard.BusinessLogic.BusinessLogic
             }
 
             repository.Update(entity);
-            //unitOfWork.Commit();
+            unitOfWork.Commit();
         }
     }
 }
