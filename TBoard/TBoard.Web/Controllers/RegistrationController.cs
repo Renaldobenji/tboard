@@ -96,14 +96,14 @@ namespace TBoard.Web.Controllers
                         org = new organization();
                         org.name = formData.Get("OrganizationName");
                         org.organizationTypeID = 1;
-                        this.organizationBusinessLogic.Create(org);
+                        this.organizationBusinessLogic.Create(org);                       
                     }
                     else if (formData.Get("RegistrationType").Contains("CorporateSeller"))
                     {
                         org = new organization();
                         org.name = formData.Get("OrganizationName");
                         org.organizationTypeID = 2;
-                        this.organizationBusinessLogic.Create(org);
+                        this.organizationBusinessLogic.Create(org);                        
                     } 
                 }
 
@@ -116,7 +116,7 @@ namespace TBoard.Web.Controllers
                 {
                     userResponse = userBusinessLogic.CreateUser(formData.Get("Username"), formData.Get("Name"),
                         formData.Get("Surname"), formData.Get("Password"), "Mr", formData.Get("IDNumber"),
-                        org.organizationID, "", "");
+                        org.organizationID, "", "");                   
                 }
 
                 userBusinessLogic.AddUserToGroup(userResponse.UserID, formData.Get("RegistrationType"));

@@ -85,11 +85,7 @@ namespace TBoard.Web.Controllers
                 }
                 else
                 {
-                    homeContact.communicationLine1 = formData.Get("HomeNumber");
-                    homeContact.communicationtype.communicationTypeTLA = "HME";
-                    homeContact.owningType = formData.Get("OwnerType");
-                    homeContact.owningID = formData.Get("OrganizationID");
-
+                    addCommunicationBasedOnType(formData, orgID, "HomeNumber", "HME"); 
                 }
             }
 
@@ -107,10 +103,7 @@ namespace TBoard.Web.Controllers
                 }
                 else
                 {
-                    CellContact.communicationLine1 = formData.Get("CellNumber");
-                    CellContact.communicationtype.communicationTypeTLA = "CELL";
-                    CellContact.owningType = formData.Get("OwnerType");
-                    CellContact.owningID = formData.Get("OrganizationID");
+                    addCommunicationBasedOnType(formData, orgID, "CellNumber", "CELL");                   
 
                 }
             }
@@ -128,12 +121,8 @@ namespace TBoard.Web.Controllers
                     this.communicationBusinessLogic.Update(WorkContact);
                 }
                 else
-                {
-                    WorkContact.communicationLine1 = formData.Get("OfficeNumber");
-                    WorkContact.communicationtype.communicationTypeTLA = "WRK";
-                    WorkContact.owningType = formData.Get("OwnerType");
-                    WorkContact.owningID = formData.Get("OrganizationID");
-
+                { 
+                    addCommunicationBasedOnType(formData, orgID, "OfficeNumber", "WRK");
                 }
             }
             if (!String.IsNullOrEmpty(formData.Get("Email")))
@@ -149,14 +138,44 @@ namespace TBoard.Web.Controllers
                     this.communicationBusinessLogic.Update(EmailContact);
                 }
                 else
-                {
-                    EmailContact.communicationLine1 = formData.Get("Email");
-                    EmailContact.communicationtype.communicationTypeTLA = "EML";
-                    EmailContact.owningType = formData.Get("OwnerType");
-                    EmailContact.owningID = formData.Get("OrganizationID");
-
+                {                   
+                    addCommunicationBasedOnType(formData, orgID, "Email", "EML");
                 }
             }
+        }
+
+        private void addCommunicationBasedOnType(FormDataCollection formData, string orgID, string formField, string communicationType)
+        {
+            if (!string.IsNullOrEmpty(formData.Get(formField)))
+            {
+                this.addCommunication("ORG", orgID, formData.Get(formField), communicationType);
+            }
+        }
+
+        private void addCommunication(string owingType, string owningID, string communicationLine1,
+            string communicationType)
+        {
+            communication comm = new communication();
+            comm.owningType = owingType;
+            comm.owningID = owningID;
+            comm.communicationLine1 = communicationLine1;
+            if (communicationType.Equals("CELL"))
+            {
+                comm.communicationTypeID = 1;
+            }
+            else if (communicationType.Equals("WRK"))
+            {
+                comm.communicationTypeID = 2;
+            }
+            else if (communicationType.Equals("HME"))
+            {
+                comm.communicationTypeID = 3;
+            }
+            else if (communicationType.Equals("EML"))
+            {
+                comm.communicationTypeID = 4;
+            }
+            this.communicationBusinessLogic.Create(comm);
         }
 
         // PUT api/<controller>/5

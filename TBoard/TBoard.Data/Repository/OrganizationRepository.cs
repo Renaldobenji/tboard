@@ -37,9 +37,25 @@ namespace TBoard.Data.Repository
             return result;
         }
 
-        public organization GetOrganization(int organizationID)
+        public OrganizationDTO GetOrganization(int organizationID)
         {
-            return this._dbContext.organizations.Where(x => x.organizationID == organizationID).FirstOrDefault();
+            var org = (from x in this._dbContext.organizations
+                       where x.organizationID == organizationID
+                       select new OrganizationDTO()
+                       {
+                           organizationID = x.organizationID,
+                           name = x.name,
+                           oem = x.oem,
+                           registrationNumber = x.registrationNumber,
+                           taxNumber = x.taxNumber,
+                           tradingName = x.tradingName,
+                           vatNumber = x.vatNumber,
+
+                       }).FirstOrDefault();
+
+            return org;
+                
+                //this._dbContext.organizations.Where(x => x.organizationID == organizationID).FirstOrDefault();
         }
 
         public IList<custodian> GetCustodianDetails(int organizationID)

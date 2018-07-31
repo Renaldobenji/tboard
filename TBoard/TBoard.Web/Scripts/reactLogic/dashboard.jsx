@@ -308,6 +308,42 @@ var RFQCreateDashboard = React.createClass({
 }
 });
 
+
+var CommingSoon = React.createClass({
+
+    Navigate : function(){
+        routie('rfqrequest');
+    },
+
+    render: function() {
+
+        var navBarSyle= {
+            marginBottom:0
+        };
+
+        return (
+                  <div>		
+				    <nav className="navbar navbar-default navbar-static-top" role="navigation" style={navBarSyle}>
+	                    <NavHeader />
+                        <NavMenu />
+                    </nav>
+                    <div id="page-wrapper" >  
+                        <div className="vertical-center">
+                            <div className="row">
+		                    <div className="col-lg-12">
+			                    <div className="alert alert-info jumbotron"><h1 className="text-center">Coming Soon</h1></div>
+		                    </div>
+                            </div>
+                        </div>                     
+	                    
+                        </div>
+                    </div>
+            )
+}
+});
+
+
+
 var OrganizationCompleteness = React.createClass({
 
     getInitialState: function () {

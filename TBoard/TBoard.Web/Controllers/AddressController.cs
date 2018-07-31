@@ -45,8 +45,25 @@ namespace TBoard.Web.Controllers
         [JWTTokenValidation]
         public void Post(FormDataCollection formData)
         {
+            address address = new address();
+            var orgID = formData.Get("OrganizationID");           
+            if (string.IsNullOrEmpty(formData.Get("AddressID")))
+            {                
+                address.addressLine1 = formData.Get("AddressLine1");
+                address.addressLine2 = formData.Get("AddressLine2");
+                address.addressLine3 = formData.Get("AddressLine3");
+                address.addressLine4 = formData.Get("AddressLine4");
+                address.addressLine5 = formData.Get("AddressLine5");
+                address.postalCode = formData.Get("PostalCode");
+                address.owningType = "ORG";
+                address.owningID = orgID;
+                address.addressTypeID = 1;//Physical Address
+                this.addressBusinessLogic.Create(address);
+                return;
+            }
+
             int addressID = Convert.ToInt32(formData.Get("AddressID"));
-            var address = addressBusinessLogic.FindBy(x => x.addressID == addressID).FirstOrDefault();
+            address = addressBusinessLogic.FindBy(x => x.addressID == addressID).FirstOrDefault();
             address.addressLine1 = formData.Get("AddressLine1");
             address.addressLine2 = formData.Get("AddressLine2");
             address.addressLine3 = formData.Get("AddressLine3");

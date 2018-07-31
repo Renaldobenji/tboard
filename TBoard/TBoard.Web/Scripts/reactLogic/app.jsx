@@ -182,49 +182,49 @@ routie({
         ,
         'rfqrequest': function () {
             ReactDOM.render(
-				React.createElement(RFQRequest, null), document.getElementById('container')
+				React.createElement(CommingSoon, null), document.getElementById('container')
 			);
         }
         ,
         'rfqmyrequest': function () {
             ReactDOM.render(
-				React.createElement(MyRFQ, null), document.getElementById('container')
+				React.createElement(CommingSoon, null), document.getElementById('container')
 			);
         }
         ,
         'rfqallrequest': function () {
             ReactDOM.render(
-				React.createElement(MyAllRFQ, null), document.getElementById('container')
+				React.createElement(CommingSoon, null), document.getElementById('container')
 			);
         }
         ,
         'rfqmyactivebids': function () {
             ReactDOM.render(
-				React.createElement(MyActiveBids, null), document.getElementById('container')
+				React.createElement(CommingSoon, null), document.getElementById('container')
 			);
         }
          ,
         'myacceptedquotes': function () {
             ReactDOM.render(
-				React.createElement(MyAcceptedQuotes, null), document.getElementById('container')
+				React.createElement(CommingSoon, null), document.getElementById('container')
 			);
         }
         ,
         'bidswon': function () {
             ReactDOM.render(
-				React.createElement(BidsWon, null), document.getElementById('container')
+				React.createElement(CommingSoon, null), document.getElementById('container')
 			);
         }
         ,
         'bidslost': function () {
             ReactDOM.render(
-				React.createElement(BidsLost, null), document.getElementById('container')
+				React.createElement(CommingSoon, null), document.getElementById('container')
 			);
         }
          ,
         'report': function () {
             ReactDOM.render(
-				React.createElement(ReportFilter, null), document.getElementById('container')
+				React.createElement(CommingSoon, null), document.getElementById('container')
 			);
         }
         ,

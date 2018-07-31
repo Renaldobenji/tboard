@@ -19,7 +19,7 @@ namespace TBoard.BusinessLogic.BusinessLogic
             this.repository = repository;
         }
 
-        public organization GetOrganization(int organizationID)
+        public OrganizationDTO GetOrganization(int organizationID)
         {
            return this.repository.GetOrganization(organizationID);
            

@@ -823,7 +823,18 @@ var OrganizationContact = React.createClass({
 });
 
 /*Register Page*/
-var OrganizationBankDetails = React.createClass({	
+var OrganizationBankDetails = React.createClass({
+
+    componentDidUpdate(prevProps) {
+        // Typical usage (don't forget to compare props):
+        if (this.props.OrganizationID !== prevProps.OrganizationID) {
+            this.props.accountName = "";
+            this.props.accountNumber = "";
+            this.props.branchCode = "";
+            this.props.branchName = ""; t
+        }
+    },
+
 	render: function(){
 		return (	
 		            <div className="panel panel-default">
@@ -937,6 +948,13 @@ var CustodianDetails = React.createClass({
     },
 
     loadData: function () {
+        this.setState({ name: "" });
+        this.setState({ surname: "" });
+        this.setState({ jobTitle: "" });
+        this.setState({ landline: "" });
+        this.setState({ email: "" });
+        this.setState({ companyNumber: "" });
+        this.setState({ cell: "" });
         $.ajax({
             url: 'api/Organization/CustodianDetails/' + this.props.OrganizationID,
             success: function (data) {
