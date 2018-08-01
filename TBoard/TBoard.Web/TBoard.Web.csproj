@@ -247,6 +247,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Attributes\JWTTokenValidationAttribute.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\RegistrationCompleteController.cs" />
     <Compile Include="Controllers\ActivationController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
@@ -423,6 +424,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Activation\Index.cshtml" />
     <Content Include="Views\RegistrationComplete\Index.cshtml" />
+    <Content Include="Views\Contact\Index.cshtml" />
     <Resource Include="Content\EmailTemplates\bidaccepted.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

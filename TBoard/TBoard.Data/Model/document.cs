@@ -19,6 +19,8 @@ namespace TBoard.Data.Model
         public Nullable<System.DateTime> dateCreated { get; set; }
         public string documentPath { get; set; }
         public Nullable<int> organizationID { get; set; }
+        public Nullable<System.DateTime> expiryDate { get; set; }
+        public Nullable<sbyte> verified { get; set; }
     
         public virtual documenttype documenttype { get; set; }
         public virtual organization organization { get; set; }

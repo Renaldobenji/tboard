@@ -23,6 +23,7 @@ namespace TBoard.Data.Model
         public int documentTypeID { get; set; }
         public string documentCode { get; set; }
         public string documentDescription { get; set; }
+        public Nullable<int> expiryTermMonths { get; set; }
     
         public virtual ICollection<documentrequirement> documentrequirements { get; set; }
         public virtual ICollection<document> documents { get; set; }

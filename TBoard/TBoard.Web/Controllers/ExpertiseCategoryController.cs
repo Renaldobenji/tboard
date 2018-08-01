@@ -30,14 +30,16 @@ namespace TBoard.Web.Controllers
         {
 
             
-            var expertiseList = expertiseCategoryBusinessLogic.GetAll().ToList().SelectMany(x => x.expertisesubcategories).Select(y => new
+           /* var expertiseList = expertiseCategoryBusinessLogic.GetAll().ToList().SelectMany(x => x.expertisesubcategories).Select(y => new
             {
                 SubCategoryName = string.Format("{0} - {1}", y.expertisecategory.Name, y.Name),
                 ExpertiseSubCategoryID = y.ExpertiseSubCategoryID
-            });
-            
-            /*.Select();*/
-            var response = new
+            });*/
+
+            var expertiseList = expertiseCategoryBusinessLogic.GetExpertise();
+
+           /*.Select();*/
+           var response = new
             {
                 data = expertiseList.OrderBy(i => i.SubCategoryName)
             };

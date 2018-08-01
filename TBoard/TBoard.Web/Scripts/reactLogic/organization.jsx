@@ -454,16 +454,16 @@
                             <ul className="nav nav-tabs">
 		                        <li className="active"><a href="#Details" data-toggle="tab" aria-expanded="true">Details</a>
 		                        </li>
-		                        <li className=""><a href="#Contact" data-toggle="tab" aria-expanded="false">Contact</a>
+		                        <li className=""><a href="#Contact" data-toggle="tab" aria-expanded="false">Contact Directory</a>
 		                        </li>
 		                        <li className=""><a href="#Address" data-toggle="tab" aria-expanded="false">Address</a>
 		                        </li>
                                 <li className=""><a href="#BankDetails" data-toggle="tab" aria-expanded="false">Bank Details</a>
 		                        </li>
                                 <li className="">
-                                <a href="#Custodian" data-toggle="tab" aria-expanded="false">Custodian</a>
+                                <a href="#Custodian" data-toggle="tab" aria-expanded="false">Administrator</a>
                                 </li>                                
-                                <li className=""><a href="#Expertise" data-toggle="tab" aria-expanded="false">Expertise</a>
+                                <li className=""><a href="#Expertise" data-toggle="tab" aria-expanded="false">Commodities and Services</a>
 		                        </li>
 	                        </ul>	
 	                        <div className="tab-content">
@@ -792,7 +792,7 @@ var OrganizationContact = React.createClass({
 		return (	
 		            <div className="panel panel-default">
 			            <div className="panel-heading">
-				            Contact Information
+				            Contact Directory
 			            </div>
 			            <div className="panel-body">
 				            <form>
@@ -979,7 +979,7 @@ var CustodianDetails = React.createClass({
         return (	
 		            <div className="panel panel-default">
 			            <div className="panel-heading">
-				            Custodian Details
+				            Administrator
 			            </div>
 			            <div className="panel-body">
 				            <form>
@@ -1122,7 +1122,11 @@ var OrganizationExpertise = React.createClass({
                   type: 'GET',
                   dataType: 'json',
                   cache: false,
-                  success: function(data) {
+                  success: function (data) {
+                      if (data.length == 0)
+                      {
+                          return;
+                      }
 					var $select = $('#ExpertiseSelect');
 					for (i = 0; i < data.data.length; i++) {
 					    var $option = $('#ExpertiseSelect option[value = '+data.data[i].Key+']');

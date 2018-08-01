@@ -23,6 +23,11 @@ namespace TBoard.Data.Repository
             
         }
 
+        public IList<sps_GetSubCategories_Result> GetExpertise()
+        {
+            return this._dbContext.sps_GetSubCategories().ToList() ;
+        }
+
         public IList<SearchSubCategory> GetExpertiseLike(string q)
         {
             var var = (from x in this._dbContext.expertisesubcategories
