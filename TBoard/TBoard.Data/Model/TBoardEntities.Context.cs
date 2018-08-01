@@ -12,6 +12,7 @@ namespace TBoard.Data.Model
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+   
     using System.Data.Entity.Core.Objects;
 
     public partial class TBoardEntities : DbContext
@@ -167,6 +168,11 @@ namespace TBoard.Data.Model
                 new ObjectParameter("rfqReference", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sps_GetHighestBidsForQuote_Result>("sps_GetHighestBidsForQuote", rfqReferenceParameter);
+        }
+    
+        public virtual ObjectResult<sps_GetSubCategories_Result> sps_GetSubCategories()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sps_GetSubCategories_Result>("sps_GetSubCategories");
         }
     }
 }

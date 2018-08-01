@@ -130,6 +130,8 @@
           <Property Name="organizationID" Type="int" />
           <Property Name="documentPath" Type="varchar" MaxLength="5000" />
           <Property Name="dateCreated" Type="datetime" Precision="0" />
+          <Property Name="expiryDate" Type="datetime" Precision="0" />
+          <Property Name="verified" Type="tinyint" />
         </EntityType>
         <EntityType Name="documenttypes">
           <Key>
@@ -138,6 +140,7 @@
           <Property Name="documentTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="documentCode" Type="varchar" MaxLength="45" />
           <Property Name="documentDescription" Type="varchar" MaxLength="45" />
+          <Property Name="expiryTermMonths" Type="int" />
         </EntityType>
         <EntityType Name="emailqueue">
           <Key>
@@ -551,6 +554,7 @@
         <Function Name="sps_GetRolesForUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tboard">
           <Parameter Name="userID" Type="int" Mode="In" />
         </Function>
+        <Function Name="sps_GetSubCategories" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="tboard" />
         <EntityContainer Name="TBoardModelStoreContainer">
           <EntitySet Name="address" EntityType="Self.address" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="addresstype" EntityType="Self.addresstype" Schema="tboard" store:Type="Tables" />
@@ -773,6 +777,7 @@
           </FunctionImport>
           <EntitySet Name="metadatas" EntityType="TBoardModel.metadata" />
           <EntitySet Name="organizationmappings" EntityType="TBoardModel.organizationmapping" />
+          <FunctionImport Name="sps_GetSubCategories" ReturnType="Collection(TBoardModel.sps_GetSubCategories_Result)" />
         </EntityContainer>
         <EntityType Name="address">
           <Key>
@@ -961,6 +966,7 @@
           <Property Type="String" Name="documentDescription" MaxLength="45" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="documentrequirements" Relationship="TBoardModel.documentTypeID" FromRole="documenttype" ToRole="documentrequirement" />
           <NavigationProperty Name="documents" Relationship="TBoardModel.documentType1" FromRole="documenttype" ToRole="document" />
+          <Property Name="expiryTermMonths" Type="Int32" />
         </EntityType>
         <Association Name="documentTypeID">
           <End Type="TBoardModel.documenttype" Role="documenttype" Multiplicity="0..1" />
@@ -997,6 +1003,8 @@
           <Property Type="String" Name="documentPath" MaxLength="5000" FixedLength="false" Unicode="false" />
           <Property Type="Int32" Name="organizationID" />
           <NavigationProperty Name="organization" Relationship="TBoardModel.orgID" FromRole="document" ToRole="organization" />
+          <Property Name="expiryDate" Type="DateTime" />
+          <Property Name="verified" Type="SByte" />
         </EntityType>
         <Association Name="documentType1">
           <End Type="TBoardModel.documenttype" Role="documenttype" Multiplicity="0..1" />
@@ -1390,6 +1398,10 @@
           <Property Name="userID" Type="Int32" />
           <Property Name="created" Type="DateTime" />
         </EntityType>
+        <ComplexType Name="sps_GetSubCategories_Result" >
+          <Property Type="String" Name="SubCategoryName" Nullable="false" />
+          <Property Type="Int32" Name="ExpertiseSubCategoryID" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1526,6 +1538,7 @@
           <EntitySetMapping Name="documenttypes">
             <EntityTypeMapping TypeName="TBoardModel.documenttype">
               <MappingFragment StoreEntitySet="documenttypes">
+                <ScalarProperty Name="expiryTermMonths" ColumnName="expiryTermMonths" />
                 <ScalarProperty Name="documentDescription" ColumnName="documentDescription" />
                 <ScalarProperty Name="documentCode" ColumnName="documentCode" />
                 <ScalarProperty Name="documentTypeID" ColumnName="documentTypeID" />
@@ -1535,6 +1548,8 @@
           <EntitySetMapping Name="documents">
             <EntityTypeMapping TypeName="TBoardModel.document">
               <MappingFragment StoreEntitySet="documents">
+                <ScalarProperty Name="verified" ColumnName="verified" />
+                <ScalarProperty Name="expiryDate" ColumnName="expiryDate" />
                 <ScalarProperty Name="organizationID" ColumnName="organizationID" />
                 <ScalarProperty Name="documentPath" ColumnName="documentPath" />
                 <ScalarProperty Name="dateCreated" ColumnName="dateCreated" />
@@ -1817,6 +1832,11 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sps_GetSubCategories" FunctionName="TBoardModel.Store.sps_GetSubCategories">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TBoardModel.sps_GetSubCategories_Result" />
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
