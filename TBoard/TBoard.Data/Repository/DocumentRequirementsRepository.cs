@@ -25,5 +25,6 @@ namespace TBoard.Data.Repository
             var result = this._dbContext.sps_GetOutstandingDocumentRequirements(organizationID).ToList();
             return result;
         }
+
     }
 }

@@ -45,11 +45,33 @@ namespace TBoard.Web.Controllers
 
         }
 
-        [Route("api/Document/{organizationID}")]
         [JWTTokenValidation]
-        public HttpResponseMessage Get(int organizationID)
+        [Route("api/Document/GetOrganizationDocuments")]
+        public HttpResponseMessage GetOrganizationDocuments()
+        {            
+            var result = this.documentBusinessLogic.GetOrganizationDocuments(Convert.ToInt32(HttpContext.Current.Request.Headers["OrganizationID"]));
+
+            var response = new
+            {
+                data = result
+            };
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(response))
+            };
+
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            return resp;
+
+        }
+
+
+        [Route("api/Document")]
+        [JWTTokenValidation]
+        public HttpResponseMessage Get()
         {
-            var result = this.documentBusinessLogic.FindBy(x => x.organizationID == organizationID).ToList();
+            int orgID = Convert.ToInt32(HttpContext.Current.Request.Headers["OrganizationID"]);
+            var result = this.documentBusinessLogic.FindBy(x => x.organizationID == orgID).ToList();
 
             var documents = from x in result
                             select new
@@ -58,7 +80,10 @@ namespace TBoard.Web.Controllers
                                     documentTypeID = x.documentTypeID,
                                     documentTypeCode = x.documenttype.documentCode,
                                     documentDescription = x.documenttype.documentDescription,
-                                    dateCreated = x.dateCreated
+                                    dateCreated = x.dateCreated,
+                                    expiryDate = x.expiryDate,
+                                    verified = (x.verified == 1 ? "TRUE" : "FALSE")
+
                                 };
 
             var response = new

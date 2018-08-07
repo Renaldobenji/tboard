@@ -8,12 +8,30 @@ using TBoard.Data.Model;
 
 namespace TBoard.Data.Repository
 {
-    public class BankAccountRepository : Repository<bankaccountdetail>
+   
+    public class DocumentRepository : Repository<document>
     {
-        public BankAccountRepository(TBoardEntities dbContext)
-            :base(dbContext)
+        public DocumentRepository(TBoardEntities dbContext)
+            : base(dbContext)
         {
-            
+
+        }
+
+        public IList<OrganizationDocumentsDTO> GetOrganizationDocuments(int orgID)
+        {
+            var entities = (from x in this._dbContext.documents
+                            where x.organizationID == orgID
+                            select new OrganizationDocumentsDTO()
+                            {
+                                documentID = x.documentID,
+                                dateCreated = x.dateCreated,
+                                documenttype = x.documenttype.documentDescription,
+                                expiryDate = x.expiryDate,
+                                verified = x.verified,
+                            }).ToList();
+
+            return entities;
+
         }
     }
 }

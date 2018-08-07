@@ -8,12 +8,13 @@ using TBoard.Data.Model;
 
 namespace TBoard.Data.Repository
 {
-    public class DocumentRepository : Repository<document>
+    public class BankAccountRepository : Repository<bankaccountdetail>
     {
-        public DocumentRepository(TBoardEntities dbContext)
-            :base(dbContext)
+        public BankAccountRepository(TBoardEntities dbContext)
+            : base(dbContext)
         {
-            
+
         }
     }
+
 }

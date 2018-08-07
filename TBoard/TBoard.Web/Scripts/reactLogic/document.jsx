@@ -154,38 +154,63 @@ var DocumentRequirements = React.createClass({
 
 
 /*Register Page*/
-var DocumentList = React.createClass({    
+var DocumentList = React.createClass({
 
-    componentDidMount: function() {
+    getInitialState: function () {
+        return { data: [] }
+    },
 
-        $('#documentTable').DataTable( {
-            ajax: {
-                    "url": 'api/Document/' + this.props.OrganizationID
-                }
-                ,"columns": [
-                                { "data": "documentTypeCode" },
-                                { "data": "documentDescription" },
-                                { "data": "dateCreated" }
-                            ]
-        } );
+    loadData: function () {
+        $.ajax({           
+            url: 'api/Document/' ,
+            success: function (data) {
+                this.setState({ data: data.data });
+            }.bind(this)
+        })
+    },
+
+    componentWillMount: function () {
+        this.loadData();
     },
     	
-	render: function(){
+    render: function(){
         var navBarSyle= {
-              marginBottom:0
-            };
-	    
+            marginBottom:0
+        };            
+
+        function actionsFormatter(cell, row) {
+            return <ExpiryView verified={row.verified }/>;
+        }
         
-		return (
-	            <table id="documentTable" className="table table-striped table-bordered table-hover dataTable no-footer dtr-inline" width="100%" role="grid">
-                    <thead>
-                        <tr>
-                            <th>Document Type Code</th>
-                            <th>Document Description</th>
-                            <th>Created</th>
-                        </tr>
-                    </thead>
-                </table>
+        return (
+                    <div className="col-lg-12">
+				        <BootstrapTable data={this.state.data} striped={true} hover={true} pagination={true} search={true}>
+                          <TableHeaderColumn isKey={true} dataField="documentTypeCode" dataSort={true}>documentTypeCode</TableHeaderColumn>
+                          <TableHeaderColumn dataField="documentDescription" dataSort={true}>documentDescription</TableHeaderColumn>
+                          <TableHeaderColumn dataField="dateCreated" dataSort={true}>dateCreated</TableHeaderColumn>
+                          <TableHeaderColumn dataField="expiryDate" dataSort={true}>expiryDate</TableHeaderColumn>                          
+                          <TableHeaderColumn dataFormat={actionsFormatter}>verified</TableHeaderColumn>
+				        </BootstrapTable>
+			        </div>
+                
 		);
-	}
+    }
+});
+
+var ExpiryView = React.createClass({
+
+    render: function () {
+        
+        return (
+            <div>
+                { this.props.verified == "TRUE" ?
+                     (<button className="btn btn-outline btn btn-success btn-sm">Verified</button>) :
+                (                <button className="btn btn btn-danger btn-sm">Not Verified</button>)
+                }
+
+				
+            </div>      
+            
+		)
+    }
 });

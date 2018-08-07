@@ -13,6 +13,8 @@ namespace TBoard.Web.Attributes
     public class JWTTokenValidationAttribute : ActionFilterAttribute
     {
         public string Roles { get; set; }
+        public string OrganizationID { get; set; }
+        public string UserID { get; set; }
 
         public JWTTokenValidationAttribute()
         {
@@ -45,6 +47,12 @@ namespace TBoard.Web.Attributes
                 SecurityToken validatedToken;
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var claimsCollection = tokenHandler.ValidateToken(jwtToken, tokenValidationParameters, out validatedToken);
+
+                OrganizationID = claimsCollection.FindFirst("OrganizationID").Value;
+                UserID = claimsCollection.FindFirst("UserID").Value;
+
+                HttpContext.Current.Request.Headers.Add("OrganizationID", OrganizationID);
+                HttpContext.Current.Request.Headers.Add("UserID", UserID);
 
                 if (!String.IsNullOrEmpty(Roles))
                 { 

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TBoard.Data.Interfaces;
 using TBoard.Data.Repository;
+using TBoard.Data.Model;
 
 namespace TBoard.BusinessLogic.BusinessLogic
 {
@@ -17,6 +18,11 @@ namespace TBoard.BusinessLogic.BusinessLogic
             : base(unitOfWork, repository)
         {
             this.repository = repository;
+        }
+
+        public IList<OrganizationDocumentsDTO> GetOrganizationDocuments(int orgID)
+        {
+            return repository.GetOrganizationDocuments(orgID);
         }
     }
 }
