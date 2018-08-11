@@ -1,0 +1,30 @@
+﻿@model IEnumerable<TBoard.Web.Models.VerifyDocuments>  
+
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "_Layout.cshtml";
+}
+
+<br/>
+
+<h1 className="page-header">Verify Documents</h1>
+
+
+<br/>
+<table class="table table-bordered table-responsive table-hover">
+    <tr>       
+        <th>OrganizationName</th>
+        <th>DocumentType</th>
+        <th>DocumentURL</th>       
+        <th>Verified</th>        
+    </tr>
+    @foreach (var d in Model)
+    {
+        <tr>           
+            <td>@d.OrganizationName</td>
+            <td>@d.DocumentType</td>
+            <td>@d.DocumentURL</td>            
+            <td>@d.Verified</td>
+        </tr>
+    }
+</table>
