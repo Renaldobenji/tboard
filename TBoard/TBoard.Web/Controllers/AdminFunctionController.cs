@@ -7,6 +7,14 @@ using System.Web.Http;
 using System.Web.Mvc;
 using TBoard.Web.Models;
 using TBoard.BusinessLogic.BusinessLogic;
+using TBoard.Data.Interfaces;
+using TBoard.Data.Model;
+using TBoard.Data.Repository;
+using Unity.WebApi;
+using TBoard.Web.Services;
+using TBoard.Web.Controllers;
+using System.Net.Http.Formatting;
+using System.IO;
 
 namespace TBoard.Web.Controllers
 {
@@ -17,12 +25,14 @@ namespace TBoard.Web.Controllers
         private DocumentRequirementBusinessLogic documentRequirementBusinessLogic;
         private DocumentBusinessLogic documentBusinessLogic;
         ConfigBusinessLogic configBusinesslogic;
-        public AdminFunctionController(DocumentRequirementBusinessLogic documentRequirementBusinessLogic, DocumentBusinessLogic documentBusinessLogic, ConfigBusinessLogic configBusinesslogic)
+        private TBoardEntities entities;
+        public AdminFunctionController()
         {
-            this.documentRequirementBusinessLogic = documentRequirementBusinessLogic;
-            this.documentBusinessLogic = documentBusinessLogic;
-            this.configBusinesslogic = configBusinesslogic;
+            entities = new TBoardEntities();          
+            this.documentBusinessLogic = new DocumentBusinessLogic(new UnitOfWork(entities),new DocumentRepository(entities));
+            this.configBusinesslogic = new ConfigBusinessLogic(new UnitOfWork(entities),new ConfigRepository(entities)); 
         }
+    
 
         public ActionResult Index()
         {
@@ -32,27 +42,54 @@ namespace TBoard.Web.Controllers
         
         public ActionResult VerifyDocuments()
         {
-            verifyDocuments = new List<VerifyDocuments>()
+
+            verifyDocuments = documentBusinessLogic.GetUnverifiedDocuments().Select(x => new VerifyDocuments()
             {
-                new Models.VerifyDocuments()
-                {
-                    DocumentType = "DocumentType",
-                    DocumentURL = "DocumentURL",
-                    OrganizationID = 1,
-                    OrganizationName = "OrganizationName",
-                    Verified  = true
-                },
-                new Models.VerifyDocuments()
-                {
-                    DocumentType = "DocumentURL",
-                    DocumentURL = "DocumentType",
-                    OrganizationID = 1,
-                    OrganizationName = "OrganizationName",
-                    Verified  = false
-                }
-            };
+                DocumentType = x.documenttype,
+                DocumentID = x.documentID.ToString(),
+                OrganizationID = x.organizationID,
+                OrganizationName = x.organizationName,
+                DocumentURL = x.documentID.ToString(),
+                Verified = x.verified
+            }).ToList();            
 
             return View(verifyDocuments);
         }
+
+        public class VerifyDocumentViewModel
+        {
+            public string DocumentID { get; set; }
+        }
+
+        [System.Web.Http.HttpPost]
+        public ActionResult VerifyDocument(VerifyDocumentViewModel formData)
+        {
+            int documentID = Convert.ToInt32(formData.DocumentID);
+            var result = this.documentBusinessLogic.VerifyDocument(documentID);
+
+
+            return Redirect("VerifyDocuments");
+        }
+
+        [System.Web.Http.HttpPost]
+        public FileStreamResult DownloadDocument(VerifyDocumentViewModel formData)
+        {
+            string storageDetails;
+            using (TBoardEntities entities = new TBoardEntities())
+            {
+                storageDetails = entities.configs.Where(x => x.name == "StorageConnectionString").Select(y => y.value).FirstOrDefault();
+            }
+
+
+            int documentID = Convert.ToInt32(formData.DocumentID);
+            var result = this.documentBusinessLogic.GetDocument(documentID);
+
+            FileStream fs = new FileStream(storageDetails + result, FileMode.Open, FileAccess.Read);
+            return File(fs, "application/octet-stream", result);
+
+            
+        }
+
+
     }
 }
