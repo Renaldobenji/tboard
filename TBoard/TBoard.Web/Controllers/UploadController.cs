@@ -3,6 +3,7 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -40,7 +41,7 @@ namespace TBoard.Web.Controllers
 
         [System.Web.Http.HttpPost]
         [JWTTokenValidation]
-        public HttpResponseMessage PostForm()
+        public HttpResponseMessage PostFormCloud()
         {
             try
             {
@@ -90,8 +91,62 @@ namespace TBoard.Web.Controllers
             }
 
             return new HttpResponseMessage(HttpStatusCode.OK);
-        }        
+        }
 
+
+        [System.Web.Http.HttpPost]
+        [JWTTokenValidation]
+        public HttpResponseMessage PostForm()
+        {
+            try
+            {
+                string storageDetails;
+                using (TBoardEntities entities = new TBoardEntities())
+                {
+                    storageDetails = entities.configs.Where(x => x.name == "StorageConnectionString").Select(y => y.value).FirstOrDefault();
+                }
+
+                var httpRequest = System.Web.HttpContext.Current.Request;
+                if (httpRequest.Files.Count > 0)
+                {
+                    foreach (string file in httpRequest.Files)
+                    {
+                        var guiidName = string.Format("{0}.{1}", Guid.NewGuid().ToString(), httpRequest.Files[file].FileName.Split('.')[1]);
+
+                        byte[] fileData = null;
+                        using (var binaryReader = new BinaryReader(httpRequest.Files[file].InputStream))
+                        {
+                            fileData = binaryReader.ReadBytes(Request.Files[file].ContentLength);
+                        }
+                       
+                         // Create the file.
+                        using (FileStream fs = System.IO.File.Create(storageDetails+ guiidName))
+                        {                            
+                            // Add some information to the file.
+                            fs.Write(fileData, 0, fileData.Length);
+                        };
+
+                        using (TBoardEntities entities = new TBoardEntities())
+                        {
+                            entities.documents.Add(new document()
+                            {
+                                organizationID = Convert.ToInt32(httpRequest.Form["OrganizationID"]),
+                                dateCreated = DateTime.Now,
+                                documentTypeID = Convert.ToInt32(httpRequest.Form["DocumentType"]),
+                                documentPath = guiidName
+                            });
+                            entities.SaveChanges();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return new HttpResponseMessage(HttpStatusCode.OK);
+        }
         public class UploadViewModel
         {
             public Dictionary<string, string> DocumentTypes { get; set; }

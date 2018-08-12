@@ -7,6 +7,7 @@ using TBoard.Data.Model;
 using TBoard.Data.Repository;
 using Unity.WebApi;
 using TBoard.Web.Services;
+using TBoard.Web.Controllers;
 
 namespace TBoard.Web
 {
@@ -53,12 +54,14 @@ namespace TBoard.Web
 
             container.RegisterType<BankAccountRepository, BankAccountRepository>();
             container.RegisterType<BankAccountTypesRepository, BankAccountTypesRepository>();
-            
+
+            container.RegisterType<AdminFunctionController, AdminFunctionController>();
+
             // register all your components with the container here
             // it is NOT necessary to register your controllers
-            
+
             // e.g. container.RegisterType<ITestService, TestService>();
-            
+
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }
     }

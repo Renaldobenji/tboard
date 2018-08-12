@@ -131,7 +131,7 @@
           <Property Name="documentPath" Type="varchar" MaxLength="5000" />
           <Property Name="dateCreated" Type="datetime" Precision="0" />
           <Property Name="expiryDate" Type="datetime" Precision="0" />
-          <Property Name="verified" Type="tinyint" />
+          <Property Name="verified" Type="datetime" Precision="0" />
         </EntityType>
         <EntityType Name="documenttypes">
           <Key>
@@ -232,6 +232,7 @@
           <Property Name="taxNumber" Type="varchar" MaxLength="150" />
           <Property Name="organizationTypeID" Type="int" />
           <Property Name="oem" Type="bit" />
+          <Property Name="verified" Type="datetime" Precision="0" />
         </EntityType>
         <EntityType Name="organizationmapping">
           <Key>
@@ -863,6 +864,7 @@
           <NavigationProperty Name="organizationtype" Relationship="TBoardModel.orgType" FromRole="organization" ToRole="organizationtypes" />
           <NavigationProperty Name="documents" Relationship="TBoardModel.orgID" FromRole="organization" ToRole="document" />
           <Property Type="Boolean" Name="oem" />
+          <Property Name="verified" Type="DateTime" />
         </EntityType>
         <EntityType Name="organizationtype">
           <Key>
@@ -1004,7 +1006,7 @@
           <Property Type="Int32" Name="organizationID" />
           <NavigationProperty Name="organization" Relationship="TBoardModel.orgID" FromRole="document" ToRole="organization" />
           <Property Name="expiryDate" Type="DateTime" />
-          <Property Name="verified" Type="SByte" />
+          <Property Name="verified" Type="DateTime" />
         </EntityType>
         <Association Name="documentType1">
           <End Type="TBoardModel.documenttype" Role="documenttype" Multiplicity="0..1" />
@@ -1481,6 +1483,7 @@
           <EntitySetMapping Name="organizations">
             <EntityTypeMapping TypeName="TBoardModel.organization">
               <MappingFragment StoreEntitySet="organization">
+                <ScalarProperty Name="verified" ColumnName="verified" />
                 <ScalarProperty Name="oem" ColumnName="oem" />
                 <ScalarProperty Name="organizationID" ColumnName="organizationID" />
                 <ScalarProperty Name="name" ColumnName="name" />

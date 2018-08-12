@@ -11,20 +11,38 @@
 
 
 <br/>
+
 <table class="table table-bordered table-responsive table-hover">
-    <tr>       
+    <tr>
         <th>OrganizationName</th>
         <th>DocumentType</th>
-        <th>DocumentURL</th>       
-        <th>Verified</th>        
+        <th>View</th>
+        <th>Verify</th>
     </tr>
     @foreach (var d in Model)
     {
-        <tr>           
+        <tr>
             <td>@d.OrganizationName</td>
             <td>@d.DocumentType</td>
-            <td>@d.DocumentURL</td>            
-            <td>@d.Verified</td>
+            <td>
+            
+                @using (Html.BeginForm("DownloadDocument", "AdminFunction", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" value="@d.DocumentID" name="DocumentID" />
+                    <input type="submit" value="View Document" id="View" name="View" class="btn btn-info" />
+                }   
+           </td>  
+            <td>
+                @using (Html.BeginForm("VerifyDocument", "AdminFunction", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" value="@d.DocumentID" name="DocumentID" />
+                    <input type="submit" value="Verify Document" id="Verify" name="Verify" class="btn btn-info" />
+                }                
+            </td>
+          
         </tr>
     }
 </table>
+

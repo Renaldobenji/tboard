@@ -9,6 +9,7 @@ using System.Web.Http;
 using Newtonsoft.Json;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.Web.Attributes;
+using System.Net.Http.Formatting;
 
 namespace TBoard.Web.Controllers
 {
@@ -82,7 +83,7 @@ namespace TBoard.Web.Controllers
                                     documentDescription = x.documenttype.documentDescription,
                                     dateCreated = x.dateCreated,
                                     expiryDate = x.expiryDate,
-                                    verified = (x.verified == 1 ? "TRUE" : "FALSE")
+                                    verified = (x.verified != null ? "TRUE" : "FALSE")
 
                                 };
 
@@ -133,6 +134,29 @@ namespace TBoard.Web.Controllers
 
             resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             return resp;
+        }
+
+        
+        [HttpPost]
+        [JWTTokenValidation]
+        [Route("api/Document/VerifyDocument")]
+        public HttpResponseMessage VerifyDocument(FormDataCollection formData)
+        {
+            int documentID = Convert.ToInt32(formData.Get("documentID"));
+            var result = this.documentBusinessLogic.VerifyDocument(documentID);
+
+            var response = new
+            {
+                data = result
+            };
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(response))
+            };
+
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            return resp;
+
         }
 
         // PUT api/<controller>/5

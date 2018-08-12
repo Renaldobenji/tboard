@@ -24,5 +24,26 @@ namespace TBoard.BusinessLogic.BusinessLogic
         {
             return repository.GetOrganizationDocuments(orgID);
         }
+
+        public IList<OrganizationDocumentsDTO> GetUnverifiedDocuments(int orgID)
+        {
+            return repository.GetUnverifiedDocuments(orgID);
+        }
+
+        public IList<OrganizationDocumentsDTO> GetUnverifiedDocuments()
+        {
+            return repository.GetUnverifiedDocuments();
+        }
+
+        public bool VerifyDocument(int documentID)
+        {
+            return repository.VerifyDocument(documentID);
+        }
+
+        public string GetDocument(int documentID)
+        {
+            return repository.GetDocument(documentID);
+        }
+
     }
 }

@@ -221,6 +221,10 @@
     <Reference Include="System.Web.Providers">
       <HintPath>..\packages\Microsoft.AspNet.Providers.Core.1.1\lib\net40\System.Web.Providers.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Mvc4, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Mvc4.1.6.0.0\lib\net45\Unity.Mvc4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Unity.WebApi, Version=5.2.3.0, Culture=neutral, PublicKeyToken=43da31bc42a85347, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.WebAPI.5.2.3\lib\net45\Unity.WebApi.dll</HintPath>
       <Private>True</Private>
@@ -421,6 +425,7 @@
     <Content Include="Scripts\reactLogic\rfqbidlost.jsx" />
     <Content Include="Scripts\reactLogic\reports.jsx" />
     <Content Include="Scripts\Sortable.js" />
+    <Content Include="Unity.Mvc4.README.txt" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Features.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />

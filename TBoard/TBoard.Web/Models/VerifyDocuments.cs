@@ -9,10 +9,11 @@ namespace TBoard.Web.Models
     {
 
         public int OrganizationID { get; set; }
+        public string DocumentID { get; set; }
         public string DocumentType { get; set; }
         public string DocumentURL { get; set; }
         public string OrganizationName { get; set; }
-        public Boolean Verified { get; set; }
+        public Nullable<System.DateTime> Verified { get; set; }
         
 
     }
