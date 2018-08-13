@@ -302,6 +302,9 @@
     <Content Include="Content\bootstrap\sb-admin-2.css" />
     <Content Include="Content\bootstrap\timeline.css" />
     <Content Include="Content\EmailTemplates\quotepaid.html" />
+    <Resource Include="Content\EmailTemplates\expiredDocuments.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Images\Banner.jpg" />
     <Content Include="Content\Images\Cloudbased.png" />

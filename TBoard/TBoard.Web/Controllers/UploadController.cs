@@ -98,19 +98,28 @@ namespace TBoard.Web.Controllers
         [JWTTokenValidation]
         public HttpResponseMessage PostForm()
         {
+            int expiryInMonths = 0;
+            
             try
             {
                 string storageDetails;
                 using (TBoardEntities entities = new TBoardEntities())
                 {
-                    storageDetails = entities.configs.Where(x => x.name == "StorageConnectionString").Select(y => y.value).FirstOrDefault();
+                    storageDetails = entities.configs.Where(x => x.name == "StorageConnectionString").Select(y => y.value).FirstOrDefault();                    
                 }
 
                 var httpRequest = System.Web.HttpContext.Current.Request;
                 if (httpRequest.Files.Count > 0)
                 {
+                    int documentTypeID = 0;
                     foreach (string file in httpRequest.Files)
                     {
+                        documentTypeID = Convert.ToInt32(httpRequest.Form["DocumentType"]);
+                        using (TBoardEntities entities = new TBoardEntities())
+                        {
+                            expiryInMonths = (int)entities.documenttypes.Where(x => x.documentTypeID == documentTypeID).First().expiryTermMonths;
+                        }
+
                         var guiidName = string.Format("{0}.{1}", Guid.NewGuid().ToString(), httpRequest.Files[file].FileName.Split('.')[1]);
 
                         byte[] fileData = null;
@@ -133,7 +142,8 @@ namespace TBoard.Web.Controllers
                                 organizationID = Convert.ToInt32(httpRequest.Form["OrganizationID"]),
                                 dateCreated = DateTime.Now,
                                 documentTypeID = Convert.ToInt32(httpRequest.Form["DocumentType"]),
-                                documentPath = guiidName
+                                documentPath = guiidName,
+                                expiryDate = DateTime.Now.AddMonths(expiryInMonths)
                             });
                             entities.SaveChanges();
                         }

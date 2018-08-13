@@ -9,6 +9,8 @@ using Newtonsoft.Json;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.Data.Model;
 using System.Net.Mail;
+using System.IO;
+using System.Web;
 
 namespace TBoard.Web.Controllers
 {
@@ -24,24 +26,101 @@ namespace TBoard.Web.Controllers
 
 
         // GET api/<controller>/5
+        [HttpGet]        
+        [Route("api/Tasks/ExpiredDocumentNotification")]
+        public void ExpiredDocumentNotification()
+        {
+            DateTime startDate = DateTime.Now;
+            DateTime endDate = DateTime.Now.AddDays(10);
+
+            using (TBoardEntities entities = new TBoardEntities())
+            {
+                var closeToExpiry = (from documents in entities.documents
+                                   where documents.expiryDate.Value >= startDate && documents.expiryDate.Value <= endDate
+                                     select documents).ToList();
+
+                foreach (var doc in closeToExpiry)
+                {
+                    var custodian = (from cust in entities.custodians.Where(x => x.organizationID == doc.organizationID)
+                                     select cust).FirstOrDefault();
+                    string email = "";
+
+                    if (custodian == null || string.IsNullOrEmpty(custodian.email))
+                    {
+                        var user = (from usser in entities.users.Where(x => x.organizationID == doc.organizationID)
+                                         select usser).FirstOrDefault();
+                        if (user == null || string.IsNullOrEmpty(user.username))
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            email = user.username;
+                        }
+                    }
+                    else
+                    {
+                        email = custodian.email;
+                    }
+
+                    if (String.IsNullOrEmpty(email))
+                    {
+                        continue;
+                    }
+                    double totalDays = Math.Round((DateTime.Now - doc.expiryDate.Value).TotalDays, MidpointRounding.AwayFromZero) * -1;
+                    this.emailQueueBusinessLogic.SendEmail("support@tenderboard.co.za", email, "Document Expired Notification", createExpiredDocumentEmailBody(doc.documenttype.documentDescription, totalDays.ToString()));
+                    unverifyCompany();
+                }
+            }
+        }
+
+        private void unverifyCompany()
+        {
+            DateTime startDate = DateTime.Now;
+            DateTime endDate = DateTime.Now.AddDays(1);
+            using (TBoardEntities entities = new TBoardEntities())
+            {
+                var organ =        (from org in entities.organizations
+                                     join doc in entities.documents on org.organizationID equals doc.organizationID
+                                     where doc.expiryDate.Value >= startDate && doc.expiryDate.Value <= endDate
+                                     select org).ToList();
+
+                foreach (var o in organ)
+                {
+                    o.verified = new Nullable<DateTime>();
+                };
+
+                entities.SaveChanges();
+            }
+        }
+
+        private string createExpiredDocumentEmailBody(string documentType, string dateDiff)
+        {
+            string body = string.Empty;
+            //using streamreader for reading my htmltemplate   
+            using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Content/EmailTemplates/expiredDocuments.html")))
+            {
+
+                body = reader.ReadToEnd();
+            }
+
+            body = body.Replace("{document}", documentType); //replacing the required things     
+            body = body.Replace("{days}", dateDiff); //replacing the required things            
+
+            return body;
+        }
+
         [HttpGet]
         [Route("api/Tasks/SendEmail")]
         public void SendEmail()
         {
             var unprocessedEmailQueue = this.emailQueueBusinessLogic.GetUnprocessedEmail();
 
-            foreach(var email in unprocessedEmailQueue)
+            foreach (var email in unprocessedEmailQueue)
             {
-                try
-                {
-                    SendMail(email);
-                    email.sentDate = DateTime.Now;
-                    this.emailQueueBusinessLogic.Update(email);                               
-                }
-                catch(Exception ex)
-                {
-
-                }
+                SendMail(email);
+                email.sentDate = DateTime.Now;
+                this.emailQueueBusinessLogic.Update(email);
             }
         }
 
