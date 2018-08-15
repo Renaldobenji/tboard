@@ -159,6 +159,7 @@
     <Compile Include="Model\communication.cs">
       <DependentUpon>TBoardEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\CommunicationDTO.cs" />
     <Compile Include="Model\communicationtype.cs">
       <DependentUpon>TBoardEntities.tt</DependentUpon>
     </Compile>

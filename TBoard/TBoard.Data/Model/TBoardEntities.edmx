@@ -82,6 +82,7 @@
           <Property Name="communicationLine1" Type="varchar" MaxLength="45" />
           <Property Name="communicationLine2" Type="varchar" MaxLength="45" />
           <Property Name="communicationTypeID" Type="int" />
+          <Property Name="role" Type="varchar" MaxLength="150" />
         </EntityType>
         <EntityType Name="communicationtype">
           <Key>
@@ -840,6 +841,7 @@
           <Property Name="communicationLine2" Type="String" MaxLength="45" Unicode="false" FixedLength="false" />
           <Property Name="communicationTypeID" Type="Int32" />
           <NavigationProperty Name="communicationtype" Relationship="TBoardModel.commTypeID" FromRole="communication" ToRole="communicationtype" />
+          <Property Name="role" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="communicationtype">
           <Key>
@@ -1462,6 +1464,7 @@
           <EntitySetMapping Name="communications">
             <EntityTypeMapping TypeName="TBoardModel.communication">
               <MappingFragment StoreEntitySet="communication">
+                <ScalarProperty Name="role" ColumnName="role" />
                 <ScalarProperty Name="communicationID" ColumnName="communicationID" />
                 <ScalarProperty Name="owningType" ColumnName="owningType" />
                 <ScalarProperty Name="owningID" ColumnName="owningID" />

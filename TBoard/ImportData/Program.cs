@@ -12,7 +12,7 @@ namespace ImportData
     {
         static void Main(string[] args)
         {
-            string[] lines = File.ReadAllLines(@"ExpertiseList.txt", Encoding.UTF8);
+            string[] lines = File.ReadAllLines(@"ExpertiseList2.txt", Encoding.UTF8);
             var entities = new TBoard.Data.Model.TBoardEntities();
 
             foreach (var line in lines)

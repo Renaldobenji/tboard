@@ -20,6 +20,7 @@ namespace TBoard.Data.Model
         public string communicationLine1 { get; set; }
         public string communicationLine2 { get; set; }
         public Nullable<int> communicationTypeID { get; set; }
+        public string role { get; set; }
     
         public virtual communicationtype communicationtype { get; set; }
     }

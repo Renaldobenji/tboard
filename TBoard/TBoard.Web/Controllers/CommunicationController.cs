@@ -22,8 +22,8 @@ namespace TBoard.Web.Controllers
 
         // GET api/<controller>/5
         [JWTTokenValidation]
-        [Route("api/Communication/{ownerType}/{ownerID}")]
-        public string Get(string ownerType, string ownerID)
+        [Route("api/Communication/{ownerType}/{ownerID}/{communicationID}")]
+        public string Get(string ownerType, string ownerID, string communicationID)
         {
             var home =
                 this.communicationBusinessLogic.FindBy(
@@ -65,19 +65,33 @@ namespace TBoard.Web.Controllers
                                                 });
         }
 
+        [JWTTokenValidation]
+        [Route("api/Communication/{ownerType}/{ownerID}")]
+        public string Get(string ownerType, string ownerID)
+        {
+            var comm = this.communicationBusinessLogic.GetCommunication(ownerType, ownerID);
+
+            return JsonConvert.SerializeObject(comm, Formatting.Indented,
+                                               new JsonSerializerSettings
+                                               {
+                                                   ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                               });
+        }
+
         // POST api/<controller>
         [JWTTokenValidation]
         public void PostOrganization(FormDataCollection formData)
         {
             var orgID = formData.Get("OrganizationID");
             var ownerType = formData.Get("OwnerType");
+            var role = formData.Get("ContactRole");
             if (!String.IsNullOrEmpty(formData.Get("HomeNumber")))
             {
                 var homeContact =
                     this.communicationBusinessLogic.FindBy(
                         x =>
                             x.owningType == ownerType && x.owningID == orgID &&
-                            x.communicationtype.communicationTypeTLA == "HME").FirstOrDefault();
+                            x.communicationtype.communicationTypeTLA == "HME" && x.role == role).FirstOrDefault();
                 if (homeContact != null)
                 {
                     homeContact.communicationLine1 = formData.Get("HomeNumber");
@@ -95,7 +109,7 @@ namespace TBoard.Web.Controllers
                     this.communicationBusinessLogic.FindBy(
                         x =>
                             x.owningType == ownerType && x.owningID == orgID &&
-                            x.communicationtype.communicationTypeTLA == "CELL").FirstOrDefault();
+                            x.communicationtype.communicationTypeTLA == "CELL" && x.role == role).FirstOrDefault();
                 if (CellContact != null)
                 {
                     CellContact.communicationLine1 = formData.Get("CellNumber");
@@ -114,7 +128,7 @@ namespace TBoard.Web.Controllers
                     this.communicationBusinessLogic.FindBy(
                         x =>
                             x.owningType == ownerType && x.owningID == orgID &&
-                            x.communicationtype.communicationTypeTLA == "WRK").FirstOrDefault();
+                            x.communicationtype.communicationTypeTLA == "WRK" && x.role == role).FirstOrDefault();
                 if (WorkContact != null)
                 {
                     WorkContact.communicationLine1 = formData.Get("OfficeNumber");
@@ -131,7 +145,7 @@ namespace TBoard.Web.Controllers
                     this.communicationBusinessLogic.FindBy(
                         x =>
                             x.owningType == ownerType && x.owningID == orgID &&
-                            x.communicationtype.communicationTypeTLA == "EML").FirstOrDefault();
+                            x.communicationtype.communicationTypeTLA == "EML" && x.role == role).FirstOrDefault();
                 if (EmailContact != null)
                 {
                     EmailContact.communicationLine1 = formData.Get("Email");
@@ -148,17 +162,18 @@ namespace TBoard.Web.Controllers
         {
             if (!string.IsNullOrEmpty(formData.Get(formField)))
             {
-                this.addCommunication("ORG", orgID, formData.Get(formField), communicationType);
+                this.addCommunication("ORG", orgID, formData.Get(formField), communicationType, formData.Get("ContactRole"));
             }
         }
 
         private void addCommunication(string owingType, string owningID, string communicationLine1,
-            string communicationType)
+            string communicationType, string role)
         {
             communication comm = new communication();
             comm.owningType = owingType;
             comm.owningID = owningID;
             comm.communicationLine1 = communicationLine1;
+            comm.role = role;
             if (communicationType.Equals("CELL"))
             {
                 comm.communicationTypeID = 1;

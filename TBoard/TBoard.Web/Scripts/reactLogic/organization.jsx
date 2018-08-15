@@ -10,7 +10,8 @@
             CellNumber : '',
 			HomeNumber : '',
 			OfficeNumber : '',
-			Email : '',
+			Email: '',
+			ContactRole: '',
 			AddressLine1 : '',
 			AddressLine2 : '',
 			AddressLine3 : '',
@@ -24,6 +25,7 @@
             BranchCode : '',
             BranchName : '',
             BankAccountType: [],
+            ContactDirectory: [],
             UserOrg: [],
             SelectedBankAccountType : '',
             OEM: 'false',
@@ -135,6 +137,22 @@
         });
     },
 
+    fetchContactDetailsArray: function (orgID) {
+        $.ajax({
+            url: 'api/Communication/ORG/' + orgID,
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+                var obj = $.parseJSON(data);                
+                this.setState({ ContactDirectory: obj });           
+
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error('api/Address/ORG/', status, err.toString());
+            }.bind(this)
+        });
+    },
+
     fetchContactDetails: function(orgID) {
         $.ajax({
           url: 'api/Communication/ORG/' + orgID,
@@ -216,7 +234,7 @@
        
         this.fetchOrgDetails(this.state.OrganizationID);
         this.fetchAddressDetails(this.state.OrganizationID);
-        this.fetchContactDetails(this.state.OrganizationID);
+        this.fetchContactDetailsArray(this.state.OrganizationID);
         this.fetchAccountTypes();
         this.fetchBankDetails(this.state.OrganizationID);
         this.fetchUserOrganization(this.state.UserID);
@@ -283,7 +301,8 @@
                   dataType: 'json',
                   data: this.state,
                   cache: false,
-                  success: function(data) {
+                  success: function (data) {
+                      this.fetchContactDetailsArray(this.state.OrganizationID);
                       var opts = {
                           title: "Success",
                           text: "That thing that you were trying to do worked.",
@@ -292,13 +311,14 @@
                           nonblock: {
                               nonblock: true
                           }
-                      };
+                      };                      
                       new PNotify(opts);
                   }.bind(this),
                   error: function(xhr, status, err) {
                     console.error('api/Organization/Post', status, err.toString());
                   }.bind(this)
-            });
+        });
+        
     },
 
     bankDetailsPOST : function() {
@@ -400,6 +420,10 @@
 		this.setState({OEM : e.target.value});
 		console.log(this.state.OEM);		
 	},
+	updatecontactRole: function (e) {
+	    this.setState({ ContactRole: e.target.value });
+	    console.log(this.state.ContactRole);
+	},
 
 	updateOrganizationID: function (e) {	    
 
@@ -475,13 +499,17 @@
                                     </div>
 		                        </div>
 		                        <div className="tab-pane fade" id="Contact">
-			                        <div className="col-lg-8">
+			                        <div className="col-lg-6">
                                         <br/>
                                         <OrganizationContact 
-                                                            cellNumber={this.state.CellNumber} updateCellNumber={this.updateCellNumberState}
+                                                            cellNumber={this.state.CellNumber} updateCellNumber={this.updateCellNumberState} contactRole={this.state.ContactRole} updatecontactRole={this.updatecontactRole}
 											                homeNumber={this.state.HomeNumber} updateHomeNumber={this.updateHomeNumberState}
 											                officeNumber={this.state.OfficeNumber} updateOfficeNumber={this.updateOfficeNumberState}
 											                email={this.state.Email} updateEmail={this.updateEmailState} contactPOST= {this.contactPOST} />
+                                    </div>
+                                    <div className="col-lg-6">
+                                        <br />
+                                        <ContactDirectoryList ContactDirectory={this.state.ContactDirectory} />
                                     </div>
 		                        </div>
 		                        <div className="tab-pane fade" id="Address">
@@ -601,6 +629,7 @@ var CreateOrganization = React.createClass({
             HomeNumber: '',
             OfficeNumber: '',
             Email: '',
+            contactRole : '',
             AddressLine1: '',
             AddressLine2: '',
             AddressLine3: '',
@@ -811,7 +840,15 @@ var OrganizationContact = React.createClass({
 						        <div className="form-group">
                                     <label>Email</label>
                                     <input id="Email" className="form-control" placeholder="Email" value={this.props.email} onChange={this.props.updateEmail}/>
-                                </div>						
+                                </div>
+                                <div className="form-group">
+                                <label>Role</label>
+                                <select className="form-control" value={this.props.contactRole} onChange={this.props.updatecontactRole}>
+                                    <option value='Manager'>Manager</option>
+									<option value='Administrator'>Administrator</option>
+                                    <option value='Reception'>Reception</option>
+                                </select>
+                            </div>						
 					        </form>
 			            </div> 
                         <div className="panel-footer text-right">
@@ -1046,6 +1083,38 @@ var OrganizationBankDetailsList = React.createClass({
                               <TableHeaderColumn dataField="BranchName">BranchName</TableHeaderColumn>
                               <TableHeaderColumn dataField="BranchCode">BranchCode</TableHeaderColumn>                              
                               <TableHeaderColumn dataFormat={bankAccountTypeView}>BankAccountType</TableHeaderColumn>                                
+				            </BootstrapTable>
+			            </div>                         
+		            </div>
+		);
+    }
+});
+
+var ContactDirectoryList = React.createClass({	
+    render: function () {
+        
+        function bankAccountTypeView(cell, row) {
+
+            if (row.BankAccountTypeID == 1)
+                return <div>Cheque</div>
+            else if (row.BankAccountTypeID == 2)
+                return <div>Savings</div>
+            else
+                return <div>Unknown</div>
+        }
+
+        return (	
+		            <div className="panel panel-default">
+			            <div className="panel-heading">
+				            Contact Directory
+			            </div>
+			            <div className="panel-body">
+				            <BootstrapTable data={this.props.ContactDirectory} striped={true} hover={true} pagination={true} search={true}>
+                              <TableHeaderColumn isKey={true} dataField="CellPhone">Cell</TableHeaderColumn>
+                              <TableHeaderColumn dataField="Home">Home</TableHeaderColumn>
+                              <TableHeaderColumn dataField="WorkPhone">Office</TableHeaderColumn>
+                              <TableHeaderColumn dataField="Email">Email</TableHeaderColumn>                              
+                             <TableHeaderColumn dataField="role">Role</TableHeaderColumn>                             
 				            </BootstrapTable>
 			            </div>                         
 		            </div>
