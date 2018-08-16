@@ -24,13 +24,15 @@ namespace TBoard.Web.Controllers
         private PasswordHasher passwordHasher;
         private UserBusinessLogic userBusinessLogic;
         private ConfigBusinessLogic configBusinessLogic;
+        private OrganizationBusinessLogic organizationBusinessLogic;
 
-        public AuthenticationController(IAuthenticationService authService, UserBusinessLogic userBusinessLogic, ConfigBusinessLogic configBusinessLogic)
+        public AuthenticationController(IAuthenticationService authService, UserBusinessLogic userBusinessLogic, ConfigBusinessLogic configBusinessLogic, OrganizationBusinessLogic organizationBusinessLogic)
         {
             this.authService = authService;
             this.passwordHasher = new PasswordHasher();
             this.userBusinessLogic = userBusinessLogic;
             this.configBusinessLogic = configBusinessLogic;
+            this.organizationBusinessLogic = organizationBusinessLogic;
         }        
 
         [HttpGet]
@@ -61,6 +63,12 @@ namespace TBoard.Web.Controllers
             }
 
             var userRoles = this.userBusinessLogic.GetRolesForUser(user.userID);
+            var organization = getUserOganization(user.organizationID);
+            var verified = false;
+            if (organization != null)
+            {
+                verified = (organization.verified.HasValue ? true : false);
+            }
 
             var plainTextSecurityKey = "Tboard Secret what do you mean 128 bits, i cant even spell that";
             var signingKey = new InMemorySymmetricSecurityKey(Encoding.UTF8.GetBytes(plainTextSecurityKey));
@@ -72,6 +80,7 @@ namespace TBoard.Web.Controllers
                 new Claim(ClaimTypes.Name, user.firstname),
                 new Claim(ClaimTypes.Surname, user.surname),
                 new Claim("OrganizationID",user.organizationID.ToString()),
+                new Claim("Verified", verified.ToString()),
                 new Claim("UserID",user.userID.ToString())
             }, "Custom");
 
@@ -111,29 +120,7 @@ namespace TBoard.Web.Controllers
             };
 
             resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            return resp;
-            //return signedAndEncodedToken;
-            /*
-            var tokenValidationParameters = new TokenValidationParameters()
-            {
-                ValidAudiences = new string[]
-                {
-                    "http://localhost"
-                },
-                ValidIssuers = new string[]
-                {
-                    "http://localhost"
-                },
-                IssuerSigningKey = signingKey
-            };
-
-            SecurityToken validatedToken;
-            tokenHandler.ValidateToken(signedAndEncodedToken, tokenValidationParameters, out validatedToken);
-
-            Console.WriteLine(validatedToken.ToString());
-            Console.ReadLine();
-            */
-
+            return resp; 
         }
 
         [HttpGet]
@@ -199,6 +186,14 @@ namespace TBoard.Web.Controllers
                 return user;
             else
                 return null;
+        }
+
+        private organization getUserOganization(int? organizationID)
+        {
+            if (organizationID.HasValue == false)
+                return null;
+
+            return this.organizationBusinessLogic.FindBy(x => x.organizationID == organizationID).FirstOrDefault();
         }
     }
 }

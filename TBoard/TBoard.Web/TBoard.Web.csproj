@@ -305,6 +305,12 @@
     <Resource Include="Content\EmailTemplates\expiredDocuments.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Content\EmailTemplates\rfqupdate.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Content\EmailTemplates\rfqcancel.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Images\Banner.jpg" />
     <Content Include="Content\Images\Cloudbased.png" />
@@ -417,6 +423,7 @@
     <Content Include="Images\user.png" />
     <Content Include="Images\Userfriendly.png" />
     <Content Include="Images\Vendorverification.png" />
+    <Content Include="Images\Verify.png" />
     <Content Include="Images\WallpaperBG.png" />
     <Content Include="Images\watch-img.png" />
     <Content Include="Scripts\jquery.min.js" />

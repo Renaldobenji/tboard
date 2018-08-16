@@ -220,18 +220,37 @@ namespace TBoard.Web.Controllers
             //Send out email to all subscribed to that category
             foreach (var e in expertiseOwnership)
             {                
-                this.emailQueueBusinessLogic.SendEmail("support@tenderboard.co.za", e.communicationLine1,"Request for Quotation", createEmailBody(rfq.reference, sitURL + "admin#rfqbid/" + rfq.reference));
+                this.emailQueueBusinessLogic.SendEmail("support@tenderboard.co.za", e.communicationLine1,"Request for Quotation", createEmailBody(rfq.reference, sitURL + "admin#rfqbid/" + rfq.reference,"CREATE"));
             } 
         }
 
-        private string createEmailBody(string reference, string url)
+        private string createEmailBody(string reference, string url, string type)
         {
             string body = string.Empty;
             //using streamreader for reading my htmltemplate   
-            using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Content/EmailTemplates/rfqrequest.html")))
+            if (type == "CREATE")
             {
+                using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Content/EmailTemplates/rfqrequest.html")))
+                {
 
-                body = reader.ReadToEnd();
+                    body = reader.ReadToEnd();
+                }
+            }
+            if (type == "UPDATE")
+            {
+                using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Content/EmailTemplates/rfqupdate.html")))
+                {
+
+                    body = reader.ReadToEnd();
+                }
+            }
+            if (type == "CANCEL")
+            {
+                using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Content/EmailTemplates/rfqcancel.html")))
+                {
+
+                    body = reader.ReadToEnd();
+                }
             }
 
             body = body.Replace("{reference}", reference); //replacing the required things     
@@ -752,6 +771,25 @@ namespace TBoard.Web.Controllers
             var rfq = this.rfqBusinessLogic.FindBy(x => x.reference == rfqReference).SingleOrDefault();
             rfq.status = "CAN";
             this.rfqBusinessLogic.Update(rfq);
+
+            //Send out email
+            var expertiseOwnership =
+                this.expertiseOwnershipBusinessLogic.GetSubscribed(
+                    Convert.ToInt32(formData.Get("ExpertiseSubCategoryID")));
+
+            if (expertiseOwnership.Count.Equals(0))
+            {
+                //Send email to admin
+                this.emailQueueBusinessLogic.SendEmail("support@tenderboard.co.za", "support@tenderboard.co.za", "RFQ Cancellation", string.Format("There is no organization available to serve this request: {0}", rfq.reference));
+                return;
+            }
+
+            var sitURL = configBusinessLogic.GetConfigValue("SiteURL");
+            //Send out email to all subscribed to that category
+            foreach (var e in expertiseOwnership)
+            {
+                this.emailQueueBusinessLogic.SendEmail("support@tenderboard.co.za", e.communicationLine1, "RFQ Cancellation", createEmailBody(rfq.reference, sitURL + "admin#rfqbid/" + rfq.reference,"CANCEL"));
+            }
         }
 
         [HttpPost]
@@ -763,6 +801,25 @@ namespace TBoard.Web.Controllers
             var rfq = this.rfqBusinessLogic.FindBy(x => x.reference == rfqReference).SingleOrDefault();
             populateUpdateRFQ(formData, rfq);
             this.rfqBusinessLogic.Update(rfq);
+
+            //Send out email
+            var expertiseOwnership =
+                this.expertiseOwnershipBusinessLogic.GetSubscribed(
+                    Convert.ToInt32(formData.Get("ExpertiseSubCategoryID")));
+
+            if (expertiseOwnership.Count.Equals(0))
+            {
+                //Send email to admin
+                this.emailQueueBusinessLogic.SendEmail("support@tenderboard.co.za", "support@tenderboard.co.za", "RFQ Update", string.Format("There is no organization available to serve this request: {0}", rfq.reference));
+                return;
+            }
+
+            var sitURL = configBusinessLogic.GetConfigValue("SiteURL");
+            //Send out email to all subscribed to that category
+            foreach (var e in expertiseOwnership)
+            {
+                this.emailQueueBusinessLogic.SendEmail("support@tenderboard.co.za", e.communicationLine1, "RFQ Update", createEmailBody(rfq.reference, sitURL + "admin#rfqbid/" + rfq.reference,"UPDATE"));
+            }
         }
 
         private void populateUpdateRFQ(FormDataCollection formData, rfq rfq)
