@@ -286,6 +286,18 @@
           <Property Name="comment" Type="varchar" MaxLength="590" />
           <Property Name="dateCreated" Type="datetime" Precision="0" />
         </EntityType>
+        <EntityType Name="requirements">
+          <Key>
+            <PropertyRef Name="requirementsID" />
+          </Key>
+          <Property Name="requirementsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="owningType" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="owningID" Type="varchar" MaxLength="45" />
+          <Property Name="requirementTypeCode" Type="varchar" MaxLength="45" />
+          <Property Name="metaData" Type="text" />
+          <Property Name="date" Type="datetime" Precision="0" />
+          <Property Name="resolved" Type="datetime" Precision="0" />
+        </EntityType>
         <EntityType Name="rfq">
           <Key>
             <PropertyRef Name="rfqID" />
@@ -585,6 +597,7 @@
           <EntitySet Name="quote" EntityType="Self.quote" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="quotestatus" EntityType="Self.quotestatus" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="rating" EntityType="Self.rating" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="requirements" EntityType="Self.requirements" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="rfq" EntityType="Self.rfq" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="rfqtype" EntityType="Self.rfqtype" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="roles" EntityType="Self.roles" Schema="tboard" store:Type="Tables" />
@@ -780,6 +793,7 @@
           <EntitySet Name="metadatas" EntityType="TBoardModel.metadata" />
           <EntitySet Name="organizationmappings" EntityType="TBoardModel.organizationmapping" />
           <FunctionImport Name="sps_GetSubCategories" ReturnType="Collection(TBoardModel.sps_GetSubCategories_Result)" />
+          <EntitySet Name="requirements" EntityType="TBoardModel.requirement" />
         </EntityContainer>
         <EntityType Name="address">
           <Key>
@@ -1406,6 +1420,18 @@
           <Property Type="String" Name="SubCategoryName" Nullable="false" />
           <Property Type="Int32" Name="ExpertiseSubCategoryID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="requirement">
+          <Key>
+            <PropertyRef Name="requirementsID" />
+          </Key>
+          <Property Name="requirementsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="owningType" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="owningID" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="requirementTypeCode" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="metaData" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="date" Type="DateTime" />
+          <Property Name="resolved" Type="DateTime" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1843,6 +1869,19 @@
               <ComplexTypeMapping TypeName="TBoardModel.sps_GetSubCategories_Result" />
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="requirements">
+            <EntityTypeMapping TypeName="TBoardModel.requirement">
+              <MappingFragment StoreEntitySet="requirements">
+                <ScalarProperty Name="resolved" ColumnName="resolved" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="metaData" ColumnName="metaData" />
+                <ScalarProperty Name="requirementTypeCode" ColumnName="requirementTypeCode" />
+                <ScalarProperty Name="owningID" ColumnName="owningID" />
+                <ScalarProperty Name="owningType" ColumnName="owningType" />
+                <ScalarProperty Name="requirementsID" ColumnName="requirementsID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

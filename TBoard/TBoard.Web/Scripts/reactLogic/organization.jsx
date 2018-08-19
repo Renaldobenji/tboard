@@ -25,7 +25,7 @@
             BranchCode : '',
             BranchName : '',
             BankAccountType: [],
-            ContactDirectory: [],
+            ContactDirectory: [],           
             UserOrg: [],
             SelectedBankAccountType : '',
             OEM: 'false',
@@ -151,7 +151,7 @@
                 console.error('api/Address/ORG/', status, err.toString());
             }.bind(this)
         });
-    },
+    },    
 
     fetchContactDetails: function(orgID) {
         $.ajax({
@@ -234,7 +234,7 @@
        
         this.fetchOrgDetails(this.state.OrganizationID);
         this.fetchAddressDetails(this.state.OrganizationID);
-        this.fetchContactDetailsArray(this.state.OrganizationID);
+        this.fetchContactDetailsArray(this.state.OrganizationID);        
         this.fetchAccountTypes();
         this.fetchBankDetails(this.state.OrganizationID);
         this.fetchUserOrganization(this.state.UserID);
@@ -509,7 +509,7 @@
                                     </div>
                                     <div className="col-lg-6">
                                         <br />
-                                        <ContactDirectoryList ContactDirectory={this.state.ContactDirectory} />
+                                        <ContactDirectoryList ContactDirectory={this.state.ContactDirectory} />                                        
                                     </div>
 		                        </div>
 		                        <div className="tab-pane fade" id="Address">
@@ -548,7 +548,7 @@
                                 <div className="tab-pane fade" id="Expertise">
 			                        <div className="col-lg-8">
                                         <br/>
-                                        <OrganizationExpertise OrganizationID={this.state.OrganizationID}/>
+                                        <OrganizationExpertise OrganizationID={this.state.OrganizationID}/>                                       
                                     </div>
                                     <div className="col-lg-4">
                                         <br />
@@ -1123,14 +1123,72 @@ var ContactDirectoryList = React.createClass({
 });
 
 
+var DocumentRequirementsList = React.createClass({	
+    render: function () {
+        
+        function ResolveView(cell, row) {
+
+            if (row.ResolvedDate == "")
+                return <div>Upload Document</div>           
+            else
+                return <div>Resolved</div>
+        }
+
+        return (	
+		            <div className="panel panel-red">
+			            <div className="panel-heading">
+				            Document Requirements
+			            </div>
+			            <div className="panel-body">
+				            <BootstrapTable data={this.props.DocumentRequirements} striped={true} hover={true}>
+                              <TableHeaderColumn isKey={true} dataField="RequirementType">Requirement Type</TableHeaderColumn>
+                              <TableHeaderColumn dataField="RequirementName">Document</TableHeaderColumn>
+                              <TableHeaderColumn dataField="CreatedDate">Created</TableHeaderColumn>                             
+                              <TableHeaderColumn dataFormat={ResolveView}>Resolution</TableHeaderColumn>                       
+				            </BootstrapTable>
+			            </div>                         
+		            </div>
+		);
+    }
+});
+
 /*Register Page*/
 var OrganizationExpertise = React.createClass({	
 
 	getInitialState: function() {
         return {
-            ExpertiseSubCategory : []
+            ExpertiseSubCategory: [],
+            DocumentRequirements: []
         };
-    },
+	},
+
+	fetchDocumentRequirements: function (orgID) {
+	    $.ajax({
+	        url: 'api/Requirement/DOCUMENTREQUIREMENT/ORG/' + orgID,
+	        dataType: 'json',
+	        cache: false,
+	        success: function (data) {
+	            this.setState({ DocumentRequirements: data });
+
+	            if (data.length > 0) {
+	                var opts = {
+	                    title: "Document Requirement",
+	                    text: "Please resolve the Outstanding Document Requirements.",
+	                    addclass: "stack-bottomright",
+	                    type: "error",
+	                    nonblock: {
+	                        nonblock: true
+	                    }
+	                };
+	                new PNotify(opts);
+	            }
+
+	        }.bind(this),
+	        error: function (xhr, status, err) {
+	            console.error('api/Requirements/Document/ORG/', status, err.toString());
+	        }.bind(this)
+	    });
+	},
 
 	fetchExpertiseCategory: function() {
         $.ajax({
@@ -1149,13 +1207,14 @@ var OrganizationExpertise = React.createClass({
 	componentDidMount: function() {
 		$("#ExpertiseSelect").select2();
 	    this.fetchExpertiseCategory();
-	    this.fetchUserCategories(this.props.OrganizationID);
+	    this.fetchUserCategories(this.props.OrganizationID);	    
 	},
 
 	componentDidUpdate(prevProps) {
 	    // Typical usage (don't forget to compare props):
 	    if (this.props.OrganizationID !== prevProps.OrganizationID) {
 	        this.fetchUserCategories(this.props.OrganizationID);
+	        this.fetchDocumentRequirements(this.props.OrganizationID);
 	    }
 	},
 
@@ -1225,7 +1284,8 @@ var OrganizationExpertise = React.createClass({
                   dataType: 'json',
                   data: postData,
                   cache: false,
-                  success: function(data) {
+                  success: function (data) {
+                      this.fetchDocumentRequirements(this.props.OrganizationID);
                       var opts = {
                           title: "Success",
                           text: "That thing that you were trying to do worked.",
@@ -1235,7 +1295,7 @@ var OrganizationExpertise = React.createClass({
                               nonblock: true
                           }
                       };
-                      new PNotify(opts);
+                      new PNotify(opts);                     
                   }.bind(this),
                   error: function(xhr, status, err) {
                     console.error('api/Organization/Post', status, err.toString());
@@ -1244,7 +1304,8 @@ var OrganizationExpertise = React.createClass({
     },
 
 	render: function(){
-		return (	
+	    return (
+                    <div>
 		            <div className="panel panel-default">
 			            <div className="panel-heading">
 				            Please select your expertise
@@ -1260,6 +1321,9 @@ var OrganizationExpertise = React.createClass({
                             <button type="button" className="btn btn-primary" onClick= {this.userCategoriesPOST} >Save</button>
                         </div>
 		            </div>
+                        <DocumentRequirementsList DocumentRequirements={this.state.DocumentRequirements} />
+                    </div>
+
 		);
 	}
 });

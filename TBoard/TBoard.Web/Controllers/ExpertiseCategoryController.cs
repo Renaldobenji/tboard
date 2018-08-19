@@ -19,10 +19,12 @@ namespace TBoard.Web.Controllers
     {
         private ExpertiseCategoryBusinessLogic expertiseCategoryBusinessLogic;
         private ExpertiseOwnershipBusinessLogic expertiseOwnershipBusinessLogic;
-        public ExpertiseCategoryController(ExpertiseCategoryBusinessLogic expertiseCategoryBusinessLogic, ExpertiseOwnershipBusinessLogic expertiseOwnershipBusinessLogic)
+        private RequirementBusinessLogic requirementBusinessLogic;
+        public ExpertiseCategoryController(ExpertiseCategoryBusinessLogic expertiseCategoryBusinessLogic, ExpertiseOwnershipBusinessLogic expertiseOwnershipBusinessLogic, RequirementBusinessLogic requirementBusinessLogic)
         {
             this.expertiseCategoryBusinessLogic = expertiseCategoryBusinessLogic;
             this.expertiseOwnershipBusinessLogic = expertiseOwnershipBusinessLogic;
+            this.requirementBusinessLogic = requirementBusinessLogic;
         }
         // GET api/<controller>
         [JWTTokenValidation]
@@ -137,8 +139,11 @@ namespace TBoard.Web.Controllers
                             owningID = orgID,
                             expertiseSubCategoryID = Convert.ToInt32(userCat.Value)
                         });
+
+                        this.requirementBusinessLogic.RaiseRequirement("ORG", orgID, "Expertise", userCat.Value);
                     }
                 }
+
             }
         }
 

@@ -55,6 +55,9 @@ namespace TBoard.Web
             container.RegisterType<BankAccountRepository, BankAccountRepository>();
             container.RegisterType<BankAccountTypesRepository, BankAccountTypesRepository>();
 
+            container.RegisterType<RequirementsRepository, RequirementsRepository>();
+            container.RegisterType<RequirementBusinessLogic, RequirementBusinessLogic>();
+
             container.RegisterType<AdminFunctionController, AdminFunctionController>();
 
             // register all your components with the container here
