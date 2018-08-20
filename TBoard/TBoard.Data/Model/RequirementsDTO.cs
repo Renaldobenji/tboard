@@ -12,5 +12,6 @@ namespace TBoard.Data.Model
         public string RequirementName { get; set; }
         public string CreatedDate { get; set; }
         public string ResolvedDate { get; set; }
+        public string OrgID { get; set; }
     }
 }

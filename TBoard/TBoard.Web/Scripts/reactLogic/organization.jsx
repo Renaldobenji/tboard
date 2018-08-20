@@ -1129,7 +1129,7 @@ var DocumentRequirementsList = React.createClass({
         function ResolveView(cell, row) {
 
             if (row.ResolvedDate == "")
-                return <div>Upload Document</div>           
+                return <div><a href={'Upload/DocumentTypeIndex?&documentCode=' + row.RequirementName + '&key=' + row.OrgID} id="fakeLink" target="_blank"><button class="btn btn-outline btn-primary">Upload Document</button></a></div>           
             else
                 return <div>Resolved</div>
         }
@@ -1321,7 +1321,7 @@ var OrganizationExpertise = React.createClass({
                             <button type="button" className="btn btn-primary" onClick= {this.userCategoriesPOST} >Save</button>
                         </div>
 		            </div>
-                        <DocumentRequirementsList DocumentRequirements={this.state.DocumentRequirements} />
+                        <DocumentRequirementsList OrgID={this.props.OrganizationID} DocumentRequirements={this.state.DocumentRequirements} />
                     </div>
 
 		);

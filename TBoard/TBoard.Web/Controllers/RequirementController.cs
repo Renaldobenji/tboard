@@ -32,7 +32,8 @@ namespace TBoard.Web.Controllers
                 CreatedDate = y.date.ToString(),
                 RequirementName = y.metaData,
                 RequirementType = y.requirementTypeCode,
-                ResolvedDate = y.resolved.ToString()                
+                ResolvedDate = y.resolved.ToString(),
+                OrgID = ownerID
             }).ToList();
 
 

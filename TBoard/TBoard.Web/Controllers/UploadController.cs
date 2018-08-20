@@ -39,6 +39,20 @@ namespace TBoard.Web.Controllers
             }
         }
 
+        [JWTTokenValidation]
+        public ActionResult DocumentTypeIndex(string documentCode, int key)
+        {
+            UploadViewModel view = new UploadViewModel();
+            using (TBoardEntities entities = new TBoardEntities())
+            {
+                var documentReq = entities.documenttypes.Where(x => x.documentDescription == documentCode).FirstOrDefault();
+                
+                view.OrganizationID = key;
+                view.DocumentTypes.Add(documentReq.documentTypeID.ToString(), string.Format("{0}-{1}", documentReq.documentCode, documentReq.documentDescription));                
+            }
+            return View("Index", view);
+        }
+
         [System.Web.Http.HttpPost]
         [JWTTokenValidation]
         public HttpResponseMessage PostFormCloud()
