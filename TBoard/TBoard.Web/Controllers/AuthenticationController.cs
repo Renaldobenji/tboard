@@ -65,9 +65,11 @@ namespace TBoard.Web.Controllers
             var userRoles = this.userBusinessLogic.GetRolesForUser(user.userID);
             var organization = getUserOganization(user.organizationID);
             var verified = false;
+            var organizationName = "";
             if (organization != null)
             {
                 verified = (organization.verified.HasValue ? true : false);
+                organizationName = organization.name;
             }
 
             var plainTextSecurityKey = "Tboard Secret what do you mean 128 bits, i cant even spell that";
@@ -80,6 +82,7 @@ namespace TBoard.Web.Controllers
                 new Claim(ClaimTypes.Name, user.firstname),
                 new Claim(ClaimTypes.Surname, user.surname),
                 new Claim("OrganizationID",user.organizationID.ToString()),
+                new Claim("OrganizationName",organizationName),
                 new Claim("Verified", verified.ToString()),
                 new Claim("UserID",user.userID.ToString())
             }, "Custom");
@@ -121,6 +124,98 @@ namespace TBoard.Web.Controllers
 
             resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             return resp; 
+        }
+
+        [HttpGet]
+        [Route("api/Authentication/SwitchCompany/{userID}/{OrganizationID}")]
+        public HttpResponseMessage SwitchCompany(int? userID, int? OrganizationID)
+        {
+            if (userID == null || OrganizationID == null)
+            {
+                var errRe = new
+                {
+                    authenicated = "false",
+                    errorMessage = "Cannot perform action"
+                };
+
+                var errresp = new HttpResponseMessage()
+                {
+                    Content = new StringContent(JsonConvert.SerializeObject(errRe, Formatting.None,
+                                                    new JsonSerializerSettings
+                                                    {
+                                                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                                    }))
+                };
+
+                errresp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                return errresp;
+            }
+
+            
+            var user = this.userBusinessLogic.FindBy(x => x.userID == userID && x.isApproved == true).FirstOrDefault();
+
+            var userRoles = this.userBusinessLogic.GetRolesForUser((int)userID);
+            var organization = getUserOganization(OrganizationID);
+            var verified = false;
+            var organizationName = "";
+            if (organization != null)
+            {
+                verified = (organization.verified.HasValue ? true : false);
+                organizationName = organization.name;
+            }
+
+            var plainTextSecurityKey = "Tboard Secret what do you mean 128 bits, i cant even spell that";
+            var signingKey = new InMemorySymmetricSecurityKey(Encoding.UTF8.GetBytes(plainTextSecurityKey));
+            var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256Signature, SecurityAlgorithms.Sha256Digest);
+
+            var claimsIdentity = new ClaimsIdentity(new List<Claim>()
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.username),
+                new Claim(ClaimTypes.Name, user.firstname),
+                new Claim(ClaimTypes.Surname, user.surname),
+                new Claim("OrganizationID",organization.organizationID.ToString()),
+                new Claim("OrganizationName",organizationName),
+                new Claim("Verified", verified.ToString()),
+                new Claim("UserID",user.userID.ToString())
+            }, "Custom");
+
+            foreach (var roles in userRoles)
+            {
+                claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, roles.roleCode));
+            }
+
+            var securityTokenDescriptor = new SecurityTokenDescriptor()
+            {
+                AppliesToAddress = "http://localhost",
+                TokenIssuerName = "http://localhost",
+                Subject = claimsIdentity,
+                SigningCredentials = signingCredentials
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var plainToken = tokenHandler.CreateToken(securityTokenDescriptor);
+            var signedAndEncodedToken = tokenHandler.WriteToken(plainToken);
+
+            // Console.WriteLine(plainToken.ToString());
+            // Console.WriteLine(signedAndEncodedToken);   
+            var response = new
+            {
+                authenicated = "true",
+                errorMessage = "",
+                data = signedAndEncodedToken
+            };
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(response, Formatting.None,
+                                                new JsonSerializerSettings
+                                                {
+                                                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                                                }))
+            };
+
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            return resp;
         }
 
         [HttpGet]

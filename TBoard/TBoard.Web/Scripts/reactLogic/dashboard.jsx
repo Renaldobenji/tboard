@@ -7,8 +7,10 @@
             activeBidsTotal: 0,
             acceptedQuotes: 0,
             OrganizationID: 0,
+            OrganizationName: "",
             Verified: 0,
-            bidsWonCount: 0
+            bidsWonCount: 0,
+            UserOrg: [],
         };
     },
 
@@ -34,6 +36,34 @@
                 this.setState({ bidsWonCount: data.data });
             }.bind(this)
         });
+
+        $.ajax({
+            url: 'api/Organization/GetUserOrganizations/' + userID,
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+                this.setState({ UserOrg: data.data });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error('api/Organization/GetUserOrganizations/', status, err.toString());
+            }.bind(this)
+        });
+    },
+
+    startWithAutoIncrement: function () {
+        this.setState({
+            percent: 0,
+            autoIncrement: true,
+            intervalTime: (Math.random() * 1000)
+        });
+    },
+
+    stopWithAutoIncrement: function () {
+        this.setState({
+            percent: 0,
+            autoIncrement: false,
+            intervalTime: (Math.random() * 1000)
+        });
     },
 
     componentWillMount: function () {
@@ -42,7 +72,45 @@
         this.setState({ UserID: decodedToken.UserID });
         this.setState({ OrganizationID: decodedToken.OrganizationID });
         this.setState({ Verified: decodedToken.Verified });
+        this.setState({ OrganizationName: decodedToken.OrganizationName });
         this.loadData(decodedToken.UserID);
+    },
+
+    componentDidUpdate: function() {
+        $("#switchCompanyDiv").toggle();
+    },
+
+    updateOrganizationID: function (e) {
+
+        var filtered = this.state.UserOrg.filter(function (el) {
+            return el.Name === e.target.value;
+        });
+
+        var orgKey = filtered[0].Key;
+        this.setState({ OrganizationID: orgKey });
+        console.log(this.state.OrganizationID);
+
+        this.startWithAutoIncrement();
+        $.ajax({
+            url: 'api/Authentication/SwitchCompany/' + this.state.UserID + '/' + orgKey,
+            dataType: 'json',
+            cache: false,
+            success: function (result) {
+                this.stopWithAutoIncrement();
+                if (result.authenicated == "true") {                   
+                    var sa = new TboardJWTToken();
+                    sa.store(result.data);
+                    location.reload();
+                }
+                else {
+                    alert(result.errorMessage);
+                }
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error('api/Authentication/', status, err.toString());
+            }.bind(this)
+        });      
+
     },
 
 	render: function() {
@@ -50,6 +118,14 @@
         var navBarSyle= {
               marginBottom:0
         };
+
+        var hideCompanies = {
+         
+        };
+
+        let optionItems = this.state.UserOrg.map((planet) =>
+            <option key={planet.Key }>{planet.Name}</option>
+            );
 
         var tripToShowNavigation = new Trip([
                                   { sel: $("#UserProfileStats"), content: "This gives you an idea in percentage of how complete your profile is with us!", position: "n" },
@@ -63,6 +139,10 @@
                                             showCloseBox: true,
                                             delay: -1
                                         });
+
+        $("#switchCompany").on("click", function () {          
+            $("#switchCompanyDiv").toggle();
+        });
 
         $("#tourbutton").on("click", function () {
             tripToShowNavigation.start();
@@ -79,16 +159,31 @@
 	                        <div className="row">
 		                        <div className="col-lg-12">
 			                        <h1 className="page-header"><img src="../../Images/logos/Logo 02.png" height="70px" width="450px" />&nbsp;&nbsp;
+                                        { this.state.OrganizationName != "" ?
+			                               ( this.state.OrganizationName
+			                               ) : ""}
+                                        
                                         {this.state.Verified == "True"? (
                                         <img alt="Verified" src="../../Images/Verify.png" height="70px" width="70px" />) : ""}
                                     
-                                        &nbsp;&nbsp;<button id="tourbutton" type="button" className="btn btn-outline btn-default">Take a Tour</button></h1>
+                                        &nbsp;&nbsp;
+                                    <button id="switchCompany" type="button" className="btn btn-outline btn-default">Switch Company</button>
+                                        &nbsp;&nbsp;
+                                    <button id="tourbutton" type="button" className="btn btn-outline btn-default">Take a Tour</button>
+                                    <div id="switchCompanyDiv" style={hideCompanies}>
+                                        <br/>
+                                     <select className="form-control" onChange={this.updateOrganizationID}>
+                                         {optionItems}
+                                     </select>
+                                    </div>
+                                       
+                                    </h1>
 		                        </div>                
 	                        </div>  
                             <div className="row">
 		                        <div className="col-lg-12">
-			                        <h3 className="page-header">Profile </h3>                                    
-		                        </div>
+			                        <h3 className="page-header">Profile </h3>                 
+		                        </div>                               
                             </div>  
                             <div className="row">
 		                        <div className="col-md-3" id="UserProfileStats">
