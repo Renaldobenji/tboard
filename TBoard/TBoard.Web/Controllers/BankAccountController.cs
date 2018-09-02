@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.Data.Model;
 using TBoard.Web.Attributes;
+using TBoard.Web.Helpers;
 
 namespace TBoard.Web.Controllers
 {
@@ -65,8 +66,10 @@ namespace TBoard.Web.Controllers
         [Route("api/BankAccount/{ownerType}/{ownerID}")]
         public HttpResponseMessage Get(string ownerType, string ownerID)
         {
-           var bankDetails =
-                this.bankacountBusinessLogic.FindBy(x => x.owningType == ownerType && x.owningID == ownerID).Select(y => new
+            string ownerIDs = EncryptionHelper.Decrypt(ownerID);
+
+            var bankDetails =
+                this.bankacountBusinessLogic.FindBy(x => x.owningType == ownerType && x.owningID == ownerIDs).Select(y => new
                 {
                     AccountNumber = y.accountNumber,
                     AccountName = y.accountName,
@@ -100,9 +103,11 @@ namespace TBoard.Web.Controllers
         {             
             if (String.IsNullOrEmpty(formData.Get("BankAccountDetailID")))
             {
+                string ownerIDs = EncryptionHelper.Decrypt(formData.Get("OrganizationID"));
+
                 bankaccountdetail details = new bankaccountdetail();
                 details.owningType = formData.Get("OwnerType");
-                details.owningID = formData.Get("OrganizationID"); 
+                details.owningID = ownerIDs; 
                 details.accountName = formData.Get("AccountName"); 
                 details.accountNumber = formData.Get("AccountNumber"); 
                 details.branchCode = formData.Get("BranchCode"); 

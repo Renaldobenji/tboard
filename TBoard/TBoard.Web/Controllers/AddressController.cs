@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.Data.Model;
 using TBoard.Web.Attributes;
+using TBoard.Web.Helpers;
 
 namespace TBoard.Web.Controllers
 {
@@ -30,8 +31,10 @@ namespace TBoard.Web.Controllers
         [Route("api/Address/{ownerType}/{ownerID}")]
         public string Get(string ownerType, string ownerID)
         {
+            string ownerIDs = EncryptionHelper.Decrypt(ownerID);
+
             address address =
-                this.addressBusinessLogic.FindBy(x => x.owningType == ownerType && x.owningID == ownerID)
+                this.addressBusinessLogic.FindBy(x => x.owningType == ownerType && x.owningID == ownerIDs)
                     .FirstOrDefault();
 
             return JsonConvert.SerializeObject(address, Formatting.Indented,
@@ -46,7 +49,8 @@ namespace TBoard.Web.Controllers
         public void Post(FormDataCollection formData)
         {
             address address = new address();
-            var orgID = formData.Get("OrganizationID");           
+            string ownerIDs = EncryptionHelper.Decrypt(formData.Get("OrganizationID"));
+                    
             if (string.IsNullOrEmpty(formData.Get("AddressID")))
             {                
                 address.addressLine1 = formData.Get("AddressLine1");
@@ -56,7 +60,7 @@ namespace TBoard.Web.Controllers
                 address.addressLine5 = formData.Get("AddressLine5");
                 address.postalCode = formData.Get("PostalCode");
                 address.owningType = "ORG";
-                address.owningID = orgID;
+                address.owningID = ownerIDs;
                 address.addressTypeID = 1;//Physical Address
                 this.addressBusinessLogic.Create(address);
                 return;

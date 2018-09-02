@@ -12,6 +12,7 @@ using System.Web.Http;
 using TBoard.Web.Attributes;
 using System.IO;
 using System.Web;
+using TBoard.Web.Helpers;
 
 namespace TBoard.Web.Controllers
 {
@@ -42,7 +43,9 @@ namespace TBoard.Web.Controllers
         [JWTTokenValidation]
         public HttpResponseMessage Get(string userID)
         {
-            var userIDInt = Convert.ToInt32(userID);
+            
+            int userIDInt = Convert.ToInt32(EncryptionHelper.Decrypt(userID));
+           
             var rfq = this.rfqBusinessLogic.FindBy(x => x.userID == userIDInt && x.status == "ACT").ToList();
 
             var r = new
@@ -72,12 +75,14 @@ namespace TBoard.Web.Controllers
         [Route("api/RFQ/Statistics/{userID}")]
         [HttpGet]
         [JWTTokenValidation]
-        public HttpResponseMessage Statistics(int userID)
+        public HttpResponseMessage Statistics(string userID)
         {
+
+            int userIDInt = Convert.ToInt32(EncryptionHelper.Decrypt(userID));
             //Get RFQ Active Count 
-            var activeRFQTotal = this.rfqBusinessLogic.MyActiveRFQ(userID);
+            var activeRFQTotal = this.rfqBusinessLogic.MyActiveRFQ(userIDInt);
             //My Active Bids
-            var activeBidsTotal = this.quoteBusinessLogic.GetActiveBids(userID);
+            var activeBidsTotal = this.quoteBusinessLogic.GetActiveBids(userIDInt);
 
             var r = new
             {
@@ -101,10 +106,12 @@ namespace TBoard.Web.Controllers
         [Route("api/RFQ/MyActiveBids/{userID}")]
         [HttpGet]
         [JWTTokenValidation]
-        public HttpResponseMessage MyActiveBids(int userID)
-        {            
+        public HttpResponseMessage MyActiveBids(string userID)
+        {
+            int userIDInt = Convert.ToInt32(EncryptionHelper.Decrypt(userID));
+
             //My Active Bids
-            var activeBids = this.quoteBusinessLogic.GetMyActiveBids(userID);
+            var activeBids = this.quoteBusinessLogic.GetMyActiveBids(userIDInt);
 
             var r = new
             {
@@ -136,7 +143,8 @@ namespace TBoard.Web.Controllers
         [JWTTokenValidation]
         public HttpResponseMessage All(string userID)
         {
-            var userIDInt = Convert.ToInt32(userID);
+            int userIDInt = Convert.ToInt32(EncryptionHelper.Decrypt(userID));
+
             var rfq = this.rfqBusinessLogic.FindBy(x => x.userID == userIDInt).ToList();
 
             var r = new
@@ -265,13 +273,15 @@ namespace TBoard.Web.Controllers
         public HttpResponseMessage Quote(FormDataCollection formData)
         {
             var rfqReference = formData.Get("RFQReference");
-            var userID = Convert.ToInt32(formData.Get("UserID"));
+            var userID = formData.Get("UserID");
             var amount = Convert.ToDecimal(formData.Get("NewBidAmount"));
             var supplyTime = Convert.ToDateTime(formData.Get("SupplyTime"));
             var deliveryTime = Convert.ToDateTime(formData.Get("DeliveryTime"));
             //Create Quote
 
-            var quote = this.quoteBusinessLogic.FindBy(x => x.rfqReference == rfqReference && x.userID == userID).LastOrDefault();
+            int userpID = Convert.ToInt32(EncryptionHelper.Decrypt(userID));
+
+            var quote = this.quoteBusinessLogic.FindBy(x => x.rfqReference == rfqReference && x.userID == userpID).LastOrDefault();
             if (quote != null)
             {
                 if (quote.amount > amount)
@@ -293,7 +303,7 @@ namespace TBoard.Web.Controllers
 
             quote q = new quote();
             q.rfqReference = rfqReference;
-            q.userID = userID;
+            q.userID = userpID;
             q.amount = amount;
             q.deliveryTime = deliveryTime;
             q.supplyTime = supplyTime;
@@ -422,8 +432,8 @@ namespace TBoard.Web.Controllers
         [Route("api/RFQ/MyLatestQuote/{rfqReference}/{userID}")]
         public HttpResponseMessage MyLatestQuote(string rfqReference, string userID)
         {
-            var userIDInt = Convert.ToInt32(userID);
-            var quote = this.quoteBusinessLogic.FindBy(x => x.rfqReference == rfqReference && x.userID == userIDInt).LastOrDefault();
+            int userpID = Convert.ToInt32(EncryptionHelper.Decrypt(userID));
+            var quote = this.quoteBusinessLogic.FindBy(x => x.rfqReference == rfqReference && x.userID == userpID).LastOrDefault();
             
              var r = new
             {
@@ -448,7 +458,7 @@ namespace TBoard.Web.Controllers
         [Route("api/RFQ/HighestQuote/{rfqReference}/{userID}")]
         public HttpResponseMessage QuotehighestBid(string rfqReference, string userID)
         {
-            var userIDInt = Convert.ToInt32(userID);
+            int userpID = Convert.ToInt32(EncryptionHelper.Decrypt(userID));
             var quote = this.rfqBusinessLogic.GetHighestRFQBids(rfqReference).OrderByDescending(x => x.amount).FirstOrDefault();
 
             var r = new
@@ -475,11 +485,11 @@ namespace TBoard.Web.Controllers
         public HttpResponseMessage AcceptQuote(FormDataCollection formData)
         {
             var RFQReference = formData.Get("RFQReference");
-            var QuoteID = Convert.ToInt32(formData.Get("QuoteID"));
-            var UserID = Convert.ToInt32(formData.Get("UserID"));
+            var QuoteID = Convert.ToInt32(formData.Get("QuoteID"));            
+            int userpID = Convert.ToInt32(EncryptionHelper.Decrypt(formData.Get("UserID")));
             var MetaData = formData.Get("MetaData");
 
-            this.quoteBusinessLogic.AcceptBid(UserID, RFQReference, QuoteID, MetaData);            
+            this.quoteBusinessLogic.AcceptBid(userpID, RFQReference, QuoteID, MetaData);            
 
             var alertInformation = this.quoteBusinessLogic.GetQuoteOwnerDetails(QuoteID);
             //Send Email
@@ -508,10 +518,11 @@ namespace TBoard.Web.Controllers
         public HttpResponseMessage PayQuote(FormDataCollection formData)
         {
             var RFQReference = formData.Get("reference");            
-            var UserID = Convert.ToInt32(formData.Get("UserID"));
+            
+            int userpID = Convert.ToInt32(EncryptionHelper.Decrypt(formData.Get("UserID")));
 
             var quoteid = this.quoteBusinessLogic.GetQuoteID(RFQReference);
-            this.quoteBusinessLogic.PayBid(UserID, RFQReference, (int)quoteid);
+            this.quoteBusinessLogic.PayBid(userpID, RFQReference, (int)quoteid);
 
             var alertInformation = this.quoteBusinessLogic.GetQuoteOwnerDetails((int)quoteid).Distinct();
             //Send Email
@@ -570,10 +581,12 @@ namespace TBoard.Web.Controllers
         [HttpGet]
         [JWTTokenValidation]
         [Route("api/RFQ/GetAcceptedQuotes/{userID}")]
-        public HttpResponseMessage GetAcceptedQuotes(int userID)
+        public HttpResponseMessage GetAcceptedQuotes(string userID)
         {
 
-            var data = this.quoteBusinessLogic.GetAcceptedBids(userID);
+            int userpID = Convert.ToInt32(EncryptionHelper.Decrypt(userID));
+
+            var data = this.quoteBusinessLogic.GetAcceptedBids(userpID);
 
             var r = new
             {
@@ -592,12 +605,14 @@ namespace TBoard.Web.Controllers
         [HttpGet]
         [JWTTokenValidation]
         [Route("api/RFQ/GetBidsWon/{userID}")]
-        public HttpResponseMessage GetBidsWon(int userID)
+        public HttpResponseMessage GetBidsWon(string userID)
         {
 
             try
             {
-                var data = this.quoteBusinessLogic.GetBidsWon(userID);
+                int userpID = Convert.ToInt32(EncryptionHelper.Decrypt(userID));
+
+                var data = this.quoteBusinessLogic.GetBidsWon(userpID);
 
                 var r = new
                 {
@@ -627,11 +642,13 @@ namespace TBoard.Web.Controllers
         [HttpGet]
         [JWTTokenValidation]
         [Route("api/RFQ/GetBidsLost/{userID}")]
-        public HttpResponseMessage GetBidsLost(int userID)
+        public HttpResponseMessage GetBidsLost(string userID)
         {
             try
             {
-                var data = this.quoteBusinessLogic.GetBidsLost(userID);
+                int userpID = Convert.ToInt32(EncryptionHelper.Decrypt(userID));
+
+                var data = this.quoteBusinessLogic.GetBidsLost(userpID);
 
                 var r = new
                 {
@@ -665,12 +682,13 @@ namespace TBoard.Web.Controllers
         {
             try
             {
-                var userID = Convert.ToInt32(formData.Get("userID"));
+                int userpID = Convert.ToInt32(EncryptionHelper.Decrypt(formData.Get("userID")));
+                
                 var status = formData.Get("status");
                 var startDate = Convert.ToDateTime(formData.Get("startDate").Substring(0,10)).ToString("yyyy/MM/dd");
                 var endDate = Convert.ToDateTime(formData.Get("endDate").Substring(0, 10)).ToString("yyyy/MM/dd");
 
-                var dataResult = this.quoteBusinessLogic.sps_GetQuoteHistory(userID, status, startDate, endDate);
+                var dataResult = this.quoteBusinessLogic.sps_GetQuoteHistory(userpID, status, startDate, endDate);
 
 
                 var data = dataResult.Select(y => new
@@ -709,10 +727,12 @@ namespace TBoard.Web.Controllers
         [HttpGet]
         [JWTTokenValidation]
         [Route("api/RFQ/GetAcceptedBidsCount/{userID}")]
-        public HttpResponseMessage GetAcceptedBidsCount(int userID)
+        public HttpResponseMessage GetAcceptedBidsCount(string userID)
         {
 
-            var data = this.quoteBusinessLogic.GetAcceptedBidsCount(userID);
+            int userpID = Convert.ToInt32(EncryptionHelper.Decrypt(userID));
+
+            var data = this.quoteBusinessLogic.GetAcceptedBidsCount(userpID);
 
             var r = new
             {
@@ -731,11 +751,13 @@ namespace TBoard.Web.Controllers
         [HttpGet]
         [JWTTokenValidation]
         [Route("api/RFQ/GetBidsWonCount/{userID}")]
-        public HttpResponseMessage GetBidsWonCount(int userID)
+        public HttpResponseMessage GetBidsWonCount(string userID)
         {
             try
             {
-                var data = this.quoteBusinessLogic.GetBidsWonCount(userID);
+                int userpID = Convert.ToInt32(EncryptionHelper.Decrypt(userID));
+
+                var data = this.quoteBusinessLogic.GetBidsWonCount(userpID);
 
                 var r = new
                 {

@@ -14,6 +14,7 @@ using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.BusinessLogic.Responses;
 using TBoard.Data.Model;
 using TBoard.Web.Attributes;
+using TBoard.Web.Helpers;
 
 namespace TBoard.Web.Controllers
 {
@@ -32,9 +33,11 @@ namespace TBoard.Web.Controllers
         // GET api/<controller>/5
         [JWTTokenValidation]
         [Route("api/User/GetByOrganization/{id}")]
-        public HttpResponseMessage GetByOrganization(int id)
+        public HttpResponseMessage GetByOrganization(string id)
         {
-            var userArray = this.userBusinessLogic.FindBy(x => x.organizationID == id).Select(x => new
+            int ownerIDs = Convert.ToInt32(EncryptionHelper.Decrypt(id));
+
+            var userArray = this.userBusinessLogic.FindBy(x => x.organizationID == ownerIDs).Select(x => new
             {
                 UserID = x.userID,
                 Username = x.username,
@@ -63,11 +66,12 @@ namespace TBoard.Web.Controllers
         // POST api/<controller>
         [JWTTokenValidation]
         public string Post(FormDataCollection formData)
-        {
-            var orgID = Convert.ToInt32(formData.Get("OrganizationID"));
+        {  
+            int ownerIDs = Convert.ToInt32(EncryptionHelper.Decrypt(formData.Get("OrganizationID")));
+
 
             var userResponse = userBusinessLogic.CreateUser(formData.Get("Username"), formData.Get("Name"),
-                        formData.Get("Surname"), formData.Get("Password"), formData.Get("Title"), formData.Get("IDNumber"), orgID, formData.Get("EmployeeNumber"), formData.Get("DepartmentCode"));
+                        formData.Get("Surname"), formData.Get("Password"), formData.Get("Title"), formData.Get("IDNumber"), ownerIDs, formData.Get("EmployeeNumber"), formData.Get("DepartmentCode"));
 
             userBusinessLogic.AddUserToGroup(userResponse.UserID, "SubordinateAccess");
 
@@ -105,9 +109,9 @@ namespace TBoard.Web.Controllers
         [Route("api/User/Update")]
         public void Update(FormDataCollection formData)
         {
-            var id = Convert.ToInt32(formData.Get("UserID"));
+            int ownerIDs = Convert.ToInt32(EncryptionHelper.Decrypt(formData.Get("UserID")));
 
-            var userObject = userBusinessLogic.FindBy(x => x.userID == id).First();
+            var userObject = userBusinessLogic.FindBy(x => x.userID == ownerIDs).First();
 
             userObject.firstname = formData.Get("FirstName");
             userObject.surname = formData.Get("Surname");
@@ -123,9 +127,9 @@ namespace TBoard.Web.Controllers
         [Route("api/User/Update/ContactInformation")]
         public void ContactInformation(FormDataCollection formData)
         {
-            var id = Convert.ToInt32(formData.Get("UserID"));
+            int ownerIDs = Convert.ToInt32(EncryptionHelper.Decrypt(formData.Get("UserID")));
 
-            var userObject = userBusinessLogic.FindBy(x => x.userID == id).First();           
+            var userObject = userBusinessLogic.FindBy(x => x.userID == ownerIDs).First();           
 
             addCommunicationBasedOnType(formData, formData.Get("UserID"), "CellNumber", "CELL");
             addCommunicationBasedOnType(formData, formData.Get("UserID"), "HomeNumber", "HME");
@@ -135,18 +139,23 @@ namespace TBoard.Web.Controllers
 
         private void addCommunicationBasedOnType(FormDataCollection formData, string userID, string formField, string communicationType)
         {
+
             if (!string.IsNullOrEmpty(formData.Get(formField)))
-            {               
-                this.addCommunication("PER", userID, formData.Get(formField), communicationType);
+            {
+                string ownerIDs = EncryptionHelper.Decrypt(userID);
+
+                this.addCommunication("PER", ownerIDs, formData.Get(formField), communicationType);
             }
         }
 
         private void addCommunication(string owingType, string owningID, string communicationLine1,
             string communicationType)
-        {           
+        {
+            string ownerIDs = EncryptionHelper.Decrypt(owningID);
+
             communication comm = new communication();
             comm.owningType = owingType;
-            comm.owningID = owningID;
+            comm.owningID = ownerIDs;
             comm.communicationLine1 = communicationLine1;
             if (communicationType.Equals("CELL"))
             {
@@ -181,9 +190,11 @@ namespace TBoard.Web.Controllers
 
         [JWTTokenValidation]
         [Route("api/User/GetUserInformation/{id}")]
-        public HttpResponseMessage GetUserInformation(int id)
+        public HttpResponseMessage GetUserInformation(string id)
         {
-            var userArray = this.userBusinessLogic.FindBy(x => x.userID == id).Select(x => new
+            var ownerIDs = Convert.ToInt32(EncryptionHelper.Decrypt(id));
+
+            var userArray = this.userBusinessLogic.FindBy(x => x.userID == ownerIDs).Select(x => new
             {
                 UserID = x.userID,
                 Username = x.username,
@@ -196,7 +207,7 @@ namespace TBoard.Web.Controllers
                 EmployeeNumber = x.employeeCode                
             }).FirstOrDefault();
 
-            var communication = this.communicationBusinessLogic.FindBy(x => x.owningType == "PER" && x.owningID == id.ToString()).ToList();
+            var communication = this.communicationBusinessLogic.FindBy(x => x.owningType == "PER" && x.owningID == ownerIDs.ToString()).ToList();
 
             var contactInformation = new {
                 HomeNumber = communication.Where(x => x.communicationTypeID == 3).Select(y => y.communicationLine1).FirstOrDefault(),
@@ -221,9 +232,11 @@ namespace TBoard.Web.Controllers
         [JWTTokenValidation]
         [HttpGet]
         [Route("api/User/DeactivateUser/{id}")]
-        public HttpResponseMessage DeactivateUser(int id)
+        public HttpResponseMessage DeactivateUser(string id)
         {
-            var userObject = this.userBusinessLogic.FindBy(x => x.userID == id).FirstOrDefault();
+            var ownerIDs = Convert.ToInt32(EncryptionHelper.Decrypt(id));
+
+            var userObject = this.userBusinessLogic.FindBy(x => x.userID == ownerIDs).FirstOrDefault();
 
             userObject.isApproved = false;
 
@@ -244,9 +257,11 @@ namespace TBoard.Web.Controllers
         [JWTTokenValidation]
         [HttpGet]
         [Route("api/User/ApproveUser/{id}")]
-        public HttpResponseMessage ApproveUser(int id)
+        public HttpResponseMessage ApproveUser(string id)
         {
-            var userObject = this.userBusinessLogic.FindBy(x => x.userID == id).FirstOrDefault();
+            var ownerIDs = Convert.ToInt32(EncryptionHelper.Decrypt(id));
+
+            var userObject = this.userBusinessLogic.FindBy(x => x.userID == ownerIDs).FirstOrDefault();
 
             userObject.isApproved = true;
 
@@ -268,9 +283,11 @@ namespace TBoard.Web.Controllers
         
         [HttpGet]
         [Route("api/User/OrganizationCompleteness/{id}")]
-        public HttpResponseMessage OrganizationCompleteness(int id)
+        public HttpResponseMessage OrganizationCompleteness(string id)
         {
-            var percComplete = this.userBusinessLogic.GetOrganizationCompleteness(id);
+            var ownerIDs = Convert.ToInt32(EncryptionHelper.Decrypt(id));
+
+            var percComplete = this.userBusinessLogic.GetOrganizationCompleteness(ownerIDs);
             
             var r = new
             {
@@ -287,9 +304,11 @@ namespace TBoard.Web.Controllers
 
         [HttpGet]
         [Route("api/User/ProfileCompleteness/{id}")]
-        public HttpResponseMessage ProfileCompleteness(int id)
+        public HttpResponseMessage ProfileCompleteness(string id)
         {
-            var percComplete = this.userBusinessLogic.GetUserProfileCompleteness(id);
+            var ownerIDs = Convert.ToInt32(EncryptionHelper.Decrypt(id));
+
+            var percComplete = this.userBusinessLogic.GetUserProfileCompleteness(ownerIDs);
 
             var r = new
             {

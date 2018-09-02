@@ -28,6 +28,7 @@ namespace TBoard.Data.Model
         public Nullable<int> organizationTypeID { get; set; }
         public Nullable<bool> oem { get; set; }
         public Nullable<System.DateTime> verified { get; set; }
+        public string organizationuuid { get; set; }
     
         public virtual organizationtype organizationtype { get; set; }
         public virtual ICollection<document> documents { get; set; }

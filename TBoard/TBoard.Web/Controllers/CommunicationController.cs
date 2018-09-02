@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.Data.Model;
 using TBoard.Web.Attributes;
+using TBoard.Web.Helpers;
 
 namespace TBoard.Web.Controllers
 {
@@ -25,28 +26,31 @@ namespace TBoard.Web.Controllers
         [Route("api/Communication/{ownerType}/{ownerID}/{communicationID}")]
         public string Get(string ownerType, string ownerID, string communicationID)
         {
+            string ownerIDs = EncryptionHelper.Decrypt(ownerID);
+
+
             var home =
                 this.communicationBusinessLogic.FindBy(
                     x =>
-                        x.owningType == ownerType && x.owningID == ownerID &&
+                        x.owningType == ownerType && x.owningID == ownerIDs &&
                         x.communicationtype.communicationTypeTLA == "HME").FirstOrDefault()?.communicationLine1;
 
             var cell =
                 this.communicationBusinessLogic.FindBy(
                     x =>
-                        x.owningType == ownerType && x.owningID == ownerID &&
+                        x.owningType == ownerType && x.owningID == ownerIDs &&
                         x.communicationtype.communicationTypeTLA == "CELL").FirstOrDefault()?.communicationLine1;
 
             var work =
                 this.communicationBusinessLogic.FindBy(
                     x =>
-                        x.owningType == ownerType && x.owningID == ownerID &&
+                        x.owningType == ownerType && x.owningID == ownerIDs &&
                         x.communicationtype.communicationTypeTLA == "WRK").FirstOrDefault()?.communicationLine1;
 
             var email =
                 this.communicationBusinessLogic.FindBy(
                     x =>
-                        x.owningType == ownerType && x.owningID == ownerID &&
+                        x.owningType == ownerType && x.owningID == ownerIDs &&
                         x.communicationtype.communicationTypeTLA == "EML").FirstOrDefault()?.communicationLine1;
 
 
@@ -82,7 +86,9 @@ namespace TBoard.Web.Controllers
         [JWTTokenValidation]
         public void PostOrganization(FormDataCollection formData)
         {
-            var orgID = formData.Get("OrganizationID");
+            string ownerIDs = EncryptionHelper.Decrypt(formData.Get("OrganizationID"));
+
+           
             var ownerType = formData.Get("OwnerType");
             var role = formData.Get("ContactRole");
             if (!String.IsNullOrEmpty(formData.Get("HomeNumber")))
@@ -90,7 +96,7 @@ namespace TBoard.Web.Controllers
                 var homeContact =
                     this.communicationBusinessLogic.FindBy(
                         x =>
-                            x.owningType == ownerType && x.owningID == orgID &&
+                            x.owningType == ownerType && x.owningID == ownerIDs &&
                             x.communicationtype.communicationTypeTLA == "HME" && x.role == role).FirstOrDefault();
                 if (homeContact != null)
                 {
@@ -99,7 +105,7 @@ namespace TBoard.Web.Controllers
                 }
                 else
                 {
-                    addCommunicationBasedOnType(formData, orgID, "HomeNumber", "HME"); 
+                    addCommunicationBasedOnType(formData, ownerIDs, "HomeNumber", "HME"); 
                 }
             }
 
@@ -108,7 +114,7 @@ namespace TBoard.Web.Controllers
                 var CellContact =
                     this.communicationBusinessLogic.FindBy(
                         x =>
-                            x.owningType == ownerType && x.owningID == orgID &&
+                            x.owningType == ownerType && x.owningID == ownerIDs &&
                             x.communicationtype.communicationTypeTLA == "CELL" && x.role == role).FirstOrDefault();
                 if (CellContact != null)
                 {
@@ -117,7 +123,7 @@ namespace TBoard.Web.Controllers
                 }
                 else
                 {
-                    addCommunicationBasedOnType(formData, orgID, "CellNumber", "CELL");                   
+                    addCommunicationBasedOnType(formData, ownerIDs, "CellNumber", "CELL");                   
 
                 }
             }
@@ -127,7 +133,7 @@ namespace TBoard.Web.Controllers
                 var WorkContact =
                     this.communicationBusinessLogic.FindBy(
                         x =>
-                            x.owningType == ownerType && x.owningID == orgID &&
+                            x.owningType == ownerType && x.owningID == ownerIDs &&
                             x.communicationtype.communicationTypeTLA == "WRK" && x.role == role).FirstOrDefault();
                 if (WorkContact != null)
                 {
@@ -136,7 +142,7 @@ namespace TBoard.Web.Controllers
                 }
                 else
                 { 
-                    addCommunicationBasedOnType(formData, orgID, "OfficeNumber", "WRK");
+                    addCommunicationBasedOnType(formData, ownerIDs, "OfficeNumber", "WRK");
                 }
             }
             if (!String.IsNullOrEmpty(formData.Get("Email")))
@@ -144,7 +150,7 @@ namespace TBoard.Web.Controllers
                 var EmailContact =
                     this.communicationBusinessLogic.FindBy(
                         x =>
-                            x.owningType == ownerType && x.owningID == orgID &&
+                            x.owningType == ownerType && x.owningID == ownerIDs &&
                             x.communicationtype.communicationTypeTLA == "EML" && x.role == role).FirstOrDefault();
                 if (EmailContact != null)
                 {
@@ -153,7 +159,7 @@ namespace TBoard.Web.Controllers
                 }
                 else
                 {                   
-                    addCommunicationBasedOnType(formData, orgID, "Email", "EML");
+                    addCommunicationBasedOnType(formData, ownerIDs, "Email", "EML");
                 }
             }
         }

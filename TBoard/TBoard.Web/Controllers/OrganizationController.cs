@@ -10,6 +10,7 @@ using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.Data.Model;
 using TBoard.Web.Attributes;
 using System.Net.Http.Headers;
+using TBoard.Web.Helpers;
 
 namespace TBoard.Web.Controllers
 {
@@ -23,9 +24,10 @@ namespace TBoard.Web.Controllers
         }
 
         [JWTTokenValidation]
-        public string Get(int id)
+        public string Get(string id)
         {
-            OrganizationDTO org = this.organizationBusinessLogic.GetOrganization(id);
+            int orgID = Convert.ToInt32(EncryptionHelper.Decrypt(id));
+            OrganizationDTO org = this.organizationBusinessLogic.GetOrganization(orgID);
             if (org == null)
                 return "";
 
@@ -40,9 +42,9 @@ namespace TBoard.Web.Controllers
         [JWTTokenValidation]
         public void Post(FormDataCollection formData)
         {
-            int organizationID = Convert.ToInt32(formData.Get("OrganizationID"));
+            int orgID = Convert.ToInt32(EncryptionHelper.Decrypt(formData.Get("OrganizationID")));
 
-            organization org = this.organizationBusinessLogic.FindBy(x => x.organizationID == organizationID).FirstOrDefault();
+            organization org = this.organizationBusinessLogic.FindBy(x => x.organizationID == orgID).FirstOrDefault();
             org.name = formData.Get("Name");
             org.registrationNumber = formData.Get("RegistrationNumber");
             org.taxNumber = formData.Get("TaxNumber");
@@ -56,7 +58,8 @@ namespace TBoard.Web.Controllers
         [Route("api/Organization/Create")]
         public void CreateOrganization(FormDataCollection formData)
         {
-            int userID = Convert.ToInt32(formData.Get("UserID"));
+
+            int userpID = Convert.ToInt32(EncryptionHelper.Decrypt(formData.Get("UserID")));
 
             organization org = new organization();
             org.name = formData.Get("Name");
@@ -67,15 +70,17 @@ namespace TBoard.Web.Controllers
             org.oem = (formData.Get("oem").ToLower().Equals("true") ? true : false);
             this.organizationBusinessLogic.Create(org);
 
-            this.organizationBusinessLogic.MapUserToOrganization(org.organizationID, userID);
+            this.organizationBusinessLogic.MapUserToOrganization(org.organizationID, userpID);
         }
 
         [JWTTokenValidation]
         [HttpGet]
         [Route("api/Organization/CustodianDetails/{organizationID}")]
-        public HttpResponseMessage GetCustodianDetails(int organizationID)
+        public HttpResponseMessage GetCustodianDetails(string organizationID)
         {
-            var custodianDetail = this.organizationBusinessLogic.GetCustodianDetails(organizationID).Take(1);
+            int orgID = Convert.ToInt32(EncryptionHelper.Decrypt(organizationID));
+
+            var custodianDetail = this.organizationBusinessLogic.GetCustodianDetails(orgID).Take(1);
 
             var resp = new HttpResponseMessage()
             {
@@ -90,7 +95,9 @@ namespace TBoard.Web.Controllers
         [Route("api/Organization/SaveCustodianDetails")]
         public void SaveCustodianDetails(FormDataCollection formData)
         {
-            var custodianDetail = this.organizationBusinessLogic.GetCustodianDetails(Convert.ToInt32(formData.Get("organizationID"))).FirstOrDefault();
+            int orgID = Convert.ToInt32(EncryptionHelper.Decrypt(formData.Get("organizationID")));
+
+            var custodianDetail = this.organizationBusinessLogic.GetCustodianDetails(orgID).FirstOrDefault();
             if (custodianDetail == null)
             {
                 var custodian = new custodian();
@@ -120,17 +127,23 @@ namespace TBoard.Web.Controllers
         [JWTTokenValidation]
         [HttpGet]
         [Route("api/Organization/GetUserOrganizations/{userID}")]
-        public HttpResponseMessage GetUserOrganizations(int userID)
+        public HttpResponseMessage GetUserOrganizations(string userID)
         {
-            var userOrg = this.organizationBusinessLogic.GetUserOrganiztions(userID);
+            int userpID = Convert.ToInt32(EncryptionHelper.Decrypt(userID));
 
+            var userOrg = this.organizationBusinessLogic.GetUserOrganiztions(userpID);
+            userOrg.Insert(0, new organization()
+            {
+                name ="--Please Select Organization--",
+                organizationID = -1                
+            });
 
             var response = new
             {
                 data = from x in userOrg
                        select new
                        {
-                           Key = x.organizationID,
+                           Key = EncryptionHelper.Encrypt(x.organizationID.ToString()),
                            Name = x.name
                        }
             };

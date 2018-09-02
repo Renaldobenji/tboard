@@ -21,6 +21,7 @@ namespace TBoard.Data.Model
         public Nullable<int> organizationID { get; set; }
         public Nullable<System.DateTime> expiryDate { get; set; }
         public Nullable<System.DateTime> verified { get; set; }
+        public string documentuuid { get; set; }
     
         public virtual documenttype documenttype { get; set; }
         public virtual organization organization { get; set; }

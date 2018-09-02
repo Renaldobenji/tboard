@@ -14,6 +14,7 @@ using System.Web.Http;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.BusinessLogic.Password;
 using TBoard.Data.Model;
+using TBoard.Web.Helpers;
 using TBoard.Web.Services;
 
 namespace TBoard.Web.Controllers
@@ -76,15 +77,18 @@ namespace TBoard.Web.Controllers
             var signingKey = new InMemorySymmetricSecurityKey(Encoding.UTF8.GetBytes(plainTextSecurityKey));
             var signingCredentials = new SigningCredentials(signingKey,SecurityAlgorithms.HmacSha256Signature, SecurityAlgorithms.Sha256Digest);
 
+            string orgID = EncryptionHelper.Encrypt(user.organizationID.ToString());
+            string userID = EncryptionHelper.Encrypt(user.userID.ToString());
+
             var claimsIdentity = new ClaimsIdentity(new List<Claim>()
             {
                 new Claim(ClaimTypes.NameIdentifier, user.username),
                 new Claim(ClaimTypes.Name, user.firstname),
                 new Claim(ClaimTypes.Surname, user.surname),
-                new Claim("OrganizationID",user.organizationID.ToString()),
+                new Claim("OrganizationID",orgID),
                 new Claim("OrganizationName",organizationName),
                 new Claim("Verified", verified.ToString()),
-                new Claim("UserID",user.userID.ToString())
+                new Claim("UserID",userID)
             }, "Custom");
 
             foreach (var roles in userRoles)
@@ -128,7 +132,7 @@ namespace TBoard.Web.Controllers
 
         [HttpGet]
         [Route("api/Authentication/SwitchCompany/{userID}/{OrganizationID}")]
-        public HttpResponseMessage SwitchCompany(int? userID, int? OrganizationID)
+        public HttpResponseMessage SwitchCompany(string userID, string OrganizationID)
         {
             if (userID == null || OrganizationID == null)
             {
@@ -151,11 +155,13 @@ namespace TBoard.Web.Controllers
                 return errresp;
             }
 
-            
-            var user = this.userBusinessLogic.FindBy(x => x.userID == userID && x.isApproved == true).FirstOrDefault();
+            int orgID = Convert.ToInt32(EncryptionHelper.Decrypt(OrganizationID));
+            int userpID = Convert.ToInt32(EncryptionHelper.Decrypt(userID));
 
-            var userRoles = this.userBusinessLogic.GetRolesForUser((int)userID);
-            var organization = getUserOganization(OrganizationID);
+            var user = this.userBusinessLogic.FindBy(x => x.userID == userpID && x.isApproved == true).FirstOrDefault();
+
+            var userRoles = this.userBusinessLogic.GetRolesForUser((int)userpID);
+            var organization = getUserOganization(orgID);
             var verified = false;
             var organizationName = "";
             if (organization != null)
@@ -173,10 +179,10 @@ namespace TBoard.Web.Controllers
                 new Claim(ClaimTypes.NameIdentifier, user.username),
                 new Claim(ClaimTypes.Name, user.firstname),
                 new Claim(ClaimTypes.Surname, user.surname),
-                new Claim("OrganizationID",organization.organizationID.ToString()),
+                new Claim("OrganizationID",OrganizationID),
                 new Claim("OrganizationName",organizationName),
                 new Claim("Verified", verified.ToString()),
-                new Claim("UserID",user.userID.ToString())
+                new Claim("UserID",userID)
             }, "Custom");
 
             foreach (var roles in userRoles)

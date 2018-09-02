@@ -12,6 +12,7 @@ using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.Data.Model;
 using System.Web;
 using TBoard.Web.Attributes;
+using TBoard.Web.Helpers;
 
 namespace TBoard.Web.Controllers
 {
@@ -63,8 +64,11 @@ namespace TBoard.Web.Controllers
         [JWTTokenValidation]
         public HttpResponseMessage GetExpertiseCategory(string ownerType, string ownerID)
         {
+            string ownerIDs = EncryptionHelper.Decrypt(ownerID);
+
+
             var ownershipCat =
-                this.expertiseOwnershipBusinessLogic.FindBy(x => x.ownerType == ownerType && x.owningID == ownerID)
+                this.expertiseOwnershipBusinessLogic.FindBy(x => x.ownerType == ownerType && x.owningID == ownerIDs)
                     .ToList();
                     
             

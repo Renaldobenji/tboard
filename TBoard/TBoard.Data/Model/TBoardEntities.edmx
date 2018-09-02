@@ -133,6 +133,7 @@
           <Property Name="dateCreated" Type="datetime" Precision="0" />
           <Property Name="expiryDate" Type="datetime" Precision="0" />
           <Property Name="verified" Type="datetime" Precision="0" />
+          <Property Name="documentuuid" Type="varchar" MaxLength="45" />
         </EntityType>
         <EntityType Name="documenttypes">
           <Key>
@@ -234,6 +235,7 @@
           <Property Name="organizationTypeID" Type="int" />
           <Property Name="oem" Type="bit" />
           <Property Name="verified" Type="datetime" Precision="0" />
+          <Property Name="organizationuuid" Type="varchar" MaxLength="45" />
         </EntityType>
         <EntityType Name="organizationmapping">
           <Key>
@@ -354,6 +356,7 @@
           <Property Name="updated" Type="datetime" Precision="0" />
           <Property Name="employeeCode" Type="varchar" MaxLength="245" />
           <Property Name="departmentCode" Type="varchar" MaxLength="245" />
+          <Property Name="useruuid" Type="varchar" MaxLength="45" />
         </EntityType>
         <Association Name="a">
           <End Role="quote" Type="Self.quote" Multiplicity="0..1" />
@@ -881,6 +884,7 @@
           <NavigationProperty Name="documents" Relationship="TBoardModel.orgID" FromRole="organization" ToRole="document" />
           <Property Type="Boolean" Name="oem" />
           <Property Name="verified" Type="DateTime" />
+          <Property Name="organizationuuid" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="organizationtype">
           <Key>
@@ -964,6 +968,7 @@
           <NavigationProperty Name="rfqs" Relationship="TBoardModel.rfq2" FromRole="user" ToRole="rfq" />
           <Property Name="employeeCode" Type="String" MaxLength="245" FixedLength="false" Unicode="false" />
           <Property Name="departmentCode" Type="String" MaxLength="245" FixedLength="false" Unicode="false" />
+          <Property Name="useruuid" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="documentrequirement">
           <Key>
@@ -1023,6 +1028,7 @@
           <NavigationProperty Name="organization" Relationship="TBoardModel.orgID" FromRole="document" ToRole="organization" />
           <Property Name="expiryDate" Type="DateTime" />
           <Property Name="verified" Type="DateTime" />
+          <Property Name="documentuuid" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="documentType1">
           <End Type="TBoardModel.documenttype" Role="documenttype" Multiplicity="0..1" />
@@ -1512,6 +1518,7 @@
           <EntitySetMapping Name="organizations">
             <EntityTypeMapping TypeName="TBoardModel.organization">
               <MappingFragment StoreEntitySet="organization">
+                <ScalarProperty Name="organizationuuid" ColumnName="organizationuuid" />
                 <ScalarProperty Name="verified" ColumnName="verified" />
                 <ScalarProperty Name="oem" ColumnName="oem" />
                 <ScalarProperty Name="organizationID" ColumnName="organizationID" />
@@ -1536,6 +1543,7 @@
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="TBoardModel.user">
               <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="useruuid" ColumnName="useruuid" />
                 <ScalarProperty Name="departmentCode" ColumnName="departmentCode" />
                 <ScalarProperty Name="employeeCode" ColumnName="employeeCode" />
                 <ScalarProperty Name="updated" ColumnName="updated" />
@@ -1580,6 +1588,7 @@
           <EntitySetMapping Name="documents">
             <EntityTypeMapping TypeName="TBoardModel.document">
               <MappingFragment StoreEntitySet="documents">
+                <ScalarProperty Name="documentuuid" ColumnName="documentuuid" />
                 <ScalarProperty Name="verified" ColumnName="verified" />
                 <ScalarProperty Name="expiryDate" ColumnName="expiryDate" />
                 <ScalarProperty Name="organizationID" ColumnName="organizationID" />

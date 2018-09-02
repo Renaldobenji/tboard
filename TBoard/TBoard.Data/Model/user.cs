@@ -38,6 +38,7 @@ namespace TBoard.Data.Model
         public Nullable<System.DateTime> updated { get; set; }
         public string employeeCode { get; set; }
         public string departmentCode { get; set; }
+        public string useruuid { get; set; }
     
         public virtual ICollection<rfq> rfqs { get; set; }
     }

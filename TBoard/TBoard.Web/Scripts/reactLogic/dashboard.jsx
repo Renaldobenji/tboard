@@ -140,9 +140,9 @@
                                             delay: -1
                                         });
 
-        $("#switchCompany").on("click", function () {          
+        /*$("#switchCompany").on("click", function () {          
             $("#switchCompanyDiv").toggle();
-        });
+        });*/
 
         $("#tourbutton").on("click", function () {
             tripToShowNavigation.start();
@@ -167,15 +167,10 @@
                                         <img alt="Verified" src="../../Images/Verify.png" height="70px" width="70px" />) : ""}
                                     
                                         &nbsp;&nbsp;
-                                    <button id="switchCompany" type="button" className="btn btn-outline btn-default">Switch Company</button>
+                                    <button id="switchCompany" type="button" className="btn btn-outline btn-default" data-toggle="modal" data-target="#changeCompanyModal">Switch Company</button>
                                         &nbsp;&nbsp;
                                     <button id="tourbutton" type="button" className="btn btn-outline btn-default">Take a Tour</button>
-                                    <div id="switchCompanyDiv" style={hideCompanies}>
-                                        <br/>
-                                     <select className="form-control" onChange={this.updateOrganizationID}>
-                                         {optionItems}
-                                     </select>
-                                    </div>
+                                   
                                        
                                     </h1>
 		                        </div>                
@@ -213,10 +208,25 @@
 		                        <div className="col-md-3" id="BidsWonStatisticsTour">
 			                        <BidsWonCountStatistics bidsWonCount={this.state.bidsWonCount} />
 		                        </div>                               
-                            </div>                         
-                             
+                            </div> 
+                    </div>
 
-                        
+                    <div className="modal fade" id="changeCompanyModal" tabindex="-1" role="dialog" aria-labelledby="changeCompanyModal" aria-hidden="true">
+						<div className="modal-dialog">
+							<div className="modal-content">
+								<div className="modal-header">
+									<h4 className="modal-title" id="myModalLabel">Switch Company</h4>
+								</div>
+								<div className="modal-body">
+                                    <form role="form">
+                                     <div id="switchCompanyDiv" style={hideCompanies}>                                       
+                                         <select className="form-control" onChange={this.updateOrganizationID}>{optionItems}
+                                         </select>
+                                     </div>
+                                    </form>
+								</div>								
+							</div>
+						</div>
                     </div>
                 </div>
 
