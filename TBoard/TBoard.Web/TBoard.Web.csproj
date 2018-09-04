@@ -305,6 +305,7 @@
     <Content Include="Content\bootstrap\sb-admin-2.css" />
     <Content Include="Content\bootstrap\timeline.css" />
     <Content Include="Content\EmailTemplates\quotepaid.html" />
+    <Content Include="Scripts\reactLogic\OrganizationInformation.jsx" />
     <Resource Include="Content\EmailTemplates\expiredDocuments.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -429,6 +430,7 @@
     <Content Include="Images\Verify.png" />
     <Content Include="Images\WallpaperBG.png" />
     <Content Include="Images\watch-img.png" />
+    <Content Include="Scripts\allenfang\dist\react-bootstrap-table.min.js" />
     <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\notify.min.js" />
     <Content Include="Scripts\pnotify.custom.min.js" />
@@ -525,7 +527,6 @@
     <Content Include="Scripts\allenfang\css\react-bootstrap-table.min.css" />
     <Content Include="Scripts\allenfang\css\toastr.css" />
     <Content Include="Scripts\allenfang\dist\react-bootstrap-table.js" />
-    <Content Include="Scripts\allenfang\dist\react-bootstrap-table.min.js" />
     <Content Include="Scripts\bootstap\bower_components\bootstrap-social\.bower.json" />
     <Content Include="Scripts\bootstap\bower_components\bootstrap-social\.editorconfig" />
     <Content Include="Scripts\bootstap\bower_components\bootstrap-social\.gitignore" />

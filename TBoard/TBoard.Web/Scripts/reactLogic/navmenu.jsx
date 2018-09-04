@@ -131,6 +131,11 @@ var OrganizationMenu = React.createClass({
                         </li>
 		                <li>
 			                <a href="#organization">Details</a>
+                            <ul className="nav nav-third-level collapse in" aria-expanded="true">
+                                <li>
+                                    <a href="#OrgInfo">Organization Information</a>
+                                </li>                                
+                            </ul>
 		                </li>
 		                <li>
 			                <a href="#document">Documents</a>
