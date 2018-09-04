@@ -233,6 +233,12 @@ routie({
 				React.createElement(CreateOrganization, null), document.getElementById('container')
 			);
         }
+         ,
+        'OrgInfo': function () {
+            ReactDOM.render(
+				React.createElement(OrganizationInformation, null), document.getElementById('container')
+			);
+        }
     
 });
 
