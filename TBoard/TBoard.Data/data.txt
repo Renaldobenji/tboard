@@ -89,7 +89,6 @@ INSERT INTO `communication` (`communicationID`, `owningType`, `owningID`, `commu
 --
 
 INSERT INTO `config` (`configID`, `name`, `value`) VALUES
-(1, 'StorageConnectionString', 'DefaultEndpointsProtocol=https;AccountName=tboardstorage;AccountKey=hL3js6HVYnRgFu6quTS3G1+bUPWbN0sauJ+JXr0a/Pot3Z83PkdsFMk2oDNDXjefAj05d1tpRaKUm1rJ3L0/zg=='),
 (2, 'SendGridUsername', 'azure_a2bbb2221ba1032d0a0f85f618e821ec@azure.com'),
 (3, 'SendGridPassword', 'Renaldo123'),
 (4, 'SendGridSMTPServer', 'smtp.sendgrid.net'),
