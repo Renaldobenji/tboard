@@ -1,0 +1,550 @@
+--
+
+INSERT INTO `addresstype` (`addressTypeID`, `addressTypeTLA`, `AddressTypeDescription`) VALUES
+(1, 'PHY', 'Physical Address'),
+(2, 'WRK', 'Work Address');
+
+-- --------------------------------------------------------
+-- Dumping data for table `address`
+--
+
+INSERT INTO `address` (`addressID`, `owningType`, `owningID`, `addressTypeID`, `addressLine1`, `addressLine2`, `addressLine3`, `addressLine4`, `addressLine5`, `postalCode`) VALUES
+(1, 'ORG', '45', 1, 'Renaldobednji@gmail.com', 'Renaldobednji@gmail.com', 'Renaldobednji@gmail.com', 'Renaldobednji@gmail.com', 'Renaldobednji@gmail.com', 'Renaldobednji@gmail.com'),
+(2, 'PER', '76', 2, 'Renaldobednji@gmail.com', 'Renaldobednji@gmail.com', 'Renaldobednji@gmail.com', 'Renaldobednji@gmail.com', 'Renaldobednji@gmail.com', 'Renaldobednji@gmail.com'),
+(3, 'ORG', '46', 1, '5 De Waru Avenue', 'Renaldobenji@gmail.com', 'Renaldobenji@gmail.com', 'Renaldobenji@gmail.com', 'Renaldobenji@gmail.com', '1709'),
+(4, 'PER', '77', 2, '5 De Waru Avenue', 'Renaldobenji@gmail.com', 'Renaldobenji@gmail.com', 'Renaldobenji@gmail.com', 'Renaldobenji@gmail.com', '1709'),
+(5, 'ORG', '47', 1, 'afasdf', 'asdfasd', 'asdf', 'asdf', 'asdf', 'asdfasdf'),
+(6, 'ORG', '48', 1, '17250 phase 2', 'Bloemanda', 'Bloemfontein', '', '', '9323'),
+(7, 'PER', '78', 2, '17250 phase 2', 'Bloemanda', 'Bloemfontein', '', '', '9323'),
+(8, 'ORG', '49', 1, '5 Olivene Street', '', '', '', 'Lime Acres', '8410'),
+(9, 'PER', '79', 2, '5 Olivene Street', '', '', '', 'Lime Acres', '8410'),
+(10, 'ORG', '50', 1, '5 De Waru Avenue', 'renaldob187@hotmail.com', 'Johannesburg', 'renaldob187@hotmail.com', 'renaldob187@hotmail.com', '1709'),
+(11, 'PER', '80', 2, '5 De Waru Avenue', 'renaldob187@hotmail.com', 'Johannesburg', 'renaldob187@hotmail.com', 'renaldob187@hotmail.com', '1709');
+
+-- --------------------------------------------------------
+
+
+
+INSERT INTO `bankaccounttype` (`bankAccountTypeID`, `bankAccountTypeCode`, `bankAccountTypeDescription`) VALUES
+(1, 'Cheque', 'Cheque'),
+(2, 'Savings', 'Savings');
+-- Table structure for
+-- Dumping data for table `bankaccountdetails`
+--
+
+INSERT INTO `bankaccountdetails` (`bankAccountDetailID`, `owningType`, `owningID`, `accountName`, `accountNumber`, `branchCode`, `branchName`, `default`, `bankAccountTypeID`) VALUES
+(1, 'ORG', '47', '12312', '1234', '1234', '12341234', NULL, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for
+INSERT INTO `communicationtype` (`communicationTypeID`, `communicationTypeTLA`, `communicationTypeDescription`) VALUES
+(1, 'CELL', 'Cellphone'),
+(2, 'WRK', 'Work Number'),
+(3, 'HME', 'Home Number'),
+(4, 'EML', 'Email ');
+
+
+INSERT INTO `communication` (`communicationID`, `owningType`, `owningID`, `communicationLine1`, `communicationLine2`, `communicationTypeID`) VALUES
+(1, 'ORG', '45', 'Renaldobednji@gmail.com', NULL, 1),
+(2, 'PER', '76', 'Renaldobednji@gmail.com', NULL, 1),
+(3, 'ORG', '45', 'Renaldobednji@gmail.com', NULL, 3),
+(4, 'PER', '76', 'Renaldobednji@gmail.com', NULL, 3),
+(5, 'ORG', '45', 'Renaldobednji@gmail.com', NULL, 2),
+(6, 'PER', '76', 'Renaldobednji@gmail.com', NULL, 2),
+(7, 'ORG', '45', 'Renaldobednji@gmail.com', NULL, 4),
+(8, 'PER', '76', 'Renaldobednji@gmail.com', NULL, 4),
+(9, 'ORG', '46', '0722771137', NULL, 1),
+(10, 'PER', '77', '0722771137', NULL, 1),
+(11, 'ORG', '46', 'Renaldobenji@gmail.com', NULL, 3),
+(12, 'PER', '77', 'Renaldobenji@gmail.com', NULL, 3),
+(13, 'ORG', '46', 'Renaldobenji@gmail.com', NULL, 2),
+(14, 'PER', '77', 'Renaldobenji@gmail.com', NULL, 2),
+(15, 'ORG', '46', 'Renaldobenji@gmail.com', NULL, 4),
+(16, 'PER', '77', 'Renaldobenji@gmail.com', NULL, 4),
+(17, 'ORG', '47', 'asdf', NULL, 3),
+(18, 'ORG', '47', 'asdf', NULL, 1),
+(19, 'ORG', '47', 'asdf', NULL, 2),
+(20, 'ORG', '47', 'renaldobenji@gmail.com', NULL, 4),
+(21, 'ORG', '48', '0710253537', NULL, 1),
+(22, 'PER', '78', '0710253537', NULL, 1),
+(23, 'ORG', '48', 'Ntshingat@yahoo.com', NULL, 4),
+(24, 'PER', '78', 'Ntshingat@yahoo.com', NULL, 4),
+(25, 'ORG', '49', '0724559730', NULL, 1),
+(26, 'PER', '79', '0724559730', NULL, 1),
+(27, 'ORG', '49', 'jaydeebenjamin@gmail.com', NULL, 4),
+(28, 'PER', '79', 'jaydeebenjamin@gmail.com', NULL, 4),
+(29, 'ORG', '50', 'renaldob187@hotmail.com', NULL, 1),
+(30, 'PER', '80', 'renaldob187@hotmail.com', NULL, 1),
+(31, 'ORG', '50', 'renaldob187@hotmail.com', NULL, 3),
+(32, 'PER', '80', 'renaldob187@hotmail.com', NULL, 3),
+(33, 'ORG', '50', 'renaldob187@hotmail.com', NULL, 2),
+(34, 'PER', '80', 'renaldob187@hotmail.com', NULL, 2),
+(35, 'ORG', '50', 'renaldob187@hotmail.com', NULL, 4),
+(36, 'PER', '80', 'renaldob187@hotmail.com', NULL, 4);
+
+-- --------------------------------------------------------
+
+--
+
+INSERT INTO `config` (`configID`, `name`, `value`) VALUES
+(1, 'StorageConnectionString', 'DefaultEndpointsProtocol=https;AccountName=tboardstorage;AccountKey=hL3js6HVYnRgFu6quTS3G1+bUPWbN0sauJ+JXr0a/Pot3Z83PkdsFMk2oDNDXjefAj05d1tpRaKUm1rJ3L0/zg=='),
+(2, 'SendGridUsername', 'azure_a2bbb2221ba1032d0a0f85f618e821ec@azure.com'),
+(3, 'SendGridPassword', 'Renaldo123'),
+(4, 'SendGridSMTPServer', 'smtp.sendgrid.net'),
+(5, 'BankingDetails', 'StandardBank,1111111,051101656'),
+(6, 'SiteURL', 'http://tenderboard.co.za/');
+
+INSERT INTO `grouprolemapping` (`groupRoleMappingID`, `groupCode`, `roleCode`, `fromDate`, `toDate`) VALUES
+(1, 'admin', 'admin', '2015-01-01 00:00:00', NULL),
+(2, 'CorporateBuyer', 'CorporateBuyer', '2015-01-01 00:00:00', NULL),
+(3, 'CorporateSeller', 'CorporateSeller', '2015-01-01 00:00:00', NULL),
+(4, 'PrivateBuyer', 'PrivateBuyer', '2015-01-01 00:00:00', NULL),
+(5, 'SubordinateAccess', 'CanViewPersonalMenu', '2015-01-01 00:00:00', NULL),
+(6, 'SubordinateAccess', 'CanViewBidsMenu', '2015-01-01 00:00:00', NULL);
+
+-- --------------------------------------------------------
+
+--
+
+INSERT INTO `groups` (`groupID`, `groupCode`, `groupName`, `groupDescription`, `groupStatus`) VALUES
+(1, 'admin', 'admin', 'admin', 'ACT'),
+(2, 'CorporateBuyer', 'CorporateBuyer', 'CorporateBuyer', 'ACT'),
+(3, 'CorporateSeller', 'CorporateSeller', 'CorporateSeller', 'ACT'),
+(4, 'PrivateBuyer', 'PrivateBuyer', 'PrivateBuyer', 'ACT'),
+(5, 'SubordinateAccess', 'SubordinateAccess', 'SubordinateAccess', 'ACT');
+
+-- --------------------------------------------------------
+
+--
+-- Dumping data for table `organization`
+--
+
+INSERT INTO `organizationtypes` (`organizationTypeID`, `name`, `description`) VALUES
+(1, 'Company Buyer', 'Company Buyer'),
+(2, 'Company Seller', 'Company Seller'),
+(3, 'Private Buyer', 'Private Buyer');
+INSERT INTO `organization` (`organizationID`, `name`, `tradingName`, `registrationNumber`, `vatNumber`, `taxNumber`, `organizationTypeID`, `oem`) VALUES
+(46, 'Renaldobenji@gmail.com', 'JaydeeCompany', 'JaydeeCompany', 'JaydeeCompany', 'JaydeeCompany', 1, b'0'),
+(47, 'RenaldoOrg', 'RenaldoOrg', 'RenaldoOrg', 'RenaldoOrg', 'RenaldoOrg', NULL, b'1'),
+(48, 'Motion bytes', NULL, NULL, NULL, NULL, 2, NULL),
+(49, 'Skybid Auctioneers', NULL, NULL, NULL, NULL, 1, NULL),
+(50, 'renaldob187@hotmail.com', NULL, NULL, NULL, NULL, 1, NULL);
+
+
+
+INSERT INTO `organizationmapping` (`organizationMappingID`, `organizationID`, `userID`, `created`) VALUES
+(3, 46, 77, '2018-08-01 01:14:11'),
+(4, 47, 77, '2018-08-01 01:21:05'),
+(5, 48, 78, '2018-08-01 16:57:45'),
+(6, 49, 79, '2018-08-01 21:08:02'),
+(7, 50, 80, '2018-08-02 02:47:24');
+
+
+
+INSERT INTO `documenttypes` (`documentTypeID`, `documentCode`, `documentDescription`, `expiryTermMonths`) VALUES
+(1, 'Company Registration', 'Company Registration', NULL),
+(2, 'Member Id Document', 'Member Id Document', NULL),
+(3, 'Vat Number', 'Vat Number', NULL),
+(4, 'Bank Details', 'Bank Details', NULL),
+(5, 'CIPC Registration', 'CIPC Registration', NULL),
+(6, 'Tax Clearance Certificate - Good Standing', 'Tax Clearance Certificate - Good Standing', NULL),
+(7, 'Letter of Good Standing - Department of Labou', 'Letter of Good Standing - Department of Labou', NULL);
+
+
+--
+-- Table structure for table `
+-- Dumping data for table `documentrequirements`
+--
+
+
+-- --------------------------------------------------------
+
+--
+
+
+
+
+INSERT INTO `groupmembership` (`groupMembershipID`, `userID`, `groupCode`, `fromDate`, `toDate`) VALUES
+(53, 75, 'PrivateBuyer', '2018-07-31 03:28:00', NULL),
+(54, 75, 'CorporateBuyer', '2018-07-31 03:28:00', NULL),
+(55, 75, 'CorporateSeller', '2018-07-31 03:28:00', NULL),
+(56, 76, 'PrivateBuyer', '2018-07-31 18:58:49', NULL),
+(57, 76, 'CorporateBuyer', '2018-07-31 18:58:49', NULL),
+(58, 77, 'PrivateBuyer', '2018-08-01 01:14:11', NULL),
+(59, 77, 'CorporateBuyer', '2018-08-01 01:14:11', NULL),
+(60, 77, 'CorporateSeller', '2018-08-01 01:14:11', NULL),
+(61, 78, 'CorporateSeller', '2018-08-01 16:57:45', NULL),
+(62, 79, 'CorporateBuyer', '2018-08-01 21:08:02', NULL),
+(63, 80, 'PrivateBuyer', '2018-08-02 02:47:24', NULL),
+(64, 80, 'CorporateBuyer', '2018-08-02 02:47:24', NULL),
+(65, 80, 'CorporateSeller', '2018-08-02 02:47:24', NULL);
+
+INSERT INTO `documentrequirements` (`documentRequirementsID`, `documentTypeID`, `organizationTypeID`) VALUES
+(1, 1, 1),
+(2, 2, 1),
+(3, 3, 1),
+(4, 4, 1),
+(5, 1, 2),
+(6, 2, 2),
+(7, 3, 2),
+(8, 4, 2),
+(9, 5, 1),
+(10, 6, 1),
+(11, 7, 1),
+(12, 5, 2),
+(13, 6, 2),
+(14, 7, 2);
+
+--
+-- Dumping data for table `documents`
+--
+
+INSERT INTO `documents` (`documentID`, `documentTypeID`, `organizationID`, `documentPath`, `dateCreated`, `expiryDate`, `verified`) VALUES
+(7, 1, 46, 'effe81b5-d6c7-4d77-a27c-1a48491edb3a.45655228', '2018-08-01 01:22:13', NULL, NULL),
+(8, 1, 50, 'ee8c83ae-9f0f-4da9-94be-d5edccaa1e40.pdf', '2018-08-02 03:05:30', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+
+
+-- --------------------------------------------------------
+
+--
+INSERT INTO `expertisecategory` (`ExpertiseCategoryID`, `Name`) VALUES
+(218, 'General');
+
+-- --------------------------------------------------------
+
+INSERT INTO `expertisesubcategory` (`ExpertiseSubCategoryID`, `Name`, `ExpertiseCategoryID`) VALUES
+(1684, 'Abrasives and Related Materials - All', 218),
+(1685, 'Abrasives and Related Materials - Grinding Consumables', 218),
+(1686, 'Agitators and Thickeners - All', 218),
+(1687, 'Agricultural Vehicles - All', 218),
+(1688, 'Agricultural Vehicles - Harvesters', 218),
+(1689, 'Agricultural Vehicles - Tractors', 218),
+(1690, 'Agricultaural Vehicles - Trailers', 218),
+(1691, 'Air conditioners - All', 218),
+(1692, 'Air conditioners - Domestic', 218),
+(1693, 'Air conditioners - Industrial', 218),
+(1694, 'Air conditioners - Mechanical Coolers', 218),
+(1695, 'Air conditioners - Trucks', 218),
+(1696, 'Air conditioners - Underground Vehicles', 218),
+(1697, 'Air conditioners - Vehicle', 218),
+(1698, 'All types of steel, pipe and plate - All', 218),
+(1699, 'All types of steel, pipe and plate - HDPE Pipes and Fittings', 218),
+(1700, 'All types of steel, pipe and plate - Plate and Plate Sections', 218),
+(1701, 'All types of steel, pipe and plate - PVC Pipes and Fittings', 218),
+(1702, 'All types of steel, pipe and plate - Rails and Rail Sections', 218),
+(1703, 'All types of steel, pipe and plate - Sheeting and Grating', 218),
+(1704, 'All types of steel, pipe and plate - Special Steel', 218),
+(1705, 'All types of steel, pipe and plate - Steel Pipes and Fittings', 218),
+(1706, 'Apron Feeders - All', 218),
+(1707, 'Batteries - All types', 218),
+(1708, 'Bearings, Drive Belts and Seals - All', 218),
+(1709, 'Bearings, Drive Belts and Seals - Bearings', 218),
+(1710, 'Bearings, Drive Belts and Seals - Couplings', 218),
+(1711, 'Bearings, Drive Belts and Seals - Drive Belts', 218),
+(1712, 'Bearings, Drive Belts and Seals - Plumber Blocks', 218),
+(1713, 'Bearings, Drive Belts and Seals - Pulleys, Bush and Taper Locks', 218),
+(1714, 'Bearings, Drive Belts and Seals - Seals', 218),
+(1715, 'Bearings, Drive Belts and Seals - Sprocket Chains', 218),
+(1716, 'Bearings, Drive Belts and Seals - Sprockets', 218),
+(1717, 'Blast Monitoring', 218),
+(1718, 'Bolts and Nuts - All', 218),
+(1719, 'Bricks - All', 218),
+(1720, 'Building Materials - All', 218),
+(1721, 'Casting and Forgings - All', 218),
+(1722, 'Catering and Food Supplies - All', 218),
+(1723, 'Cement - All', 218),
+(1724, 'Chemicals - All', 218),
+(1725, 'Chemicals - Chemical Liquids', 218),
+(1726, 'Chemicals - Chemical Powders', 218),
+(1727, 'Chemicals - Concrete Accelerator', 218),
+(1728, 'Chemicals - Ferrosilicon', 218),
+(1729, 'Chemicals - Flocculant', 218),
+(1730, 'Chemicals - Lime and Lime Products', 218),
+(1731, 'Chemicals - Reagents', 218),
+(1732, 'Cocopan / Grambies / Hoppers - All', 218),
+(1733, 'Communication - All', 218),
+(1734, 'Communication - Cellular Phones', 218),
+(1735, 'Communication - Telkom Phones', 218),
+(1736, 'Communication - VOIP Phones', 218),
+(1737, 'Compressors and Related Spares', 218),
+(1738, 'Concrete ( Ready-mix & Bagged )', 218),
+(1739, 'Conference facilities - All', 218),
+(1740, 'Containers and Packaging Supplies - All', 218),
+(1741, 'Contractor Civil and Construction Labour - All', 218),
+(1742, 'Contractor Underground Labour - All', 218),
+(1743, 'Control and Instrumentation - All', 218),
+(1744, 'Conveyor Belt, Accessories and Parts - All', 218),
+(1745, 'Conveyor Belt, Accessories and Parts - Belting', 218),
+(1746, 'Conveyor Belt, Accessories and Parts - Frames', 218),
+(1747, 'Conveyor Belt, Accessories and Parts - Idlers', 218),
+(1748, 'Conveyor Belt, Accessories and Parts - Pulleys', 218),
+(1749, 'Conveyor Belt, Accessories and Parts - Scrapers', 218),
+(1750, 'Corporate Gifts, Clothing and Awards - All', 218),
+(1751, 'Courier Services - All', 218),
+(1752, 'Cranes - All', 218),
+(1753, 'Cranes - Mobile', 218),
+(1754, 'Cranes - Overhead Cranes', 218),
+(1755, 'Crushing Equipment, Related Parts and Spares - All', 218),
+(1756, 'Cyclones and Cyclone Spares - All', 218),
+(1757, 'Density Tracers / Clean Room Products / Sampling Equipment etc', 218),
+(1758, 'Diamond Recovery X-Ray Equipment - All', 218),
+(1759, 'Diesel and Petrol Engines - All', 218),
+(1760, 'Differentials - All', 218),
+(1761, 'Domestic and General Cleaning Materials - All', 218),
+(1762, 'Domestic Appliances and Equipment - All', 218),
+(1763, 'Drill Steel and Drilling Consumables - All', 218),
+(1764, 'Earthmoving Vehicles - All', 218),
+(1765, 'Earthmoving Vehicles - Surface', 218),
+(1766, 'Earthmoving Vehicles - Underground', 218),
+(1767, 'Electric pumps and Related Spares - All', 218),
+(1768, 'Electrical cables - All', 218),
+(1769, 'Electrical Equipment and Related Accessories - All', 218),
+(1770, 'Electrical Motors - All', 218),
+(1771, 'Electrical Valves and Spares - All', 218),
+(1772, 'Environmental Consulting', 218),
+(1773, 'Environmental Monitoring, Handling & Auditing', 218),
+(1774, 'Equipment Hire and Rentals - All', 218),
+(1775, 'Equipment Hire and Rentals - Mobile Equipment Hire and Rentals', 218),
+(1776, 'Equipment Hire and Rentals - Plant and Tool Hire and Rentals', 218),
+(1777, 'Explosives and Accessories - All', 218),
+(1778, 'Filtration Equipment and Systems - All', 218),
+(1779, 'Fire Equipment and Related Parts - All', 218),
+(1780, 'Flotation - All', 218),
+(1781, 'Fuel Management Systems - All', 218),
+(1782, 'Fuels - All', 218),
+(1783, 'Fuels - Diesel', 218),
+(1784, 'Fuels - Paraffin', 218),
+(1785, 'Fuels - Petrol', 218),
+(1786, 'Gas Cutting Consumables - All', 218),
+(1787, 'Gasses and Cylinder Rentals - All', 218),
+(1788, 'Gearboxes, Transmissions and Differentials - All', 218),
+(1789, 'General Hardware - All', 218),
+(1790, 'Gunnite Equipment - All', 218),
+(1791, 'High Speed video Filming', 218),
+(1792, 'Hospital, Medical Equipment and Supplies - All', 218),
+(1793, 'Hydraulic Equipment - All', 218),
+(1794, 'Hydraulic Equipment - Cylinders', 218),
+(1795, 'Hydraulic Equipment -Fittings', 218),
+(1796, 'Hydraulic Equipment - Hoses', 218),
+(1797, 'Hydraulic Equipment - Pumps', 218),
+(1798, 'Hydraulic Motors - All', 218),
+(1799, 'Hydraulic Spares - All', 218),
+(1800, 'Hydraulic Valves and Spares - All', 218),
+(1801, 'IT Equipment - All', 218),
+(1802, 'IT Software - All', 218),
+(1803, 'Laboratory Equipment - All', 218),
+(1804, 'Laboratory Services - All', 218),
+(1805, 'Lamp room Equipment - All', 218),
+(1806, 'Lifting Equipment - All', 218),
+(1807, 'Lifting Equipment - Cables', 218),
+(1808, 'Lifting Equipment - Lifting Hooks', 218),
+(1809, 'Lifting Equipment - Link Chains', 218),
+(1810, 'Lifting Equipment - Shackles', 218),
+(1811, 'Lifting Equipment - Slings', 218),
+(1812, 'Lifting Equipment - Winches', 218),
+(1813, 'Locomotives and Related Spares - All', 218),
+(1814, 'Locomotives and Related Spares - Diesel Locos', 218),
+(1815, 'Locomotives and Related Spares - Electric Locos', 218),
+(1816, 'Lubricants - All', 218),
+(1817, 'Lubricants - Greases', 218),
+(1818, 'Lubricants - Oils', 218),
+(1819, 'Magnetic Separators and Scrubbers - All', 218),
+(1820, 'Marketing Material - All', 218),
+(1821, 'Mechanical Blowers - All', 218),
+(1822, 'Mechanical Valves and Spares - All', 218),
+(1823, 'Medicine - All', 218),
+(1824, 'Mills and Related Spares - All', 218),
+(1825, 'Mining Machinery Surface - All', 218),
+(1826, 'Mining Machinery Surface - Articulated Trucks', 218),
+(1827, 'Mining Machinery Surface - Dozers', 218),
+(1828, 'Mining Machinery Surface - Dump Trucks', 218),
+(1829, 'Mining Machinery Surface - Forklifts', 218),
+(1830, 'Mining Machinery Surface - Front End Loaders', 218),
+(1831, 'Mining Machinery Surface - Graders', 218),
+(1832, 'Mining Machinery Surface - Horse and Trailers', 218),
+(1833, 'Mining Machinery Surface - Impact Rollers', 218),
+(1834, 'Mining Machinery Surface - Skidsteer Loaders', 218),
+(1835, 'Mining Machinery Surface - Water Bowsers', 218),
+(1836, 'Mining Machinery Underground - All', 218),
+(1837, 'Mining Machinery Underground - Bolters', 218),
+(1838, 'Mining Machinery Underground - Drill Rigs', 218),
+(1839, 'Mining Machinery Underground - Dump Trucks', 218),
+(1840, 'Mining Machinery Underground - LHD', 218),
+(1841, 'Mining Machinery Underground - Rock breaker Equipment and Spares', 218),
+(1842, 'Mining Machinery Underground - Rock Drill', 218),
+(1843, 'Mining Machinery Underground - Utility Vehicles', 218),
+(1844, 'Motor Vehicles - All', 218),
+(1845, 'Motor Vehicles - Light Delivery Vehicles', 218),
+(1846, 'Motor Vehicles - Motorcycles', 218),
+(1847, 'Motor Vehicles - Personnel Carriers', 218),
+(1848, 'Motor Vehicles - Quad Bikes', 218),
+(1849, 'Motor Vehicles - Sedans', 218),
+(1850, 'Motor Vehicles - Trailers', 218),
+(1851, 'Noise Monitoring - All', 218),
+(1852, 'Nursery / Plants & Associated Products - All', 218),
+(1853, 'Office Furniture and Equipment - All', 218),
+(1854, 'Packing and Jointing - All', 218),
+(1855, 'Packing and Jointing - Gasket Sealer', 218),
+(1856, 'Packing and Jointing - Gaskets', 218),
+(1857, 'Packing and Jointing - Jointing', 218),
+(1858, 'Paints, Fillers and Consumables - All', 218),
+(1859, 'Personal Protective Equipment - PPE (All)', 218),
+(1860, 'Pneumatic Equipment - All', 218),
+(1861, 'Pneumatic Motors - All', 218),
+(1862, 'Pneumatic Pumps and Related Spares - All', 218),
+(1863, 'Pneumatic Valves and Spares - All', 218),
+(1864, 'Polyurethane Liners - All', 218),
+(1865, 'Pressure Pumps and Related Spares - All', 218),
+(1866, 'Pressure Vessels - All', 218),
+(1867, 'Roofing Support - All', 218),
+(1868, 'Roofing Support - Roof Bolts and Accessories', 218),
+(1869, 'Rubber Liners - All', 218),
+(1870, 'Rubber Liners - Rubber Lining', 218),
+(1871, 'Safety Signage - All', 218),
+(1872, 'Sand and Stone - All', 218),
+(1873, 'Screens, Screen Panels and Screen Spares - All', 218),
+(1874, 'Security Equipment - All', 218),
+(1875, 'Services - Accounting and Auditing - All', 218),
+(1876, 'Services - BEE Services and Consultation - All', 218),
+(1877, 'Services - Electrical Engineering - All', 218),
+(1878, 'Services - Electrical Engineering - Design', 218),
+(1879, 'Services - Electrical Engineering - Installation', 218),
+(1880, 'Services - Engineering Civil Construction - All', 218),
+(1881, 'Services - Engineering Civil Construction - Design', 218),
+(1882, 'Services - Engineering Civil Construction - Road Maintenance', 218),
+(1883, 'Services - Engineering Civil Construction - Services', 218),
+(1884, 'Services - Engineering Structural Manufacturing - All', 218),
+(1885, 'Services - Engineering Structural Manufacturing - Design', 218),
+(1886, 'Services - Engineering Structural Manufacturing - Installation', 218),
+(1887, 'Services - Engineering Structural Manufacturing - Manufacturing', 218),
+(1888, 'Services - Export Customs and Clearances - All', 218),
+(1889, 'Services - Fencing - All', 218),
+(1890, 'Services - Financial - All', 218),
+(1891, 'Services - Fire Management - All', 218),
+(1892, 'Services - Fuel Management - All', 218),
+(1893, 'Services - General - All', 218),
+(1894, 'Services - Geotechnical - All', 218),
+(1895, 'Services - HR and IR - Human and Social Services - All', 218),
+(1896, 'Services - HR and IR - Human and Social Services - Specialised', 218),
+(1897, 'Services - HSEQ - All', 218),
+(1898, 'Services - HSEQ - Biohazardous Services', 218),
+(1899, 'Services - HSEQ - Emergency Services', 218),
+(1900, 'Services - HSEQ - Environmental Impact Assessments', 218),
+(1901, 'Services - HSEQ - Health Management', 218),
+(1902, 'Services - HSEQ - Quality Management', 218),
+(1903, 'Services - HSEQ - Safety Management', 218),
+(1904, 'Services - HSEQ - Ventilation Audits', 218),
+(1905, 'Services - HSEQ - Ventilation Installation', 218),
+(1906, 'Services - HSEQ - Waste Management', 218),
+(1907, 'Services - HSEQ - Water Treatment', 218),
+(1908, 'Services - Import Customs and Clearances - All', 218),
+(1909, 'Services - IT - All', 218),
+(1910, 'Services - Legal - Legal Services', 218),
+(1911, 'Services - Material Management - All', 218),
+(1912, 'Services - Mining - All', 218),
+(1913, 'Services - Mining - Cleaning', 218),
+(1914, 'Services - Mining - Development', 218),
+(1915, 'Services - Mining - Drilling', 218),
+(1916, 'Services - Mining - Primary Support', 218),
+(1917, 'Services - Mining - Road Maintenance', 218),
+(1918, 'Services - Mining - Secondary Support', 218),
+(1919, 'Services - Mining - Shaft Maintenance', 218),
+(1920, 'Services - Mining - Underground Rehab', 218),
+(1921, 'Services - Pest Control - All', 218),
+(1922, 'Services - Plant - All', 218),
+(1923, 'Services - Plant Cleaning', 218),
+(1924, 'Services - Plant - Road Maintenance', 218),
+(1925, 'Services - Plant - Slime Dam Maintenance', 218),
+(1926, 'Services - Procurement - All', 218),
+(1927, 'Services - Sales and Marketing - All', 218),
+(1928, 'Services - Security - All', 218),
+(1929, 'Services - Security and Guarding - All', 218),
+(1930, 'Services - Survey - All', 218),
+(1931, 'Services - Training - All', 218),
+(1932, 'Services - Transport - All', 218),
+(1933, 'Services - Tyre Management - All', 218),
+(1934, 'Services - Tyre Management - Offsite Repairs', 218),
+(1935, 'Services - Tyre Management - Onsite Repairs', 218),
+(1936, 'Services - Tyre Management - Onsite Tyre Management', 218),
+(1937, 'Slurry Pumps and Related Spares - All', 218),
+(1938, 'Smelting and Refining Equipment and Related Parts - All', 218),
+(1939, 'Stationery and Office Supplies - All', 218),
+(1940, 'Submersible Pumps and Related Spares - All', 218),
+(1941, 'Supply of Blast Monitoring Equipment - All', 218),
+(1942, 'Timber - All', 218),
+(1943, 'Tools - All (Incl Specialised Tools)', 218),
+(1944, 'Transformers - All', 218),
+(1945, 'Travel and Accommodation - All', 218),
+(1946, 'Turbines - All', 218),
+(1947, 'Tyres - All', 218),
+(1948, 'Tyres - Earthmoving', 218),
+(1949, 'Tyres - Foam Fill', 218),
+(1950, 'Tyres - Motor Vehicle', 218),
+(1951, 'Tyres - Motorcycle', 218),
+(1952, 'Tyres - Quad bikes', 218),
+(1953, 'Tyres - Solid Tyres', 218),
+(1954, 'Tyres - Truck', 218),
+(1955, 'Tyres - Tubes and Accessories', 218),
+(1956, 'Vehicle Spares - All', 218),
+(1957, 'Ventilation Equipment and Related Parts - All', 218),
+(1958, 'Ventilation Equipment and Related Parts - Ventilation Pipes and Accessories', 218),
+(1959, 'Ventilation Fans - All', 218),
+(1960, 'Vibrating Equipment - All', 218),
+(1961, 'Vibration Monitoring - All', 218),
+(1962, 'Washing and Screening - All', 218),
+(1963, 'Welded Mesh - All', 218),
+(1964, 'Welding and Cutting Equipment - All', 218),
+(1965, 'Winder Ropes and Attachments - All', 218),
+(1966, 'Winders, Hoists, Winches and Lifts - All', 218),
+(1967, 'Wire Mesh - All', 218);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `groupmembership`
+--
+
+-- --------------------------------------------------------
+
+--
+
+INSERT INTO `rfqtype` (`rfqTypeID`, `code`, `description`, `Prefix`) VALUES
+(1, 'RFQ', 'RFQ', 'RFQ'),
+(2, 'OTT', 'OTT', 'OTT'),
+(3, 'CTT', 'CTT', 'CTT');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `
+--
+
+INSERT INTO `roles` (`roleID`, `roleCode`, `roleName`, `roleDescription`, `roleStatus`) VALUES
+(1, 'Admin', 'Admin', 'Admin', 'ACT'),
+(2, 'CorporateBuyer', 'CorporateBuyer', 'CorporateBuyer', 'ACT'),
+(3, 'CorporateSeller', 'CorporateSeller', 'CorporateSeller', 'ACT'),
+(4, 'PrivateBuyer', 'PrivateBuyer', 'PrivateBuyer', 'ACT'),
+(5, 'CanViewOrganizationMenu', 'CanViewOrganizationMenu', 'CanViewOrganizationMenu', 'ACT'),
+(6, 'CanViewPersonalMenu', 'CanViewPersonalMenu', 'CanViewPersonalMenu', 'ACT'),
+(7, 'CanViewBidsMenu', 'CanViewBidsMenu', 'CanViewBidsMenu', 'ACT');
+
+-- --------------------------------------------------------
+
+--
+--
+
+INSERT INTO `users` (`userID`, `organizationID`, `username`, `password`, `passwordSalt`, `title`, `firstname`, `surname`, `identificationNumber`, `isApproved`, `isLockedOut`, `lastActivityDate`, `lastPasswordChange`, `lastLoginDate`, `failedPasswordAttemptCount`, `created`, `updated`, `employeeCode`, `departmentCode`) VALUES
+(77, 46, 'Renaldobenji@gmail.com', '/mCEXO3nA7d+41g+rU4aFg==', '3XXLQS4C8F', 'Mr', 'Renaldobenji@gmail.com', 'Renaldobenji@gmail.com', '', b'1', 'false', '2018-08-01 01:14:10', '2018-08-01 01:14:10', '2018-08-01 01:14:10', 0, '2018-08-01 01:14:10', NULL, '', ''),
+(78, 48, 'Ntshingat@yahoo.com', 'rJBt7DImBa62AWvh69vG9w==', '3Q8J29ERA7', 'Mr', 'Thando', 'Ntshinga', '', b'1', 'false', '2018-08-01 16:57:45', '2018-08-01 16:57:45', '2018-08-01 16:57:45', 0, '2018-08-01 16:57:45', NULL, '', ''),
+(79, 49, 'jaydeebenjamin@gmail.com', 'jB+79OxSFPWlbNnuCHp9Ng==', 'VID87QKYUY', 'Mr', 'Jaydee', 'Benjamin', '', b'1', 'false', '2018-08-01 21:08:02', '2018-08-01 21:08:02', '2018-08-01 21:08:02', 0, '2018-08-01 21:08:02', NULL, '', ''),
+(80, 50, 'renaldob187@hotmail.com', 'J9FxOcN/5goO3ghjMHuqBQ==', '8ZJ8A05XXH', 'Mr', 'renaldob187@hotmail.com', 'renaldob187@hotmail.com', '', b'1', 'false', '2018-08-02 02:47:24', '2018-08-02 02:47:24', '2018-08-02 02:47:24', 0, '2018-08-02 02:47:24', NULL, '', '');
+
+--
+-- Indexes for dumped tables
+--
