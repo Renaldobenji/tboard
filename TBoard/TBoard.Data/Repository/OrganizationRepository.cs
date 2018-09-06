@@ -63,6 +63,28 @@ namespace TBoard.Data.Repository
             return this._dbContext.custodians.Where(x => x.organizationID == organizationID).ToList();
         }
 
+        public void SaveMetaData(int OrganizationId, string key, string value)
+        {
+            var orgString = OrganizationId.ToString();
+            var oldmetaData = this._dbContext.metadatas.Where(x => x.ownerType == "ORG" && x.ownerTypeID == orgString && x.metaDataName == key).FirstOrDefault();            
+            
+            //this.repository
+            var newmetaData = new metadata();
+            newmetaData.ownerType = "ORG";
+            newmetaData.ownerTypeID = OrganizationId.ToString();
+            newmetaData.metaDataName = key;
+            newmetaData.metaDataValue = value;
+            newmetaData.dateCreated = DateTime.Now;
+
+            if (oldmetaData != null)
+            {
+                this._dbContext.metadatas.Remove(oldmetaData);
+            }
+            
+            this._dbContext.metadatas.Add(newmetaData);
+            this._dbContext.SaveChanges();
+        }
+
         public void SaveCustodianDetails(custodian custodian)
         {
             this._dbContext.custodians.Add(custodian);

@@ -45,6 +45,11 @@ namespace TBoard.BusinessLogic.BusinessLogic
             this.repository.SaveCustodianDetails(custodian);
         }
 
+        public void SaveMetaData(int OrganizationId, string key, string value)
+        {
+            this.repository.SaveMetaData(OrganizationId, key, value);
+        }
+
         public void UpdateCustodianDetails(custodian custodian)
         {
             this.repository.UpdateCustodianDetails(custodian);

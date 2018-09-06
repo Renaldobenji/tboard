@@ -92,6 +92,43 @@ namespace TBoard.Web.Controllers
         }
 
         [JWTTokenValidation]
+        [HttpPost]
+        [Route("api/Organization/MetaData/OrgInfo")]
+        public HttpResponseMessage MetaDataOrgInfo(FormDataCollection formData)
+        {
+            int orgID = Convert.ToInt32(EncryptionHelper.Decrypt(formData.Get("organizationID")));
+
+            var updateLetterHead = formData.Get("updateLetterHead");
+            var updateCompanyProfile = formData.Get("updateCompanyProfile");
+            var updateQuotationExample = formData.Get("updateQuotationExample");
+            var updatePurchaseOrderExample = formData.Get("updatePurchaseOrderExample");
+            var updateInvoiceExample = formData.Get("updateInvoiceExample");
+            var updateSuppliersDocuments = formData.Get("updateSuppliersDocuments");
+            var updateSuppliersCount = formData.Get("updateSuppliersCount");
+            var updateRegisterShares = formData.Get("updateRegisterShares");
+            var updateEmergencyStrikes = formData.Get("updateEmergencyStrikes");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "LetterHead", updateLetterHead);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "CompanyProfile", updateCompanyProfile);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "QuotationExample", updateQuotationExample);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "PurchaseOrderExample", updatePurchaseOrderExample);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "InvoiceExample", updateInvoiceExample);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "SuppliersDocuments", updateSuppliersDocuments);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "SuppliersCount", updateSuppliersCount);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "RegisterShares", updateRegisterShares);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "EmergencyStrikes", updateEmergencyStrikes);
+            
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject("OK"))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return resp;
+        }
+
+        [JWTTokenValidation]
         [Route("api/Organization/SaveCustodianDetails")]
         public void SaveCustodianDetails(FormDataCollection formData)
         {
