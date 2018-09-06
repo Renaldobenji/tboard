@@ -23,6 +23,7 @@
     <IISExpressUseClassicPipelineMode />
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -305,6 +306,7 @@
     <Content Include="Content\bootstrap\sb-admin-2.css" />
     <Content Include="Content\bootstrap\timeline.css" />
     <Content Include="Content\EmailTemplates\quotepaid.html" />
+    <Content Include="Scripts\reactLogic\FinanceInformation.jsx" />
     <Content Include="Scripts\reactLogic\OrganizationInformation.jsx" />
     <Resource Include="Content\EmailTemplates\expiredDocuments.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -1021,9 +1023,7 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\Index.cshtml">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml">
       <SubType>Designer</SubType>
