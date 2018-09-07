@@ -239,6 +239,12 @@ routie({
 				React.createElement(OrganizationInformation, null), document.getElementById('container')
 			);
         }
+        ,
+        'FinanceInfo': function () {
+            ReactDOM.render(
+                React.createElement(FinanceInformation, null), document.getElementById('container')
+            );
+        }
     
 });
 

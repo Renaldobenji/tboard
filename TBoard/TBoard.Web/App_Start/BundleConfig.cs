@@ -47,7 +47,8 @@ namespace TBoard.Web
                 new BabelTransform()
                 //,new JsMinify(),
             }).Include(
-                 "~/Scripts/reactLogic/OrganizationInformation.jsx",
+                "~/Scripts/reactLogic/FinanceInformation.jsx",
+                "~/Scripts/reactLogic/OrganizationInformation.jsx",
                 "~/Scripts/reactLogic/reports.jsx",
                 "~/Scripts/reactLogic/rfqbidlost.jsx",
                 "~/Scripts/reactLogic/rfqpay.jsx",
