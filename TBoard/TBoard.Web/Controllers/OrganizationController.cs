@@ -17,10 +17,12 @@ namespace TBoard.Web.Controllers
     public class OrganizationController : ApiController
     {
         private OrganizationBusinessLogic organizationBusinessLogic;
+        RequirementBusinessLogic requirementBusinessLogic;
         // GET api/<controller>/5
-        public OrganizationController(OrganizationBusinessLogic organizationBusinessLogic)
+        public OrganizationController(OrganizationBusinessLogic organizationBusinessLogic, RequirementBusinessLogic requirementBusinessLogic)
         {
             this.organizationBusinessLogic = organizationBusinessLogic;
+            this.requirementBusinessLogic = requirementBusinessLogic;
         }
 
         [JWTTokenValidation]
@@ -109,11 +111,35 @@ namespace TBoard.Web.Controllers
             var updateEmergencyStrikes = formData.Get("updateEmergencyStrikes");
 
             this.organizationBusinessLogic.SaveMetaData(orgID, "LetterHead", updateLetterHead);
+            if (updateLetterHead.ToUpper().Equals("YES"))
+            {
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ORGINFO", "LetterHead");
+            }
             this.organizationBusinessLogic.SaveMetaData(orgID, "CompanyProfile", updateCompanyProfile);
+            if (updateCompanyProfile.ToUpper().Equals("YES"))
+            {
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ORGINFO", "CompanyProfile");
+            }
             this.organizationBusinessLogic.SaveMetaData(orgID, "QuotationExample", updateQuotationExample);
+            if (updateQuotationExample.ToUpper().Equals("YES"))
+            {
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ORGINFO", "QuotationExample");
+            }
             this.organizationBusinessLogic.SaveMetaData(orgID, "PurchaseOrderExample", updatePurchaseOrderExample);
+            if (updatePurchaseOrderExample.ToUpper().Equals("YES"))
+            {
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ORGINFO", "PurchaseOrderExample");
+            }
             this.organizationBusinessLogic.SaveMetaData(orgID, "InvoiceExample", updateInvoiceExample);
+            if (updateInvoiceExample.ToUpper().Equals("YES"))
+            {
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ORGINFO", "InvoiceExample");
+            }
             this.organizationBusinessLogic.SaveMetaData(orgID, "SuppliersDocuments", updateSuppliersDocuments);
+            if (updateSuppliersDocuments.ToUpper().Equals("YES"))
+            {
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ORGINFO", "SuppliersDocuments");
+            }
             this.organizationBusinessLogic.SaveMetaData(orgID, "SuppliersCount", updateSuppliersCount);
             this.organizationBusinessLogic.SaveMetaData(orgID, "RegisterShares", updateRegisterShares);
             this.organizationBusinessLogic.SaveMetaData(orgID, "EmergencyStrikes", updateEmergencyStrikes);
