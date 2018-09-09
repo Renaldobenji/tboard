@@ -11,16 +11,20 @@ using TBoard.Data.Model;
 using TBoard.Web.Attributes;
 using System.Net.Http.Headers;
 using TBoard.Web.Helpers;
+using TBoard.Web.Models;
 
 namespace TBoard.Web.Controllers
 {
     public class OrganizationController : ApiController
     {
         private OrganizationBusinessLogic organizationBusinessLogic;
+        private MetaDataBusinessLogic metaDataBusinessLogic;
+
         // GET api/<controller>/5
-        public OrganizationController(OrganizationBusinessLogic organizationBusinessLogic)
+        public OrganizationController(OrganizationBusinessLogic organizationBusinessLogic, MetaDataBusinessLogic metaDataBusinessLogic)
         {
             this.organizationBusinessLogic = organizationBusinessLogic;
+            this.metaDataBusinessLogic = metaDataBusinessLogic;
         }
 
         [JWTTokenValidation]
@@ -123,6 +127,51 @@ namespace TBoard.Web.Controllers
             {
                 Content = new StringContent(JsonConvert.SerializeObject("OK"))
             };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return resp;
+        }
+
+        [JWTTokenValidation]
+        [HttpPost]
+        [Route("api/Organization/MetaData/FinanceInfo")]
+        public HttpResponseMessage MetaDataFinanceInfo(FormDataCollection formData)
+        {
+            int orgID = Convert.ToInt32(EncryptionHelper.Decrypt(formData.Get("organizationID")));
+
+            var updateAppointedAccountant = formData.Get("updateAppointedAccountant");
+            var updatePublicInterestScore = formData.Get("updatePublicInterestScore");
+            var updateElectronicAccountSystem = formData.Get("updateElectronicAccountSystem");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "AppointedAccountant", updateAppointedAccountant);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "PublicInterestScore", updatePublicInterestScore);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "ElectronicAccountingSystem", updateElectronicAccountSystem);
+            
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject("OK"))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return resp;
+        }
+
+        [JWTTokenValidation]
+        [HttpPost]
+        [Route("api/Organization/MetaData")]
+        public HttpResponseMessage GetMetaData(FetchMetaData fetchMetaData)
+        {
+            int decryptedOrgID = Convert.ToInt32(EncryptionHelper.Decrypt(fetchMetaData.OwnerID));
+            fetchMetaData.OwnerID = decryptedOrgID.ToString();
+
+            var financeMetaData = metaDataBusinessLogic.GetMetaDataByMetaDataName(fetchMetaData);
+            
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(financeMetaData))
+            };
+
             resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
             return resp;

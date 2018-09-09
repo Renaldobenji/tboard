@@ -1056,6 +1056,10 @@
       <Project>{b08545b1-739d-4d91-8a04-840ace45576e}</Project>
       <Name>TBoard.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TBoard.Models\TBoard.Models.csproj">
+      <Project>{5c913742-d00c-4bbb-8adf-07ca33accb36}</Project>
+      <Name>TBoard.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

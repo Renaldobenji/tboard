@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2016
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TBoard.Data", "TBoard.Data\TBoard.Data.csproj", "{B08545B1-739D-4D91-8A04-840ACE45576E}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TBoard.Web", "TBoard.Web\TBoard.Web.csproj", "{ACE586EB-D1AE-4621-A719-EB3E454A17E4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImportData", "ImportData\ImportData.csproj", "{6E6BF500-7161-418B-A444-F8AA2256B4F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TBoard.Models", "TBoard.Models\TBoard.Models.csproj", "{5C913742-D00C-4BBB-8ADF-07CA33ACCB36}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,8 +35,15 @@ Global
 		{6E6BF500-7161-418B-A444-F8AA2256B4F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E6BF500-7161-418B-A444-F8AA2256B4F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E6BF500-7161-418B-A444-F8AA2256B4F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C913742-D00C-4BBB-8ADF-07CA33ACCB36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C913742-D00C-4BBB-8ADF-07CA33ACCB36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C913742-D00C-4BBB-8ADF-07CA33ACCB36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C913742-D00C-4BBB-8ADF-07CA33ACCB36}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {731861A4-2756-4E4C-9B2A-B5B49136633E}
 	EndGlobalSection
 EndGlobal

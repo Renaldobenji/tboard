@@ -85,6 +85,11 @@ namespace TBoard.Data.Repository
             this._dbContext.SaveChanges();
         }
 
+        public IList<metadata> GetMetaData(int organizationID)
+        {
+            return this._dbContext.metadatas.Where(x => x.ownerTypeID == organizationID.ToString()).ToList();
+        }
+
         public void SaveCustodianDetails(custodian custodian)
         {
             this._dbContext.custodians.Add(custodian);

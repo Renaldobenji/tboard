@@ -40,6 +40,13 @@ namespace TBoard.BusinessLogic.BusinessLogic
            return this.repository.GetCustodianDetails(organizationID);
         }
 
+        public IList<metadata> GetMetaData(int organizationID)
+        {
+            return repository.GetMetaData(organizationID);
+        }
+
+     
+
         public void SaveCustodianDetails(custodian custodian)
         {
             this.repository.SaveCustodianDetails(custodian);
