@@ -245,6 +245,12 @@ routie({
                 React.createElement(FinanceInformation, null), document.getElementById('container')
             );
         }
+         ,
+        'HrInfo': function () {
+            ReactDOM.render(
+                React.createElement(HumanResourcesInformation, null), document.getElementById('container')
+            );
+        }
     
 });
 

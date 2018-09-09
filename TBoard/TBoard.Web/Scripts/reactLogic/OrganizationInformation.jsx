@@ -19,6 +19,34 @@ var OrganizationInformation = React.createClass({
         };
 	},
 
+	fetchDocumentRequirements: function (orgID) {
+	    $.ajax({
+	        url: 'api/Requirement/DOCUMENTREQUIREMENT/ORG/' + orgID,
+	        dataType: 'json',
+	        cache: false,
+	        success: function (data) {
+	            this.setState({ DocumentRequirements: data });
+
+	            if (data.length > 0) {
+	                var opts = {
+	                    title: "Document Requirement",
+	                    text: "Please resolve the Outstanding Document Requirements.",
+	                    addclass: "stack-bottomright",
+	                    type: "error",
+	                    nonblock: {
+	                        nonblock: true
+	                    }
+	                };
+	                new PNotify(opts);
+	            }
+
+	        }.bind(this),
+	        error: function (xhr, status, err) {
+	            console.error('api/Requirements/Document/ORG/', status, err.toString());
+	        }.bind(this)
+	    });
+	},
+
 
 	OrgInfoPOST: function () {
 	    console.log('POSTING FORM');
@@ -92,10 +120,17 @@ var OrganizationInformation = React.createClass({
 	    this.setState({ UserID: decodedToken.UserID });	    
 	},
 
+	componentDidUpdate(prevProps) {
+	    // Typical usage (don't forget to compare props):
+	    if (this.props.OrganizationID !== prevProps.OrganizationID) {	       
+	        this.fetchDocumentRequirements(this.state.OrganizationID);
+	    }
+	},
+
    
     
     componentDidMount: function() {
-      
+        this.fetchDocumentRequirements(this.state.OrganizationID);
     },	
 		
 	render: function(){
@@ -214,5 +249,279 @@ var OrganizationInformation = React.createClass({
                 
 		);
 	}
+});
+
+var HumanResourcesInformation = React.createClass({
+    
+    getInitialState: function() {
+        return {
+            OrganizationInformation: [],
+            DocumentRequirements: [],
+            OrganizationID : "",			
+            UserID: "",
+            companyOrganogram: "NO",
+            employmentEquityPolicy: "NO",
+            employmentEquityReport: "NO",
+            EEA2document: "NO",
+            EEA4document: "NO",
+            socialLabourPlan: "NO",
+            employmentContracts: "NO",
+            workplaceSkillsPlan: "NO",
+            employeeAttendanceRegister: "NO",
+            basicConditionsofEmploymentAct: "NO",
+            employmentEquityAct : "NO"
+        };
+    },
+
+    fetchDocumentRequirements: function (orgID) {
+        $.ajax({
+            url: 'api/Requirement/DOCUMENTREQUIREMENT/ORG/' + orgID,
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+                this.setState({ DocumentRequirements: data });
+
+                if (data.length > 0) {
+                    var opts = {
+                        title: "Document Requirement",
+                        text: "Please resolve the Outstanding Document Requirements.",
+                        addclass: "stack-bottomright",
+                        type: "error",
+                        nonblock: {
+                            nonblock: true
+                        }
+                    };
+                    new PNotify(opts);
+                }
+
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error('api/Requirements/Document/ORG/', status, err.toString());
+            }.bind(this)
+        });
+    },
+
+
+    HRInfoPOST: function () {
+        console.log('POSTING FORM');
+        $.ajax({
+            url: 'api/Organization/MetaData/HRInfo',
+            type: 'POST',
+            dataType: 'json',
+            data: this.state,
+            cache: false,
+            success: function (data) {
+                var opts = {
+                    title: "Success",
+                    text: "That thing that you were trying to do worked.",
+                    addclass: "stack-bottomright",
+                    type: "success",
+                    nonblock: {
+                        nonblock: true
+                    }
+                };
+                new PNotify(opts);
+
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error('api/Organization/MetaData/OrgInfo', status, err.toString());
+            }.bind(this)
+        });
+    },
+
+    companyOrganogram: function (e) {
+        this.setState({ companyOrganogram: e.target.value });
+        console.log(this.state.companyOrganogram);
+    },
+    employmentEquityPolicy: function (e) {
+        this.setState({ employmentEquityPolicy: e.target.value });
+        console.log(this.state.employmentEquityPolicy);
+    },
+    employmentEquityReport: function (e) {
+        this.setState({ employmentEquityReport: e.target.value });
+        console.log(this.state.employmentEquityReport);
+    },
+    EEA2document: function (e) {
+        this.setState({ EEA2document: e.target.value });
+        console.log(this.state.EEA2document);
+    },
+    EEA4document: function (e) {
+        this.setState({ EEA4document: e.target.value });
+        console.log(this.state.EEA4document);
+    },
+    socialLabourPlan: function (e) {
+        this.setState({ socialLabourPlan: e.target.value });
+        console.log(this.state.socialLabourPlan);
+    },
+    employmentContracts: function (e) {
+        this.setState({ employmentContracts: e.target.value });
+        console.log(this.state.employmentContracts);
+    },
+    workplaceSkillsPlan: function (e) {
+        this.setState({ workplaceSkillsPlan: e.target.value });
+        console.log(this.state.workplaceSkillsPlan);
+    },
+    employeeAttendanceRegister: function (e) {
+        this.setState({ employeeAttendanceRegister: e.target.value });
+        console.log(this.state.employeeAttendanceRegister);
+    },
+    basicConditionsofEmploymentAct: function (e) {
+        this.setState({ basicConditionsofEmploymentAct: e.target.value });
+        console.log(this.state.basicConditionsofEmploymentAct);
+    },
+    employmentEquityAct: function (e) {
+        this.setState({ employmentEquityAct: e.target.value });
+        console.log(this.state.employmentEquityAct);
+    },
+
+
+    componentWillMount: function () {
+        var tokens = new TboardJWTToken();
+        var decodedToken = tokens.getJWTToken();
+        this.setState({ OrganizationID: decodedToken.OrganizationID });
+        this.setState({ UserID: decodedToken.UserID });	    
+    },
+
+    componentDidUpdate(prevProps) {
+        // Typical usage (don't forget to compare props):
+        if (this.props.OrganizationID !== prevProps.OrganizationID) {	       
+            this.fetchDocumentRequirements(this.state.OrganizationID);
+        }
+    },
+
+   
+    
+    componentDidMount: function() {
+        this.fetchDocumentRequirements(this.state.OrganizationID);
+    },	
+		
+    render: function(){
+        var navBarSyle= {
+            marginBottom:0
+        };
+
+        var overflowStyle = {
+            overflow: "hidden",
+            width: "auto"   
+        };
+	    
+        
+        return (
+	                <div>		
+				        <nav className="navbar navbar-default navbar-static-top" role="navigation" style={navBarSyle}>
+	                        <NavHeader />
+                            <NavMenu />
+                        </nav>
+                        <div id="page-wrapper"  >
+	                        <div className="row">
+		                        <div className="col-lg-10">
+			                        <h1 className="page-header">
+                                        HR Information																		
+                                    </h1>
+		                        </div>
+	                        </div>
+                            <br/>
+                            <div className="row">
+                              <div className="col-lg-10">
+                    <div className="panel panel-info">
+                        <div className="panel-heading">
+                            Please complete the following
+                        </div>
+                      
+                        <div className="panel-body" style={overflowStyle}>
+                            <div className="table-responsive">
+                                <table className="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Question</th>
+                                            <th>Answer</th>                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Does your company have a company organogram?</td>
+                                            <td><select  onChange={this.companyOrganogram} className="form-control">                                            <option>NO</option><option>YES</option></select>
+                                            </td>                                           
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Does your company have an Employment Equity Policy? </td>
+                                            <td>                                            <select onChange={this.employmentEquityPolicy} className="form-control"><option>NO</option>                                            <option>YES</option></select></td>                                            
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>Has your company submitted an Employment Equity Report for the last financial year to the Department of Labour?</td>
+<td>                                            <select onChange={this.employmentEquityReport} className="form-control"><option>NO</option>                                            <option>YES</option></select></td>                                            
+</tr>
+<tr>
+ <td>4</td>
+<td>Does your company have a EEA2 document?</td>
+<td>                                            <select onChange={this.EEA2document} className="form-control"><option>NO</option>                                            <option>YES</option></select></td>                                           
+</tr>
+<tr>
+ <td>5</td>
+<td>If your company has more than 50 employees please upload your EEA 4 document?</td>
+<td>                                            <select onChange={this.EEA4document} className="form-control"><option>NO</option>                                            <option>YES</option></select></td>
+</tr>
+<tr>
+ <td>6</td>
+<td>Does your company have a Social Labour Plan?</td>
+<td>                                            <select onChange={this.socialLabourPlan} className="form-control"> <option>NO</option>                                            <option>YES</option></select></td>
+</tr>
+<tr>
+ <td>7</td>
+<td>Please upload an example of your company's Employment Contracts?</td>
+<td>                                            <select onChange={this.employmentContracts} className="form-control"><option>NO</option>                                            <option>YES</option></select></td>
+</tr>
+<tr>
+ <td>8</td>
+<td>Does your company have a Workplace Skills Plan?</td>
+<td>                                            <select onChange={this.workplaceSkillsPlan} className="form-control"><option>NO</option>                                            <option>YES</option></select></td>
+</tr>
+<tr>
+ <td>9</td>
+<td>Does your company have an Employee Attendance Register?</td>
+<td>                                            <select onChange={this.employeeAttendanceRegister} className="form-control"><option>NO</option>                                            <option>YES</option></select></td>
+</tr>   
+                                        <tr>
+ <td>9</td>
+<td>
+    Does your company display a summary of the Basic Conditions of Employment Act within your workplace?
+</td>
+<td>                                            <select onChange={this.basicConditionsofEmploymentAct} className="form-control"><option>NO</option>                                            <option>YES</option></select></td>
+                                        </tr>   
+                                        <tr>
+ <td>9</td>
+<td>
+    Does your company display a summary of the Employment Equity Act within your workplace?
+</td>
+<td>                                            <select onChange={this.employmentEquityAct} className="form-control"><option>NO</option>                                            <option>YES</option></select></td>
+                                        </tr>   
+<tr>
+ <td></td>
+<td>
+                                               
+</td>
+<td>                                            <button type="button" className="btn btn-primary" onClick={this.HRInfoPOST}>Save</button></td>
+</tr>                                       
+</tbody>
+</table>                          
+</div>
+<br/>
+<DocumentRequirementsList OrgID={this.props.OrganizationID} DocumentRequirements={this.state.DocumentRequirements} />
+</div>
+                        
+</div>
+                                
+</div>
+</div>
+</div>
+							
+</div>  
+                
+);
+}
 });
 

@@ -10,6 +10,7 @@ using System.Web.Http;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.Data.Model;
 using TBoard.Web.Attributes;
+using TBoard.Web.Helpers;
 
 namespace TBoard.Web.Controllers
 {
@@ -27,7 +28,9 @@ namespace TBoard.Web.Controllers
         [JWTTokenValidation]
         public HttpResponseMessage Get(string requirementType, string ownerType, string ownerID)
         {
-            var requirements = this.requirementBusinessLogic.FindBy(x => x.owningType == ownerType && x.owningID == ownerID && x.requirementTypeCode == requirementType).Select((y) => new RequirementsDTO()
+            var orgID = EncryptionHelper.Decrypt(ownerID);
+
+            var requirements = this.requirementBusinessLogic.FindBy(x => x.owningType == ownerType && x.owningID == orgID && x.requirementTypeCode == requirementType).Select((y) => new RequirementsDTO()
             {
                 CreatedDate = y.date.ToString(),
                 RequirementName = y.metaData,
