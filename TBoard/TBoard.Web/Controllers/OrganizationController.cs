@@ -155,6 +155,102 @@ namespace TBoard.Web.Controllers
         }
 
         [JWTTokenValidation]
+        [HttpPost]
+        [Route("api/Organization/MetaData/HRInfo")]
+        public HttpResponseMessage MetaDataHRInfo(FormDataCollection formData)
+        {
+            int orgID = Convert.ToInt32(EncryptionHelper.Decrypt(formData.Get("organizationID")));
+
+            var companyOrganogram = formData.Get("companyOrganogram");
+            var employmentEquityPolicy = formData.Get("employmentEquityPolicy");
+            var employmentEquityReport = formData.Get("employmentEquityReport");
+            var EEA2document = formData.Get("EEA2document");
+            var EEA4document = formData.Get("EEA4document");
+            var socialLabourPlan = formData.Get("socialLabourPlan");
+            var employmentContracts = formData.Get("employmentContracts");
+            var workplaceSkillsPlan = formData.Get("workplaceSkillsPlan");
+            var employeeAttendanceRegister = formData.Get("employeeAttendanceRegister");
+            var basicConditionsofEmploymentAct = formData.Get("basicConditionsofEmploymentAct");
+            var employmentEquityAct = formData.Get("employmentEquityAct");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "companyOrganogram", companyOrganogram);
+            if (companyOrganogram.ToUpper().Equals("YES"))
+            {
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "HRINFO", "companyOrganogram");
+            }
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "employmentEquityPolicy", employmentEquityPolicy);
+            if (employmentEquityPolicy.ToUpper().Equals("YES"))
+            {
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "HRINFO", "employmentEquityPolicy");
+            }
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "employmentEquityReport", employmentEquityReport);
+            if (employmentEquityReport.ToUpper().Equals("YES"))
+            {
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "HRINFO", "employmentEquityReport");
+            }
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "EEA2document", EEA2document);
+            if (EEA2document.ToUpper().Equals("YES"))
+            {
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "HRINFO", "EEA2document");
+            }
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "EEA4document", EEA4document);
+            if (EEA4document.ToUpper().Equals("YES"))
+            {
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "HRINFO", "EEA4document");
+            }
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "socialLabourPlan", socialLabourPlan);
+            if (socialLabourPlan.ToUpper().Equals("YES"))
+            {
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "HRINFO", "socialLabourPlan");
+            }
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "employmentContracts", employmentContracts);
+            if (employmentContracts.ToUpper().Equals("YES"))
+            {
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "HRINFO", "employmentContracts");
+            }
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "workplaceSkillsPlan", workplaceSkillsPlan);
+            if (workplaceSkillsPlan.ToUpper().Equals("YES"))
+            {
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "HRINFO", "workplaceSkillsPlan");
+            }
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "employeeAttendanceRegister", employeeAttendanceRegister);
+            if (employeeAttendanceRegister.ToUpper().Equals("YES"))
+            {
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "HRINFO", "employeeAttendanceRegister");
+            }
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "basicConditionsofEmploymentAct", basicConditionsofEmploymentAct);
+            if (basicConditionsofEmploymentAct.ToUpper().Equals("YES"))
+            {
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "HRINFO", "basicConditionsofEmploymentAct");
+            }
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "employmentEquityAct", employmentEquityAct);
+            if (employmentEquityAct.ToUpper().Equals("YES"))
+            {
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "HRINFO", "employmentEquityAct");
+            }
+
+
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject("OK"))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return resp;
+        }
+
+        [JWTTokenValidation]
         [Route("api/Organization/SaveCustodianDetails")]
         public void SaveCustodianDetails(FormDataCollection formData)
         {
