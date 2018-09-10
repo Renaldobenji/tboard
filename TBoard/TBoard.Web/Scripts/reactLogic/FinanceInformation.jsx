@@ -23,15 +23,19 @@ var FinanceInformation = React.createClass({
 
         $.ajax({
             url: 'api/Organization/MetaData',
-           // dataType: 'json',
+            dataType: 'json',
             cache: false,
             type: 'POST',
-            //  traditional: true,
             data: JSON.stringify(request),
             contentType: 'application/json',
             success: function (data) {
-                var obj = $.parseJSON(data);
-                console.log(obj);
+                console.log(data.find(metaData => metaData.metaDataName === "AppointedAccountant"));
+                this.setState({ updateAppointedAccountant: data.find(metaData => metaData.metaDataName === "AppointedAccountant").metaDataValue });
+             
+                this.setState({ updatePublicInterestScore: data.find(metaData => metaData.metaDataName === "PublicInterestScore").metaDataValue });
+                console.log(this.state.updatePublicInterestScore);
+                this.setState({ updateElectronicAccountSystem: data.find(metaData => metaData.metaDataName === "ElectronicAccountingSystem").metaDataValue });
+                console.log(data);
             }.bind(this),
             error: function (xhr, status, err) {
                 console.error('api/organization', status, err.toString());
@@ -87,9 +91,7 @@ var FinanceInformation = React.createClass({
         var decodedToken = tokens.getJWTToken();
 
         this.setState({ OrganizationID: decodedToken.OrganizationID });
-
         this.setState({ UserID: decodedToken.UserID });
-
         this.fetchFinanceMetaData(decodedToken.OrganizationID);
         
     },
@@ -97,8 +99,6 @@ var FinanceInformation = React.createClass({
     componentDidMount: function () {
         
     },
-
-
 
     render: function () {
         var navBarSyle = {
@@ -167,20 +167,20 @@ var FinanceInformation = React.createClass({
                                                 <tr>
                                                     <td>1</td>
                                                     <td>Does your company have an appointed accountant?</td>
-                                                    <td><select className="form-control" onChange={this.updateAppointedAccountant}><option>NO</option><option>YES</option></select>
+                                                    <td><select value={this.state.updateAppointedAccountant} className="form-control" onChange={this.updateAppointedAccountant}><option>NO</option><option>YES</option></select>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>2</td>
                                                     <td>What is your company's public interest score?</td>
                                                     <td>
-                                                        <input style={radioButton} onChange={this.updatePublicInterestScore} id="100" type="radio" name="gender" value="100"></input>
+                                                        <input checked={this.state.updatePublicInterestScore === "100"} style={radioButton} onChange={this.updatePublicInterestScore} id="100" type="radio" name="gender" value="100"></input>
                                                         <span style={radioButtonText}> Less than 100 (No mention and audit required) Attach letter from accountant confirming the score</span><br></br>
 
-                                                        <input style={radioButton} onChange={this.updatePublicInterestScore} id="100350" type="radio" name="gender" value="100350"></input>
+                                                        <input checked={this.state.updatePublicInterestScore === "100350"} style={radioButton} onChange={this.updatePublicInterestScore} id="100350" type="radio" name="gender" value="100350"></input>
                                                         <span style={radioButtonText}> Between 100 - 350. Attach letter from accountant confirming that an independent review has been done on the previous financial year</span><br></br>
 
-                                                        <input style={radioButton} onChange={this.updatePublicInterestScore} id="100350" type="radio" name="gender" value="100350"></input>
+                                                        <input checked={this.state.updatePublicInterestScore === "350"} style={radioButton} onChange={this.updatePublicInterestScore} id="350" type="radio" name="gender" value="350"></input>
                                                         <span style={radioButtonText}> Greater than 350. Attach letter to confirm that an audit was done for the previous financial year</span>
                                                     </td>
                                                 </tr>
@@ -188,7 +188,7 @@ var FinanceInformation = React.createClass({
                                                     <td>3</td>
                                                     <td>Does your company make use of an electronic accounting system such as pastel?</td>
                                                     <td>
-                                                        <select className="form-control" onChange={this.updateElectronicAccountSystem}>>
+                                                        <select value={this.state.updateElectronicAccountSystem} className="form-control" onChange={this.updateElectronicAccountSystem}>>
                                                            <option>NO</option><option>YES</option>
                                                         </select>
                                                     </td>
