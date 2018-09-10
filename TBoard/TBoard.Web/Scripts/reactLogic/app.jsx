@@ -246,9 +246,9 @@ routie({
             );
         }
          ,
-        'HrInfo': function () {
+        'RiskInsurance': function () {
             ReactDOM.render(
-                React.createElement(HumanResourcesInformation, null), document.getElementById('container')
+                React.createElement(InsuranceAndRisk, null), document.getElementById('container')
             );
         }
     

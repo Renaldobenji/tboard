@@ -18,11 +18,11 @@ namespace TBoard.Web.Controllers
     public class OrganizationController : ApiController
     {
         private OrganizationBusinessLogic organizationBusinessLogic;
-        RequirementBusinessLogic requirementBusinessLogic;
+        private RequirementBusinessLogic requirementBusinessLogic;
         private MetaDataBusinessLogic metaDataBusinessLogic;
 
         // GET api/<controller>/5
-        public OrganizationController(OrganizationBusinessLogic organizationBusinessLogic, MetaDataBusinessLogic metaDataBusinessLogic)
+        public OrganizationController(OrganizationBusinessLogic organizationBusinessLogic, MetaDataBusinessLogic metaDataBusinessLogic, RequirementBusinessLogic requirementBusinessLogic)
         {
             this.organizationBusinessLogic = organizationBusinessLogic;
             this.requirementBusinessLogic = requirementBusinessLogic;
@@ -244,6 +244,60 @@ namespace TBoard.Web.Controllers
             }
 
 
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject("OK"))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return resp;
+        }
+
+        [JWTTokenValidation]
+        [HttpPost]
+        [Route("api/Organization/MetaData/InsuranceRiskInfo")]
+        public HttpResponseMessage InsuranceRiskInfo(FormDataCollection formData)
+        {
+            int orgID = Convert.ToInt32(EncryptionHelper.Decrypt(formData.Get("organizationID")));
+
+            var BuildingsInsurance = formData.Get("BuildingsInsurance");
+            var PublicLiabilityInsurancePolicy = formData.Get("PublicLiabilityInsurancePolicy");
+            var CompanyThirdPartyInsurancePolicy = formData.Get("CompanyThirdPartyInsurancePolicy");
+            var CompanyProfessionalIndemnityInsurancePolicy = formData.Get("CompanyProfessionalIndemnityInsurancePolicy");
+            var CompanyGoodsinTransitInsurancePolicy = formData.Get("CompanyGoodsinTransitInsurancePolicy");
+           
+            this.organizationBusinessLogic.SaveMetaData(orgID, "BuildingsInsurance", BuildingsInsurance);
+            if (BuildingsInsurance.ToUpper().Equals("YES"))
+            {
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "RISKINSURANCEINFO", "BuildingsInsurance");
+            }
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "PublicLiabilityInsurancePolicy", PublicLiabilityInsurancePolicy);
+            if (PublicLiabilityInsurancePolicy.ToUpper().Equals("YES"))
+            {
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "RISKINSURANCEINFO", "PublicLiabilityInsurancePolicy");
+            }
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "CompanyThirdPartyInsurancePolicy", CompanyThirdPartyInsurancePolicy);
+            if (CompanyThirdPartyInsurancePolicy.ToUpper().Equals("YES"))
+            {
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "RISKINSURANCEINFO", "CompanyThirdPartyInsurancePolicy");
+            }
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "CompanyProfessionalIndemnityInsurancePolicy", CompanyProfessionalIndemnityInsurancePolicy);
+            if (CompanyProfessionalIndemnityInsurancePolicy.ToUpper().Equals("YES"))
+            {
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "RISKINSURANCEINFO", "CompanyProfessionalIndemnityInsurancePolicy");
+            }
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "CompanyGoodsinTransitInsurancePolicy", CompanyGoodsinTransitInsurancePolicy);
+            if (CompanyGoodsinTransitInsurancePolicy.ToUpper().Equals("YES"))
+            {
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "RISKINSURANCEINFO", "CompanyGoodsinTransitInsurancePolicy");
+            }
+
+           
 
             var resp = new HttpResponseMessage()
             {
