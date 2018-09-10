@@ -22,7 +22,7 @@ namespace TBoard.Web.Controllers
         private MetaDataBusinessLogic metaDataBusinessLogic;
 
         // GET api/<controller>/5
-        public OrganizationController(OrganizationBusinessLogic organizationBusinessLogic, MetaDataBusinessLogic metaDataBusinessLogic)
+        public OrganizationController(OrganizationBusinessLogic organizationBusinessLogic, RequirementBusinessLogic requirementBusinessLogic, MetaDataBusinessLogic metaDataBusinessLogic)
         {
             this.organizationBusinessLogic = organizationBusinessLogic;
             this.requirementBusinessLogic = requirementBusinessLogic;
@@ -266,9 +266,16 @@ namespace TBoard.Web.Controllers
             var updateElectronicAccountSystem = formData.Get("updateElectronicAccountSystem");
 
             this.organizationBusinessLogic.SaveMetaData(orgID, "AppointedAccountant", updateAppointedAccountant);
-            this.organizationBusinessLogic.SaveMetaData(orgID, "PublicInterestScore", updatePublicInterestScore);
+            if (updateAppointedAccountant.ToUpper().Equals("YES"))
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "FININFO", "AccountantAppointmentLetter");
+
+            if (updatePublicInterestScore != null)
+            {
+                this.organizationBusinessLogic.SaveMetaData(orgID, "PublicInterestScore", updatePublicInterestScore);
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "FININFO", "PublicInterestScoreLetter");
+            }
+
             this.organizationBusinessLogic.SaveMetaData(orgID, "ElectronicAccountingSystem", updateElectronicAccountSystem);
-            
 
             var resp = new HttpResponseMessage()
             {
