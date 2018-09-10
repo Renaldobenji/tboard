@@ -525,3 +525,213 @@ var HumanResourcesInformation = React.createClass({
 }
 });
 
+
+var InsuranceAndRisk = React.createClass({
+    
+    getInitialState: function() {
+        return {
+            OrganizationInformation: [],
+            DocumentRequirements: [],
+            OrganizationID : "",			
+            UserID: "",
+            BuildingsInsurance: "NO",
+            PublicLiabilityInsurancePolicy: "NO",
+            CompanyThirdPartyInsurancePolicy: "NO",
+            CompanyProfessionalIndemnityInsurancePolicy: "NO",
+            CompanyGoodsinTransitInsurancePolicy: "NO"           
+        };
+    },
+
+    fetchDocumentRequirements: function (orgID) {
+        $.ajax({
+            url: 'api/Requirement/DOCUMENTREQUIREMENT/ORG/' + orgID,
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+                this.setState({ DocumentRequirements: data });
+
+                if (data.length > 0) {
+                    var opts = {
+                        title: "Document Requirement",
+                        text: "Please resolve the Outstanding Document Requirements.",
+                        addclass: "stack-bottomright",
+                        type: "error",
+                        nonblock: {
+                            nonblock: true
+                        }
+                    };
+                    new PNotify(opts);
+                }
+
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error('api/Requirements/Document/ORG/', status, err.toString());
+            }.bind(this)
+        });
+    },
+
+
+    InsuranceRiskPOST: function () {
+        console.log('POSTING FORM');
+        $.ajax({
+            url: 'api/Organization/MetaData/InsuranceRiskInfo',
+            type: 'POST',
+            dataType: 'json',
+            data: this.state,
+            cache: false,
+            success: function (data) {
+                var opts = {
+                    title: "Success",
+                    text: "That thing that you were trying to do worked.",
+                    addclass: "stack-bottomright",
+                    type: "success",
+                    nonblock: {
+                        nonblock: true
+                    }
+                };
+                new PNotify(opts);
+
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error('api/Organization/MetaData/OrgInfo', status, err.toString());
+            }.bind(this)
+        });
+    },
+
+    BuildingsInsurance: function (e) {
+        this.setState({ BuildingsInsurance: e.target.value });
+        console.log(this.state.BuildingsInsurance);
+    },
+    PublicLiabilityInsurancePolicy: function (e) {
+        this.setState({ PublicLiabilityInsurancePolicy: e.target.value });
+        console.log(this.state.PublicLiabilityInsurancePolicy);
+    },
+    CompanyThirdPartyInsurancePolicy: function (e) {
+        this.setState({ CompanyThirdPartyInsurancePolicy: e.target.value });
+        console.log(this.state.CompanyThirdPartyInsurancePolicy);
+    },
+    CompanyProfessionalIndemnityInsurancePolicy: function (e) {
+        this.setState({ CompanyProfessionalIndemnityInsurancePolicy: e.target.value });
+        console.log(this.state.CompanyProfessionalIndemnityInsurancePolicy);
+    },
+    CompanyGoodsinTransitInsurancePolicy: function (e) {
+        this.setState({ CompanyGoodsinTransitInsurancePolicy: e.target.value });
+        console.log(this.state.CompanyGoodsinTransitInsurancePolicy);
+    }, 
+
+
+    componentWillMount: function () {
+        var tokens = new TboardJWTToken();
+        var decodedToken = tokens.getJWTToken();
+        this.setState({ OrganizationID: decodedToken.OrganizationID });
+        this.setState({ UserID: decodedToken.UserID });	    
+    },
+
+    componentDidUpdate(prevProps) {
+        // Typical usage (don't forget to compare props):
+        if (this.props.OrganizationID !== prevProps.OrganizationID) {	       
+            this.fetchDocumentRequirements(this.state.OrganizationID);
+        }
+    },
+
+   
+    
+    componentDidMount: function() {
+        this.fetchDocumentRequirements(this.state.OrganizationID);
+    },	
+		
+    render: function(){
+        var navBarSyle= {
+            marginBottom:0
+        };
+
+        var overflowStyle = {
+            overflow: "hidden",
+            width: "auto"   
+        };
+	    
+        
+        return (
+	                <div>		
+				        <nav className="navbar navbar-default navbar-static-top" role="navigation" style={navBarSyle}>
+	                        <NavHeader />
+                            <NavMenu />
+                        </nav>
+                        <div id="page-wrapper"  >
+	                        <div className="row">
+		                        <div className="col-lg-10">
+			                        <h1 className="page-header">
+                                        Insurance Information																		
+                                    </h1>
+		                        </div>
+	                        </div>
+                            <br/>
+                            <div className="row">
+                              <div className="col-lg-10">
+                    <div className="panel panel-info">
+                        <div className="panel-heading">
+                            Please complete the following
+                        </div>
+                      
+                        <div className="panel-body" style={overflowStyle}>
+                            <div className="table-responsive">
+                                <table className="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Question</th>
+                                            <th>Answer</th>                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Does your company have Buildings / Vehicles / Other assets Insurance? Upload your short term Insurance policy</td>
+                                            <td><select  onChange={this.BuildingsInsurance} className="form-control">                                            <option>NO</option><option>YES</option></select>
+                                            </td>                                           
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Does your company perform work at client's premises? Upload your company's Public Liability Insurance policy</td>
+                                            <td>                                            <select onChange={this.PublicLiabilityInsurancePolicy} className="form-control"><option>NO</option>                                            <option>YES</option></select></td>                                            
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>Does your company transport products or people? Upload your company's Third Party Insurance policy</td>
+<td>                                            <select onChange={this.CompanyThirdPartyInsurancePolicy} className="form-control"><option>NO</option>                                            <option>YES</option></select></td>                                            
+</tr>
+<tr>
+ <td>4</td>
+<td>Does your company provide professional services? Upload your company's Professional Indemnity Insurance policy</td>
+<td>                                            <select onChange={this.CompanyProfessionalIndemnityInsurancePolicy} className="form-control"><option>NO</option>                                            <option>YES</option></select></td>                                           
+</tr>
+<tr>
+ <td>5</td>
+<td>Does your company have Goods in Transit Insurance? Upload your company's Goods in Transit Insurance policy</td>
+<td>                                            <select onChange={this.CompanyGoodsinTransitInsurancePolicy} className="form-control"><option>NO</option>                                            <option>YES</option></select></td>
+</tr> 
+<tr>
+ <td></td>
+<td>
+                                               
+</td>
+<td>                                            <button type="button" className="btn btn-primary" onClick={this.InsuranceRiskPOST}>Save</button></td>
+</tr>                                       
+</tbody>
+</table>                          
+</div>
+<br/>
+<DocumentRequirementsList OrgID={this.props.OrganizationID} DocumentRequirements={this.state.DocumentRequirements} />
+</div>
+                        
+</div>
+                                
+</div>
+</div>
+</div>
+							
+</div>  
+                
+);
+}
+});

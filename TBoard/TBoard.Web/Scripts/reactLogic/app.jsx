@@ -245,11 +245,18 @@ routie({
                 React.createElement(FinanceInformation, null), document.getElementById('container')
             );
         }
-         ,
+        ,
         'HrInfo': function () {
             ReactDOM.render(
                 React.createElement(HumanResourcesInformation, null), document.getElementById('container')
             );
+        }
+        ,
+        'RiskInsurance': function () {
+            ReactDOM.render(
+                React.createElement(InsuranceAndRisk, null), document.getElementById('container')
+            );
+
         }
     
 });
