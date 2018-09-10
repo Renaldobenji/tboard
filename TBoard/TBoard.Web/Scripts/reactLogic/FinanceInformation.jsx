@@ -29,16 +29,13 @@ var FinanceInformation = React.createClass({
             data: JSON.stringify(request),
             contentType: 'application/json',
             success: function (data) {
-                console.log(data.find(metaData => metaData.metaDataName === "AppointedAccountant"));
                 this.setState({ updateAppointedAccountant: data.find(metaData => metaData.metaDataName === "AppointedAccountant").metaDataValue });
-             
                 this.setState({ updatePublicInterestScore: data.find(metaData => metaData.metaDataName === "PublicInterestScore").metaDataValue });
-                console.log(this.state.updatePublicInterestScore);
                 this.setState({ updateElectronicAccountSystem: data.find(metaData => metaData.metaDataName === "ElectronicAccountingSystem").metaDataValue });
-                console.log(data);
+
             }.bind(this),
             error: function (xhr, status, err) {
-                console.error('api/organization', status, err.toString());
+                console.error('api/Organization/MetaData', status, err.toString());
             }.bind(this)
         });
     },
