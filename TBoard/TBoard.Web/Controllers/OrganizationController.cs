@@ -491,6 +491,59 @@ namespace TBoard.Web.Controllers
 
         [JWTTokenValidation]
         [HttpPost]
+        [Route("api/Organization/MetaData/ISO18001Info")]
+        public HttpResponseMessage ISO18001Info(FormDataCollection formData)
+        {
+            int orgID = Convert.ToInt32(EncryptionHelper.Decrypt(formData.Get("organizationID")));
+
+            var occupationalHealthAndSafetyCertified = formData.Get("occupationalHealthAndSafetyCertified");
+            var provideCopyOfCompayRiskAssessmentRecords = formData.Get("provideCopyOfCompayRiskAssessmentRecords");
+            var haveAnEvacuationPlan = formData.Get("haveAnEvacuationPlan");
+            var companyDisplayCopyofOHSA = formData.Get("companyDisplayCopyofOHSA");
+            var haveRegularToolboxTalks = formData.Get("haveRegularToolboxTalks");
+            var haveAppointOHSRep = formData.Get("haveAppointOHSRep");
+            var haveFullyEquippedFirstAidBoxes = formData.Get("haveFullyEquippedFirstAidBoxes");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "OccupationalHealthAndSafetyCertified", occupationalHealthAndSafetyCertified);
+            if (occupationalHealthAndSafetyCertified.ToUpper().Equals("YES"))
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO18001INFO", "ISO18001Certificate");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "ProvideCopyOfCompayRiskAssessmentRecords", provideCopyOfCompayRiskAssessmentRecords);
+            if (provideCopyOfCompayRiskAssessmentRecords.ToUpper().Equals("YES"))
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO18001INFO", "Risk Assessment Records");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "HaveAnEvacuationPlan", haveAnEvacuationPlan);
+            if (haveAnEvacuationPlan.ToUpper().Equals("YES"))
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO18001INFO", "Evacuation Plan");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "CompanyDisplayCopyofOHSA", companyDisplayCopyofOHSA);
+            if (companyDisplayCopyofOHSA.ToUpper().Equals("YES"))
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO18001INFO", "Photograph Of Displayed OHS Act");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "HaveRegularToolboxTalks", haveRegularToolboxTalks);
+            if (haveRegularToolboxTalks.ToUpper().Equals("YES"))
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO18001INFO", "Toolbox Safety Attendance Register");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "HaveAppointOHSRep", haveAppointOHSRep);
+            if (haveAppointOHSRep.ToUpper().Equals("YES"))
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO18001INFO", "List Of Appointed OHS Reps");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "HaveFullyEquippedFirstAidBoxes", haveFullyEquippedFirstAidBoxes);
+            if (haveFullyEquippedFirstAidBoxes.ToUpper().Equals("YES"))
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO18001INFO", "Photograph Of First Aid Boxes");
+
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject("OK"))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return resp;
+        }
+
+        [JWTTokenValidation]
+        [HttpPost]
         [Route("api/Organization/MetaData")]
         public HttpResponseMessage GetMetaData(FetchMetaData fetchMetaData)
         {

@@ -298,13 +298,13 @@
                                             <tbody>    
                                                 <tr>
                                                     <td>1</td>
-                                                    <td>Is your company ISO 14001 "Environmental Management System" Certified? </td>
+                                                    <td>Is your company ISO 14001 "Environmental Management System" Certified? Upload ISO 14001 Certificate </td>
                                                     <td><select value={this.state.environmentalManagementSystemCertified} className="form-control" onChange={this.environmentalManagementSystemCertified}><option>NO</option><option>YES</option></select>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>2</td>
-                                                    <td>Does your company have an Environmental Management Policy?</td>
+                                                    <td>Does your company have an Environmental Management Policy? Upload your company's Environmental Management Policy</td>
                                                     <td>
                                                         <select value={this.state.environmentalManagementPolicy} className="form-control" onChange={this.environmentalManagementPolicy}>>
                                                            <option>NO</option><option>YES</option>
@@ -313,19 +313,23 @@
                                                 </tr>
                                                 <tr>
                                                     <td>3</td>
-                                                    <td>Is your company registered with SAATCA or SACNASP?</td>
+                                                    <td>Is your company registered with SAATCA or SACNASP? Upload prood of registration with SAATCA or SACNASP</td>
                                                     <td>
                                                         <select value={this.state.registeredWithSaatcaOrSacnasp} className="form-control" onChange={this.registeredWithSaatcaOrSacnasp}>>
-                                                           <option>NO</option><option>YES</option>
+                                                            <option>NO</option>
+                                                            <option>YES</option>
+                                                            <option>N/A</option>
                                                         </select>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>4</td>
-                                                    <td>Does your company have environmental initiatives to reduce your company's carbon footprint?</td>
+                                                    <td>Does your company have environmental initiatives to reduce your company's carbon footprint? Upload proof of your company's environmental initiatives to reduce your carbon footprint</td>
                                                     <td>
                                                         <select value={this.state.reduceCarbonFootPrint} className="form-control" onChange={this.reduceCarbonFootPrint}>>
-                                                           <option>NO</option><option>YES</option>
+                                                            <option>NO</option>
+                                                            <option>YES</option>
+                                                            <option>N/A</option>
                                                         </select>
                                                     </td>
                                                 </tr>
@@ -334,16 +338,20 @@
                                                     <td>Can your company provide an Environmental Incident Procedure or Instruction?</td>
                                                     <td>
                                                         <select value={this.state.enviromentalIncidentProcedure} className="form-control" onChange={this.enviromentalIncidentProcedure}>>
-                                                           <option>NO</option><option>YES</option>
+                                                            <option>NO</option>
+                                                            <option>YES</option>
+                                                            <option>N/A</option>
                                                         </select>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>6</td>
-                                                    <td>Are your drivers licensed to transport the cargo as per Environmental Legislation?</td>
+                                                    <td>re your drivers licensed to transport the cargo as per Environmental Legislation? Upload copies of driver's licences of your drivers who transport cargo as per Environmental Legislation</td>
                                                     <td>
                                                         <select value={this.state.driversLicensedToTransportCargo} className="form-control" onChange={this.drivesLicensedToTransportCargo}>>
-                                                           <option>NO</option><option>YES</option>
+                                                            <option>NO</option>
+                                                            <option>YES</option>
+                                                            <option>N/A</option>
                                                         </select>
                                                     </td>
                                                 </tr>
@@ -352,7 +360,9 @@
                                                     <td>Does your company supply hazardous goods?</td>
                                                     <td>
                                                         <select value={this.state.supplyHazardousGoods} className="form-control" onChange={this.supplyHazardousGoods}>>
-                                                           <option>NO</option><option>YES</option>
+                                                            <option>NO</option>
+                                                            <option>YES</option>
+                                                            <option>N/A</option>
                                                         </select>
                                                     </td>
                                                 </tr>
@@ -367,25 +377,33 @@
                                                 </tr>
                                                 <tr>
                                                     <td>9</td>
-                                                    <td>Does your company transport waste to licensed waste facilities or landfill sites?</td>
-                                                    <td><select value={this.state.transportWasteToLicensedWasteFacilities} className="form-control" onChange={this.transportWasteToLicensedWasteFacilities}><option>NO</option><option>YES</option></select>
+                                                    <td>Does your company transport waste to licensed waste facilities or landfill sites? Upload latest waste transfer note to licensed facility</td>
+                                                    <td><select value={this.state.transportWasteToLicensedWasteFacilities} className="form-control" onChange={this.transportWasteToLicensedWasteFacilities}>
+                                                        <option>NO</option>
+                                                        <option>YES</option>
+                                                        <option>N/A</option>
+                                                    </select>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>10</td>
-                                                    <td>Are your delivery trucks marked with the correct signage as per Hazardous Classification?</td>
+                                                    <td>Are your delivery trucks marked with the correct signage as per Hazardous Classification? Upload pictures of trucks with the Hazardous Classification signage</td>
                                                     <td>
                                                         <select value={this.state.trucksMarkedWithCorrectSignage} className="form-control" onChange={this.trucksMarkedWithCorrectSignage}>>
-                                                           <option>NO</option><option>YES</option>
+                                                            <option>NO</option>
+                                                            <option>YES</option>
+                                                            <option>N/A</option>
                                                         </select>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>11</td>
-                                                    <td>Can you provide a Waste Disposal Procedure or Instruction?</td>
+                                                    <td>Can you provide a Waste Disposal Procedure or Instruction? Upload your company's Waste Disposal Procedure or Instruction</td>
                                                     <td>
                                                         <select value={this.state.provideWasteDisposalProcedure} className="form-control" onChange={this.provideWasteDisposalProcedure}>>
-                                                           <option>NO</option><option>YES</option>
+                                                            <option>NO</option>
+                                                            <option>YES</option>
+                                                            <option>N/A</option>
                                                         </select>
                                                     </td>
                                                 </tr>
@@ -409,25 +427,29 @@
                                                 </tr>
                                                 <tr>
                                                     <td>14</td>
-                                                    <td>Can your company provide a Spill Clean Up Procedure or Instruction?</td>
+                                                    <td>Can your company provide a Spill Clean Up Procedure or Instruction? Upload your company's Spill Clean Up Procedure or Instruction</td>
                                                     <td>
                                                         <select value={this.state.provideSpillCLeanUpProcedure} className="form-control" onChange={this.provideSpillCLeanUpProcedure}>>
-                                                           <option>NO</option><option>YES</option>
+                                                            <option>NO</option>
+                                                            <option>YES</option>
+                                                            <option>N/A</option>
                                                         </select>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>15</td>
-                                                    <td>Can your company provide a Housekeeping Procedure or Instruction?</td>
+                                                    <td>Can your company provide a Housekeeping Procedure or Instruction? Upload your company's Housekeeping Procedure or Instruction</td>
                                                     <td>
                                                         <select value={this.state.provideHousekeepingProcedure} className="form-control" onChange={this.provideHousekeepingProcedure}>>
-                                                           <option>NO</option><option>YES</option>
+                                                            <option>NO</option>
+                                                            <option>YES</option>
+                                                            <option>N/A</option>
                                                         </select>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>16</td>
-                                                    <td>Does your company use the principle of Re-Use, Reduce, and Recycle?</td>
+                                                    <td>Does your company use the principle of Re-Use, Reduce, and Recycle? Attach your latest initiative</td>
                                                     <td>
                                                         <select value={this.state.usePrincipleOfReUse} className="form-control" onChange={this.usePrincipleOfReUse}>>
                                                            <option>NO</option><option>YES</option>

@@ -252,7 +252,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>4</td>
-                                                    <td>Does your company have Internal Audit Reports/Results?</td>
+                                                    <td>Does your company have Internal Audit Reports/Results? Upload your company's Internal Audit Reports/Results</td>
                                                     <td>
                                                         <select value={this.state.internalAuditReports} className="form-control" onChange={this.internalAuditReports}>>
                                                            <option>NO</option><option>YES</option>
@@ -261,7 +261,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>5</td>
-                                                    <td>Does your company have Management Review Meeting Minutes?</td>
+                                                    <td>Does your company have Management Review Meeting Minutes? Upload a copy of your Management Review Meeting Minutes</td>
                                                     <td>
                                                         <select value={this.state.managementReviewMeetingMinutes} className="form-control" onChange={this.managementReviewMeetingMinutes}>>
                                                            <option>NO</option><option>YES</option>

@@ -83,7 +83,7 @@
     ISO18001InfoPOST: function () {
         console.log('POSTING FORM');
         $.ajax({
-            url: 'api/Organization/MetaData/ISO9001Info',
+            url: 'api/Organization/MetaData/ISO18001Info',
             type: 'POST',
             dataType: 'json',
             data: this.state,
@@ -138,7 +138,7 @@
     },
 
     haveFullyEquippedFirstAidBoxes: function (e) {
-        this.setState({ guaranteeOnProducts: e.target.value });
+        this.setState({ haveFullyEquippedFirstAidBoxes: e.target.value });
         console.log(this.state.guaranteeOnProducts);
     },
 
@@ -229,7 +229,9 @@
                                                     <td>Can you provide an example of your company's risk assessment records? Upload an example of your risk assessment records</td>
                                                     <td>
                                                         <select value={this.state.provideCopyOfCompayRiskAssessmentRecords} className="form-control" onChange={this.provideCopyOfCompayRiskAssessmentRecords}>>
-                                                           <option>NO</option><option>YES</option>
+                                                            <option>NO</option>
+                                                            <option>YES</option>
+                                                            <option>N/A</option>
                                                         </select>
                                                     </td>
                                                 </tr>
