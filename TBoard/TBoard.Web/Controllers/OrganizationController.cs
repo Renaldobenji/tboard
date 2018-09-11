@@ -342,6 +342,155 @@ namespace TBoard.Web.Controllers
 
         [JWTTokenValidation]
         [HttpPost]
+        [Route("api/Organization/MetaData/ISO9001Info")]
+        public HttpResponseMessage ISO9001Info(FormDataCollection formData)
+        {
+            int orgID = Convert.ToInt32(EncryptionHelper.Decrypt(formData.Get("organizationID")));
+
+            var qualityManagementSystemCertified = formData.Get("qualityManagementSystemCertified");
+            var qualityManagementSystem = formData.Get("qualityManagementSystem");
+            var qualityPolicy = formData.Get("qualityPolicy");
+            var internalAuditReports = formData.Get("internalAuditReports");
+            var managementReviewMeetingMinutes = formData.Get("managementReviewMeetingMinutes");
+            var warrantyManagementProcess = formData.Get("warrantyManagementProcess");
+            var guaranteeOnProducts = formData.Get("guaranteeOnProducts");
+            var durationOfGuarantee = formData.Get("durationOfGuarantee");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "QualityManagementSystemCertified", qualityManagementSystemCertified);
+            if (qualityManagementSystemCertified.ToUpper().Equals("YES"))
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO9001INFO", "QualityManagementSystemCertificate");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "QualityManagementSystem", qualityManagementSystem);
+            if (qualityManagementSystem.ToUpper().Equals("YES"))
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO9001INFO", "ProofOfQualityManagementSystem");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "QualityPolicy", qualityPolicy);
+            if (qualityPolicy.ToUpper().Equals("YES"))
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO9001INFO", "ProofQualityPolicy");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "InternalAuditReports", internalAuditReports);
+            if (internalAuditReports.ToUpper().Equals("YES"))
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO9001INFO", "InternalAuditReports");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "ManagementReviewMeetingMinutes", managementReviewMeetingMinutes);
+            if (managementReviewMeetingMinutes.ToUpper().Equals("YES"))
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO9001INFO", "CopyOfManagementReviewMeetingMinutes");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "WarrantyManagementProcess", warrantyManagementProcess);
+            if (warrantyManagementProcess.ToUpper().Equals("YES"))
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO9001INFO", "WarrantyManagementProcess");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "GuaranteeOnProducts", guaranteeOnProducts);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "DurationOfGuarantee", durationOfGuarantee);
+
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject("OK"))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return resp;
+        }
+
+        [JWTTokenValidation]
+        [HttpPost]
+        [Route("api/Organization/MetaData/ISO14001Info")]
+        public HttpResponseMessage ISO14001Info(FormDataCollection formData)
+        {
+            int orgID = Convert.ToInt32(EncryptionHelper.Decrypt(formData.Get("organizationID")));
+
+            var environmentalManagementSystemCertified = formData.Get("environmentalManagementSystemCertified");
+            var environmentalManagementPolicy = formData.Get("environmentalManagementPolicy");
+            var registeredWithSaatcaOrSacnasp = formData.Get("registeredWithSaatcaOrSacnasp");
+            var reduceCarbonFootPrint = formData.Get("reduceCarbonFootPrint");
+            var enviromentalIncidentProcedure = formData.Get("enviromentalIncidentProcedure");
+            var driversLicensedToTransportCargo = formData.Get("driversLicensedToTransportCargo");
+            var supplyHazardousGoods = formData.Get("supplyHazardousGoods");
+            var haveMaterialSafetyDataSheet = formData.Get("haveMaterialSafetyDataSheet");
+
+            var transportWasteToLicensedWasteFacilities = formData.Get("transportWasteToLicensedWasteFacilities");
+            var trucksMarkedWithCorrectSignage = formData.Get("trucksMarkedWithCorrectSignage");
+            var provideWasteDisposalProcedure = formData.Get("provideWasteDisposalProcedure");
+            var permitsToTransportWaste = formData.Get("permitsToTransportWaste");
+            var trucksRegularlyServiced = formData.Get("trucksRegularlyServiced");
+            var provideSpillCLeanUpProcedure = formData.Get("provideSpillCLeanUpProcedure");
+            var provideHousekeepingProcedure = formData.Get("provideHousekeepingProcedure");
+            var usePrincipleOfReUse = formData.Get("usePrincipleOfReUse");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "EnvironmentalManagementSystemCertified", environmentalManagementSystemCertified);
+            if (environmentalManagementSystemCertified.ToUpper().Equals("YES"))
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO14001", "ISO14001Certificate");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "EnvironmentalManagementPolicy", environmentalManagementPolicy);
+            if (environmentalManagementPolicy.ToUpper().Equals("YES"))
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO14001", "EnvironmentalManagementPolicy");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "RegisteredWithSaatcaOrSacnasp", registeredWithSaatcaOrSacnasp);
+            if (registeredWithSaatcaOrSacnasp.ToUpper().Equals("YES"))
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO14001", "SaatcaSacnsaspRegistrationDocument");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "ReduceCarbonFootPrint", reduceCarbonFootPrint);
+            if (reduceCarbonFootPrint.ToUpper().Equals("YES"))
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO14001", "EnviroInitiativesToReduceCarbonFootprint");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "EnviromentalIncidentProcedure", enviromentalIncidentProcedure);
+            if (enviromentalIncidentProcedure.ToUpper().Equals("YES"))
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO14001", "EnviromentalIncidentProcedureDocument");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "DriversLicensedToTransportCargo", driversLicensedToTransportCargo);
+            if (driversLicensedToTransportCargo.ToUpper().Equals("YES"))
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO14001", "CopyOfDriversLicence");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "SupplyHazardousGoods", supplyHazardousGoods);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "HaveMaterialSafetyDataSheet", haveMaterialSafetyDataSheet);
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "TransportWasteToLicensedWasteFacilities", transportWasteToLicensedWasteFacilities);
+            if (transportWasteToLicensedWasteFacilities.ToUpper().Equals("YES"))
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO14001", "TransferNote");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "TrucksMarkedWithCorrectSignage", trucksMarkedWithCorrectSignage);
+            if (trucksMarkedWithCorrectSignage.ToUpper().Equals("YES"))
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO14001", "PicturesOfTrucksWithSignage");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "ProvideWasteDisposalProcedure", provideWasteDisposalProcedure);
+            if (provideWasteDisposalProcedure.ToUpper().Equals("YES"))
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO14001", "WasteDisposalProcedureDocument");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "PermitsToTransportWaste", permitsToTransportWaste);
+            if (permitsToTransportWaste.ToUpper().Equals("YES"))
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO14001", "PermitOfWasteBeingTransported");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "TrucksRegularlyServiced", trucksRegularlyServiced);
+            if (trucksRegularlyServiced.ToUpper().Equals("YES"))
+            {
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO14001", "TrucksLastServiceRecord");
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO14001", "TrucksLicenceDisk");
+            }
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "ProvideSpillCLeanUpProcedure", provideSpillCLeanUpProcedure);
+            if (provideSpillCLeanUpProcedure.ToUpper().Equals("YES"))
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO14001", "SpillCleanUpProcedureDocument");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "ProvideHousekeepingProcedure", provideHousekeepingProcedure);
+            if (provideHousekeepingProcedure.ToUpper().Equals("YES"))
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO14001", "HouseKeepingProcedureDocument");
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "UsePrincipleOfReUse", usePrincipleOfReUse);
+            if (usePrincipleOfReUse.ToUpper().Equals("YES"))
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO14001", "LatestReUseInitiative");
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject("OK"))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return resp;
+        }
+
+        [JWTTokenValidation]
+        [HttpPost]
         [Route("api/Organization/MetaData")]
         public HttpResponseMessage GetMetaData(FetchMetaData fetchMetaData)
         {

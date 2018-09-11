@@ -40,6 +40,35 @@ var FinanceInformation = React.createClass({
         });
     },
 
+    fetchDocumentRequirements: function (orgID) {
+        $.ajax({
+            url: 'api/Requirement/DOCUMENTREQUIREMENT/ORG/' + orgID,
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+                this.setState({ DocumentRequirements: data });
+
+                if (data.length > 0) {
+                    var opts = {
+                        title: "Document Requirement",
+                        text: "Please resolve the Outstanding Document Requirements.",
+                        addclass: "stack-bottomright",
+                        type: "error",
+                        nonblock: {
+                            nonblock: true
+                        }
+                    };
+                    new PNotify(opts);
+                }
+
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error('api/Requirements/Document/ORG/', status, err.toString());
+            }.bind(this)
+        });
+    },
+
+
     FinancenfoPOST: function () {
         console.log('POSTING FORM');
         $.ajax({
@@ -93,8 +122,15 @@ var FinanceInformation = React.createClass({
         
     },
 
+    componentDidUpdate(prevProps) {
+        // Typical usage (don't forget to compare props):
+        if (this.props.OrganizationID !== prevProps.OrganizationID) {
+            this.fetchDocumentRequirements(this.state.OrganizationID);
+        }
+    },
+
     componentDidMount: function () {
-        
+        this.fetchDocumentRequirements(this.state.OrganizationID);
     },
 
     render: function () {
@@ -208,8 +244,6 @@ var FinanceInformation = React.createClass({
                     </div>
                 </div>
             </div>
-
         );
     }
 });
-

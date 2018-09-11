@@ -306,6 +306,9 @@
     <Content Include="Content\bootstrap\sb-admin-2.css" />
     <Content Include="Content\bootstrap\timeline.css" />
     <Content Include="Content\EmailTemplates\quotepaid.html" />
+    <Content Include="Scripts\reactLogic\ISO14001QualityManagement.jsx" />
+    <Content Include="Scripts\reactLogic\ISO18001QualityManagement.jsx" />
+    <Content Include="Scripts\reactLogic\ISO9001QualityManagement.jsx" />
     <Content Include="Scripts\reactLogic\FinanceInformation.jsx" />
     <Content Include="Scripts\reactLogic\OrganizationInformation.jsx" />
     <Resource Include="Content\EmailTemplates\expiredDocuments.html">

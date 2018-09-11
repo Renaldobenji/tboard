@@ -47,6 +47,9 @@ namespace TBoard.Web
                 new BabelTransform()
                 //,new JsMinify(),
             }).Include(
+                "~/Scripts/reactLogic/ISO18001QualityManagement.jsx",
+                "~/Scripts/reactLogic/ISO14001QualityManagement.jsx",
+                "~/Scripts/reactLogic/ISO9001QualityManagement.jsx",
                 "~/Scripts/reactLogic/FinanceInformation.jsx",
                 "~/Scripts/reactLogic/OrganizationInformation.jsx",
                 "~/Scripts/reactLogic/reports.jsx",
