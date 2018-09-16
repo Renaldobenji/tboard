@@ -43,7 +43,7 @@ namespace TBoard.Data.Repository
                        where x.organizationID == organizationID
                        select new OrganizationDTO()
                        {
-                           organizationID = x.organizationID,
+                           organizationID = x.organizationID.ToString(),
                            name = x.name,
                            oem = x.oem,
                            registrationNumber = x.registrationNumber,

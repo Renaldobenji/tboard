@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.Web.Attributes;
 using System.Net.Http.Formatting;
+using TBoard.Web.Helpers;
 
 namespace TBoard.Web.Controllers
 {
@@ -28,9 +29,11 @@ namespace TBoard.Web.Controllers
         // GET api/<controller>/5
         [JWTTokenValidation]
         [Route("api/Document/GetOutstandingRequirements/{organizationID}")]
-        public HttpResponseMessage GetOutstandingRequirements(int organizationID)
+        public HttpResponseMessage GetOutstandingRequirements(string organizationID)
         {
-            var result = this.documentRequirementBusinessLogic.GetOutstandingDocumentRequirements(organizationID);
+            int orgID = Convert.ToInt32(EncryptionHelper.Decrypt(organizationID));
+
+            var result = this.documentRequirementBusinessLogic.GetOutstandingDocumentRequirements(orgID);
 
             var response = new
             {
@@ -49,8 +52,10 @@ namespace TBoard.Web.Controllers
         [JWTTokenValidation]
         [Route("api/Document/GetOrganizationDocuments")]
         public HttpResponseMessage GetOrganizationDocuments()
-        {            
-            var result = this.documentBusinessLogic.GetOrganizationDocuments(Convert.ToInt32(HttpContext.Current.Request.Headers["OrganizationID"]));
+        {
+            int orgID = Convert.ToInt32(EncryptionHelper.Decrypt(HttpContext.Current.Request.Headers["OrganizationID"]));
+
+            var result = this.documentBusinessLogic.GetOrganizationDocuments(orgID);
 
             var response = new
             {
@@ -71,7 +76,9 @@ namespace TBoard.Web.Controllers
         [JWTTokenValidation]
         public HttpResponseMessage Get()
         {
-            int orgID = Convert.ToInt32(HttpContext.Current.Request.Headers["OrganizationID"]);
+
+            int orgID = Convert.ToInt32(EncryptionHelper.Decrypt(HttpContext.Current.Request.Headers["OrganizationID"]));
+           
             var result = this.documentBusinessLogic.FindBy(x => x.organizationID == orgID).ToList();
 
             var documents = from x in result

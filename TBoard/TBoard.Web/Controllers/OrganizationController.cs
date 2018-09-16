@@ -33,7 +33,11 @@ namespace TBoard.Web.Controllers
         public string Get(string id)
         {
             int orgID = Convert.ToInt32(EncryptionHelper.Decrypt(id));
+
             OrganizationDTO org = this.organizationBusinessLogic.GetOrganization(orgID);
+
+            org.organizationID = id;
+
             if (org == null)
                 return "";
 

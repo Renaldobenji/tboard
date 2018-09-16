@@ -8,7 +8,7 @@ namespace TBoard.Data.Model
 {
     public class OrganizationDTO
     {
-        public int organizationID { get; set; }
+        public string organizationID { get; set; }
         public string name { get; set; }
         public string tradingName { get; set; }
         public string registrationNumber { get; set; }

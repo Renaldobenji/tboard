@@ -138,11 +138,7 @@
                                             showNavigation: true,
                                             showCloseBox: true,
                                             delay: -1
-                                        });
-
-        /*$("#switchCompany").on("click", function () {          
-            $("#switchCompanyDiv").toggle();
-        });*/
+                                        });      
 
         $("#tourbutton").on("click", function () {
             tripToShowNavigation.start();
@@ -215,14 +211,14 @@
 						<div className="modal-dialog">
 							<div className="modal-content">
 								<div className="modal-header">
-									<h4 className="modal-title" id="myModalLabel">Switch Company</h4>
+									<h4 className="modal-title" id="myModalLabel">Switch Company</h4>                                    
 								</div>
 								<div className="modal-body">
                                     <form role="form">
-                                     <div id="switchCompanyDiv" style={hideCompanies}>                                       
+                                        <div>
                                          <select className="form-control" onChange={this.updateOrganizationID}>{optionItems}
                                          </select>
-                                     </div>
+                                        </div>
                                     </form>
 								</div>								
 							</div>
