@@ -161,7 +161,7 @@
     },
 
     enviromentalIncidentProcedure: function (e) {
-        this.setState({ managementReviewenviromentalIncidentProcedureMeetingMinutes: e.target.value });
+        this.setState({ enviromentalIncidentProcedure: e.target.value });
         console.log(this.state.enviromentalIncidentProcedure);
     },
 
@@ -274,7 +274,7 @@
                     <div className="row">
                         <div className="col-lg-10">
                             <h1 className="page-header">
-                                Finance Information
+                                ISO 14001 Enviromental Management
                             </h1>
                         </div>
                     </div>

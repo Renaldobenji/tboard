@@ -205,7 +205,7 @@
                     <div className="row">
                         <div className="col-lg-10">
                             <h1 className="page-header">
-                                Finance Information
+                                ISO 9001 Quality Management
                             </h1>
                         </div>
                     </div>
