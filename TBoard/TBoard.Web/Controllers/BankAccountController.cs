@@ -75,6 +75,7 @@ namespace TBoard.Web.Controllers
                     AccountName = y.accountName,
                     BranchName = y.branchName,
                     BranchCode = y.branchCode,
+                    BankName = y.bankName,
                     BankAccountTypeID = y.bankAccountTypeID,
                     BankAccountDetailID = y.bankAccountDetailID
                 });
@@ -83,6 +84,7 @@ namespace TBoard.Web.Controllers
             {
                 data = bankDetails
             };
+
 
             var resp = new HttpResponseMessage()
             {
@@ -112,6 +114,7 @@ namespace TBoard.Web.Controllers
                 details.accountNumber = formData.Get("AccountNumber"); 
                 details.branchCode = formData.Get("BranchCode"); 
                 details.branchName = formData.Get("BranchName");
+                details.bankName = formData.Get("BankName");
                 details.bankAccountTypeID = Convert.ToInt32(formData.Get("SelectedBankAccountType"));
                 this.bankacountBusinessLogic.Create(details);
             }
@@ -123,6 +126,7 @@ namespace TBoard.Web.Controllers
                 bankDetails.accountNumber = formData.Get("AccountNumber"); 
                 bankDetails.branchCode = formData.Get("BranchCode"); 
                 bankDetails.branchName = formData.Get("BranchName");
+                bankDetails.bankName = formData.Get("BankName");
                 bankDetails.bankAccountTypeID = Convert.ToInt32(formData.Get("SelectedBankAccountType"));
                 this.bankacountBusinessLogic.Update(bankDetails);
             }

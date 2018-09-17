@@ -23,7 +23,8 @@
             AccountName: '',
             AccountNumber : '',
             BranchCode : '',
-            BranchName : '',
+            BranchName: '',
+            BankName: '',
             BankAccountType: [],
             ContactDirectory: [],           
             UserOrg: [],
@@ -415,7 +416,11 @@
     updateBranchName : function(e){
 		this.setState({BranchName : e.target.value});
 		console.log(this.state.BranchName);		
-	},
+    },
+    updateBankName: function (e) {
+        this.setState({ BankName: e.target.value });
+        console.log(this.state.BankName);
+    },
 	updateOEM : function(e){
 		this.setState({OEM : e.target.value});
 		console.log(this.state.OEM);		
@@ -530,6 +535,7 @@
 										                  accountNumber={this.state.AccountNumber} updateAccountNumber={this.updateAccountNumber}
 										                  branchCode={this.state.BranchCode} updateBranchCode={this.updateBranchCode}
 										                  branchName={this.state.BranchName} updateBranchName={this.updateBranchName}
+                                                          bankName={this.state.BankName} updateBankName={this.updateBankName}
 										                  accountType={this.state.AccountType} updateAccountType={this.updateAccountType}
 										                  bankDetailsPOST= {this.bankDetailsPOST} bankAccountTypes= {this.state.BankAccountType} updateBankAccountType= {this.updateBankAccountType} selectedBankAccountType= {this.state.SelectedBankAccountType} />
                                     </div>
@@ -642,6 +648,7 @@ var CreateOrganization = React.createClass({
             AccountNumber: '',
             BranchCode: '',
             BranchName: '',
+            BankName: '',
             BankAccountType: [],
             SelectedBankAccountType: '',
             OEM: 'false',
@@ -868,7 +875,8 @@ var OrganizationBankDetails = React.createClass({
             this.props.accountName = "";
             this.props.accountNumber = "";
             this.props.branchCode = "";
-            this.props.branchName = ""; t
+            this.props.branchName = "";
+            this.props.bankName = "";
         }
     },
 
@@ -897,13 +905,33 @@ var OrganizationBankDetails = React.createClass({
                                     <input id="BranchName" className="form-control" placeholder="Branch Name" value={this.props.branchName} onChange={this.props.updateBranchName}/>
                                 </div>	
                                 <div className="form-group">
+                                    <label>Bank Name</label>                                   
+                                    <select id="BankName" className="form-control" value={this.props.bankName} onChange={this.props.updateBankName}>
+                                        <option value='Absa Group Limited'>Absa Group Limited</option>
+									    <option value='African Bank Limited'>African Bank Limited</option>
+                                        <option value='Bidvest Bank Limited'>Bidvest Bank Limited</option>
+                                        <option value='Capitec Bank Limited'>Capitec Bank Limited</option>
+                                        <option value='Discovery Limited'>Discovery Limited</option>
+                                        <option value='First National Bank'>First National Bank</option>
+                                        <option value='FirstRand Bank'>FirstRand Bank</option>
+                                        <option value='Grindrod Bank Limited'>Grindrod Bank Limited</option>
+                                        <option value='Imperial Bank South Africa'>Imperial Bank South Africa</option>
+                                        <option value='Investec Bank Limited'>Investec Bank Limited</option>                                      
+                                        <option value='Nedbank Limited'>Nedbank Limited</option>
+                                        <option value='Sasfin Bank Limited'>Sasfin Bank Limited</option>
+                                        <option value='Standard Bank of South Africa'>Standard Bank of South Africa</option>
+                                        <option value='Ubank Limited'>Ubank Limited</option>
+                                    </select>
+                                </div>
+                                <div className="form-group">
                                     <label>Account Type</label>
                                     <select className="form-control" value={this.props.selectedBankAccountType} onChange={this.props.updateBankAccountType}>
+                                        <option value='0'>Please select Account Type</option>
                                         {this.props.bankAccountTypes.map(function(obj){
                                             return <option key={obj.Key} value={obj.Key} >{obj.BankAccountTypeCode}</option>;
                                           })}
                                     </select>
-                                </div>					
+                                </div>                               				
 					        </form>
 			            </div> 
                         <div className="panel-footer text-right">
@@ -1071,6 +1099,11 @@ var OrganizationBankDetailsList = React.createClass({
                 return <div>Unknown</div>
         }
 
+        function UploadProof(cell, row) {
+
+            return <div><a href={'Upload/DocumentTypeIndex?&documentCode=' + 'BankAccountConfirmationLetter' + '&key=' + row.OrgID} id="fakeLink" target="_blank"><button class="btn btn-outline btn-primary">Upload Proof</button></a></div>           
+        }
+
         return (	
 		            <div className="panel panel-default">
 			            <div className="panel-heading">
@@ -1082,7 +1115,8 @@ var OrganizationBankDetailsList = React.createClass({
                               <TableHeaderColumn dataField="AccountName">AccountName</TableHeaderColumn>
                               <TableHeaderColumn dataField="BranchName">BranchName</TableHeaderColumn>
                               <TableHeaderColumn dataField="BranchCode">BranchCode</TableHeaderColumn>                              
-                              <TableHeaderColumn dataFormat={bankAccountTypeView}>BankAccountType</TableHeaderColumn>                                
+                              <TableHeaderColumn dataFormat={bankAccountTypeView}>BankAccountType</TableHeaderColumn>     
+                                <TableHeaderColumn dataFormat={UploadProof}>Proof</TableHeaderColumn>                              
 				            </BootstrapTable>
 			            </div>                         
 		            </div>
@@ -1767,6 +1801,7 @@ var PersonalDetails = React.createClass({
                                         <OrganizationBankDetails accountName={this.state.AccountName} updateAccountName={this.updateAccountName}
                                 accountNumber={this.state.AccountNumber} updateAccountNumber={this.updateAccountNumber}
                                 branchCode={this.state.BranchCode} updateBranchCode={this.updateBranchCode}
+                                bankName={this.state.BankName} updatebankName={this.updateBankName}
                                 branchName={this.state.BranchName} updateBranchName={this.updateBranchName}
                                 accountType={this.state.AccountType} updateAccountType={this.updateAccountType}
                                 bankDetailsPOST= {this.bankDetailsPOST} bankAccountTypes= {this.state.BankAccountType} updateBankAccountType= {this.updateBankAccountType} selectedBankAccountType= {this.state.SelectedBankAccountType} />

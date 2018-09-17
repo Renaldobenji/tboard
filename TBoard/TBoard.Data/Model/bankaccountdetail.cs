@@ -23,6 +23,7 @@ namespace TBoard.Data.Model
         public string branchName { get; set; }
         public Nullable<bool> @default { get; set; }
         public Nullable<int> bankAccountTypeID { get; set; }
+        public string bankName { get; set; }
     
         public virtual bankaccounttype bankaccounttype { get; set; }
     }

@@ -63,6 +63,7 @@
           <Property Name="branchName" Type="varchar" MaxLength="150" />
           <Property Name="default" Type="bit" />
           <Property Name="bankAccountTypeID" Type="int" />
+          <Property Name="bankName" Type="varchar" MaxLength="45" />
         </EntityType>
         <EntityType Name="bankaccounttype">
           <Key>
@@ -837,6 +838,7 @@
           <Property Name="default" Type="Boolean" />
           <Property Name="bankAccountTypeID" Type="Int32" />
           <NavigationProperty Name="bankaccounttype" Relationship="TBoardModel.bankAcctype" FromRole="bankaccountdetails" ToRole="bankaccounttype" />
+          <Property Name="bankName" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="bankaccounttype">
           <Key>
@@ -1472,6 +1474,7 @@
           <EntitySetMapping Name="bankaccountdetails">
             <EntityTypeMapping TypeName="TBoardModel.bankaccountdetail">
               <MappingFragment StoreEntitySet="bankaccountdetails">
+                <ScalarProperty Name="bankName" ColumnName="bankName" />
                 <ScalarProperty Name="bankAccountDetailID" ColumnName="bankAccountDetailID" />
                 <ScalarProperty Name="owningType" ColumnName="owningType" />
                 <ScalarProperty Name="owningID" ColumnName="owningID" />
