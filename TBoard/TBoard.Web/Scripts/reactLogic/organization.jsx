@@ -30,6 +30,7 @@
             UserOrg: [],
             SelectedBankAccountType : '',
             OEM: 'false',
+            PayeNumber: '',
             UserID: '',
             bankDetailsList: [],
             CreateOrgName: '',
@@ -429,6 +430,10 @@
 	    this.setState({ ContactRole: e.target.value });
 	    console.log(this.state.ContactRole);
 	},
+	updatePayeNumber: function (e) {
+	    this.setState({ PayeNumber: e.target.value });
+	    console.log(this.state.PayeNumber);
+	},
 
 	updateOrganizationID: function (e) {	    
 
@@ -499,8 +504,8 @@
 		                        <div className="tab-pane fade active in" id="Details">
 			                        <div className="col-lg-8">
                                         <br/>
-                                        <OrganizationDetails OEM={this.state.OEM} updateOEM={this.updateOEM} Name={this.state.Name} TradingName={this.state.TradingName} RegistrationNumber={this.state.RegistrationNumber} VatNumber={this.state.VatNumber} TaxNumber={this.state.TaxNumber}
-                                                      updateName={this.updateName}  updateTradingName={this.updateTradingName} updateRegistrationNumber={this.updateRegistrationNumber} updateVatNumber={this.updateVatNumber} updateTaxNumber={this.updateTaxNumber} registerUserPOST= {this.registerUserPOST} />
+                                        <OrganizationDetails OrganizationID={this.state.OrganizationID} OEM={this.state.OEM} updateOEM={this.updateOEM} Name={this.state.Name} TradingName={this.state.TradingName} RegistrationNumber={this.state.RegistrationNumber} VatNumber={this.state.VatNumber} TaxNumber={this.state.TaxNumber}
+                                                 updatePayeNumber={this.updatePayeNumber} PayeNumber={this.state.PayeNumber}    updateName={this.updateName}  updateTradingName={this.updateTradingName} updateRegistrationNumber={this.updateRegistrationNumber} updateVatNumber={this.updateVatNumber} updateTaxNumber={this.updateTaxNumber} registerUserPOST= {this.registerUserPOST} />
                                     </div>
 		                        </div>
 		                        <div className="tab-pane fade" id="Contact">
@@ -593,21 +598,32 @@ var OrganizationDetails = React.createClass({
 						    <div className="form-group">
                                 <label>Registration Number</label>
                                 <input id="RegistrationNumber" className="form-control" placeholder="Registration Number" value={this.props.RegistrationNumber}  onChange={this.props.updateRegistrationNumber}/>
-                            </div>
-						    <div className="form-group">
-                                <label>Vat Number</label>
-                                <input id="VatNumber" className="form-control" placeholder="Vat Number" value={this.props.VatNumber} onChange={this.props.updateVatNumber}/>
-                            </div>
-						    <div className="form-group">
-                                <label>Tax Number</label>
-                                <input id="TaxNumber" className="form-control" placeholder="Tax Number" value={this.props.TaxNumber} onChange={this.props.updateTaxNumber}/>
-                            </div>
+                            </div>						   
 							<div className="form-group">
                                 <label>OEM</label>
                                 <select className="form-control" value={this.props.OEM} onChange={this.props.updateOEM}>
                                     <option value='false'>False</option>
 									<option value='true'>True</option>
                                 </select>
+                            </div>
+                            <hr/>
+                             <h4>Tax Clearance</h4>
+                            <hr />
+                             <div className="form-group">
+                                <label>Vat Number</label>
+                                <input id="VatNumber" className="form-control" placeholder="Vat Number" value={this.props.VatNumber} onChange={this.props.updateVatNumber} />
+                             </div>
+						    <div className="form-group">
+                                <label>Tax Number</label>
+                                <input id="TaxNumber" className="form-control" placeholder="Tax Number" value={this.props.TaxNumber} onChange={this.props.updateTaxNumber} />
+						    </div>
+                            <div className="form-group">
+                                <label>PAYE Number</label>
+                                <input id="PayeNumber" className="form-control" placeholder="Paye Number" value={this.props.PayeNumber} onChange={this.props.updatePayeNumber} />
+                            </div>
+                            <div className="form-group">
+                                <label>Upload Tax Clearance Certificate:                                 <a href={'Upload/DocumentTypeIndexEncrypted?documentCode=' + 'taxClearanceCertificate' + '&key=' + this.props.OrganizationID} id="fakeLink" target="_blank">Upload Document</a></label>
+                               
                             </div>
 					    </form>
 			        </div> 
@@ -1101,7 +1117,7 @@ var OrganizationBankDetailsList = React.createClass({
 
         function UploadProof(cell, row) {
 
-            return <div><a href={'Upload/DocumentTypeIndex?&documentCode=' + 'BankAccountConfirmationLetter' + '&key=' + row.OrgID} id="fakeLink" target="_blank"><button class="btn btn-outline btn-primary">Upload Proof</button></a></div>           
+            return <div><a href={'Upload/DocumentTypeIndex?&documentCode=' + 'BankAccountConfirmationLetter' + '&key=' + row.ownerID} id="fakeLink" target="_blank"><button class="btn btn-outline btn-primary">Upload Proof</button></a></div>           
         }
 
         return (	

@@ -13,6 +13,7 @@ using System.Web.Mvc;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.Data.Model;
 using TBoard.Web.Attributes;
+using TBoard.Web.Helpers;
 
 namespace TBoard.Web.Controllers
 {
@@ -49,6 +50,22 @@ namespace TBoard.Web.Controllers
                 
                 view.OrganizationID = key;
                 view.DocumentTypes.Add(documentReq.documentTypeID.ToString(), string.Format("{0}-{1}", documentReq.documentCode, documentReq.documentDescription));                
+            }
+            return View("Index", view);
+        }
+
+        [JWTTokenValidation]
+        public ActionResult DocumentTypeIndexEncrypted(string documentCode, string key)
+        {
+            int orgID = Convert.ToInt32(EncryptionHelper.Decrypt(key));
+
+            UploadViewModel view = new UploadViewModel();
+            using (TBoardEntities entities = new TBoardEntities())
+            {
+                var documentReq = entities.documenttypes.Where(x => x.documentDescription == documentCode).FirstOrDefault();
+
+                view.OrganizationID = orgID;
+                view.DocumentTypes.Add(documentReq.documentTypeID.ToString(), string.Format("{0}-{1}", documentReq.documentCode, documentReq.documentDescription));
             }
             return View("Index", view);
         }
@@ -131,7 +148,14 @@ namespace TBoard.Web.Controllers
                         documentTypeID = Convert.ToInt32(httpRequest.Form["DocumentType"]);
                         using (TBoardEntities entities = new TBoardEntities())
                         {
-                            expiryInMonths = (int)entities.documenttypes.Where(x => x.documentTypeID == documentTypeID).First().expiryTermMonths;
+                            try
+                            {
+                                expiryInMonths = (int)entities.documenttypes.Where(x => x.documentTypeID == documentTypeID).First().expiryTermMonths;
+                            }
+                            catch (Exception)
+                            {
+                                expiryInMonths = 0;
+                            }                            
                         }
 
                         var guiidName = string.Format("{0}.{1}", Guid.NewGuid().ToString(), httpRequest.Files[file].FileName.Split('.')[1]);

@@ -77,7 +77,8 @@ namespace TBoard.Web.Controllers
                     BranchCode = y.branchCode,
                     BankName = y.bankName,
                     BankAccountTypeID = y.bankAccountTypeID,
-                    BankAccountDetailID = y.bankAccountDetailID
+                    BankAccountDetailID = y.bankAccountDetailID,
+                    ownerID = ownerIDs
                 });
 
             var response = new

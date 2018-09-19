@@ -60,6 +60,11 @@ namespace TBoard.Web.Controllers
             org.taxNumber = formData.Get("TaxNumber");
             org.tradingName = formData.Get("TradingName");
             org.vatNumber = formData.Get("VatNumber");
+
+            if (!string.IsNullOrEmpty(formData.Get("PayeNumber")))
+            {
+                this.organizationBusinessLogic.SaveMetaData(orgID, "PayeNumber", formData.Get("PayeNumber"));
+            }
             org.oem = (formData.Get("oem").ToLower().Equals("true") ? true : false);
             this.organizationBusinessLogic.Update(org);
         }
