@@ -40,6 +40,7 @@
             SelectedBankAccountType : '',
             OEM: 'false',
             PayeNumber: '',
+            CIODCertificateNumber: '',
             UserID: '',
             bankDetailsList: [],
             CreateOrgName: '',
@@ -48,6 +49,7 @@
             CreateOrgVatNumber: '',
             CreateOrgTaxNumber: '',
             CreateOrgOEM: 'false',
+            MetaDataNames: new Array("PayeNumber", "CIODCertificateNumber"),
         };
     },
 
@@ -56,6 +58,33 @@
         var decodedToken = tokens.getJWTToken();
         this.setState({ OrganizationID: decodedToken.OrganizationID });
         this.setState({ UserID: decodedToken.UserID });
+    },
+
+    fetchOrganizationMetaData: function (orgID) {
+
+        var request = {}
+        request.MetaDataNames = this.state.MetaDataNames;
+        request.OwnerID = orgID
+
+        $.ajax({
+            url: 'api/Organization/MetaData',
+            dataType: 'json',
+            cache: false,
+            type: 'POST',
+            data: JSON.stringify(request),
+            contentType: 'application/json',
+            success: function (data) {
+                if (data.length > 0) {
+
+                    this.setState({ PayeNumber: data.find(metaData => metaData.metaDataName === "PayeNumber").metaDataValue });
+                    this.setState({ CIODCertificateNumber: data.find(metaData => metaData.metaDataName === "CIODCertificateNumber").metaDataValue });                    
+                }
+
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error('api/Organization/MetaData', status, err.toString());
+            }.bind(this)
+        });
     },
 
     fetchOrgDetails: function(orgID) {
@@ -305,6 +334,7 @@
         this.fetchAccountTypes();
         this.fetchBankDetails(this.state.OrganizationID);
         this.fetchUserOrganization(this.state.UserID);
+        this.fetchOrganizationMetaData(this.state.OrganizationID);
     },
     
     registerUserPOST : function() {
@@ -523,6 +553,10 @@
 	    this.setState({ PayeNumber: e.target.value });
 	    console.log(this.state.PayeNumber);
 	},
+	updateCIODCertificateNumber: function (e) {
+	    this.setState({ CIODCertificateNumber: e.target.value });
+	    console.log(this.state.CIODCertificateNumber);
+	},
 
 	updateOrganizationID: function (e) {	    
 
@@ -594,7 +628,8 @@
 			                        <div className="col-lg-8">
                                         <br/>
                                         <OrganizationDetails OrganizationID={this.state.OrganizationID} OEM={this.state.OEM} updateOEM={this.updateOEM} Name={this.state.Name} TradingName={this.state.TradingName} RegistrationNumber={this.state.RegistrationNumber} VatNumber={this.state.VatNumber} TaxNumber={this.state.TaxNumber}
-                                                 updatePayeNumber={this.updatePayeNumber} PayeNumber={this.state.PayeNumber}    updateName={this.updateName}  updateTradingName={this.updateTradingName} updateRegistrationNumber={this.updateRegistrationNumber} updateVatNumber={this.updateVatNumber} updateTaxNumber={this.updateTaxNumber} registerUserPOST= {this.registerUserPOST} />
+                                                 updatePayeNumber={this.updatePayeNumber} PayeNumber={this.state.PayeNumber}  
+                                                             updateCIODCertificateNumber={this.updateCIODCertificateNumber} CIODCertificateNumber={this.state.CIODCertificateNumber}  updateName={this.updateName}  updateTradingName={this.updateTradingName} updateRegistrationNumber={this.updateRegistrationNumber} updateVatNumber={this.updateVatNumber} updateTaxNumber={this.updateTaxNumber} registerUserPOST= {this.registerUserPOST} />
                                     </div>
 		                        </div>
 		                        <div className="tab-pane fade" id="Contact">
@@ -720,8 +755,17 @@ var OrganizationDetails = React.createClass({
                                 <input id="PayeNumber" className="form-control" placeholder="Paye Number" value={this.props.PayeNumber} onChange={this.props.updatePayeNumber} />
                             </div>
                             <div className="form-group">
-                                <label>Upload Tax Clearance Certificate:                                 <a href={'Upload/DocumentTypeIndexEncrypted?documentCode=' + 'taxClearanceCertificate' + '&key=' + this.props.OrganizationID} id="fakeLink" target="_blank">Upload Document</a></label>
-                               
+                                <label>Upload Tax Clearance Certificate:                                 <a href={'Upload/DocumentTypeIndexEncrypted?documentCode=' + 'taxClearanceCertificate' + '&key=' + this.props.OrganizationID} id="fakeLink" target="_blank">Upload Document</a></label>                               
+                            </div>
+                            <hr />
+                             <h4>Workmen's Compensation (COID)</h4>
+                            <hr />
+                            <div className="form-group">
+                                <label>Certificate Number</label>
+                                <input id="Certificate Number" className="form-control" placeholder="CIODCertificateNumber" value={this.props.CIODCertificateNumber} onChange={this.props.updateCIODCertificateNumber} />
+                            </div>
+                            <div className="form-group">
+                                <label>Upload Letter of Good Standing:                                 <a href={'Upload/DocumentTypeIndexEncrypted?documentCode=' + 'CIODCertificate' + '&key=' + this.props.OrganizationID} id="fakeLink" target="_blank">Upload Document</a></label>
                             </div>
 					    </form>
 			        </div> 

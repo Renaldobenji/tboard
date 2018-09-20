@@ -65,6 +65,11 @@ namespace TBoard.Web.Controllers
             {
                 this.organizationBusinessLogic.SaveMetaData(orgID, "PayeNumber", formData.Get("PayeNumber"));
             }
+
+            if (!string.IsNullOrEmpty(formData.Get("CIODCertificateNumber")))
+            {
+                this.organizationBusinessLogic.SaveMetaData(orgID, "CIODCertificateNumber", formData.Get("CIODCertificateNumber"));
+            }
             org.oem = (formData.Get("oem").ToLower().Equals("true") ? true : false);
             this.organizationBusinessLogic.Update(org);
         }
