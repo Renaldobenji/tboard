@@ -17,8 +17,17 @@
 			AddressLine3 : '',
 			AddressLine4 : '',
 			AddressLine5 : '',
-			PostalCode : '',
-            AddressID : '',
+            PostalCode: '',
+
+            PostalAddressLine1: '',
+            PostalAddressLine2: '',
+            PostalAddressLine3: '',
+            PostalAddressLine4: '',
+            PostalAddressLine5: '',
+            PostalPostalCode: '',
+
+            AddressID: '',
+            PostalAddressID: '',
             OwnerType : 'ORG',
             AccountName: '',
             AccountNumber : '',
@@ -83,7 +92,7 @@
           dataType: 'json',
           cache: false,
           success: function (data) {
-
+              
               if (data == "null")
               {
                   this.setState({ AddressLine1: "" });
@@ -93,44 +102,98 @@
                   this.setState({ AddressLine5: "" });
                   this.setState({ PostalCode: "" });
                   this.setState({ AddressID: "" });
+
+                  this.setState({ PostalAddressLine1: "" });
+                  this.setState({ PostalAddressLine2: "" });
+                  this.setState({ PostalAddressLine3: "" });
+                  this.setState({ PostalAddressLine4: "" });
+                  this.setState({ PostalAddressLine5: "" });
+                  this.setState({ PostalPostalCode: "" });
+                  this.setState({ PostalAddressID: "" });
                   return;
               }
 
               var obj = $.parseJSON(data);
-              if (obj.addressLine1 != null)
-                  this.setState({ AddressLine1: obj.addressLine1 });
-              else
-                  this.setState({ AddressLine1: "" });
-              
-              if (obj.addressLine2 != null)
-                  this.setState({ AddressLine2: obj.addressLine2 });
-              else
-                  this.setState({ AddressLine2: "" });
-              
-              if (obj.addressLine3 != null)
-                  this.setState({ AddressLine3: obj.addressLine3 });
-              else
-                  this.setState({ AddressLine3: "" });
-              
-              if (obj.addressLine4 != null)
-                  this.setState({ AddressLine4: obj.addressLine4 });
-              else
-                  this.setState({ AddressLine4: "" });
-              
-              if (obj.addressLine5 != null)
-                  this.setState({ AddressLine5: obj.addressLine5 });
-              else
-                  this.setState({ AddressLine5: "" });
-              
-              if (obj.postalCode != null)
-                  this.setState({ PostalCode: obj.postalCode });
-              else
-                  this.setState({ PostalCode: "" });
 
-             if (obj.addressID != null)
-                 this.setState({ AddressID: obj.addressID });
-             else
-                 this.setState({ AddressID: "" });
+              console.log(obj);
+
+              var postalAddress = obj.find(address => address.addresstype.addressTypeTLA === 'POS')
+              var physicalAddress = obj.find(address => address.addresstype.addressTypeTLA === 'PHY')
+
+              if (physicalAddress != null) {
+                  if (physicalAddress.addressLine1 != null)
+                      this.setState({ AddressLine1: physicalAddress.addressLine1 });
+                  else
+                      this.setState({ AddressLine1: "" });
+
+                  if (physicalAddress.addressLine2 != null)
+                      this.setState({ AddressLine2: physicalAddress.addressLine2 });
+                  else
+                      this.setState({ AddressLine2: "" });
+
+                  if (physicalAddress.addressLine3 != null)
+                      this.setState({ AddressLine3: physicalAddress.addressLine3 });
+                  else
+                      this.setState({ AddressLine3: "" });
+
+                  if (physicalAddress.addressLine4 != null)
+                      this.setState({ AddressLine4: physicalAddress.addressLine4 });
+                  else
+                      this.setState({ AddressLine4: "" });
+
+                  if (physicalAddress.addressLine5 != null)
+                      this.setState({ AddressLine5: physicalAddress.addressLine5 });
+                  else
+                      this.setState({ AddressLine5: "" });
+
+                  if (physicalAddress.postalCode != null)
+                      this.setState({ PostalCode: physicalAddress.postalCode });
+                  else
+                      this.setState({ PostalCode: "" });
+
+                  if (physicalAddress.addressID != null)
+                      this.setState({ AddressID: physicalAddress.addressID });
+                  else
+                      this.setState({ AddressID: "" });
+              }
+
+              if (postalAddress != null) {
+                  console.log(postalAddress);
+                  if (postalAddress.addressLine1 != null)
+                      this.setState({ PostalAddressLine1: postalAddress.addressLine1 });
+                  else
+                      this.setState({ PostalAddressLine1: "" });
+
+                  if (postalAddress.addressLine2 != null)
+                      this.setState({ PostalAddressLine2: postalAddress.addressLine2 });
+                  else
+                      this.setState({ PostalAddressLine2: "" });
+
+                  if (postalAddress.addressLine3 != null)
+                      this.setState({ PostalAddressLine3: postalAddress.addressLine3 });
+                  else
+                      this.setState({ PostalAddressLine3: "" });
+
+                  if (postalAddress.addressLine4 != null)
+                      this.setState({ PostalAddressLine4: postalAddress.addressLine4 });
+                  else
+                      this.setState({ PostalAddressLine4: "" });
+
+                  if (postalAddress.addressLine5 != null)
+                      this.setState({ PostalAddressLine5: postalAddress.addressLine5 });
+                  else
+                      this.setState({ PostalAddressLine5: "" });
+
+                  if (postalAddress.postalCode != null)
+                      this.setState({ PostalPostalCode: postalAddress.postalCode });
+                  else
+                      this.setState({ PostalCode: "" });
+
+                  if (postalAddress.addressID != null)
+                      this.setState({ PostalAddressID: postalAddress.addressID });
+                  else
+                      this.setState({ PostalAddressID: "" });
+              }
 
           }.bind(this),
           error: function(xhr, status, err) {
@@ -138,6 +201,8 @@
           }.bind(this)
         });
     },
+
+
 
     fetchContactDetailsArray: function (orgID) {
         $.ajax({
@@ -388,7 +453,31 @@
 	updatePostalCode : function(e){
 		this.setState({PostalCode : e.target.value});	
 		console.log(this.state.PostalCode);		
-	},updateCellNumberState : function(e){
+    },
+
+    updatePostalAddLine1: function (e) {
+        this.setState({ PostalAddressLine1: e.target.value });
+    },
+    updatePostalAddLine2: function (e) {
+        this.setState({ PostalAddressLine2: e.target.value });
+    },
+    updatePostalAddLine3: function (e) {
+        this.setState({ PostalAddressLine3: e.target.value });
+        console.log(this.state.PostalAddressLine3);
+    },
+    updatePostalAddLine4: function (e) {
+        this.setState({ PostalAddressLine4: e.target.value });
+    },
+    updatePostalAddLine5: function (e) {
+        this.setState({ PostalAddressLine5: e.target.value });
+        console.log(this.state.PostalAddressLine5);
+    },
+    updatePostalPostalCode: function (e) {
+        this.setState({ PostalPostalCode: e.target.value });
+        console.log(this.state.PostalPostalCode);
+    },
+
+    updateCellNumberState: function (e) {
 		this.setState({CellNumber : e.target.value});	
 		console.log(this.state.CellNumber);			
 	},
@@ -526,11 +615,20 @@
 			                        <div className="col-lg-8">
                                         <br/>
                                         <OrganizationAddress addressLine1={this.state.AddressLine1} updateAddressLine1={this.updateAddLine1}
-										                  addressLine2={this.state.AddressLine2} updateAddressLine2={this.updateAddLine2}
-										                  addressLine3={this.state.AddressLine3} updateAddressLine3={this.updateAddLine3}
-										                  addressLine4={this.state.AddressLine4} updateAddressLine4={this.updateAddLine4}
-										                  addressLine5={this.state.AddressLine5} updateAddressLine5={this.updateAddLine5}
-										                  postalCode={this.state.PostalCode} updatePostalCode={this.updatePostalCode} addressPOST= {this.addressPOST} />
+										                    addressLine2={this.state.AddressLine2} updateAddressLine2={this.updateAddLine2}
+										                    addressLine3={this.state.AddressLine3} updateAddressLine3={this.updateAddLine3}
+										                    addressLine4={this.state.AddressLine4} updateAddressLine4={this.updateAddLine4}
+										                    addressLine5={this.state.AddressLine5} updateAddressLine5={this.updateAddLine5}
+                                                            postalCode={this.state.PostalCode} updatePostalCode={this.updatePostalCode}
+
+                                                            postalAddressLine1={this.state.PostalAddressLine1} updatePostalAddressLine1={this.updatePostalAddLine1}
+                                                            postalAddressLine2={this.state.PostalAddressLine2} updatePostalAddressLine2={this.updatePostalAddLine2}
+                                                            postalAddressLine3={this.state.PostalAddressLine3} updatePostalAddressLine3={this.updatePostalAddLine3}
+                                                            postalAddressLine4={this.state.PostalAddressLine4} updatePostalAddressLine4={this.updatePostalAddLine4}
+                                                            postalAddressLine5={this.state.PostalAddressLine5} updatePostalAddressLine5={this.updatePostalAddLine5}
+                                                            postalPostalCode={this.state.PostalPostalCode} updatePostalPostalCode={this.updatePostalPostalCode}
+
+                                                            addressPOST={this.addressPOST} />
                                     </div>
 		                        </div>
                                 <div className="tab-pane fade" id="BankDetails">
@@ -795,39 +893,93 @@ var CreateOrganization = React.createClass({
 
 /*Register Page*/
 var OrganizationAddress = React.createClass({	
-	render: function(){
+    render: function () {
+
+        var paddingLeft = {
+            paddingLeft: 10
+        };
+
+        var offSetAddress = {
+            marginLeft: 10
+        };
+
 		return (	
 		        <div className="panel panel-default">
 			        <div className="panel-heading">
 				        Address Information
 			        </div>
 			        <div className="panel-body">
-				        <form>
-						    <div className="form-group">
-                                <label>Address Line 1</label>
-                                <input id="AddressLine1" className="form-control" placeholder="Address Line 1" value={this.props.addressLine1} onChange={this.props.updateAddressLine1}/>
+                        <div className="row">
+                        <form>
+                            <div className="col-lg-6">
+                                <div className="panel panel-default">
+                                    <div className="panel-heading">
+                                            Postal Address
+                                    </div>
+                                    <div className="panel-body">
+						                <div className="form-group">
+                                            <label>Address Line 1</label>
+                                            <input id="AddressLine1" className="form-control" placeholder="Address Line 1" value={this.props.addressLine1} onChange={this.props.updateAddressLine1}/>
+                                        </div>
+						                <div className="form-group">
+                                            <label>Address Line 2</label>
+                                            <input id="AddressLine2" className="form-control" placeholder="Address Line 2" value={this.props.addressLine2} onChange={this.props.updateAddressLine2}/>
+                                        </div>
+						                <div className="form-group">
+                                            <label>Address Line 3</label>
+                                            <input id="AddressLine3" className="form-control" placeholder="Address Line 3" value={this.props.addressLine3} onChange={this.props.updateAddressLine3}/>
+                                        </div>
+						                <div className="form-group">
+                                            <label>Address Line 4</label>
+                                            <input id="AddressLine4" className="form-control" placeholder="Address Line 4" value={this.props.addressLine4} onChange={this.props.updateAddressLine4}/>
+                                        </div>
+						                <div className="form-group">
+                                            <label>Address Line 5</label>
+                                            <input id="AddressLine5" className="form-control" placeholder="Address Line 5" value={this.props.addressLine5} onChange={this.props.updateAddressLine5}/>
+                                        </div>
+						                <div className="form-group">
+                                            <label>Postal Code</label>
+                                            <input id="PostalCode" className="form-control" placeholder="Postal Code" value={this.props.postalCode} onChange={this.props.updatePostalCode}/>
+                                        </div>
+                                    </div>
+                                </div>
+                             </div>
+                          
+                            <div className="col-lg-6">
+                                <div className="panel panel-default">
+                                    <div className="panel-heading">
+                                        Physical Address
+                                    </div>
+                                    <div className="panel-body">
+                                        <div className="form-group">
+                                            <label>Address Line 1</label>
+                                            <input id="PostalAddressLine1" className="form-control" placeholder="Address Line 1" value={this.props.postalAddressLine1} onChange={this.props.updatePostalAddressLine1} />
+                                        </div>
+                                        <div className="form-group">
+                                            <label>Address Line 2</label>
+                                            <input id="PostalAddressLine2" className="form-control" placeholder="Address Line 2" value={this.props.postalAddressLine2} onChange={this.props.updatePostalAddressLine2} />
+                                        </div>
+                                        <div className="form-group">
+                                            <label>Address Line 3</label>
+                                            <input id="PostalAddressLine3" className="form-control" placeholder="Address Line 3" value={this.props.postalAddressLine3} onChange={this.props.updatePostalAddressLine3} />
+                                        </div>
+                                        <div className="form-group">
+                                            <label>Address Line 4</label>
+                                            <input id="PostalAddressLine4" className="form-control" placeholder="Address Line 4" value={this.props.postalAddressLine4} onChange={this.props.updatePostalAddressLine4} />
+                                        </div>
+                                        <div className="form-group">
+                                            <label>Address Line 5</label>
+                                            <input id="PostalAddressLine5" className="form-control" placeholder="Address Line 5" value={this.props.postalAddressLine5} onChange={this.props.updatePostalAddressLine5} />
+                                        </div>
+                                        <div className="form-group">
+                                            <label>Postal Code</label>
+                                            <input id="PostalPostalCode" className="form-control" placeholder="Postal Code" value={this.props.postalPostalCode} onChange={this.props.updatePostalPostalCode} />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-						    <div className="form-group">
-                                <label>Address Line 2</label>
-                                <input id="AddressLine2" className="form-control" placeholder="Address Line 2" value={this.props.addressLine2} onChange={this.props.updateAddressLine2}/>
-                            </div>
-						    <div className="form-group">
-                                <label>Address Line 3</label>
-                                <input id="AddressLine3" className="form-control" placeholder="Address Line 3" value={this.props.addressLine3} onChange={this.props.updateAddressLine3}/>
-                            </div>
-						    <div className="form-group">
-                                <label>Address Line 4</label>
-                                <input id="AddressLine4" className="form-control" placeholder="Address Line 4" value={this.props.addressLine4} onChange={this.props.updateAddressLine4}/>
-                            </div>
-						    <div className="form-group">
-                                <label>Address Line 5</label>
-                                <input id="AddressLine5" className="form-control" placeholder="Address Line 5" value={this.props.addressLine5} onChange={this.props.updateAddressLine5}/>
-                            </div>
-						    <div className="form-group">
-                                <label>Postal Code</label>
-                                <input id="PostalCode" className="form-control" placeholder="Postal Code" value={this.props.postalCode} onChange={this.props.updatePostalCode}/>
-                            </div>
-					    </form>
+                            </form>
+                        </div>
 			        </div> 
                     <div className="panel-footer text-right">
                         <button type="button" className="btn btn-primary" onClick={this.props.addressPOST} >Save</button>
@@ -1493,8 +1645,11 @@ var PersonalDetails = React.createClass({
             url: 'api/Address/PER/' + UserID,
             dataType: 'json',
             cache: false,
-            success: function(data) {
+            success: function (data) {
+                console.log(data);
                 var obj = $.parseJSON(data);
+                
+
                 if (obj.addressLine1 != null)
                     this.setState({AddressLine1 : obj.addressLine1});
               
@@ -1803,12 +1958,21 @@ var PersonalDetails = React.createClass({
                                 <div className="tab-pane fade" id="Address">
                                     <div className="col-lg-8">
                                         <br/>
-                                        <OrganizationAddress addressLine1={this.state.AddressLine1} updateAddressLine1={this.updateAddLine1}
-                                addressLine2={this.state.AddressLine2} updateAddressLine2={this.updateAddLine2}
-                                addressLine3={this.state.AddressLine3} updateAddressLine3={this.updateAddLine3}
-                                addressLine4={this.state.AddressLine4} updateAddressLine4={this.updateAddLine4}
-                                addressLine5={this.state.AddressLine5} updateAddressLine5={this.updateAddLine5}
-                                postalCode={this.state.PostalCode} updatePostalCode={this.updatePostalCode} addressPOST= {this.addressPOST} />
+                                    <OrganizationAddress
+                                        addressLine1={this.state.AddressLine1} updateAddressLine1={this.updateAddLine1}
+                                        addressLine2={this.state.AddressLine2} updateAddressLine2={this.updateAddLine2}
+                                        addressLine3={this.state.AddressLine3} updateAddressLine3={this.updateAddLine3}
+                                        addressLine4={this.state.AddressLine4} updateAddressLine4={this.updateAddLine4}
+                                        addressLine5={this.state.AddressLine5} updateAddressLine5={this.updateAddLine5}
+                                        postalCode={this.state.PostalCode} updatePostalCode={this.updatePostalCode}
+
+                                        postalAddressLine1={this.state.PostalAddressLine1} updatePostalAddressLine1={this.updatePostalAddLine1}
+                                        postalAddressLine2={this.state.PostalAddressLine2} updatePostalAddressLine2={this.updatePostalAddLine2}
+                                        postalAddressLine3={this.state.PostalAddressLine3} updatePostalAddressLine3={this.updatePostalAddLine3}
+                                        postalAddressLine4={this.state.PostalAddressLine4} updatePostalAddressLine4={this.updatePostalAddLine4}
+                                        postalAddressLine5={this.state.PostalAddressLine5} updatePostalAddressLine5={this.updatePostalAddLine5}
+                                        postalPostalCode={this.state.PostalPostalCode} updatePostalPostalCode={this.updatePostalPostalCode}
+                                        addressPOST={this.addressPOST} />
                                 </div>
                                 </div>
                                 <div className="tab-pane fade" id="BankDetails">

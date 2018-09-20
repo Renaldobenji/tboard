@@ -33,11 +33,13 @@ namespace TBoard.Web.Controllers
         {
             string ownerIDs = EncryptionHelper.Decrypt(ownerID);
 
+            List<address> allAddresses = this.addressBusinessLogic.FindBy(x => x.owningType == ownerType && x.owningID == ownerIDs).ToList();
+
             address address =
                 this.addressBusinessLogic.FindBy(x => x.owningType == ownerType && x.owningID == ownerIDs)
                     .FirstOrDefault();
 
-            return JsonConvert.SerializeObject(address, Formatting.Indented,
+            return JsonConvert.SerializeObject(allAddresses, Formatting.Indented,
                                                 new JsonSerializerSettings
                                                 {
                                                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
@@ -48,33 +50,8 @@ namespace TBoard.Web.Controllers
         [JWTTokenValidation]
         public void Post(FormDataCollection formData)
         {
-            address address = new address();
-            string ownerIDs = EncryptionHelper.Decrypt(formData.Get("OrganizationID"));
-                    
-            if (string.IsNullOrEmpty(formData.Get("AddressID")))
-            {                
-                address.addressLine1 = formData.Get("AddressLine1");
-                address.addressLine2 = formData.Get("AddressLine2");
-                address.addressLine3 = formData.Get("AddressLine3");
-                address.addressLine4 = formData.Get("AddressLine4");
-                address.addressLine5 = formData.Get("AddressLine5");
-                address.postalCode = formData.Get("PostalCode");
-                address.owningType = "ORG";
-                address.owningID = ownerIDs;
-                address.addressTypeID = 1;//Physical Address
-                this.addressBusinessLogic.Create(address);
-                return;
-            }
-
-            int addressID = Convert.ToInt32(formData.Get("AddressID"));
-            address = addressBusinessLogic.FindBy(x => x.addressID == addressID).FirstOrDefault();
-            address.addressLine1 = formData.Get("AddressLine1");
-            address.addressLine2 = formData.Get("AddressLine2");
-            address.addressLine3 = formData.Get("AddressLine3");
-            address.addressLine4 = formData.Get("AddressLine4");
-            address.addressLine5 = formData.Get("AddressLine5");
-            address.postalCode = formData.Get("PostalCode");
-            this.addressBusinessLogic.Update(address);
+            savePhysicalAddress(formData);
+            savePostalAddress(formData);
         }
 
         // PUT api/<controller>/5
@@ -85,6 +62,74 @@ namespace TBoard.Web.Controllers
         // DELETE api/<controller>/5
         public void Delete(int id)
         {
+        }
+
+        private void savePhysicalAddress(FormDataCollection formData)
+        {
+            address address = new address();
+
+            string ownerIDs = EncryptionHelper.Decrypt(formData.Get("OrganizationID"));
+
+            if (string.IsNullOrEmpty(formData.Get("AddressID")))
+            {
+                address.addressLine1 = formData.Get("AddressLine1");
+                address.addressLine2 = formData.Get("AddressLine2");
+                address.addressLine3 = formData.Get("AddressLine3");
+                address.addressLine4 = formData.Get("AddressLine4");
+                address.addressLine5 = formData.Get("AddressLine5");
+                address.postalCode = formData.Get("PostalCode");
+                address.owningType = "ORG";
+                address.owningID = ownerIDs;
+                address.addressTypeID = 1;//Physical Address
+                this.addressBusinessLogic.Create(address);
+            }
+            else
+            {
+
+                int addressID = Convert.ToInt32(formData.Get("AddressID"));
+                address = addressBusinessLogic.FindBy(x => x.addressID == addressID).FirstOrDefault();
+                address.addressLine1 = formData.Get("AddressLine1");
+                address.addressLine2 = formData.Get("AddressLine2");
+                address.addressLine3 = formData.Get("AddressLine3");
+                address.addressLine4 = formData.Get("AddressLine4");
+                address.addressLine5 = formData.Get("AddressLine5");
+                address.postalCode = formData.Get("PostalCode");
+                this.addressBusinessLogic.Update(address);
+            }
+        }
+
+        private void savePostalAddress(FormDataCollection formData)
+        {
+            address address = new address();
+
+            string ownerIDs = EncryptionHelper.Decrypt(formData.Get("OrganizationID"));
+
+            if (string.IsNullOrEmpty(formData.Get("PostalAddressID")))
+            {
+                address.addressLine1 = formData.Get("PostalAddressLine1");
+                address.addressLine2 = formData.Get("PostalAddressLine2");
+                address.addressLine3 = formData.Get("PostalAddressLine3");
+                address.addressLine4 = formData.Get("PostalAddressLine4");
+                address.addressLine5 = formData.Get("PostalAddressLine5");
+                address.postalCode = formData.Get("PostalPostalCode");
+                address.owningType = "ORG";
+                address.owningID = ownerIDs;
+                address.addressTypeID = 3;//Postal Address
+                this.addressBusinessLogic.Create(address);
+            }
+            else
+            {
+
+                int addressID = Convert.ToInt32(formData.Get("PostalAddressID"));
+                address = addressBusinessLogic.FindBy(x => x.addressID == addressID).FirstOrDefault();
+                address.addressLine1 = formData.Get("PostalAddressLine1");
+                address.addressLine2 = formData.Get("PostalAddressLine2");
+                address.addressLine3 = formData.Get("PostalAddressLine3");
+                address.addressLine4 = formData.Get("PostalAddressLine4");
+                address.addressLine5 = formData.Get("PostalAddressLine5");
+                address.postalCode = formData.Get("PostalPostalCode");
+                this.addressBusinessLogic.Update(address);
+            }
         }
     }
 }
