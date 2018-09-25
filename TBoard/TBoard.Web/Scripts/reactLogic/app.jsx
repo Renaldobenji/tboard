@@ -275,7 +275,13 @@ routie({
             ReactDOM.render(
                 React.createElement(ISO18001QualityManagement, null), document.getElementById('container')
             );
+        },
+        'BEECompliance': function () {
+            ReactDOM.render(
+                React.createElement(BEECompliance, null), document.getElementById('container')
+            );
         }
+    
 
 });
 

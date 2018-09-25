@@ -311,6 +311,7 @@
     <Content Include="Scripts\reactLogic\ISO9001QualityManagement.jsx" />
     <Content Include="Scripts\reactLogic\FinanceInformation.jsx" />
     <Content Include="Scripts\reactLogic\OrganizationInformation.jsx" />
+    <Content Include="Scripts\reactLogic\BEECompliance.jsx" />
     <Resource Include="Content\EmailTemplates\expiredDocuments.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
