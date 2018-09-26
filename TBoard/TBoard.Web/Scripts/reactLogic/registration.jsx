@@ -97,12 +97,21 @@ var Register = React.createClass({
 						AddressLine2 : '',
 						AddressLine3 : '',
 						AddressLine4 : '',
-						AddressLine5 : '',
+                        AddressLine5: '',
+
+                        PostalAddressLine1: '',
+                        PostalAddressLine2: '',
+                        PostalAddressLine3: '',
+                        PostalAddressLine4: '',
+                        PostalAddressLine5: '',
+                        PostalPostalCode: '',
+
 						PostalCode: '',
 						percent: -1,
 						autoIncrement: true,
 						intervalTime: 200,
                         Username: ""
+
 					};
 
 	},
@@ -297,7 +306,29 @@ var Register = React.createClass({
 	updatePostalCodeState : function(e){
 		this.setState({PostalCode : e.target.value});	
 		console.log(this.state.PostalCode);		
-	},
+    },
+
+    updatePostalAddLine1: function (e) {
+        this.setState({ PostalAddressLine1: e.target.value });
+    },
+    updatePostalAddLine2: function (e) {
+        this.setState({ PostalAddressLine2: e.target.value });
+    },
+    updatePostalAddLine3: function (e) {
+        this.setState({ PostalAddressLine3: e.target.value });
+        console.log(this.state.PostalAddressLine3);
+    },
+    updatePostalAddLine4: function (e) {
+        this.setState({ PostalAddressLine4: e.target.value });
+    },
+    updatePostalAddLine5: function (e) {
+        this.setState({ PostalAddressLine5: e.target.value });
+        console.log(this.state.PostalAddressLine5);
+    },
+    updatePostalPostalCode: function (e) {
+        this.setState({ PostalPostalCode: e.target.value });
+        console.log(this.state.PostalPostalCode);
+    },
 
 	render: function () {
 	    return (
@@ -415,7 +446,14 @@ var Register = React.createClass({
                                                          addressLine3={this.state.AddressLine3} updateAddressLine3={this.updateAddLine3State}
                                                          addressLine4={this.state.AddressLine4} updateAddressLine4={this.updateAddLine4State}
                                                          addressLine5={this.state.AddressLine5} updateAddressLine5={this.updateAddLine5State}
-                                                         postalCode={this.state.PostalCode} updatePostalCode={this.updatePostalCodeState} />
+                                                        postalCode={this.state.PostalCode} updatePostalCode={this.updatePostalCodeState}
+                                                        postalAddressLine1={this.state.PostalAddressLine1} updatePostalAddressLine1={this.updatePostalAddLine1}
+                                                        postalAddressLine2={this.state.PostalAddressLine2} updatePostalAddressLine2={this.updatePostalAddLine2}
+                                                        postalAddressLine3={this.state.PostalAddressLine3} updatePostalAddressLine3={this.updatePostalAddLine3}
+                                                        postalAddressLine4={this.state.PostalAddressLine4} updatePostalAddressLine4={this.updatePostalAddLine4}
+                                                        postalAddressLine5={this.state.PostalAddressLine5} updatePostalAddressLine5={this.updatePostalAddLine5}
+                                                        postalPostalCode={this.state.PostalPostalCode} updatePostalPostalCode={this.updatePostalPostalCode}
+                                            />
                                         <ul className="list-inline pull-right">
                                             <li><button type="button" className="btn btn-default prev-step">Previous</button></li>
                                             <li><button type="button" className="btn btn-primary btn-info-full next-step">Next</button></li>
@@ -558,45 +596,103 @@ var RegisterAddress = React.createClass({
 				<div className="panel-heading">
 				    Address Information
 				</div>
-				<div className="panel-body">
-					<form>
-						<div className="form-group">
-                             <label label for="AddressLine1" className="col-sm-3 control-label">AddressLine1</label>
-<div className="col-sm-9" style={{margin:"inherit"}}>
-	<input id="AddressLine1" className="form-control" placeholder="Address Line 1" value={this.props.addressLine1} onChange={this.props.updateAddressLine1} />
-</div>
-						</div>
-						<div className="form-group">
-                           <label label for="AddressLine2" className="col-sm-3 control-label">AddressLine2</label>
-<div className="col-sm-9" style={{margin:"inherit"}}>
-	<input id="AddressLine2" className="form-control" placeholder="Address Line 2" value={this.props.addressLine2} onChange={this.props.updateAddressLine2} />
-</div>
-						</div>
-						<div className="form-group">
-                           <label label for="AddressLine3" className="col-sm-3 control-label">AddressLine3</label>
-<div className="col-sm-9" style={{margin:"inherit"}}>
-	<input id="AddressLine3" className="form-control" placeholder="Address Line 3" value={this.props.addressLine3} onChange={this.props.updateAddressLine3} />
-</div>
-						</div>
-						<div className="form-group">
-                            <label label for="AddressLine4" className="col-sm-3 control-label">AddressLine4</label>
-<div className="col-sm-9" style={{margin:"inherit"}}>
-	<input id="AddressLine4" className="form-control" placeholder="Address Line 4" value={this.props.addressLine4} onChange={this.props.updateAddressLine4} />
-</div>
-						</div>
-						<div className="form-group">
-                           <label label for="AddressLine5" className="col-sm-3 control-label">AddressLine5</label>
-<div className="col-sm-9" style={{margin:"inherit"}}>
-	<input id="AddressLine5" className="form-control" placeholder="Address Line 5" value={this.props.addressLine5} onChange={this.props.updateAddressLine5} />
-</div>
-						</div>
-						<div className="form-group">
-                            <label label for="PostalCode" className="col-sm-3 control-label">Postal Code</label>
-<div className="col-sm-9" style={{margin:"inherit"}}>
-	<input id="PostalCode" className="form-control" placeholder="Postal Code" value={this.props.postalCode} onChange={this.props.updatePostalCode} />
-</div>
-						</div>
-					</form>
+                <div className="panel-body">
+                    <div className="row">
+                        <form>
+                            <div className="col-lg-6">
+                                <div className="panel panel-default">
+                                    <div className="panel-heading">
+                                        Physical Address
+                                    </div>
+                                    <div className="panel-body">
+						                <div className="form-group">
+                                             <label label for="AddressLine1" className="col-sm-3 control-label">AddressLine1</label>
+                                            <div className="col-sm-9" style={{margin:"inherit"}}>
+	                                            <input id="AddressLine1" className="form-control" placeholder="Address Line 1" value={this.props.addressLine1} onChange={this.props.updateAddressLine1} />
+                                            </div>
+
+						                </div>
+						                <div className="form-group">
+                                           <label label for="AddressLine2" className="col-sm-3 control-label">AddressLine2</label>
+                                        <div className="col-sm-9" style={{margin:"inherit"}}>
+	                                        <input id="AddressLine2" className="form-control" placeholder="Address Line 2" value={this.props.addressLine2} onChange={this.props.updateAddressLine2} />
+                                        </div>
+						                </div>
+						                <div className="form-group">
+                                           <label label for="AddressLine3" className="col-sm-3 control-label">AddressLine3</label>
+                                        <div className="col-sm-9" style={{margin:"inherit"}}>
+	                                        <input id="AddressLine3" className="form-control" placeholder="Address Line 3" value={this.props.addressLine3} onChange={this.props.updateAddressLine3} />
+                                        </div>
+						                </div>
+						                <div className="form-group">
+                                            <label label for="AddressLine4" className="col-sm-3 control-label">AddressLine4</label>
+                                        <div className="col-sm-9" style={{margin:"inherit"}}>
+	                                        <input id="AddressLine4" className="form-control" placeholder="Address Line 4" value={this.props.addressLine4} onChange={this.props.updateAddressLine4} />
+                                        </div>
+						                </div>
+						                <div className="form-group">
+                                           <label label for="AddressLine5" className="col-sm-3 control-label">AddressLine5</label>
+                                        <div className="col-sm-9" style={{margin:"inherit"}}>
+	                                        <input id="AddressLine5" className="form-control" placeholder="Address Line 5" value={this.props.addressLine5} onChange={this.props.updateAddressLine5} />
+                                        </div>
+						                </div>
+						                <div className="form-group">
+                                            <label label for="PostalCode" className="col-sm-3 control-label">Postal Code</label>
+                                        <div className="col-sm-9" style={{margin:"inherit"}}>
+	                                        <input id="PostalCode" className="form-control" placeholder="Postal Code" value={this.props.postalCode} onChange={this.props.updatePostalCode} />
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-lg-6">
+                                <div className="panel panel-default">
+                                    <div className="panel-heading">
+                                        Physical Address
+                                    </div>
+                                    <div className="panel-body">
+                                        <div className="form-group">
+                                            <label label for="AddressLine1" className="col-sm-3 control-label">AddressLine1</label>
+                                            <div className="col-sm-9" style={{ margin: "inherit" }}>
+                                                <input id="AddressLine1" className="form-control" placeholder="Address Line 1" value={this.props.postalAddressLine1} onChange={this.props.updatePostalAddressLine1} />
+                                            </div>
+                                        </div>
+                                        <div className="form-group">
+                                            <label label for="AddressLine2" className="col-sm-3 control-label">AddressLine2</label>
+                                            <div className="col-sm-9" style={{ margin: "inherit" }}>
+                                                <input id="AddressLine2" className="form-control" placeholder="Address Line 2" value={this.props.postalAddressLine2} onChange={this.props.updatePostalAddressLine2} />
+                                            </div>
+                                        </div>
+                                        <div className="form-group">
+                                            <label label for="AddressLine3" className="col-sm-3 control-label">AddressLine3</label>
+                                            <div className="col-sm-9" style={{ margin: "inherit" }}>
+                                                <input id="AddressLine3" className="form-control" placeholder="Address Line 3" value={this.props.postalAddressLine3} onChange={this.props.updatePostalAddressLine3} />
+                                            </div>
+                                        </div>
+                                        <div className="form-group">
+                                            <label label for="AddressLine4" className="col-sm-3 control-label">AddressLine4</label>
+                                            <div className="col-sm-9" style={{ margin: "inherit" }}>
+                                                <input id="AddressLine4" className="form-control" placeholder="Address Line 4" value={this.props.postalAddressLine4} onChange={this.props.updatePostalAddressLine4} />
+                                            </div>
+                                        </div>
+                                        <div className="form-group">
+                                            <label label for="AddressLine5" className="col-sm-3 control-label">AddressLine5</label>
+                                            <div className="col-sm-9" style={{ margin: "inherit" }}>
+                                                <input id="AddressLine5" className="form-control" placeholder="Address Line 5" value={this.props.postalAddressLine5} onChange={this.props.updatePostalAddressLine5} />
+                                            </div>
+                                        </div>
+                                        <div className="form-group">
+                                            <label label for="PostalCode" className="col-sm-3 control-label">Postal Code</label>
+                                            <div className="col-sm-9" style={{ margin: "inherit" }}>
+                                                <input id="PostalCode" className="form-control" placeholder="Postal Code" value={this.props.postalPostalCode} onChange={this.props.updatePostalPostalCode} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
 				</div>
 			</div>
 		);

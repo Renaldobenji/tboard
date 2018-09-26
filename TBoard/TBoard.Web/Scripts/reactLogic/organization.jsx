@@ -1,5 +1,5 @@
 ﻿var Organization = React.createClass({
-    getInitialState: function() {
+    getInitialState: function () {
         return {
             Name: '',
             TradingName: '',
@@ -7,16 +7,16 @@
             VatNumber: '',
             TaxNumber: '',
             OrganizationID: '',
-            CellNumber : '',
-			HomeNumber : '',
-			OfficeNumber : '',
-			Email: '',
-			ContactRole: '',
-			AddressLine1 : '',
-			AddressLine2 : '',
-			AddressLine3 : '',
-			AddressLine4 : '',
-			AddressLine5 : '',
+            CellNumber: '',
+            HomeNumber: '',
+            OfficeNumber: '',
+            Email: '',
+            ContactRole: '',
+            AddressLine1: '',
+            AddressLine2: '',
+            AddressLine3: '',
+            AddressLine4: '',
+            AddressLine5: '',
             PostalCode: '',
 
             PostalAddressLine1: '',
@@ -28,16 +28,16 @@
 
             AddressID: '',
             PostalAddressID: '',
-            OwnerType : 'ORG',
+            OwnerType: 'ORG',
             AccountName: '',
-            AccountNumber : '',
-            BranchCode : '',
+            AccountNumber: '',
+            BranchCode: '',
             BranchName: '',
             BankName: '',
             BankAccountType: [],
-            ContactDirectory: [],           
+            ContactDirectory: [],
             UserOrg: [],
-            SelectedBankAccountType : '',
+            SelectedBankAccountType: '',
             OEM: 'false',
             PayeNumber: '',
             CIODCertificateNumber: '',
@@ -50,10 +50,21 @@
             CreateOrgTaxNumber: '',
             CreateOrgOEM: 'false',
             MetaDataNames: new Array("PayeNumber", "CIODCertificateNumber"),
+
+            CompanyType: 'NotPartOfGroup',
+            JointVenture: 'JointVentureNo',
+            NumberOfDirTrusMembers: '0',
+            NamesOfCompanyDirTrusMembers: '',
+            NumberOfShareHolders: '0',
+            NumberOfEmployees: '0',
+            CorporateDetailsMetaDataNames:new Array("JointVenture", "CompanyType", "NumberOfDirTrusMembers",
+                "NamesOfCompanyDirTrusMembers", "NumberOfShareholders","NumberOfEmployees")
+
+
         };
     },
 
-    componentWillMount: function () {       
+    componentWillMount: function () {
         var tokens = new TboardJWTToken();
         var decodedToken = tokens.getJWTToken();
         this.setState({ OrganizationID: decodedToken.OrganizationID });
@@ -77,7 +88,7 @@
                 if (data.length > 0) {
 
                     this.setState({ PayeNumber: data.find(metaData => metaData.metaDataName === "PayeNumber").metaDataValue });
-                    this.setState({ CIODCertificateNumber: data.find(metaData => metaData.metaDataName === "CIODCertificateNumber").metaDataValue });                    
+                    this.setState({ CIODCertificateNumber: data.find(metaData => metaData.metaDataName === "CIODCertificateNumber").metaDataValue });
                 }
 
             }.bind(this),
@@ -87,31 +98,61 @@
         });
     },
 
-    fetchOrgDetails: function(orgID) {
+    fetchOrgDetails: function (orgID) {
         $.ajax({
-          url: 'api/organization/' + orgID,
-          dataType: 'json',
-          cache: false,
-          success: function(data) {
-              var obj = $.parseJSON(data);
-              if (obj.name != null)
-                this.setState({Name : obj.name});
-              if (obj.tradingName != null)
-                this.setState({TradingName : obj.tradingName});
-              if (obj.registrationNumber != null)
-                this.setState({RegistrationNumber : obj.registrationNumber});
-              if (obj.vatNumber != null)
-                this.setState({VatNumber : obj.vatNumber});
-              if (obj.taxNumber != null)
-                this.setState({TaxNumber : obj.taxNumber});
-              if (obj.organizationID != null)
-                this.setState({OrganizationID : obj.organizationID});
-			  if (obj.oem != null)
-                this.setState({OEM : obj.oem});
-          }.bind(this),
-          error: function(xhr, status, err) {
-            console.error('api/organization', status, err.toString());
-          }.bind(this)
+            url: 'api/organization/' + orgID,
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+                var obj = $.parseJSON(data);
+                if (obj.name != null)
+                    this.setState({ Name: obj.name });
+                if (obj.tradingName != null)
+                    this.setState({ TradingName: obj.tradingName });
+                if (obj.registrationNumber != null)
+                    this.setState({ RegistrationNumber: obj.registrationNumber });
+                if (obj.vatNumber != null)
+                    this.setState({ VatNumber: obj.vatNumber });
+                if (obj.taxNumber != null)
+                    this.setState({ TaxNumber: obj.taxNumber });
+                if (obj.organizationID != null)
+                    this.setState({ OrganizationID: obj.organizationID });
+                if (obj.oem != null)
+                    this.setState({ OEM: obj.oem });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error('api/organization', status, err.toString());
+            }.bind(this)
+        });
+    },
+
+    fetchCorporateDetails: function (orgID) {
+
+        var request = {}
+        request.MetaDataNames = this.state.CorporateDetailsMetaDataNames;
+        request.OwnerID = orgID
+
+        $.ajax({
+            url: 'api/Organization/MetaData',
+            dataType: 'json',
+            cache: false,
+            type: 'POST',
+            data: JSON.stringify(request),
+            contentType: 'application/json',
+            success: function (data) {
+                if (data.length > 0) {
+                    console.log(data);
+                    this.setState({ CompanyType: data.find(metaData => metaData.metaDataName === "CompanyType").metaDataValue });
+                    this.setState({ JointVenture: data.find(metaData => metaData.metaDataName === "JointVenture").metaDataValue });
+                    this.setState({ NumberOfDirTrusMembers: data.find(metaData => metaData.metaDataName === "NumberOfDirTrusMembers").metaDataValue });
+                    this.setState({ NamesOfCompanyDirTrusMembers: data.find(metaData => metaData.metaDataName === "NamesOfCompanyDirTrusMembers").metaDataValue });
+                    this.setState({ NumberOfShareHolders: data.find(metaData => metaData.metaDataName === "NumberOfShareholders").metaDataValue });
+                    this.setState({ NumberOfEmployees: data.find(metaData => metaData.metaDataName === "NumberOfEmployees").metaDataValue });
+                }
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error('api/Organization/MetaData', status, err.toString());
+            }.bind(this)
         });
     },
 
@@ -143,9 +184,7 @@
               }
 
               var obj = $.parseJSON(data);
-
-              console.log(obj);
-
+              
               var postalAddress = obj.find(address => address.addresstype.addressTypeTLA === 'POS')
               var physicalAddress = obj.find(address => address.addresstype.addressTypeTLA === 'PHY')
 
@@ -187,7 +226,6 @@
               }
 
               if (postalAddress != null) {
-                  console.log(postalAddress);
                   if (postalAddress.addressLine1 != null)
                       this.setState({ PostalAddressLine1: postalAddress.addressLine1 });
                   else
@@ -230,7 +268,6 @@
           }.bind(this)
         });
     },
-
 
 
     fetchContactDetailsArray: function (orgID) {
@@ -335,6 +372,8 @@
         this.fetchBankDetails(this.state.OrganizationID);
         this.fetchUserOrganization(this.state.UserID);
         this.fetchOrganizationMetaData(this.state.OrganizationID);
+        this.fetchCorporateDetails(this.state.OrganizationID);
+
     },
     
     registerUserPOST : function() {
@@ -443,6 +482,32 @@
                     console.error('api/BankAccount/Post', status, err.toString());
                   }.bind(this)
             });
+    },
+
+    registerCorporateDetailsPOST: function () {
+        $.ajax({
+            url: 'api/CorporateDetails/Post',
+            type: 'POST',
+            dataType: 'json',
+            data: this.state,
+            cache: false,
+            success: function (data) {
+                console.log(data);
+                var opts = {
+                    title: "Success",
+                    text: "That thing that you were trying to do worked.",
+                    addclass: "stack-bottomright",
+                    type: "success",
+                    nonblock: {
+                        nonblock: true
+                    }
+                };
+                new PNotify(opts);
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.error('api/CorporateDetails/Post', status, err.toString());
+            }.bind(this)
+        });
     },
 
     updateBankAccountType : function(e){
@@ -556,7 +621,44 @@
 	updateCIODCertificateNumber: function (e) {
 	    this.setState({ CIODCertificateNumber: e.target.value });
 	    console.log(this.state.CIODCertificateNumber);
-	},
+    },
+
+    updateJointVenture: function(e) {
+          this.setState({ JointVenture: e.target.value });
+    },
+
+    updateCompanyType: function (e) {
+        this.setState({ CompanyType: e.target.value });
+        console.log(this.state.CompanyType);
+    },
+
+    updateNumberOfDirTrusMembers: function (e) {
+
+        const re = /^[0-9\b]+$/;
+        if (e.target.value == '' || re.test(e.target.value)) {
+            this.setState({ NumberOfDirTrusMembers: e.target.value });
+        }
+    },
+
+    updateNamesOfCompanyDirTrusMembers: function (e) {
+        this.setState({ NamesOfCompanyDirTrusMembers: e.target.value });
+    },
+
+    updateNumberOfShareHolders: function (e) {
+
+        const re = /^[0-9\b]+$/;
+        if (e.target.value == '' || re.test(e.target.value)) {
+            this.setState({ NumberOfShareHolders: e.target.value });
+        }
+    },
+
+    updateNumberOfEmployees: function (e) {
+
+        const re = /^[0-9\b]+$/;
+        if (e.target.value == '' || re.test(e.target.value)) {
+            this.setState({ NumberOfEmployees: e.target.value });
+        }
+    },
 
 	updateOrganizationID: function (e) {	    
 
@@ -621,7 +723,9 @@
                                 <a href="#Custodian" data-toggle="tab" aria-expanded="false">Administrator</a>
                                 </li>                                
                                 <li className=""><a href="#Expertise" data-toggle="tab" aria-expanded="false">Commodities and Services</a>
-		                        </li>
+                                </li>
+                                <li className=""><a href="#CorporateDetails" data-toggle="tab" aria-expanded="false">Corporate Details</a>
+                                </li>
 	                        </ul>	
 	                        <div className="tab-content">
 		                        <div className="tab-pane fade active in" id="Details">
@@ -698,7 +802,20 @@
                                         <br />
                                         <UserExpertiseAdd />
                                     </div>                                    
-		                        </div>
+                            </div>
+                                <div className="tab-pane fade" id="CorporateDetails">
+                                    <div className="col-lg-8">
+                                    <br />
+                                    <CorporateDetails
+                                        JointVenture={this.state.JointVenture} updateJointVenture={this.updateJointVenture}
+                                        CompanyType={this.state.CompanyType} updateCompanyType={this.updateCompanyType}
+                                        NumberOfDirTrusMembers={this.state.NumberOfDirTrusMembers} updateNumberOfDirTrusMembers={this.updateNumberOfDirTrusMembers}
+                                        NamesOfCompanyDirTrusMembers={this.state.NamesOfCompanyDirTrusMembers} updateNamesOfCompanyDirTrusMembers={this.updateNamesOfCompanyDirTrusMembers}
+                                        NumberOfShareHolders={this.state.NumberOfShareHolders} updateNumberOfShareHolders={this.updateNumberOfShareHolders}
+                                        NumberOfEmployees={this.state.NumberOfEmployees} updateNumberOfEmployees={this.updateNumberOfEmployees}
+                                        registerCorporateDetailsPOST={this.registerCorporateDetailsPOST}/>
+                                    </div>
+                                </div>
 	                        </div>
                             
                         </div>
@@ -708,7 +825,59 @@
 	}
 });
 
+var CorporateDetails = React.createClass({
+    render: function () {
+        return (
+            <div className="panel panel-default">
+                <div className="panel-heading">
+                    Coroporate Details
+			        </div>
+                <div className="panel-body">
+                    <form>
+                        <div className="form-group">
+                            <label>Is your company part of a Join Venture?</label>
+                            <select className="form-control" value={this.props.JointVenture} onChange={this.props.updateJointVenture}>
+                                <option value='JointVentureNo'>No</option>
+                                <option value='JointVentureYes'>Yes</option>
+                            </select>
+                        </div>
+                        <div className="form-group">
+                            <label>Company Type</label>
+                            <select className="form-control" value={this.props.CompanyType} onChange={this.props.updateCompanyType}>
+                                <option value='NotPartOfGroup'>My Company is not part of a Group of Companies</option>
+                                <option value='HoldingCompany'>My Company is the holding company</option>
+                                <option value='SubsidiaryCompany'>My Company is a Subsidiary Company of a Holding Company</option>
+                                <option value='DivisionCompany'>My Company is a Division of a Holding Company</option>
+                                <option value='BusinessUnitCompany'>My Company is a Business Unit of a Holding Company</option>
+                                <option value='BranchCompany'>My Company is a Branch of a Holding Company</option>
+                            </select>
+                        </div>
+                        <div className="form-group">
+                            <label>Number of directors/trustees/members in your company</label>
+                            <input type="text" id="NumOfDirectorsTrusteesMembers" className="form-control" placeholder="Number of directors/trustees/members" value={this.props.NumberOfDirTrusMembers} onChange={this.props.updateNumberOfDirTrusMembers} />
+                        </div>
+                        <div className="form-group">
+                            <label>Provide the names of the directors/trustees/members</label>
+                            <textarea id="NamesOfCompanyDirTrusMembers" className="form-control" placeholder="Type in the names of the directors/trustees/members" value={this.props.NamesOfCompanyDirTrusMembers} onChange={this.props.updateNamesOfCompanyDirTrusMembers} />
+                        </div>
+                        <div className="form-group">
+                            <label>Number of shareholders in your company</label>
+                            <input type="text" id="NumberOfShareHolders" className="form-control" placeholder="Number of shareholders in your company" value={this.props.NumberOfShareHolders} onChange={this.props.updateNumberOfShareHolders} />
+                        </div>
+                        <div className="form-group">
+                            <label>Number of employees in your company</label>
+                            <input type="text" id="NumberOfShareHolders" className="form-control" placeholder="Number of employees in your company" value={this.props.NumberOfEmployees} onChange={this.props.updateNumberOfEmployees} />
+                        </div>
+                    </form>
+                </div>
+                <div className="panel-footer text-right">
+                    <button type="button" className="btn btn-primary" onClick={this.props.registerCorporateDetailsPOST} >Save</button>
+                </div>
+            </div>
+        );
+    }
 
+});
 
 /*Register Page*/
 var OrganizationDetails = React.createClass({	
@@ -776,7 +945,6 @@ var OrganizationDetails = React.createClass({
 		);
 	}
 });
-
 
 /*Register Page*/
 var CreateOrganization = React.createClass({
@@ -958,7 +1126,7 @@ var OrganizationAddress = React.createClass({
                             <div className="col-lg-6">
                                 <div className="panel panel-default">
                                     <div className="panel-heading">
-                                            Postal Address
+                                            Physical Address
                                     </div>
                                     <div className="panel-body">
 						                <div className="form-group">
@@ -992,7 +1160,7 @@ var OrganizationAddress = React.createClass({
                             <div className="col-lg-6">
                                 <div className="panel panel-default">
                                     <div className="panel-heading">
-                                        Physical Address
+                                        Postal Address
                                     </div>
                                     <div className="panel-body">
                                         <div className="form-group">
@@ -1690,10 +1858,7 @@ var PersonalDetails = React.createClass({
             dataType: 'json',
             cache: false,
             success: function (data) {
-                console.log(data);
                 var obj = $.parseJSON(data);
-                
-
                 if (obj.addressLine1 != null)
                     this.setState({AddressLine1 : obj.addressLine1});
               
@@ -1915,19 +2080,17 @@ var PersonalDetails = React.createClass({
     },
     updateAddLine3 : function(e){
         this.setState({AddressLine3 : e.target.value});	
-        console.log(this.state.AddressLine3);		
     },
     updateAddLine4 : function(e){
         this.setState({AddressLine4 : e.target.value});		
     },
     updateAddLine5 : function(e){
         this.setState({AddressLine5 : e.target.value});	
-        console.log(this.state.AddressLine5);		
     },
     updatePostalCode : function(e){
         this.setState({PostalCode : e.target.value});	
-        console.log(this.state.PostalCode);		
-    },updateCellNumberState : function(e){
+    },
+    updateCellNumberState: function (e) {
         this.setState({CellNumber : e.target.value});	
         console.log(this.state.CellNumber);			
     },
@@ -1960,6 +2123,10 @@ var PersonalDetails = React.createClass({
     updateOEM : function(e){
         this.setState({OEM : e.target.value});
         console.log(this.state.OEM);		
+    },
+
+    updateCompanyType: function (e) {
+        this.setState({ GroupOfCompanies: e.target.value });
     },
 
     render: function() {

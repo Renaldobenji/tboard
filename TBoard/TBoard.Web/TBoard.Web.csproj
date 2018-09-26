@@ -254,6 +254,7 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\AdminFunctionController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
+    <Compile Include="Controllers\CorporateDetailsController.cs" />
     <Compile Include="Controllers\RegistrationCompleteController.cs" />
     <Compile Include="Controllers\ActivationController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
