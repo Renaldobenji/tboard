@@ -73,7 +73,8 @@ namespace TBoard.Web.Controllers
         [Route("api/Communication/{ownerType}/{ownerID}")]
         public string Get(string ownerType, string ownerID)
         {
-            var comm = this.communicationBusinessLogic.GetCommunication(ownerType, ownerID);
+            string ownerIDs = EncryptionHelper.Decrypt(ownerID);
+            var comm = this.communicationBusinessLogic.GetCommunication(ownerType, ownerIDs);
 
             return JsonConvert.SerializeObject(comm, Formatting.Indented,
                                                new JsonSerializerSettings

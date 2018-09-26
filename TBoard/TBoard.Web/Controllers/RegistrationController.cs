@@ -197,18 +197,38 @@ namespace TBoard.Web.Controllers
             address.addressLine5 = formData.Get("AddressLine5");
             address.postalCode = formData.Get("PostalCode");
 
+            address postalAddress = new address();
+            postalAddress.addressLine1 = formData.Get("PostalAddressLine1");
+            postalAddress.addressLine2 = formData.Get("PostalAddressLine2");
+            postalAddress.addressLine3 = formData.Get("PostalAddressLine3");
+            postalAddress.addressLine4 = formData.Get("PostalAddressLine4");
+            postalAddress.addressLine5 = formData.Get("PostalAddressLine5");
+            postalAddress.postalCode = formData.Get("PostalPostalCode");
+
+
             if (org != null)
             {
                 address.owningType = "ORG";
                 address.owningID = org.organizationID.ToString();
                 address.addressTypeID = 1;//Physical Address
                 this.addressBusinessLogic.Create(address);
+
+                postalAddress.owningType = "ORG";
+                postalAddress.owningID = org.organizationID.ToString();
+                postalAddress.addressTypeID = 3;//Postal Address
+                this.addressBusinessLogic.Create(postalAddress);
+
             }
 
             address.owningType = "PER";
             address.owningID = userResponse.UserID.ToString();
             address.addressTypeID = (org == null ? 1 : 2);
             this.addressBusinessLogic.Create(address);
+
+            postalAddress.owningType = "PER";
+            postalAddress.owningID = userResponse.UserID.ToString();
+            postalAddress.addressTypeID = (org == null ? 3 : 2);
+            this.addressBusinessLogic.Create(postalAddress);
         }
 
         private void addCommunicationBasedOnType(FormDataCollection formData, organization org, UserResponse userResponse, string formField, string communicationType)

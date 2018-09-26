@@ -967,7 +967,12 @@ var CreateOrganization = React.createClass({
             AddressLine3: '',
             AddressLine4: '',
             AddressLine5: '',
-            PostalCode: '',
+            PostalAddressLine1: '',
+            PostalAddressLine2: '',
+            PostalAddressLine3: '',
+            PostalAddressLine4: '',
+            PostalAddressLine5: '',
+            PostalPostalCode: '',
             AddressID: '',
             OwnerType: 'ORG',
             AccountName: '',
@@ -1830,8 +1835,15 @@ var PersonalDetails = React.createClass({
             AddressLine3 : '',
             AddressLine4 : '',
             AddressLine5 : '',
-            PostalCode : '',
-            AddressID : '',
+            PostalCode: '',
+            PostalAddressLine1: '',
+            PostalAddressLine2: '',
+            PostalAddressLine3: '',
+            PostalAddressLine4: '',
+            PostalAddressLine5: '',
+            PostalPostalCode: '',
+            AddressID: '',
+            PostalAddressID: "",
             OwnerType : 'ORG',
             AccountName: '',
             AccountNumber : '',
@@ -1858,27 +1870,104 @@ var PersonalDetails = React.createClass({
             dataType: 'json',
             cache: false,
             success: function (data) {
-                var obj = $.parseJSON(data);
-                if (obj.addressLine1 != null)
-                    this.setState({AddressLine1 : obj.addressLine1});
-              
-                if (obj.addressLine2 != null)
-                    this.setState({AddressLine2 : obj.addressLine2});
-              
-                if (obj.addressLine3 != null)
-                    this.setState({AddressLine3 : obj.addressLine3});
-              
-                if (obj.addressLine4 != null)
-                    this.setState({AddressLine4 : obj.addressLine4});
-              
-                if (obj.addressLine5 != null)
-                    this.setState({AddressLine5 : obj.addressLine5});
-              
-                if (obj.postalCode != null)
-                    this.setState({PostalCode : obj.postalCode});
+                if (data == "null") {
+                    this.setState({ AddressLine1: "" });
+                    this.setState({ AddressLine2: "" });
+                    this.setState({ AddressLine3: "" });
+                    this.setState({ AddressLine4: "" });
+                    this.setState({ AddressLine5: "" });
+                    this.setState({ PostalCode: "" });
+                    this.setState({ AddressID: "" });
 
-                if (obj.addressID != null)
-                    this.setState({AddressID : obj.addressID});
+                    this.setState({ PostalAddressLine1: "" });
+                    this.setState({ PostalAddressLine2: "" });
+                    this.setState({ PostalAddressLine3: "" });
+                    this.setState({ PostalAddressLine4: "" });
+                    this.setState({ PostalAddressLine5: "" });
+                    this.setState({ PostalPostalCode: "" });
+                    this.setState({ PostalAddressID: "" });
+                    return;
+                }
+
+                var obj = $.parseJSON(data);
+
+                var postalAddress = obj.find(address => address.addresstype.addressTypeTLA === 'POS')
+                var physicalAddress = obj.find(address => address.addresstype.addressTypeTLA === 'PHY')
+
+                if (physicalAddress != null) {
+                    if (physicalAddress.addressLine1 != null)
+                        this.setState({ AddressLine1: physicalAddress.addressLine1 });
+                    else
+                        this.setState({ AddressLine1: "" });
+
+                    if (physicalAddress.addressLine2 != null)
+                        this.setState({ AddressLine2: physicalAddress.addressLine2 });
+                    else
+                        this.setState({ AddressLine2: "" });
+
+                    if (physicalAddress.addressLine3 != null)
+                        this.setState({ AddressLine3: physicalAddress.addressLine3 });
+                    else
+                        this.setState({ AddressLine3: "" });
+
+                    if (physicalAddress.addressLine4 != null)
+                        this.setState({ AddressLine4: physicalAddress.addressLine4 });
+                    else
+                        this.setState({ AddressLine4: "" });
+
+                    if (physicalAddress.addressLine5 != null)
+                        this.setState({ AddressLine5: physicalAddress.addressLine5 });
+                    else
+                        this.setState({ AddressLine5: "" });
+
+                    if (physicalAddress.postalCode != null)
+                        this.setState({ PostalCode: physicalAddress.postalCode });
+                    else
+                        this.setState({ PostalCode: "" });
+
+                    if (physicalAddress.addressID != null)
+                        this.setState({ AddressID: physicalAddress.addressID });
+                    else
+                        this.setState({ AddressID: "" });
+                }
+
+                if (postalAddress != null) {
+                    if (postalAddress.addressLine1 != null) {
+                        this.setState({ PostalAddressLine1: postalAddress.addressLine1 });
+                    }
+                    else
+                        this.setState({ PostalAddressLine1: "" });
+
+                    if (postalAddress.addressLine2 != null)
+                        this.setState({ PostalAddressLine2: postalAddress.addressLine2 });
+                    else
+                        this.setState({ PostalAddressLine2: "" });
+
+                    if (postalAddress.addressLine3 != null)
+                        this.setState({ PostalAddressLine3: postalAddress.addressLine3 });
+                    else
+                        this.setState({ PostalAddressLine3: "" });
+
+                    if (postalAddress.addressLine4 != null)
+                        this.setState({ PostalAddressLine4: postalAddress.addressLine4 });
+                    else
+                        this.setState({ PostalAddressLine4: "" });
+
+                    if (postalAddress.addressLine5 != null)
+                        this.setState({ PostalAddressLine5: postalAddress.addressLine5 });
+                    else
+                        this.setState({ PostalAddressLine5: "" });
+
+                    if (postalAddress.postalCode != null)
+                        this.setState({ PostalPostalCode: postalAddress.postalCode });
+                    else
+                        this.setState({ PostalPostalCode: "" });
+
+                    if (postalAddress.addressID != null)
+                        this.setState({ PostalAddressID: postalAddress.addressID });
+                    else
+                        this.setState({ PostalAddressID: "" });
+                }
 
             }.bind(this),
             error: function(xhr, status, err) {
@@ -2090,6 +2179,26 @@ var PersonalDetails = React.createClass({
     updatePostalCode : function(e){
         this.setState({PostalCode : e.target.value});	
     },
+
+    updatePostalAddLine1: function (e) {
+        this.setState({ PostalAddressLine1: e.target.value });
+    },
+    updatePostalAddLine2: function (e) {
+        this.setState({ PostalAddressLine2: e.target.value });
+    },
+    updatePostalAddLine3: function (e) {
+        this.setState({ PostalAddressLine3: e.target.value });
+    },
+    updatePostalAddLine4: function (e) {
+        this.setState({ PostalAddressLine4: e.target.value });
+    },
+    updatePostalAddLine5: function (e) {
+        this.setState({ PostalAddressLine5: e.target.value });
+    },
+    updatePostalPostalCode: function (e) {
+        this.setState({ PostalPostalCode: e.target.value });
+    },
+
     updateCellNumberState: function (e) {
         this.setState({CellNumber : e.target.value});	
         console.log(this.state.CellNumber);			
