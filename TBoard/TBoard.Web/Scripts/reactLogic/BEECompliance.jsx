@@ -64,6 +64,10 @@
             marginBottom: 0
         };
 
+        var hidewStyle = {
+            display: "none"
+        };
+
         var overflowStyle = {
             overflow: "hidden",
             width: "auto"
@@ -82,6 +86,22 @@
             padding: "20px"
         }
 
+        $("#AffidavatButton").on("click", function () {
+            var x = document.getElementById("BEECertificate");
+            var y = document.getElementById("BEEAffidavit");
+
+            x.style.display = "none";
+            y.style.display = "block";
+        });
+
+        $("#CertificateButton").on("click", function () {
+            var x = document.getElementById("BEECertificate");
+            var y = document.getElementById("BEEAffidavit");
+
+            y.style.display = "none";
+            x.style.display = "block";
+        });
+
         return (
             <div>
                 <nav className="navbar navbar-default navbar-static-top" role="navigation" style={navBarSyle}>
@@ -97,16 +117,22 @@
                         </div>
                     </div>
                     <div className="row">
+                        <h4>Please select BEE Compliance </h4>
                         <div className="col-lg-10">
                            <p>
-                               <button type="button" className="btn btn-outline btn-primary btn-lg">Affidavit</button> &nbsp;&nbsp;
-                               <button type="button" className="btn btn-outline btn-primary btn-lg">BEE Certificate</button>
+                               <button id="AffidavatButton" type="button" className="btn btn-outline btn-primary btn-lg">Affidavit</button> &nbsp;&nbsp;
+                               <button id="CertificateButton" type="button" className="btn btn-outline btn-primary btn-lg">BEE Certificate</button>
                            </p>
                         </div>
                     </div>
                     <br />
-                    <BEEComplianceBEECertificate />
-                    <BEEComplianceAffidavit />
+                    <div id="BEECertificate" style={hidewStyle}>
+                        <BEEComplianceBEECertificate />
+                    </div>
+                    <div id="BEEAffidavit" style={hidewStyle}>
+                        <BEEComplianceAffidavit />
+                    </div>
+                    
                     <DocumentRequirementsList OrgID={this.props.OrganizationID} DocumentRequirements={this.state.DocumentRequirements} />
                 </div>
             </div>
@@ -185,9 +211,7 @@ var BEEComplianceBEECertificate = React.createClass({
                     this.setState({ VerificationAgencyName: data.find(metaData => metaData.metaDataName === "VerificationAgencyName").metaDataValue });
                     this.setState({ FinancialYearEnd: data.find(metaData => metaData.metaDataName === "FinancialYearEnd").metaDataValue });
                     this.setState({ FinancialYearTurnOver: data.find(metaData => metaData.metaDataName === "FinancialYearTurnOver").metaDataValue });
-                    this.setState({ AccountantName: data.find(metaData => metaData.metaDataName === "AccountantName").metaDataValue });
-                    this.setState({ permitsToTransportWaste: data.find(metaData => metaData.metaDataName === "PermitsToTransportWaste").metaDataValue });
-                    this.setState({ trucksRegularlyServiced: data.find(metaData => metaData.metaDataName === "TrucksRegularlyServiced").metaDataValue });
+                    this.setState({ AccountantName: data.find(metaData => metaData.metaDataName === "AccountantName").metaDataValue });                   
                     this.setState({ DesignatedGroupSupplier: data.find(metaData => metaData.metaDataName === "DesignatedGroupSupplier").metaDataValue });
                     this.setState({ EmpoweringSupplier: data.find(metaData => metaData.metaDataName === "EmpoweringSupplier").metaDataValue });
                     this.setState({ EnterpriseType: data.find(metaData => metaData.metaDataName === "EnterpriseType").metaDataValue });
@@ -580,6 +604,14 @@ var BEEComplianceBEECertificate = React.createClass({
             </select>
         </td>
     </tr>
+    <tr>
+    <td colSpan="2" style={lastTR}>I confirm that the above information and documents are correct and valid
+        <input style={checkBox} type="checkbox"></input>
+    </td>
+    <td>
+        <button type="button" className="btn btn-primary" onClick={this.BEEComplaincePOST}>Save</button>
+    </td>
+    </tr>
 </tbody>
 </table>
 </div>
@@ -679,18 +711,10 @@ var BEEComplianceAffidavit = React.createClass({
                     this.setState({ VerificationAgencyName: data.find(metaData => metaData.metaDataName === "VerificationAgencyName").metaDataValue });
                     this.setState({ FinancialYearEnd: data.find(metaData => metaData.metaDataName === "FinancialYearEnd").metaDataValue });
                     this.setState({ FinancialYearTurnOver: data.find(metaData => metaData.metaDataName === "FinancialYearTurnOver").metaDataValue });
-                    this.setState({ AccountantName: data.find(metaData => metaData.metaDataName === "AccountantName").metaDataValue });
-                    this.setState({ permitsToTransportWaste: data.find(metaData => metaData.metaDataName === "PermitsToTransportWaste").metaDataValue });
-                    this.setState({ trucksRegularlyServiced: data.find(metaData => metaData.metaDataName === "TrucksRegularlyServiced").metaDataValue });
+                    this.setState({ AccountantName: data.find(metaData => metaData.metaDataName === "AccountantName").metaDataValue });                   
                     this.setState({ DesignatedGroupSupplier: data.find(metaData => metaData.metaDataName === "DesignatedGroupSupplier").metaDataValue });
                     this.setState({ EmpoweringSupplier: data.find(metaData => metaData.metaDataName === "EmpoweringSupplier").metaDataValue });
-                    this.setState({ EnterpriseType: data.find(metaData => metaData.metaDataName === "EnterpriseType").metaDataValue });
-                    this.setState({ EmpoweringSupplier: data.find(metaData => metaData.metaDataName === "EmpoweringSupplier").metaDataValue });
-                    this.setState({ EnterpriseType: data.find(metaData => metaData.metaDataName === "EnterpriseType").metaDataValue });
-                    this.setState({ EmpoweringSupplier: data.find(metaData => metaData.metaDataName === "EmpoweringSupplier").metaDataValue });
-                    this.setState({ EnterpriseType: data.find(metaData => metaData.metaDataName === "EnterpriseType").metaDataValue });
-                    this.setState({ EmpoweringSupplier: data.find(metaData => metaData.metaDataName === "EmpoweringSupplier").metaDataValue });
-                    this.setState({ EnterpriseType: data.find(metaData => metaData.metaDataName === "EnterpriseType").metaDataValue });
+                    this.setState({ EnterpriseType: data.find(metaData => metaData.metaDataName === "EnterpriseType").metaDataValue });                   
                     this.setState({ ShareHolderCount: data.find(metaData => metaData.metaDataName === "ShareHolderCount").metaDataValue });
                     this.setState({ ShareHolderBlack: data.find(metaData => metaData.metaDataName === "ShareHolderBlack").metaDataValue });
                     this.setState({ ShareHolder18to35: data.find(metaData => metaData.metaDataName === "ShareHolder18to35").metaDataValue });
@@ -1190,6 +1214,14 @@ var BEEComplianceAffidavit = React.createClass({
         <td>
            <input className="form-control"></input>
         </td>
+    </tr>
+    <tr>
+    <td colSpan="2" style={lastTR}>I confirm that the above information and documents are correct and valid
+        <input style={checkBox} type="checkbox"></input>
+    </td>
+    <td>
+        <button type="button" className="btn btn-primary" onClick={this.BEEComplaincePOST}>Save</button>
+    </td>
     </tr>
 </tbody>
 </table>
