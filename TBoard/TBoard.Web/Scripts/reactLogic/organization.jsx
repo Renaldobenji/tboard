@@ -294,29 +294,29 @@
           success: function(data) {
               var obj = $.parseJSON(data);
               
-               if (obj.Home != null)
-                   this.setState({ HomeNumber: obj.Home });
+               if (obj[0].Home != null)
+                   this.setState({ HomeNumber: obj[0].Home });
               else
                    this.setState({ HomeNumber: "" });
               
-              if (obj.CellPhone != null)
-                  this.setState({ CellNumber: obj.CellPhone });
+              if (obj[0].CellPhone != null)
+                  this.setState({ CellNumber: obj[0].CellPhone });
               else
                   this.setState({ CellNumber: "" });
               
-              if (obj.WorkPhone != null)
-                  this.setState({ OfficeNumber: obj.WorkPhone });
+              if (obj[0].WorkPhone != null)
+                  this.setState({ OfficeNumber: obj[0].WorkPhone });
               else
                   this.setState({ OfficeNumber: "" });
               
-              if (obj.Email != null)
-                  this.setState({ Email: obj.Email });
+              if (obj[0].Email != null)
+                  this.setState({ Email: obj[0].Email });
               else
                   this.setState({ Email: "" });
 
           }.bind(this),
           error: function(xhr, status, err) {
-            console.error('api/Address/ORG/', status, err.toString());
+              console.error('api/Communication/ORG/', status, err.toString());
           }.bind(this)
         });
     },
@@ -373,13 +373,17 @@
         this.fetchUserOrganization(this.state.UserID);
         this.fetchOrganizationMetaData(this.state.OrganizationID);
         this.fetchCorporateDetails(this.state.OrganizationID);
+        this.fetchContactDetails(this.state.OrganizationID);
 
     },
     
     registerUserPOST : function() {
         console.log('POSTING FORM');
+
+        var queryStringParamaters
+
         $.ajax({
-                  url: 'api/Organization/Post',
+            url: 'api/Communication/ORG/' + this.state.OrganizationID,
                   type: 'POST',
                   dataType: 'json',
                   data: this.state,
@@ -397,7 +401,7 @@
                       new PNotify(opts);
                   }.bind(this),
                   error: function(xhr, status, err) {
-                    console.error('api/Organization/Post', status, err.toString());
+                      console.error('api/Communication/ORG', status, err.toString());
                   }.bind(this)
             });
     },
@@ -432,7 +436,7 @@
     contactPOST : function() {
         console.log('POSTING FORM');
         $.ajax({
-                  url: 'api/Communication/PostOrganization',
+            url: 'api/Communication/ORG/' + this.state.OrganizationID,
                   type: 'POST',
                   dataType: 'json',
                   data: this.state,
@@ -610,7 +614,7 @@
 		this.setState({OEM : e.target.value});
 		console.log(this.state.OEM);		
 	},
-	updatecontactRole: function (e) {
+    updatecontactRole: function (e) {
 	    this.setState({ ContactRole: e.target.value });
 	    console.log(this.state.ContactRole);
 	},
@@ -1858,10 +1862,12 @@ var PersonalDetails = React.createClass({
     },
 
     componentWillMount: function () {
+        console.log(decodedToken);
         var tokens = new TboardJWTToken();
         var decodedToken = tokens.getJWTToken();
         this.setState({ OrganizationID: decodedToken.OrganizationID });
         this.setState({ UserID: decodedToken.UserID });
+       
     },
 
     fetchAddressDetails: function (UserID) {
@@ -1983,22 +1989,22 @@ var PersonalDetails = React.createClass({
             cache: false,
             success: function(data) {
                 var obj = $.parseJSON(data);
+                
+                if (obj[0].Home != null)
+                    this.setState({ HomeNumber: obj[0].Home});
               
-                if (obj.Home != null)
-                    this.setState({HomeNumber : obj.Home});
+                if (obj[0].CellPhone != null)
+                    this.setState({ CellNumber: obj[0].CellPhone});
               
-                if (obj.CellPhone != null)
-                    this.setState({CellNumber : obj.CellPhone});
+                if (obj[0].WorkPhone != null)
+                    this.setState({ OfficeNumber: obj[0].WorkPhone});
               
-                if (obj.WorkPhone != null)
-                    this.setState({OfficeNumber : obj.WorkPhone});
-              
-                if (obj.Email != null)
-                    this.setState({Email : obj.Email});
+                if (obj[0].Email != null)
+                    this.setState({ Email: obj[0].Email});
 
             }.bind(this),
             error: function(xhr, status, err) {
-                console.error('api/Address/ORG/', status, err.toString());
+                console.error('api/Communication/PER/', status, err.toString());
             }.bind(this)
         });
     },
@@ -2031,7 +2037,7 @@ var PersonalDetails = React.createClass({
         });
     },
 
-    componentDidMount: function() {        
+    componentDidMount: function () {   
         this.fetchAddressDetails(this.state.UserID);
         this.fetchContactDetails(this.state.UserID);
         this.fetchAccountTypes();
@@ -2093,7 +2099,7 @@ var PersonalDetails = React.createClass({
     contactPOST : function() {
         console.log('POSTING FORM');
         $.ajax({
-            url: 'api/Communication/PostOrganization',
+            url: 'api/Communication/PER/' + this.state.UserID,
             type: 'POST',
             dataType: 'json',
             data: this.state,

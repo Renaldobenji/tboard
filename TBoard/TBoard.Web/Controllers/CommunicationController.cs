@@ -85,119 +85,26 @@ namespace TBoard.Web.Controllers
 
         // POST api/<controller>
         [JWTTokenValidation]
-        public void PostOrganization(FormDataCollection formData)
+        [Route("api/Communication/{ownerType}/{ownerID}")]
+        public void PostOrganization(FormDataCollection formData,string ownerType,string ownerID)
         {
-            string ownerIDs = EncryptionHelper.Decrypt(formData.Get("OrganizationID"));
+            string decryptedOwnerID = EncryptionHelper.Decrypt(ownerID);
+            saveCommunication(formData, ownerType, decryptedOwnerID);
+        }
 
-           
-            var ownerType = formData.Get("OwnerType");
+        private void saveCommunication(FormDataCollection formData, string ownerType, string ownerIDs)
+        {
             var role = formData.Get("ContactRole");
-            if (!String.IsNullOrEmpty(formData.Get("HomeNumber")))
-            {
-                var homeContact =
-                    this.communicationBusinessLogic.FindBy(
-                        x =>
-                            x.owningType == ownerType && x.owningID == ownerIDs &&
-                            x.communicationtype.communicationTypeTLA == "HME" && x.role == role).FirstOrDefault();
-                if (homeContact != null)
-                {
-                    homeContact.communicationLine1 = formData.Get("HomeNumber");
-                    this.communicationBusinessLogic.Update(homeContact);
-                }
-                else
-                {
-                    addCommunicationBasedOnType(formData, ownerIDs, "HomeNumber", "HME"); 
-                }
-            }
 
-            if (!String.IsNullOrEmpty(formData.Get("CellNumber")))
-            {
-                var CellContact =
-                    this.communicationBusinessLogic.FindBy(
-                        x =>
-                            x.owningType == ownerType && x.owningID == ownerIDs &&
-                            x.communicationtype.communicationTypeTLA == "CELL" && x.role == role).FirstOrDefault();
-                if (CellContact != null)
-                {
-                    CellContact.communicationLine1 = formData.Get("CellNumber");
-                    this.communicationBusinessLogic.Update(CellContact);
-                }
-                else
-                {
-                    addCommunicationBasedOnType(formData, ownerIDs, "CellNumber", "CELL");                   
+            var homePhoneNumber = formData.Get("HomeNumber");
+            var cellphoneNumber = formData.Get("CellNumber");
+            var officeNumber = formData.Get("OfficeNumber");
+            var emailAddress = formData.Get("Email");
 
-                }
-            }
-
-            if (!String.IsNullOrEmpty(formData.Get("OfficeNumber")))
-            {
-                var WorkContact =
-                    this.communicationBusinessLogic.FindBy(
-                        x =>
-                            x.owningType == ownerType && x.owningID == ownerIDs &&
-                            x.communicationtype.communicationTypeTLA == "WRK" && x.role == role).FirstOrDefault();
-                if (WorkContact != null)
-                {
-                    WorkContact.communicationLine1 = formData.Get("OfficeNumber");
-                    this.communicationBusinessLogic.Update(WorkContact);
-                }
-                else
-                { 
-                    addCommunicationBasedOnType(formData, ownerIDs, "OfficeNumber", "WRK");
-                }
-            }
-            if (!String.IsNullOrEmpty(formData.Get("Email")))
-            {
-                var EmailContact =
-                    this.communicationBusinessLogic.FindBy(
-                        x =>
-                            x.owningType == ownerType && x.owningID == ownerIDs &&
-                            x.communicationtype.communicationTypeTLA == "EML" && x.role == role).FirstOrDefault();
-                if (EmailContact != null)
-                {
-                    EmailContact.communicationLine1 = formData.Get("Email");
-                    this.communicationBusinessLogic.Update(EmailContact);
-                }
-                else
-                {                   
-                    addCommunicationBasedOnType(formData, ownerIDs, "Email", "EML");
-                }
-            }
-        }
-
-        private void addCommunicationBasedOnType(FormDataCollection formData, string orgID, string formField, string communicationType)
-        {
-            if (!string.IsNullOrEmpty(formData.Get(formField)))
-            {
-                this.addCommunication("ORG", orgID, formData.Get(formField), communicationType, formData.Get("ContactRole"));
-            }
-        }
-
-        private void addCommunication(string owingType, string owningID, string communicationLine1,
-            string communicationType, string role)
-        {
-            communication comm = new communication();
-            comm.owningType = owingType;
-            comm.owningID = owningID;
-            comm.communicationLine1 = communicationLine1;
-            comm.role = role;
-            if (communicationType.Equals("CELL"))
-            {
-                comm.communicationTypeID = 1;
-            }
-            else if (communicationType.Equals("WRK"))
-            {
-                comm.communicationTypeID = 2;
-            }
-            else if (communicationType.Equals("HME"))
-            {
-                comm.communicationTypeID = 3;
-            }
-            else if (communicationType.Equals("EML"))
-            {
-                comm.communicationTypeID = 4;
-            }
-            this.communicationBusinessLogic.Create(comm);
+            communicationBusinessLogic.SaveCommunication(ownerType, ownerIDs, "HME", homePhoneNumber, role);
+            communicationBusinessLogic.SaveCommunication(ownerType, ownerIDs, "CELL", cellphoneNumber, role);
+            communicationBusinessLogic.SaveCommunication(ownerType, ownerIDs, "WRK", officeNumber, role);
+            communicationBusinessLogic.SaveCommunication(ownerType, ownerIDs, "EML", emailAddress, role);
         }
 
         // PUT api/<controller>/5
