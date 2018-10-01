@@ -327,7 +327,7 @@ namespace TBoard.Web.Controllers
         [Route("api/Organization/MetaData/FinanceInfo")]
         public HttpResponseMessage MetaDataFinanceInfo(FormDataCollection formData)
         {
-            int orgID = Convert.ToInt32(EncryptionHelper.Decrypt(formData.Get("organizationID")));
+            int orgID = Convert.ToInt32(EncryptionHelper.Decrypt(formData.Get("organizationID")));            
 
             var updateAppointedAccountant = formData.Get("updateAppointedAccountant");
             var updatePublicInterestScore = formData.Get("updatePublicInterestScore");
@@ -344,6 +344,10 @@ namespace TBoard.Web.Controllers
             }
 
             this.organizationBusinessLogic.SaveMetaData(orgID, "ElectronicAccountingSystem", updateElectronicAccountSystem);
+
+
+            var weightingJSON = this.metaDataBusinessLogic.MetaDataScoringSystem(new FetchMetaData() { OwnerID = "FINANCEINFO", MetaDataNames = new List<string>() { "WeightingCriteria" } },
+                new FetchMetaData() { OwnerID = orgID.ToString(), MetaDataNames = new List<string>() { "AppointedAccountant", "PublicInterestScore", "ElectronicAccountingSystem" } });
 
             var resp = new HttpResponseMessage()
             {

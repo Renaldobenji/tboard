@@ -25,5 +25,12 @@ namespace TBoard.BusinessLogic.BusinessLogic
             return repository.GetMetaDataForMetaDataNames(metaDataToFetch.OwnerID, metaDataToFetch.MetaDataNames);
         }
 
+    
+        public int MetaDataScoringSystem(FetchMetaData weightingMetaDataToFetch, FetchMetaData ratingMetaData)
+        {
+            var weightingJSON = this.GetMetaDataByMetaDataName(weightingMetaDataToFetch);
+            var ratingMetaDataValues = this.GetMetaDataByMetaDataName(ratingMetaData);
+        }
+
     }
 }
