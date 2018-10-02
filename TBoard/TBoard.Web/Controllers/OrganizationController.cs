@@ -161,7 +161,10 @@ namespace TBoard.Web.Controllers
             this.organizationBusinessLogic.SaveMetaData(orgID, "SuppliersCount", updateSuppliersCount);
             this.organizationBusinessLogic.SaveMetaData(orgID, "RegisterShares", updateRegisterShares);
             this.organizationBusinessLogic.SaveMetaData(orgID, "EmergencyStrikes", updateEmergencyStrikes);
-            
+
+            var weightingJSON = this.metaDataBusinessLogic.MetaDataScoringSystem(new FetchMetaData() { OwnerID = "ORGINFO", MetaDataNames = new List<string>() { "WeightingCriteria" } },
+                new FetchMetaData() { OwnerID = orgID.ToString(), MetaDataNames = new List<string>() { "LetterHead", "CompanyProfile", "QuotationExample", "PurchaseOrderExample", "InvoiceExample"
+                , "SuppliersDocuments" , "SuppliersCount" , "RegisterShares" , "EmergencyStrikes"} });
 
             var resp = new HttpResponseMessage()
             {
