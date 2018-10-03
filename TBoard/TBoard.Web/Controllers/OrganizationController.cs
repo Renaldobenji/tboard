@@ -260,6 +260,14 @@ namespace TBoard.Web.Controllers
                 this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "HRINFO", "employmentEquityAct");
             }
 
+            var weightingJSON = this.metaDataBusinessLogic.MetaDataScoringSystem(new FetchMetaData() { OwnerID = "HRINFO", MetaDataNames = new List<string>() { "WeightingCriteria" } },
+                new FetchMetaData()
+                {
+                    OwnerID = orgID.ToString(),
+                    MetaDataNames = new List<string>() { "companyOrganogram", "employmentEquityPolicy", "employmentEquityReport", "EEA2document", "EEA4document"
+                , "socialLabourPlan" , "employmentContracts" , "workplaceSkillsPlan" , "employeeAttendanceRegister" , "basicConditionsofEmploymentAct" , "employmentEquityAct" }
+                });
+
 
 
             var resp = new HttpResponseMessage()
@@ -314,7 +322,12 @@ namespace TBoard.Web.Controllers
                 this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "RISKINSURANCEINFO", "CompanyGoodsinTransitInsurancePolicy");
             }
 
-           
+            var weightingJSON = this.metaDataBusinessLogic.MetaDataScoringSystem(new FetchMetaData() { OwnerID = "INSURANCEINFO", MetaDataNames = new List<string>() { "WeightingCriteria" } },
+                new FetchMetaData()
+                {
+                    OwnerID = orgID.ToString(),
+                    MetaDataNames = new List<string>() { "BuildingsInsurance", "PublicLiabilityInsurancePolicy", "CompanyThirdPartyInsurancePolicy", "CompanyProfessionalIndemnityInsurancePolicy", "CompanyGoodsinTransitInsurancePolicy" }
+                });
 
             var resp = new HttpResponseMessage()
             {
