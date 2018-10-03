@@ -259,7 +259,7 @@ var OrganizationInformation = React.createClass({
                                         <tr>
                                              <td>7</td>
                                             <td>How may suppliers does your company have?</td>
-                                            <td>                                            <select value={this.state.updateSuppliersCount} onChange={this.updateSuppliersCount} className="form-control">                                              <option>0</option>                                          <option>1-10</option><option>10-1000</option></select></td>
+                                            <td><select value={this.state.updateSuppliersCount} onChange={this.updateSuppliersCount} className="form-control">                                              <option>0</option>                                          <option>1-10</option><option>10-1000</option></select></td>
                                         </tr>
                                         <tr>
                                              <td>8</td>
@@ -270,7 +270,7 @@ var OrganizationInformation = React.createClass({
                                              <td>9</td>
                                             <td>Does your company have an emergency plan for strikes?
 (How will you ensure that your clients aren't affected when your suppliers | employees go on strike?)</td>
-                                            <td>                                            <select value={this.state.updateEmergencyStrikes} onChange={this.updateEmergencyStrikes} className="form-control"><option>NO</option>                                            <option>YES</option></select></td>
+                                            <td> <select value={this.state.updateEmergencyStrikes} onChange={this.updateEmergencyStrikes} className="form-control"><option>NO</option>                                            <option>YES</option></select></td>
                                         </tr>   
                                          <tr>
                                              <td></td>

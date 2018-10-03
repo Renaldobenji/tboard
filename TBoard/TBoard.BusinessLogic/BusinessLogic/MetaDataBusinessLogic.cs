@@ -55,8 +55,6 @@ namespace TBoard.BusinessLogic.BusinessLogic
             }
 
             return total;
-
         }
-
     }
 }
