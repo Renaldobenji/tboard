@@ -396,7 +396,7 @@ var BEEComplianceBEECertificate = React.createClass({
                                                 <tr>
                                                     <td>1</td>
                                                     <td>Business Sector</td>
-                                                    <td><select value={this.state.environmentalManagementSystemCertified} className="form-control" onChange={this.environmentalManagementSystemCertified}>
+                                                    <td><select value={this.state.BusinessSector} className="form-control" onChange={this.BusinessSector}>
                                                             <option value="Please Select">Please Select</option>
                                                             <option value="Construction - Building Environment Professionals">Construction - Building Environment Professionals</option>
                                                             <option value="Transport">Transport</option>
@@ -416,11 +416,11 @@ var BEEComplianceBEECertificate = React.createClass({
 <td>2</td>
 <td>Enterprise Type</td>
 <td>
-    <select value={this.state.environmentalManagementPolicy} className="form-control" onChange={this.environmentalManagementPolicy}>
+    <select value={this.state.EnterpriseType} className="form-control" onChange={this.EnterpriseType}>
          <option value="Please Select">Please Select</option>
-         <option value="EME (Exempted Micro Enterprises) ">EME (Exempted Micro Enterprises) </option>
-         <option value="QSE >51% Black Ownership ">QSE GT 51% Black Ownership  </option>
-         <option value="QSE < 51% Black Ownership ">QSE LT 51% Black Ownership </option>
+         <option value="EME (Exempted Micro Enterprises)">EME (Exempted Micro Enterprises) </option>
+         <option value="QSE > 51% Black Ownership">QSE GT 51% Black Ownership  </option>
+         <option value="QSE < 51% Black Ownership">QSE LT 51% Black Ownership </option>
          <option value="Generic ">Generic </option>
 
     </select>
@@ -430,14 +430,14 @@ var BEEComplianceBEECertificate = React.createClass({
 <td>3</td>
 <td>Description of your Business</td>
 <td>
-    <textarea className="form-control" rows="3" onChange={this.environmentalManagementPolicy}></textarea>
+    <textarea value={this.state.BusinessDescription} onChange={this.BusinessDescription}   className="form-control" rows="3" ></textarea>
 </td>
 </tr>
 <tr>
 <td>4</td>
 <td>BEE Status Level</td>
 <td>
-    <select value={this.state.reduceCarbonFootPrint} className="form-control" onChange={this.reduceCarbonFootPrint}>
+    <select value={this.state.BEEStatusLevel} className="form-control" onChange={this.BEEStatusLevel}>
         <option value="Please Select">Please Select</option>
         <option value="Level One Contributor">Level One Contributor</option>
         <option value="Level Two Contributor">Level Two Contributor</option>
@@ -455,7 +455,7 @@ var BEEComplianceBEECertificate = React.createClass({
 <td>5</td>
 <td>BEE Procurement Recognition Level Percentage?</td>
 <td>
-    <select value={this.state.enviromentalIncidentProcedure} className="form-control" onChange={this.enviromentalIncidentProcedure}>
+    <select value={this.state.BEEProcRecognitionLevelPercentage} className="form-control" onChange={this.BEEProcRecognitionLevelPercentage}>
         <option value="Please Select">Please Select</option>
         <option value="135% BEE Recognition Level">135% BEE Recognition Level</option>
         <option value="125% BEE Recognition Level">125% BEE Recognition Level</option>
@@ -472,14 +472,14 @@ var BEEComplianceBEECertificate = React.createClass({
 <td>6</td>
 <td>Financial Year Rated</td>
 <td>
-   <input className="form-control"></input>
+   <input className="form-control"  value={this.state.FinancialYearEnd} onChange={this.FinancialYearEnd} ></input>
 </td>
 </tr>
 <tr>
 <td>7</td>
 <td>Black Ownership Percentage</td>
 <td>
-     <select value={this.state.enviromentalIncidentProcedure} className="form-control" onChange={this.enviromentalIncidentProcedure}>
+     <select value={this.state.BlackOwnershipPercentage} className="form-control" onChange={this.BlackOwnershipPercentage}>
         <option value="0%">0%</option>
         <option value="10%">10%</option>
         <option value="20%">20%</option>
@@ -498,7 +498,7 @@ var BEEComplianceBEECertificate = React.createClass({
 <td>8</td>
 <td>Black Female Ownership Percentage</td>
 <td>
-    <select value={this.state.enviromentalIncidentProcedure} className="form-control" onChange={this.enviromentalIncidentProcedure}>
+    <select value={this.state.BlackFemalOwnershipPercentage} className="form-control" onChange={this.BlackFemalOwnershipPercentage}>
         <option value="0%">0%</option>
         <option value="10%">10%</option>
         <option value="20%">20%</option>
@@ -516,7 +516,7 @@ var BEEComplianceBEECertificate = React.createClass({
 <tr>
 <td>9</td>
 <td>VBlack Youth Ownership Percentage (Aged 18 - 35)</td>
-        <td> <select value={this.state.enviromentalIncidentProcedure} className="form-control" onChange={this.enviromentalIncidentProcedure}>
+        <td> <select value={this.state.BlackYouthOwnershipPercentage} className="form-control" onChange={this.BlackYouthOwnershipPercentage}>
                 <option value="0%">0%</option>
                 <option value="10%">10%</option>
                 <option value="20%">20%</option>
@@ -535,14 +535,14 @@ var BEEComplianceBEECertificate = React.createClass({
         <td>10</td>
         <td>Verification Agency Name</td>
         <td>
-          <input className="form-control"></input>
+          <input className="form-control" value={this.state.VerificationAgencyName} onChange={this.VerificationAgencyName} ></input>
         </td>
     </tr>
     <tr>
         <td>11</td>
         <td>Financial Year End</td>
         <td>
-            <select value={this.state.provideWasteDisposalProcedure} className="form-control" onChange={this.provideWasteDisposalProcedure}>
+            <select value={this.state.FinancialYearEnd} className="form-control" onChange={this.FinancialYearEnd}>
                 <option value="JAN">JAN</option>
                 <option value="FEB">FEB</option>
                 <option value="MARCH">MARCH</option>
@@ -569,7 +569,7 @@ var BEEComplianceBEECertificate = React.createClass({
         <td>13</td>
         <td>What was your turnover for last financial year?</td>
         <td>
-            <input className="form-control"></input>
+            <input className="form-control" value={this.state.FinancialYearTurnOver} onChange={this.FinancialYearTurnOver} ></input>
         </td>
     </tr>
     <tr>
@@ -583,14 +583,14 @@ var BEEComplianceBEECertificate = React.createClass({
         <td>15</td>
         <td>Name of accountant / auditor</td>
         <td>
-           <input className="form-control"></input>
+           <input className="form-control"  value={this.state.AccountantName} onChange={this.AccountantName} ></input>
         </td>
     </tr>
     <tr>
         <td>16</td>
         <td>Designated Group Supplier</td>
         <td>
-            <select value={this.state.usePrincipleOfReUse} className="form-control" onChange={this.usePrincipleOfReUse}>
+            <select value={this.state.DesignatedGroupSupplier} className="form-control" onChange={this.DesignatedGroupSupplier}>
                <option>NO</option><option>YES</option>
             </select>
         </td>
@@ -599,7 +599,7 @@ var BEEComplianceBEECertificate = React.createClass({
         <td>17</td>
         <td>Empowering Supplier</td>
         <td>
-            <select value={this.state.usePrincipleOfReUse} className="form-control" onChange={this.usePrincipleOfReUse}>
+            <select value={this.state.EmpoweringSupplier} className="form-control" onChange={this.EmpoweringSupplier}>
                <option>NO</option><option>YES</option>
             </select>
         </td>
@@ -655,6 +655,7 @@ var BEEComplianceAffidavit = React.createClass({
             ShareHolderRuralArea: "0",
             ShareHolderBlackMilitaryVeterans: "0",
             DateAffidavitSigned: "",
+            ShareHolderBlackFemales: "",
 
 
             MetaDataNames: new Array("BusinessSector",
@@ -678,7 +679,8 @@ var BEEComplianceAffidavit = React.createClass({
 "ShareHolderUnemployed",
 "ShareHolderRuralArea",
 "ShareHolderBlackMilitaryVeterans",
-"DateAffidavitSigned"
+"DateAffidavitSigned",
+                "ShareHolderBlackFemales"
                 ),
 
         };
@@ -716,6 +718,7 @@ var BEEComplianceAffidavit = React.createClass({
                     this.setState({ EmpoweringSupplier: data.find(metaData => metaData.metaDataName === "EmpoweringSupplier").metaDataValue });
                     this.setState({ EnterpriseType: data.find(metaData => metaData.metaDataName === "EnterpriseType").metaDataValue });                   
                     this.setState({ ShareHolderCount: data.find(metaData => metaData.metaDataName === "ShareHolderCount").metaDataValue });
+                    this.setState({ ShareHolderBlackFemales: data.find(metaData => metaData.metaDataName === "ShareHolderBlackFemales").metaDataValue });
                     this.setState({ ShareHolderBlack: data.find(metaData => metaData.metaDataName === "ShareHolderBlack").metaDataValue });
                     this.setState({ ShareHolder18to35: data.find(metaData => metaData.metaDataName === "ShareHolder18to35").metaDataValue });
                     this.setState({ ShareHolderBlackAndDisabled: data.find(metaData => metaData.metaDataName === "ShareHolderBlackAndDisabled").metaDataValue });
@@ -845,6 +848,11 @@ var BEEComplianceAffidavit = React.createClass({
     ShareHolderBlack: function (e) {
         this.setState({ ShareHolderBlack: e.target.value });
         console.log(this.state.ShareHolderBlack);
+    },    
+
+    ShareHolderBlackFemales: function (e) {
+        this.setState({ ShareHolderBlackFemales: e.target.value });
+        console.log(this.state.ShareHolderBlackFemales);
     },
 
     ShareHolder18to35: function (e) {
@@ -944,7 +952,7 @@ var BEEComplianceAffidavit = React.createClass({
                                                 <tr>
                                                     <td>1</td>
                                                     <td>Business Sector</td>
-                                                    <td><select value={this.state.environmentalManagementSystemCertified} className="form-control" onChange={this.environmentalManagementSystemCertified}>
+                                                    <td><select value={this.state.BusinessSector} className="form-control" onChange={this.BusinessSector}>
                                                             <option value="Please Select">Please Select</option>
                                                             <option value="Construction - Building Environment Professionals">Construction - Building Environment Professionals</option>
                                                             <option value="Transport">Transport</option>
@@ -964,7 +972,7 @@ var BEEComplianceAffidavit = React.createClass({
 <td>2</td>
 <td>Enterprise Type</td>
 <td>
-    <select value={this.state.environmentalManagementPolicy} className="form-control" onChange={this.environmentalManagementPolicy}>
+    <select value={this.state.EnterpriseType} className="form-control" onChange={this.EnterpriseType}>
          <option value="Please Select">Please Select</option>
          <option value="EME (Exempted Micro Enterprises) ">EME (Exempted Micro Enterprises) </option>
          <option value="QSE >51% Black Ownership ">QSE GT 51% Black Ownership  </option>
@@ -978,14 +986,14 @@ var BEEComplianceAffidavit = React.createClass({
 <td>3</td>
 <td>Description of your Business</td>
 <td>
-    <textarea className="form-control" rows="3" onChange={this.environmentalManagementPolicy}></textarea>
+    <textarea className="form-control" rows="3" value={this.state.BusinessDescription}  onChange={this.BusinessDescription}></textarea>
 </td>
 </tr>
 <tr>
 <td>4</td>
 <td>BEE Status Level</td>
 <td>
-    <select value={this.state.reduceCarbonFootPrint} className="form-control" onChange={this.reduceCarbonFootPrint}>
+    <select value={this.state.BEEStatusLevel} className="form-control" onChange={this.BEEStatusLevel}>
         <option value="Please Select">Please Select</option>
         <option value="Level One Contributor">Level One Contributor</option>
         <option value="Level Two Contributor">Level Two Contributor</option>
@@ -1003,7 +1011,7 @@ var BEEComplianceAffidavit = React.createClass({
 <td>5</td>
 <td>BEE Procurement Recognition Level Percentage?</td>
 <td>
-    <select value={this.state.enviromentalIncidentProcedure} className="form-control" onChange={this.enviromentalIncidentProcedure}>
+    <select value={this.state.BEEProcRecognitionLevelPercentage} className="form-control" onChange={this.BEEProcRecognitionLevelPercentage}>
         <option value="Please Select">Please Select</option>
         <option value="135% BEE Recognition Level">135% BEE Recognition Level</option>
         <option value="125% BEE Recognition Level">125% BEE Recognition Level</option>
@@ -1020,14 +1028,14 @@ var BEEComplianceAffidavit = React.createClass({
 <td>6</td>
 <td>Financial Year Rated</td>
 <td>
-   <input className="form-control"></input>
+   <input  value={this.state.FinancialYearRated} onChange={this.FinancialYearRated} className="form-control"></input>
 </td>
 </tr>
 <tr>
 <td>7</td>
 <td>Black Ownership Percentage</td>
 <td>
-     <select value={this.state.enviromentalIncidentProcedure} className="form-control" onChange={this.enviromentalIncidentProcedure}>
+     <select value={this.state.BlackOwnershipPercentage} className="form-control" onChange={this.BlackOwnershipPercentage}>
         <option value="0%">0%</option>
         <option value="10%">10%</option>
         <option value="20%">20%</option>
@@ -1046,7 +1054,7 @@ var BEEComplianceAffidavit = React.createClass({
 <td>8</td>
 <td>Black Female Ownership Percentage</td>
 <td>
-    <select value={this.state.enviromentalIncidentProcedure} className="form-control" onChange={this.enviromentalIncidentProcedure}>
+    <select value={this.state.BlackFemalOwnershipPercentage} className="form-control" onChange={this.BlackFemalOwnershipPercentage}>
         <option value="0%">0%</option>
         <option value="10%">10%</option>
         <option value="20%">20%</option>
@@ -1063,8 +1071,8 @@ var BEEComplianceAffidavit = React.createClass({
 </tr>
 <tr>
 <td>9</td>
-<td>VBlack Youth Ownership Percentage (Aged 18 - 35)</td>
-        <td> <select value={this.state.enviromentalIncidentProcedure} className="form-control" onChange={this.enviromentalIncidentProcedure}>
+<td>Black Youth Ownership Percentage (Aged 18 - 35)</td>
+        <td> <select value={this.state.BlackYouthOwnershipPercentage} className="form-control" onChange={this.BlackYouthOwnershipPercentage}>
                 <option value="0%">0%</option>
                 <option value="10%">10%</option>
                 <option value="20%">20%</option>
@@ -1083,14 +1091,14 @@ var BEEComplianceAffidavit = React.createClass({
         <td>10</td>
         <td>Verification Agency Name</td>
         <td>
-          <input className="form-control"></input>
+          <input className="form-control" value={this.state.VerificationAgencyName} onChange={this.VerificationAgencyName} ></input>
         </td>
     </tr>
     <tr>
         <td>11</td>
         <td>Financial Year End</td>
         <td>
-            <select value={this.state.provideWasteDisposalProcedure} className="form-control" onChange={this.provideWasteDisposalProcedure}>
+            <select value={this.state.FinancialYearEnd} className="form-control" onChange={this.FinancialYearEnd}>
                 <option value="JAN">JAN</option>
                 <option value="FEB">FEB</option>
                 <option value="MARCH">MARCH</option>
@@ -1117,7 +1125,7 @@ var BEEComplianceAffidavit = React.createClass({
         <td>13</td>
         <td>What was your turnover for last financial year?</td>
         <td>
-            <input className="form-control"></input>
+            <input className="form-control"  value={this.state.FinancialYearTurnOver} onChange={this.FinancialYearTurnOver} ></input>
         </td>
     </tr>
     <tr>
@@ -1131,14 +1139,14 @@ var BEEComplianceAffidavit = React.createClass({
         <td>15</td>
         <td>Name of accountant / auditor</td>
         <td>
-           <input className="form-control"></input>
+           <input className="form-control"  value={this.state.AccountantName} onChange={this.AccountantName} ></input>
         </td>
     </tr>
     <tr>
         <td>16</td>
         <td>Designated Group Supplier</td>
         <td>
-            <select value={this.state.usePrincipleOfReUse} className="form-control" onChange={this.usePrincipleOfReUse}>
+            <select value={this.state.DesignatedGroupSupplier} className="form-control" onChange={this.DesignatedGroupSupplier}>
                <option>NO</option><option>YES</option>
             </select>
         </td>
@@ -1147,7 +1155,7 @@ var BEEComplianceAffidavit = React.createClass({
         <td>17</td>
         <td>Empowering Supplier</td>
         <td>
-            <select value={this.state.usePrincipleOfReUse} className="form-control" onChange={this.usePrincipleOfReUse}>
+            <select value={this.state.EmpoweringSupplier} className="form-control" onChange={this.EmpoweringSupplier}>
                <option>NO</option><option>YES</option>
             </select>
         </td>
@@ -1156,63 +1164,63 @@ var BEEComplianceAffidavit = React.createClass({
         <td>18</td>
         <td>How many shareholders does your company have</td>
         <td>
-           <input className="form-control"></input>
+           <input  value={this.state.ShareHolderCount} onChange={this.ShareHolderCount}  className="form-control"></input>
         </td>
     </tr>
     <tr>
         <td>19</td>
         <td>How many of your shareholders are black</td>
         <td>
-           <input className="form-control"></input>
+           <input  value={this.state.ShareHolderBlack} onChange={this.ShareHolderBlack}  className="form-control"></input>
         </td>
     </tr>
     <tr>
         <td>20</td>
         <td>How many of your shareholders are black females</td>
         <td>
-           <input className="form-control"></input>
+           <input  value={this.state.ShareHolderBlackFemales} onChange={this.ShareHolderBlackFemales}  className="form-control"></input>
         </td>
     </tr>
     <tr>
         <td>21</td>
         <td>How many of your shareholders are between the ages of 18 and 35</td>
         <td>
-           <input className="form-control"></input>
+           <input value={this.state.ShareHolder18to35} onChange={this.ShareHolder18to35}  className="form-control"></input>
         </td>
     </tr>
     <tr>
         <td>22</td>
         <td>How many of your shareholders are black and disabled</td>
         <td>
-           <input className="form-control"></input>
+           <input   value={this.state.ShareHolderBlackAndDisabled} onChange={this.ShareHolderBlackAndDisabled} className="form-control"></input>
         </td>
     </tr>
     <tr>
         <td>23</td>
         <td>How many of your shareholders were unemployed at the time of becoming a shareholder?</td>
         <td>
-           <input className="form-control"></input>
+           <input  value={this.state.ShareHolderUnemployed} onChange={this.ShareHolderUnemployed}  className="form-control"></input>
         </td>
     </tr>
     <tr>
         <td>24</td>
         <td>How many shareholders live in a rural area</td>
         <td>
-           <input className="form-control"></input>
+           <input  value={this.state.ShareHolderRuralArea} onChange={this.ShareHolderRuralArea}  className="form-control"></input>
         </td>
     </tr>
     <tr>
         <td>25</td>
         <td>How many shareholders are black military veterans</td>
         <td>
-           <input className="form-control"></input>
+           <input  value={this.state.ShareHolderBlackMilitaryVeterans} onChange={this.ShareHolderBlackMilitaryVeterans}  className="form-control"></input>
         </td>
     </tr>
     <tr>
         <td>26</td>
         <td>Date when the Affidavit was signed by the Deponent</td>
         <td>
-           <input className="form-control"></input>
+           <input  value={this.state.DateAffidavitSigned} onChange={this.DateAffidavitSigned}  className="form-control"></input>
         </td>
     </tr>
     <tr>
