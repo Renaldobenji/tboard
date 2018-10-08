@@ -52,6 +52,7 @@
         <EntityTypeShape EntityType="TBoardModel.metadata" Width="1.5" PointX="0.75" PointY="14.75" />
         <EntityTypeShape EntityType="TBoardModel.organizationmapping" Width="1.5" PointX="6.75" PointY="14.75" />
         <EntityTypeShape EntityType="TBoardModel.requirement" Width="1.5" PointX="14.375" PointY="13.75" />
+        <EntityTypeShape EntityType="TBoardModel.organizationweighting" Width="1.5" PointX="15.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

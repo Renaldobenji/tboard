@@ -255,6 +255,22 @@
           <Property Name="name" Type="varchar" MaxLength="150" />
           <Property Name="description" Type="varchar" MaxLength="150" />
         </EntityType>
+        <EntityType Name="organizationweighting">
+          <Key>
+            <PropertyRef Name="organizationWeightingID" />
+          </Key>
+          <Property Name="organizationWeightingID" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="weighting" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="organizationID" Type="int" />
+          <Property Name="organizationInfo" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="financeInfo" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="hrInfo" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="beeInfo" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="insuranceInfo" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="iso9001" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="iso40001" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="iso18001" Type="decimal" Precision="4" Scale="2" />
+        </EntityType>
         <EntityType Name="quote">
           <Key>
             <PropertyRef Name="quoteID" />
@@ -598,6 +614,7 @@
           <EntitySet Name="organization" EntityType="Self.organization" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="organizationmapping" EntityType="Self.organizationmapping" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="organizationtypes" EntityType="Self.organizationtypes" Schema="tboard" store:Type="Tables" />
+          <EntitySet Name="organizationweighting" EntityType="Self.organizationweighting" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="quote" EntityType="Self.quote" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="quotestatus" EntityType="Self.quotestatus" Schema="tboard" store:Type="Tables" />
           <EntitySet Name="rating" EntityType="Self.rating" Schema="tboard" store:Type="Tables" />
@@ -798,6 +815,7 @@
           <EntitySet Name="organizationmappings" EntityType="TBoardModel.organizationmapping" />
           <FunctionImport Name="sps_GetSubCategories" ReturnType="Collection(TBoardModel.sps_GetSubCategories_Result)" />
           <EntitySet Name="requirements" EntityType="TBoardModel.requirement" />
+          <EntitySet Name="organizationweightings" EntityType="TBoardModel.organizationweighting" />
         </EntityContainer>
         <EntityType Name="address">
           <Key>
@@ -1440,6 +1458,22 @@
           <Property Name="date" Type="DateTime" />
           <Property Name="resolved" Type="DateTime" />
         </EntityType>
+        <EntityType Name="organizationweighting">
+          <Key>
+            <PropertyRef Name="organizationWeightingID" />
+          </Key>
+          <Property Name="organizationWeightingID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="weighting" Type="Decimal" />
+          <Property Name="organizationID" Type="Int32" />
+          <Property Name="organizationInfo" Type="Decimal" />
+          <Property Name="financeInfo" Type="Decimal" />
+          <Property Name="hrInfo" Type="Decimal" />
+          <Property Name="beeInfo" Type="Decimal" />
+          <Property Name="insuranceInfo" Type="Decimal" />
+          <Property Name="iso9001" Type="Decimal" />
+          <Property Name="iso40001" Type="Decimal" />
+          <Property Name="iso18001" Type="Decimal" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1891,6 +1925,23 @@
                 <ScalarProperty Name="owningID" ColumnName="owningID" />
                 <ScalarProperty Name="owningType" ColumnName="owningType" />
                 <ScalarProperty Name="requirementsID" ColumnName="requirementsID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="organizationweightings">
+            <EntityTypeMapping TypeName="TBoardModel.organizationweighting">
+              <MappingFragment StoreEntitySet="organizationweighting">
+                <ScalarProperty Name="iso18001" ColumnName="iso18001" />
+                <ScalarProperty Name="iso40001" ColumnName="iso40001" />
+                <ScalarProperty Name="iso9001" ColumnName="iso9001" />
+                <ScalarProperty Name="insuranceInfo" ColumnName="insuranceInfo" />
+                <ScalarProperty Name="beeInfo" ColumnName="beeInfo" />
+                <ScalarProperty Name="hrInfo" ColumnName="hrInfo" />
+                <ScalarProperty Name="financeInfo" ColumnName="financeInfo" />
+                <ScalarProperty Name="organizationInfo" ColumnName="organizationInfo" />
+                <ScalarProperty Name="organizationID" ColumnName="organizationID" />
+                <ScalarProperty Name="weighting" ColumnName="weighting" />
+                <ScalarProperty Name="organizationWeightingID" ColumnName="organizationWeightingID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -219,6 +219,9 @@
     <Compile Include="Model\organizationtype.cs">
       <DependentUpon>TBoardEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\organizationweighting.cs">
+      <DependentUpon>TBoardEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\quote.cs">
       <DependentUpon>TBoardEntities.tt</DependentUpon>
     </Compile>
