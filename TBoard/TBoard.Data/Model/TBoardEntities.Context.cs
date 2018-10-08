@@ -58,6 +58,7 @@ namespace TBoard.Data.Model
         public DbSet<metadata> metadatas { get; set; }
         public DbSet<organizationmapping> organizationmappings { get; set; }
         public DbSet<requirement> requirements { get; set; }
+        public DbSet<organizationweighting> organizationweightings { get; set; }
     
         public virtual ObjectResult<DocumentReq> sps_GetOutstandingDocumentRequirements(Nullable<int> organizationID)
         {

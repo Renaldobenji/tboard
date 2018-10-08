@@ -437,7 +437,7 @@ var BEEComplianceBEECertificate = React.createClass({
 <td>4</td>
 <td>BEE Status Level</td>
 <td>
-    <select value={this.state.reduceCarbonFootPrint} className="form-control" onChange={this.reduceCarbonFootPrint}>>
+    <select value={this.state.reduceCarbonFootPrint} className="form-control" onChange={this.reduceCarbonFootPrint}>
         <option value="Please Select">Please Select</option>
         <option value="Level One Contributor">Level One Contributor</option>
         <option value="Level Two Contributor">Level Two Contributor</option>
@@ -455,7 +455,7 @@ var BEEComplianceBEECertificate = React.createClass({
 <td>5</td>
 <td>BEE Procurement Recognition Level Percentage?</td>
 <td>
-    <select value={this.state.enviromentalIncidentProcedure} className="form-control" onChange={this.enviromentalIncidentProcedure}>>
+    <select value={this.state.enviromentalIncidentProcedure} className="form-control" onChange={this.enviromentalIncidentProcedure}>
         <option value="Please Select">Please Select</option>
         <option value="135% BEE Recognition Level">135% BEE Recognition Level</option>
         <option value="125% BEE Recognition Level">125% BEE Recognition Level</option>
@@ -479,7 +479,7 @@ var BEEComplianceBEECertificate = React.createClass({
 <td>7</td>
 <td>Black Ownership Percentage</td>
 <td>
-     <select value={this.state.enviromentalIncidentProcedure} className="form-control" onChange={this.enviromentalIncidentProcedure}>>
+     <select value={this.state.enviromentalIncidentProcedure} className="form-control" onChange={this.enviromentalIncidentProcedure}>
         <option value="0%">0%</option>
         <option value="10%">10%</option>
         <option value="20%">20%</option>
@@ -498,7 +498,7 @@ var BEEComplianceBEECertificate = React.createClass({
 <td>8</td>
 <td>Black Female Ownership Percentage</td>
 <td>
-    <select value={this.state.enviromentalIncidentProcedure} className="form-control" onChange={this.enviromentalIncidentProcedure}>>
+    <select value={this.state.enviromentalIncidentProcedure} className="form-control" onChange={this.enviromentalIncidentProcedure}>
         <option value="0%">0%</option>
         <option value="10%">10%</option>
         <option value="20%">20%</option>
@@ -516,7 +516,7 @@ var BEEComplianceBEECertificate = React.createClass({
 <tr>
 <td>9</td>
 <td>VBlack Youth Ownership Percentage (Aged 18 - 35)</td>
-        <td> <select value={this.state.enviromentalIncidentProcedure} className="form-control" onChange={this.enviromentalIncidentProcedure}>>
+        <td> <select value={this.state.enviromentalIncidentProcedure} className="form-control" onChange={this.enviromentalIncidentProcedure}>
                 <option value="0%">0%</option>
                 <option value="10%">10%</option>
                 <option value="20%">20%</option>
@@ -590,7 +590,7 @@ var BEEComplianceBEECertificate = React.createClass({
         <td>16</td>
         <td>Designated Group Supplier</td>
         <td>
-            <select value={this.state.usePrincipleOfReUse} className="form-control" onChange={this.usePrincipleOfReUse}>>
+            <select value={this.state.usePrincipleOfReUse} className="form-control" onChange={this.usePrincipleOfReUse}>
                <option>NO</option><option>YES</option>
             </select>
         </td>
@@ -599,7 +599,7 @@ var BEEComplianceBEECertificate = React.createClass({
         <td>17</td>
         <td>Empowering Supplier</td>
         <td>
-            <select value={this.state.usePrincipleOfReUse} className="form-control" onChange={this.usePrincipleOfReUse}>>
+            <select value={this.state.usePrincipleOfReUse} className="form-control" onChange={this.usePrincipleOfReUse}>
                <option>NO</option><option>YES</option>
             </select>
         </td>
@@ -985,7 +985,7 @@ var BEEComplianceAffidavit = React.createClass({
 <td>4</td>
 <td>BEE Status Level</td>
 <td>
-    <select value={this.state.reduceCarbonFootPrint} className="form-control" onChange={this.reduceCarbonFootPrint}>>
+    <select value={this.state.reduceCarbonFootPrint} className="form-control" onChange={this.reduceCarbonFootPrint}>
         <option value="Please Select">Please Select</option>
         <option value="Level One Contributor">Level One Contributor</option>
         <option value="Level Two Contributor">Level Two Contributor</option>
@@ -1003,7 +1003,7 @@ var BEEComplianceAffidavit = React.createClass({
 <td>5</td>
 <td>BEE Procurement Recognition Level Percentage?</td>
 <td>
-    <select value={this.state.enviromentalIncidentProcedure} className="form-control" onChange={this.enviromentalIncidentProcedure}>>
+    <select value={this.state.enviromentalIncidentProcedure} className="form-control" onChange={this.enviromentalIncidentProcedure}>
         <option value="Please Select">Please Select</option>
         <option value="135% BEE Recognition Level">135% BEE Recognition Level</option>
         <option value="125% BEE Recognition Level">125% BEE Recognition Level</option>
@@ -1027,7 +1027,7 @@ var BEEComplianceAffidavit = React.createClass({
 <td>7</td>
 <td>Black Ownership Percentage</td>
 <td>
-     <select value={this.state.enviromentalIncidentProcedure} className="form-control" onChange={this.enviromentalIncidentProcedure}>>
+     <select value={this.state.enviromentalIncidentProcedure} className="form-control" onChange={this.enviromentalIncidentProcedure}>
         <option value="0%">0%</option>
         <option value="10%">10%</option>
         <option value="20%">20%</option>
@@ -1046,7 +1046,7 @@ var BEEComplianceAffidavit = React.createClass({
 <td>8</td>
 <td>Black Female Ownership Percentage</td>
 <td>
-    <select value={this.state.enviromentalIncidentProcedure} className="form-control" onChange={this.enviromentalIncidentProcedure}>>
+    <select value={this.state.enviromentalIncidentProcedure} className="form-control" onChange={this.enviromentalIncidentProcedure}>
         <option value="0%">0%</option>
         <option value="10%">10%</option>
         <option value="20%">20%</option>
@@ -1064,7 +1064,7 @@ var BEEComplianceAffidavit = React.createClass({
 <tr>
 <td>9</td>
 <td>VBlack Youth Ownership Percentage (Aged 18 - 35)</td>
-        <td> <select value={this.state.enviromentalIncidentProcedure} className="form-control" onChange={this.enviromentalIncidentProcedure}>>
+        <td> <select value={this.state.enviromentalIncidentProcedure} className="form-control" onChange={this.enviromentalIncidentProcedure}>
                 <option value="0%">0%</option>
                 <option value="10%">10%</option>
                 <option value="20%">20%</option>
@@ -1138,7 +1138,7 @@ var BEEComplianceAffidavit = React.createClass({
         <td>16</td>
         <td>Designated Group Supplier</td>
         <td>
-            <select value={this.state.usePrincipleOfReUse} className="form-control" onChange={this.usePrincipleOfReUse}>>
+            <select value={this.state.usePrincipleOfReUse} className="form-control" onChange={this.usePrincipleOfReUse}>
                <option>NO</option><option>YES</option>
             </select>
         </td>
@@ -1147,7 +1147,7 @@ var BEEComplianceAffidavit = React.createClass({
         <td>17</td>
         <td>Empowering Supplier</td>
         <td>
-            <select value={this.state.usePrincipleOfReUse} className="form-control" onChange={this.usePrincipleOfReUse}>>
+            <select value={this.state.usePrincipleOfReUse} className="form-control" onChange={this.usePrincipleOfReUse}>
                <option>NO</option><option>YES</option>
             </select>
         </td>
