@@ -221,7 +221,7 @@
           <Property Name="dateCreated" Type="datetime" Precision="0" />
           <Property Name="dateUpdated" Type="datetime" Precision="0" />
           <Property Name="metaDataName" Type="varchar" MaxLength="100" />
-          <Property Name="metaDataValue" Type="varchar" MaxLength="500" />
+          <Property Name="metaDataValue" Type="varchar" MaxLength="3000" />
         </EntityType>
         <EntityType Name="organization">
           <Key>
@@ -270,6 +270,7 @@
           <Property Name="iso9001" Type="decimal" Precision="4" Scale="2" />
           <Property Name="iso40001" Type="decimal" Precision="4" Scale="2" />
           <Property Name="iso18001" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="totalWeighting" Type="decimal" Precision="4" Scale="2" />
         </EntityType>
         <EntityType Name="quote">
           <Key>
@@ -1473,6 +1474,7 @@
           <Property Name="iso9001" Type="Decimal" />
           <Property Name="iso40001" Type="Decimal" />
           <Property Name="iso18001" Type="Decimal" />
+          <Property Name="totalWeighting" Type="Decimal" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1931,6 +1933,7 @@
           <EntitySetMapping Name="organizationweightings">
             <EntityTypeMapping TypeName="TBoardModel.organizationweighting">
               <MappingFragment StoreEntitySet="organizationweighting">
+                <ScalarProperty Name="totalWeighting" ColumnName="totalWeighting" />
                 <ScalarProperty Name="iso18001" ColumnName="iso18001" />
                 <ScalarProperty Name="iso40001" ColumnName="iso40001" />
                 <ScalarProperty Name="iso9001" ColumnName="iso9001" />

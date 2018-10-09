@@ -578,6 +578,72 @@ namespace TBoard.Web.Controllers
 
         [JWTTokenValidation]
         [HttpPost]
+        [Route("api/Organization/MetaData/BEEInfo")]
+        public HttpResponseMessage BEEInfo(FormDataCollection formData)
+        {
+            int orgID = Convert.ToInt32(EncryptionHelper.Decrypt(formData.Get("organizationID")));
+
+            var BusinessSector = formData.Get("BusinessSector");
+            var BusinessDescription = formData.Get("BusinessDescription");
+            var BEEStatusLevel = formData.Get("BEEStatusLevel");
+            var BEEProcRecognitionLevelPercentage = formData.Get("BEEProcRecognitionLevelPercentage");
+            var FinancialYearRated = formData.Get("FinancialYearRated");
+            var BlackOwnershipPercentage = formData.Get("BlackOwnershipPercentage");
+            var BlackFemalOwnershipPercentage = formData.Get("BlackFemalOwnershipPercentage");
+            var BlackYouthOwnershipPercentage = formData.Get("BlackYouthOwnershipPercentage");
+            var VerificationAgencyName = formData.Get("VerificationAgencyName");
+            var FinancialYearEnd = formData.Get("FinancialYearEnd");
+            var FinancialYearTurnOver = formData.Get("FinancialYearTurnOver");
+            var AccountantName = formData.Get("AccountantName");
+            var DesignatedGroupSupplier = formData.Get("DesignatedGroupSupplier");
+            var EmpoweringSupplier = formData.Get("EmpoweringSupplier");
+            var EnterpriseType = formData.Get("EnterpriseType");
+            var ShareHolderCount = formData.Get("ShareHolderCount");
+            var ShareHolderBlackFemales = formData.Get("ShareHolderBlackFemales");
+            var ShareHolderBlack = formData.Get("ShareHolderBlack");
+            var ShareHolder18to35 = formData.Get("ShareHolder18to35");
+            var ShareHolderBlackAndDisabled = formData.Get("ShareHolderBlackAndDisabled");
+            var ShareHolderUnemployed = formData.Get("ShareHolderUnemployed");
+            var ShareHolderRuralArea = formData.Get("ShareHolderRuralArea");
+            var ShareHolderBlackMilitaryVeterans = formData.Get("ShareHolderBlackMilitaryVeterans");
+            var DateAffidavitSigned = formData.Get("DateAffidavitSigned");            
+
+            this.organizationBusinessLogic.SaveMetaData(orgID, "BusinessSector", BusinessSector);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "BusinessDescription", BusinessDescription);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "BEEStatusLevel", BEEStatusLevel);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "BEEProcRecognitionLevelPercentage", BEEProcRecognitionLevelPercentage);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "FinancialYearRated", FinancialYearRated);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "BlackOwnershipPercentage", BlackOwnershipPercentage);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "BlackFemalOwnershipPercentage", BlackFemalOwnershipPercentage);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "BlackYouthOwnershipPercentage", BlackYouthOwnershipPercentage);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "VerificationAgencyName", VerificationAgencyName);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "FinancialYearEnd", FinancialYearEnd);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "FinancialYearTurnOver", FinancialYearTurnOver);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "AccountantName", AccountantName);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "DesignatedGroupSupplier", DesignatedGroupSupplier);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "EmpoweringSupplier", EmpoweringSupplier);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "EnterpriseType", EnterpriseType);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "ShareHolderCount", ShareHolderCount);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "ShareHolderBlackFemales", ShareHolderBlackFemales);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "ShareHolderBlack", ShareHolderBlack);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "ShareHolder18to35", ShareHolder18to35);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "ShareHolderBlackAndDisabled", ShareHolderBlackAndDisabled);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "ShareHolderUnemployed", ShareHolderUnemployed);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "ShareHolderRuralArea", ShareHolderRuralArea);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "ShareHolderBlackMilitaryVeterans", ShareHolderBlackMilitaryVeterans);
+            this.organizationBusinessLogic.SaveMetaData(orgID, "DateAffidavitSigned", DateAffidavitSigned);
+
+            var resp = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject("OK"))
+            };
+            resp.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            return resp;
+        }
+
+        [JWTTokenValidation]
+        [HttpPost]
         [Route("api/Organization/MetaData")]
         public HttpResponseMessage GetMetaData(FetchMetaData fetchMetaData)
         {

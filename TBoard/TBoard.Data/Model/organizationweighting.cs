@@ -25,5 +25,6 @@ namespace TBoard.Data.Model
         public Nullable<decimal> iso9001 { get; set; }
         public Nullable<decimal> iso40001 { get; set; }
         public Nullable<decimal> iso18001 { get; set; }
+        public Nullable<decimal> totalWeighting { get; set; }
     }
 }
