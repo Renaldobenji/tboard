@@ -68,7 +68,7 @@ namespace TBoard.BusinessLogic.BusinessLogic
 
             foreach (PropertyInfo pi in properties)
             {
-                if(!pi.Name.ToLower().Equals("organizationWeightingID"))
+                if(!pi.Name.ToLower().Equals("organizationweightingid") && !pi.Name.ToLower().Equals("totalweighting"))
                 {
                     if(pi.PropertyType==typeof(decimal?)&&pi.GetValue(organizationweightingInstance) !=null)
                     {
