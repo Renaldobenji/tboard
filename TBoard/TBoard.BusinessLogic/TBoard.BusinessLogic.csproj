@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLogic\MetaDataBusinessLogic.cs" />
+    <Compile Include="BusinessLogic\OrganizationWeightingBusinessLogic.cs" />
     <Compile Include="BusinessLogic\RequirementBusinessLogic.cs" />
     <Compile Include="BusinessLogic\ConfigBusinessLogic.cs" />
     <Compile Include="BusinessLogic\RatingBusinessLogic.cs" />

@@ -20,13 +20,16 @@ namespace TBoard.Web.Controllers
         private OrganizationBusinessLogic organizationBusinessLogic;
         private RequirementBusinessLogic requirementBusinessLogic;
         private MetaDataBusinessLogic metaDataBusinessLogic;
+        private OrganizationWeightingBusinessLogic organizationWeightingBusinessLogic;
 
         // GET api/<controller>/5
-        public OrganizationController(OrganizationBusinessLogic organizationBusinessLogic, RequirementBusinessLogic requirementBusinessLogic, MetaDataBusinessLogic metaDataBusinessLogic)
+        public OrganizationController(OrganizationBusinessLogic organizationBusinessLogic, RequirementBusinessLogic requirementBusinessLogic, 
+            MetaDataBusinessLogic metaDataBusinessLogic,OrganizationWeightingBusinessLogic organizationWeightingBusinessLogic)
         {
             this.organizationBusinessLogic = organizationBusinessLogic;
             this.requirementBusinessLogic = requirementBusinessLogic;
             this.metaDataBusinessLogic = metaDataBusinessLogic;
+            this.organizationWeightingBusinessLogic = organizationWeightingBusinessLogic;
         }
 
         [JWTTokenValidation]
@@ -35,7 +38,6 @@ namespace TBoard.Web.Controllers
             int orgID = Convert.ToInt32(EncryptionHelper.Decrypt(id));
 
             OrganizationDTO org = this.organizationBusinessLogic.GetOrganization(orgID);
-
             org.organizationID = id;
 
             if (org == null)
@@ -166,6 +168,8 @@ namespace TBoard.Web.Controllers
                 new FetchMetaData() { OwnerID = orgID.ToString(), MetaDataNames = new List<string>() { "LetterHead", "CompanyProfile", "QuotationExample", "PurchaseOrderExample", "InvoiceExample"
                 , "SuppliersDocuments" , "SuppliersCount" , "RegisterShares" , "EmergencyStrikes"} });
 
+            this.organizationWeightingBusinessLogic.SaveWeighting("organizationInfo", weightingJSON, orgID);
+
             var resp = new HttpResponseMessage()
             {
                 Content = new StringContent(JsonConvert.SerializeObject("OK"))
@@ -268,7 +272,7 @@ namespace TBoard.Web.Controllers
                 , "socialLabourPlan" , "employmentContracts" , "workplaceSkillsPlan" , "employeeAttendanceRegister" , "basicConditionsofEmploymentAct" , "employmentEquityAct" }
                 });
 
-
+            this.organizationWeightingBusinessLogic.SaveWeighting("hrInfo", weightingJSON, orgID);
 
             var resp = new HttpResponseMessage()
             {
@@ -329,6 +333,8 @@ namespace TBoard.Web.Controllers
                     MetaDataNames = new List<string>() { "BuildingsInsurance", "PublicLiabilityInsurancePolicy", "CompanyThirdPartyInsurancePolicy", "CompanyProfessionalIndemnityInsurancePolicy", "CompanyGoodsinTransitInsurancePolicy" }
                 });
 
+            this.organizationWeightingBusinessLogic.SaveWeighting("insuranceInfo", weightingJSON, orgID);
+
             var resp = new HttpResponseMessage()
             {
                 Content = new StringContent(JsonConvert.SerializeObject("OK"))
@@ -364,6 +370,8 @@ namespace TBoard.Web.Controllers
 
             var weightingJSON = this.metaDataBusinessLogic.MetaDataScoringSystem(new FetchMetaData() { OwnerID = "FINANCEINFO", MetaDataNames = new List<string>() { "WeightingCriteria" } },
                 new FetchMetaData() { OwnerID = orgID.ToString(), MetaDataNames = new List<string>() { "AppointedAccountant", "PublicInterestScore", "ElectronicAccountingSystem" } });
+
+            this.organizationWeightingBusinessLogic.SaveWeighting("financeInfo", weightingJSON, orgID);
 
             var resp = new HttpResponseMessage()
             {
@@ -417,6 +425,15 @@ namespace TBoard.Web.Controllers
             this.organizationBusinessLogic.SaveMetaData(orgID, "GuaranteeOnProducts", guaranteeOnProducts);
             this.organizationBusinessLogic.SaveMetaData(orgID, "DurationOfGuarantee", durationOfGuarantee);
 
+            var weightingJSON = this.metaDataBusinessLogic.MetaDataScoringSystem(new FetchMetaData() { OwnerID = "ISO9001INFO", MetaDataNames = new List<string>() { "WeightingCriteria" } },
+                new FetchMetaData()
+                {
+                    OwnerID = orgID.ToString(),
+                    MetaDataNames = new List<string>() { "QualityManagementSystemCertified", "QualityManagementSystem", "InternalAuditReports", "ManagementReviewMeetingMinutes", "WarrantyManagementProcess"
+                , "GuaranteeOnProducts" , "DurationOfGuarantee" }
+                });
+
+            this.organizationWeightingBusinessLogic.SaveWeighting("iso9001", weightingJSON, orgID);
 
             var resp = new HttpResponseMessage()
             {
@@ -514,6 +531,17 @@ namespace TBoard.Web.Controllers
             if (usePrincipleOfReUse.ToUpper().Equals("YES"))
                 this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO14001", "LatestReUseInitiative");
 
+            var weightingJSON = this.metaDataBusinessLogic.MetaDataScoringSystem(new FetchMetaData() { OwnerID = "ISO14001INFO", MetaDataNames = new List<string>() { "WeightingCriteria" } },
+               new FetchMetaData()
+               {
+                   OwnerID = orgID.ToString(),
+                   MetaDataNames = new List<string>() { "EnvironmentalManagementSystemCertified", "EnvironmentalManagementPolicy", "RegisteredWithSaatcaOrSacnasp", "ReduceCarbonFootPrint", "EnviromentalIncidentProcedure"
+                , "DriversLicensedToTransportCargo" , "SupplyHazardousGoods" , "TransportWasteToLicensedWasteFacilities" , "TrucksMarkedWithCorrectSignage",
+                       "ProvideWasteDisposalProcedure" , "PermitsToTransportWaste","TrucksRegularlyServiced" , "ProvideSpillCLeanUpProcedure","ProvideHousekeepingProcedure" , "UsePrincipleOfReUse"}
+               });
+
+            this.organizationWeightingBusinessLogic.SaveWeighting("iso40001", weightingJSON, orgID);
+
             var resp = new HttpResponseMessage()
             {
                 Content = new StringContent(JsonConvert.SerializeObject("OK"))
@@ -566,6 +594,15 @@ namespace TBoard.Web.Controllers
             if (haveFullyEquippedFirstAidBoxes.ToUpper().Equals("YES"))
                 this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO18001INFO", "Photograph Of First Aid Boxes");
 
+            var weightingJSON = this.metaDataBusinessLogic.MetaDataScoringSystem(new FetchMetaData() { OwnerID = "ISO18001INFO", MetaDataNames = new List<string>() { "WeightingCriteria" } },
+              new FetchMetaData()
+              {
+                  OwnerID = orgID.ToString(),
+                  MetaDataNames = new List<string>() { "OccupationalHealthAndSafetyCertified", "ProvideCopyOfCompayRiskAssessmentRecords", "HaveAnEvacuationPlan", "CompanyDisplayCopyofOHSA", "HaveRegularToolboxTalks"
+                , "HaveAppointOHSRep" , "HaveFullyEquippedFirstAidBoxes"}
+              });
+
+            this.organizationWeightingBusinessLogic.SaveWeighting("iso18001", weightingJSON, orgID);
 
             var resp = new HttpResponseMessage()
             {

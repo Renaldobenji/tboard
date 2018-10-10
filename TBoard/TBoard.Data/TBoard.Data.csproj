@@ -291,6 +291,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\MetaDataRepository.cs" />
+    <Compile Include="Repository\OrganizationWeightingRepository.cs" />
     <Compile Include="Repository\RequirementsRepository.cs" />
     <Compile Include="Repository\ConfigRepository.cs" />
     <Compile Include="Repository\RatingRepository.cs" />
