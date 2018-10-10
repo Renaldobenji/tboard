@@ -163,6 +163,15 @@ var BEEComplianceBEECertificate = React.createClass({
             AccountantName: "NO",
             DesignatedGroupSupplier: "NO",
             EmpoweringSupplier: "NO",
+            ShareHolderCount: "0",
+            ShareHolderBlack: "0",
+            ShareHolder18to35: "0",
+            ShareHolderBlackAndDisabled: "0",
+            ShareHolderUnemployed: "0",
+            ShareHolderRuralArea: "0",
+            ShareHolderBlackMilitaryVeterans: "0",
+            DateAffidavitSigned: "",
+            ShareHolderBlackFemales: "0",
 
 
             MetaDataNames: new Array("BusinessSector",
@@ -179,7 +188,16 @@ var BEEComplianceBEECertificate = React.createClass({
                 "AccountantName",
                 "DesignatedGroupSupplier",
                 "EnterpriseType",
-                "EmpoweringSupplier"),
+                "EmpoweringSupplier",
+                "ShareHolderCount",
+                        "ShareHolderBlack",
+                        "ShareHolder18to35",
+                        "ShareHolderBlackAndDisabled",
+                        "ShareHolderUnemployed",
+                        "ShareHolderRuralArea",
+                        "ShareHolderBlackMilitaryVeterans",
+                        "DateAffidavitSigned",
+                "ShareHolderBlackFemales"),
 
         };
     },
@@ -215,6 +233,15 @@ var BEEComplianceBEECertificate = React.createClass({
                     this.setState({ DesignatedGroupSupplier: data.find(metaData => metaData.metaDataName === "DesignatedGroupSupplier").metaDataValue });
                     this.setState({ EmpoweringSupplier: data.find(metaData => metaData.metaDataName === "EmpoweringSupplier").metaDataValue });
                     this.setState({ EnterpriseType: data.find(metaData => metaData.metaDataName === "EnterpriseType").metaDataValue });
+                    this.setState({ ShareHolderCount: data.find(metaData => metaData.metaDataName === "ShareHolderCount").metaDataValue });
+                    this.setState({ ShareHolderBlackFemales: data.find(metaData => metaData.metaDataName === "ShareHolderBlackFemales").metaDataValue });
+                    this.setState({ ShareHolderBlack: data.find(metaData => metaData.metaDataName === "ShareHolderBlack").metaDataValue });
+                    this.setState({ ShareHolder18to35: data.find(metaData => metaData.metaDataName === "ShareHolder18to35").metaDataValue });
+                    this.setState({ ShareHolderBlackAndDisabled: data.find(metaData => metaData.metaDataName === "ShareHolderBlackAndDisabled").metaDataValue });
+                    this.setState({ ShareHolderUnemployed: data.find(metaData => metaData.metaDataName === "ShareHolderUnemployed").metaDataValue });
+                    this.setState({ ShareHolderRuralArea: data.find(metaData => metaData.metaDataName === "ShareHolderRuralArea").metaDataValue });
+                    this.setState({ ShareHolderBlackMilitaryVeterans: data.find(metaData => metaData.metaDataName === "ShareHolderBlackMilitaryVeterans").metaDataValue });
+                    this.setState({ DateAffidavitSigned: data.find(metaData => metaData.metaDataName === "DateAffidavitSigned").metaDataValue });
                 }
 
             }.bind(this),
@@ -648,6 +675,7 @@ var BEEComplianceAffidavit = React.createClass({
             FinancialYearTurnOver: "NO",
             AccountantName: "NO",
             ShareHolderCount: "0",
+            EmpoweringSupplier : "NO",
             ShareHolderBlack: "0",
             ShareHolder18to35: "0",
             ShareHolderBlackAndDisabled: "0",
@@ -655,7 +683,7 @@ var BEEComplianceAffidavit = React.createClass({
             ShareHolderRuralArea: "0",
             ShareHolderBlackMilitaryVeterans: "0",
             DateAffidavitSigned: "",
-            ShareHolderBlackFemales: "",
+            ShareHolderBlackFemales: "0",
 
 
             MetaDataNames: new Array("BusinessSector",
@@ -672,6 +700,7 @@ var BEEComplianceAffidavit = React.createClass({
                         "AccountantName",
                         "DesignatedGroupSupplier",
                         "EnterpriseType",
+                        "EmpoweringSupplier",
                         "ShareHolderCount",
                         "ShareHolderBlack",
                         "ShareHolder18to35",
@@ -680,7 +709,7 @@ var BEEComplianceAffidavit = React.createClass({
                         "ShareHolderRuralArea",
                         "ShareHolderBlackMilitaryVeterans",
                         "DateAffidavitSigned",
-                "ShareHolderBlackFemales"
+                         "ShareHolderBlackFemales"
                 ),
 
         };

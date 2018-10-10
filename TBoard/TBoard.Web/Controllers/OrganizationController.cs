@@ -824,7 +824,18 @@ namespace TBoard.Web.Controllers
             this.organizationBusinessLogic.SaveMetaData(orgID, "ShareHolderUnemployed", ShareHolderUnemployed);
             this.organizationBusinessLogic.SaveMetaData(orgID, "ShareHolderRuralArea", ShareHolderRuralArea);
             this.organizationBusinessLogic.SaveMetaData(orgID, "ShareHolderBlackMilitaryVeterans", ShareHolderBlackMilitaryVeterans);
-            this.organizationBusinessLogic.SaveMetaData(orgID, "DateAffidavitSigned", DateAffidavitSigned);   
+            this.organizationBusinessLogic.SaveMetaData(orgID, "DateAffidavitSigned", DateAffidavitSigned);
+
+            var weightingJSON = this.metaDataBusinessLogic.MetaDataScoringSystem(new FetchMetaData() { OwnerID = "BEEINFO", MetaDataNames = new List<string>() { "WeightingCriteria" } },
+               new FetchMetaData()
+               {
+                   OwnerID = orgID.ToString(),
+                   MetaDataNames = new List<string>() { "BusinessSector", "BusinessDescription", "BEEStatusLevel", "BEEProcRecognitionLevelPercentage", "FinancialYearRated"
+                , "BlackOwnershipPercentage" , "BlackFemalOwnershipPercentage" , "BlackYouthOwnershipPercentage" , "DesignatedGroupSupplier",
+                       "EmpoweringSupplier" , "ShareHolderCount","ShareHolderBlack" , "ShareHolder18to35","ShareHolderBlackAndDisabled" , "ShareHolderUnemployed", "ShareHolderRuralArea", "ShareHolderBlackMilitaryVeterans"}
+               });
+
+            this.organizationWeightingBusinessLogic.SaveWeighting("beeInfo", weightingJSON, orgID);
 
             var resp = new HttpResponseMessage()
             {
