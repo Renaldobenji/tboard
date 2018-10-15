@@ -21,15 +21,17 @@ namespace TBoard.Web.Controllers
         private RequirementBusinessLogic requirementBusinessLogic;
         private MetaDataBusinessLogic metaDataBusinessLogic;
         private OrganizationWeightingBusinessLogic organizationWeightingBusinessLogic;
+        private ConfigBusinessLogic configBusinessLogic;
 
         // GET api/<controller>/5
         public OrganizationController(OrganizationBusinessLogic organizationBusinessLogic, RequirementBusinessLogic requirementBusinessLogic, 
-            MetaDataBusinessLogic metaDataBusinessLogic,OrganizationWeightingBusinessLogic organizationWeightingBusinessLogic)
+            MetaDataBusinessLogic metaDataBusinessLogic,OrganizationWeightingBusinessLogic organizationWeightingBusinessLogic, ConfigBusinessLogic configBusinessLogic)
         {
             this.organizationBusinessLogic = organizationBusinessLogic;
             this.requirementBusinessLogic = requirementBusinessLogic;
             this.metaDataBusinessLogic = metaDataBusinessLogic;
             this.organizationWeightingBusinessLogic = organizationWeightingBusinessLogic;
+            this.configBusinessLogic = configBusinessLogic;
         }
 
         [JWTTokenValidation]
@@ -164,9 +166,11 @@ namespace TBoard.Web.Controllers
             this.organizationBusinessLogic.SaveMetaData(orgID, "RegisterShares", updateRegisterShares);
             this.organizationBusinessLogic.SaveMetaData(orgID, "EmergencyStrikes", updateEmergencyStrikes);
 
+            decimal weightingPercentage = decimal.Parse(configBusinessLogic.FindBy(x => x.name.ToLower() == "OrgInfoWeightPer".ToLower()).Select(x => x.value).FirstOrDefault());
+
             var weightingJSON = this.metaDataBusinessLogic.MetaDataScoringSystem(new FetchMetaData() { OwnerID = "ORGINFO", MetaDataNames = new List<string>() { "WeightingCriteria" } },
                 new FetchMetaData() { OwnerID = orgID.ToString(), MetaDataNames = new List<string>() { "LetterHead", "CompanyProfile", "QuotationExample", "PurchaseOrderExample", "InvoiceExample"
-                , "SuppliersDocuments" , "SuppliersCount" , "RegisterShares" , "EmergencyStrikes"} });
+                , "SuppliersDocuments" , "SuppliersCount" , "RegisterShares" , "EmergencyStrikes"} }, weightingPercentage);
 
             this.organizationWeightingBusinessLogic.SaveWeighting("organizationInfo", weightingJSON, orgID);
 
@@ -264,13 +268,15 @@ namespace TBoard.Web.Controllers
                 this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "HRINFO", "employmentEquityAct");
             }
 
+            decimal weightingPercentage = decimal.Parse(configBusinessLogic.FindBy(x => x.name.ToLower() == "HrInfoWeightPer".ToLower()).Select(x => x.value).FirstOrDefault());
+
             var weightingJSON = this.metaDataBusinessLogic.MetaDataScoringSystem(new FetchMetaData() { OwnerID = "HRINFO", MetaDataNames = new List<string>() { "WeightingCriteria" } },
                 new FetchMetaData()
                 {
                     OwnerID = orgID.ToString(),
                     MetaDataNames = new List<string>() { "companyOrganogram", "employmentEquityPolicy", "employmentEquityReport", "EEA2document", "EEA4document"
                 , "socialLabourPlan" , "employmentContracts" , "workplaceSkillsPlan" , "employeeAttendanceRegister" , "basicConditionsofEmploymentAct" , "employmentEquityAct" }
-                });
+                }, weightingPercentage);
 
             this.organizationWeightingBusinessLogic.SaveWeighting("hrInfo", weightingJSON, orgID);
 
@@ -326,12 +332,14 @@ namespace TBoard.Web.Controllers
                 this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "RISKINSURANCEINFO", "CompanyGoodsinTransitInsurancePolicy");
             }
 
+            decimal weightingPercentage = decimal.Parse(configBusinessLogic.FindBy(x => x.name.ToLower() == "InsuranceInfoWeightPer".ToLower()).Select(x => x.value).FirstOrDefault());
+
             var weightingJSON = this.metaDataBusinessLogic.MetaDataScoringSystem(new FetchMetaData() { OwnerID = "INSURANCEINFO", MetaDataNames = new List<string>() { "WeightingCriteria" } },
                 new FetchMetaData()
                 {
                     OwnerID = orgID.ToString(),
                     MetaDataNames = new List<string>() { "BuildingsInsurance", "PublicLiabilityInsurancePolicy", "CompanyThirdPartyInsurancePolicy", "CompanyProfessionalIndemnityInsurancePolicy", "CompanyGoodsinTransitInsurancePolicy" }
-                });
+                }, weightingPercentage);
 
             this.organizationWeightingBusinessLogic.SaveWeighting("insuranceInfo", weightingJSON, orgID);
 
@@ -367,9 +375,10 @@ namespace TBoard.Web.Controllers
 
             this.organizationBusinessLogic.SaveMetaData(orgID, "ElectronicAccountingSystem", updateElectronicAccountSystem);
 
+            decimal weightingPercentage = decimal.Parse(configBusinessLogic.FindBy(x => x.name.ToLower() == "FinanceInfoWeightPer".ToLower()).Select(x => x.value).FirstOrDefault());
 
             var weightingJSON = this.metaDataBusinessLogic.MetaDataScoringSystem(new FetchMetaData() { OwnerID = "FINANCEINFO", MetaDataNames = new List<string>() { "WeightingCriteria" } },
-                new FetchMetaData() { OwnerID = orgID.ToString(), MetaDataNames = new List<string>() { "AppointedAccountant", "PublicInterestScore", "ElectronicAccountingSystem" } });
+                new FetchMetaData() { OwnerID = orgID.ToString(), MetaDataNames = new List<string>() { "AppointedAccountant", "PublicInterestScore", "ElectronicAccountingSystem" } }, weightingPercentage);
 
             this.organizationWeightingBusinessLogic.SaveWeighting("financeInfo", weightingJSON, orgID);
 
@@ -425,13 +434,15 @@ namespace TBoard.Web.Controllers
             this.organizationBusinessLogic.SaveMetaData(orgID, "GuaranteeOnProducts", guaranteeOnProducts);
             this.organizationBusinessLogic.SaveMetaData(orgID, "DurationOfGuarantee", durationOfGuarantee);
 
+            decimal weightingPercentage = decimal.Parse(configBusinessLogic.FindBy(x => x.name.ToLower() == "Iso9001InfoWeightPer".ToLower()).Select(x => x.value).FirstOrDefault());
+
             var weightingJSON = this.metaDataBusinessLogic.MetaDataScoringSystem(new FetchMetaData() { OwnerID = "ISO9001INFO", MetaDataNames = new List<string>() { "WeightingCriteria" } },
                 new FetchMetaData()
                 {
                     OwnerID = orgID.ToString(),
                     MetaDataNames = new List<string>() { "QualityManagementSystemCertified", "QualityManagementSystem", "InternalAuditReports", "ManagementReviewMeetingMinutes", "WarrantyManagementProcess"
                 , "GuaranteeOnProducts" , "DurationOfGuarantee" }
-                });
+                }, weightingPercentage);
 
             this.organizationWeightingBusinessLogic.SaveWeighting("iso9001", weightingJSON, orgID);
 
@@ -531,6 +542,8 @@ namespace TBoard.Web.Controllers
             if (usePrincipleOfReUse.ToUpper().Equals("YES"))
                 this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO14001", "LatestReUseInitiative");
 
+            decimal weightingPercentage = decimal.Parse(configBusinessLogic.FindBy(x => x.name.ToLower() == "Iso4001InfoWeightPer".ToLower()).Select(x => x.value).FirstOrDefault());
+
             var weightingJSON = this.metaDataBusinessLogic.MetaDataScoringSystem(new FetchMetaData() { OwnerID = "ISO14001INFO", MetaDataNames = new List<string>() { "WeightingCriteria" } },
                new FetchMetaData()
                {
@@ -538,7 +551,7 @@ namespace TBoard.Web.Controllers
                    MetaDataNames = new List<string>() { "EnvironmentalManagementSystemCertified", "EnvironmentalManagementPolicy", "RegisteredWithSaatcaOrSacnasp", "ReduceCarbonFootPrint", "EnviromentalIncidentProcedure"
                 , "DriversLicensedToTransportCargo" , "SupplyHazardousGoods" , "TransportWasteToLicensedWasteFacilities" , "TrucksMarkedWithCorrectSignage",
                        "ProvideWasteDisposalProcedure" , "PermitsToTransportWaste","TrucksRegularlyServiced" , "ProvideSpillCLeanUpProcedure","ProvideHousekeepingProcedure" , "UsePrincipleOfReUse"}
-               });
+               }, weightingPercentage);
 
             this.organizationWeightingBusinessLogic.SaveWeighting("iso40001", weightingJSON, orgID);
 
@@ -594,13 +607,15 @@ namespace TBoard.Web.Controllers
             if (haveFullyEquippedFirstAidBoxes.ToUpper().Equals("YES"))
                 this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO18001INFO", "Photograph Of First Aid Boxes");
 
-            var weightingJSON = this.metaDataBusinessLogic.MetaDataScoringSystem(new FetchMetaData() { OwnerID = "ISO18001INFO", MetaDataNames = new List<string>() { "WeightingCriteria" } },
+            decimal weightingPercentage = decimal.Parse(configBusinessLogic.FindBy(x => x.name.ToLower() == "Iso18001InfoWeightPer".ToLower()).Select(x => x.value).FirstOrDefault());
+
+            var weightingJSON = this.metaDataBusinessLogic.MetaDataScoringSystem(new FetchMetaData() { OwnerID = "ISO18001INFO", MetaDataNames = new List<string>() { "WeightingCriteria" }, },
               new FetchMetaData()
               {
                   OwnerID = orgID.ToString(),
                   MetaDataNames = new List<string>() { "OccupationalHealthAndSafetyCertified", "ProvideCopyOfCompayRiskAssessmentRecords", "HaveAnEvacuationPlan", "CompanyDisplayCopyofOHSA", "HaveRegularToolboxTalks"
                 , "HaveAppointOHSRep" , "HaveFullyEquippedFirstAidBoxes"}
-              });
+              }, weightingPercentage);
 
             this.organizationWeightingBusinessLogic.SaveWeighting("iso18001", weightingJSON, orgID);
 
@@ -826,6 +841,8 @@ namespace TBoard.Web.Controllers
             this.organizationBusinessLogic.SaveMetaData(orgID, "ShareHolderBlackMilitaryVeterans", ShareHolderBlackMilitaryVeterans);
             this.organizationBusinessLogic.SaveMetaData(orgID, "DateAffidavitSigned", DateAffidavitSigned);
 
+            decimal weightingPercentage = decimal.Parse(configBusinessLogic.FindBy(x => x.name.ToLower() == "BeeInfoWeightPer".ToLower()).Select(x => x.value).FirstOrDefault());
+
             var weightingJSON = this.metaDataBusinessLogic.MetaDataScoringSystem(new FetchMetaData() { OwnerID = "BEEINFO", MetaDataNames = new List<string>() { "WeightingCriteria" } },
                new FetchMetaData()
                {
@@ -833,7 +850,7 @@ namespace TBoard.Web.Controllers
                    MetaDataNames = new List<string>() { "BusinessSector", "BusinessDescription", "BEEStatusLevel", "BEEProcRecognitionLevelPercentage", "FinancialYearRated"
                 , "BlackOwnershipPercentage" , "BlackFemalOwnershipPercentage" , "BlackYouthOwnershipPercentage" , "DesignatedGroupSupplier",
                        "EmpoweringSupplier" , "ShareHolderCount","ShareHolderBlack" , "ShareHolder18to35","ShareHolderBlackAndDisabled" , "ShareHolderUnemployed", "ShareHolderRuralArea", "ShareHolderBlackMilitaryVeterans"}
-               });
+               }, weightingPercentage);
 
             this.organizationWeightingBusinessLogic.SaveWeighting("beeInfo", weightingJSON, orgID);
 

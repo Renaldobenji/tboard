@@ -27,13 +27,19 @@ namespace TBoard.BusinessLogic.BusinessLogic
             return repository.GetMetaDataForMetaDataNames(metaDataToFetch.OwnerID, metaDataToFetch.MetaDataNames);
         }
 
-    
-        public int MetaDataScoringSystem(FetchMetaData weightingMetaDataToFetch, FetchMetaData ratingMetaData)
+
+        public decimal MetaDataScoringSystem(FetchMetaData weightingMetaDataToFetch, FetchMetaData ratingMetaData, decimal weightingPercentage)
         {
             var weightingJSON = this.GetMetaDataByMetaDataName(weightingMetaDataToFetch).FirstOrDefault();
             var ratingMetaDataValues = this.GetMetaDataByMetaDataName(ratingMetaData);
 
-            int total = 0;
+            decimal weightedDecimal = weightingPercentage / 100;
+            decimal percentageForSection = 0;
+            decimal weightedTotal = 0;
+
+            decimal total = 0;
+            int grandTotalForSection = 0;
+
             JObject weighting = JObject.Parse(weightingJSON.metaDataValue);
 
             foreach (var value in ratingMetaDataValues)
@@ -42,20 +48,26 @@ namespace TBoard.BusinessLogic.BusinessLogic
                 if (!string.IsNullOrEmpty(jsonMetaDataValue))
                 {
                     var multipleScoringFacets = jsonMetaDataValue.Split(',');
+
                     foreach (var multiple in multipleScoringFacets)
                     {
                         var score = multiple.Split('$');
+                        grandTotalForSection += Convert.ToInt32(score[1]);
+
                         if (score[0] == value.metaDataValue)
                         {
                             total += Convert.ToInt32(score[1]);
                         }
                     }
-                   
                 }
             }
 
-            return total;
+            if (total != 0 && grandTotalForSection != 0)
+                percentageForSection = (total / grandTotalForSection) * 100;
 
+            weightedTotal = (percentageForSection * weightedDecimal);
+
+            return weightedTotal;
         }
 
     }
