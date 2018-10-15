@@ -112,7 +112,7 @@ namespace TBoard.Web.Controllers
 
         [HttpGet]
         [Route("api/Tasks/SendEmail")]
-        public void SendEmail()
+        public HttpResponseMessage SendEmail()
         {
             var unprocessedEmailQueue = this.emailQueueBusinessLogic.GetUnprocessedEmail();
 
@@ -122,6 +122,8 @@ namespace TBoard.Web.Controllers
                 email.sentDate = DateTime.Now;
                 this.emailQueueBusinessLogic.Update(email);
             }
+
+            return this.Request.CreateResponse(HttpStatusCode.OK);
         }
 
         public void SendMail(emailqueue message)

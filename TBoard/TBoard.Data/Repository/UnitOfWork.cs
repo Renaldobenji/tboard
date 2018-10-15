@@ -8,7 +8,7 @@ using TBoard.Data.Model;
 
 namespace TBoard.Data.Repository
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork, IDisposable
     {
         private TBoardEntities context;
 
