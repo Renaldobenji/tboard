@@ -1301,17 +1301,17 @@
           <Property Type="String" Name="surname" Nullable="false" />
         </ComplexType>
         <ComplexType Name="sps_GetBidsForQuote_Result" >
-          <Property Type="DateTime" Name="CreatedDate" Nullable="false" />
-          <Property Type="String" Name="FirstName" Nullable="false" />
-          <Property Type="String" Name="Surname" Nullable="false" />
-          <Property Type="Decimal" Name="Amount" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="true" />
+          <Property Type="String" Name="FirstName" />
+          <Property Type="String" Name="Surname" />
+          <Property Type="Decimal" Name="Amount" Nullable="true" />
           <Property Type="DateTime" Name="SupplyTime" Nullable="true" />
           <Property Type="DateTime" Name="DeliveryTime" Nullable="true" />
-          <Property Type="String" Name="name" Nullable="false" />
-          <Property Type="Boolean" Name="oem" Nullable="false" />
-          <Property Type="Int32" Name="OrganizationID" Nullable="false" />
+          <Property Type="String" Name="name" />
+          <Property Type="Boolean" Name="oem" />
+          <Property Type="Int32" Name="OrganizationID" />
           <Property Type="Decimal" Name="AverageRating" Nullable="true" />
-          <Property Type="Int32" Name="QuoteID" Nullable="false" />
+          <Property Type="Int32" Name="QuoteID" />
         </ComplexType>
         <EntityType Name="rating">
           <Key>
