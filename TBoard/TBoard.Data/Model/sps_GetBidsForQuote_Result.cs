@@ -13,16 +13,16 @@ namespace TBoard.Data.Model
     
     public partial class sps_GetBidsForQuote_Result
     {
-        public System.DateTime CreatedDate { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
         public string FirstName { get; set; }
         public string Surname { get; set; }
-        public decimal Amount { get; set; }
+        public Nullable<decimal> Amount { get; set; }
         public Nullable<System.DateTime> SupplyTime { get; set; }
         public Nullable<System.DateTime> DeliveryTime { get; set; }
         public string name { get; set; }
-        public bool oem { get; set; }
-        public int OrganizationID { get; set; }
+        public Nullable<bool> oem { get; set; }
+        public Nullable<int> OrganizationID { get; set; }
         public Nullable<decimal> AverageRating { get; set; }
-        public int QuoteID { get; set; }
+        public Nullable<int> QuoteID { get; set; }
     }
 }

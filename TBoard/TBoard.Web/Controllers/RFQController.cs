@@ -858,9 +858,10 @@ namespace TBoard.Web.Controllers
             var rfqType = rfqBusinessLogic.GetRFQ(formData.Get("QuoteType"));
             var todayDate = DateTime.Now.ToString("yyMMdd");
             var rfqPrefix = rfqType.Prefix;
+            var userid = EncryptionHelper.Decrypt(formData.Get("UserID"));
 
             rfq.reference = string.Format("{0}{1}{2}", rfqPrefix, todayDate, GenerateRandomString(3).ToUpper());
-            rfq.userID = Convert.ToInt32(formData.Get("UserID"));
+            rfq.userID = Convert.ToInt32(userid);
             rfq.expertiseSubCategoryID = Convert.ToInt32(formData.Get("ExpertiseSubCategoryID"));
             rfq.rfqDetails = formData.Get("RFQDetails");
             rfq.rfqTypeID = rfqType.rfqTypeID;
