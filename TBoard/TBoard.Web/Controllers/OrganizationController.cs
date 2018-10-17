@@ -409,7 +409,7 @@ namespace TBoard.Web.Controllers
 
             this.organizationBusinessLogic.SaveMetaData(orgID, "QualityManagementSystemCertified", qualityManagementSystemCertified);
             if (qualityManagementSystemCertified.ToUpper().Equals("YES"))
-                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO9001INFO", "QualityManagementSystemCertificate");
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO9001INFO", "ISO19001Certificate");
 
             this.organizationBusinessLogic.SaveMetaData(orgID, "QualityManagementSystem", qualityManagementSystem);
             if (qualityManagementSystem.ToUpper().Equals("YES"))
@@ -585,27 +585,27 @@ namespace TBoard.Web.Controllers
 
             this.organizationBusinessLogic.SaveMetaData(orgID, "ProvideCopyOfCompayRiskAssessmentRecords", provideCopyOfCompayRiskAssessmentRecords);
             if (provideCopyOfCompayRiskAssessmentRecords.ToUpper().Equals("YES"))
-                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO18001INFO", "Risk Assessment Records");
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO18001INFO", "RiskAssessmentRecords");
 
             this.organizationBusinessLogic.SaveMetaData(orgID, "HaveAnEvacuationPlan", haveAnEvacuationPlan);
             if (haveAnEvacuationPlan.ToUpper().Equals("YES"))
-                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO18001INFO", "Evacuation Plan");
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO18001INFO", "EvacuationPlan");
 
             this.organizationBusinessLogic.SaveMetaData(orgID, "CompanyDisplayCopyofOHSA", companyDisplayCopyofOHSA);
             if (companyDisplayCopyofOHSA.ToUpper().Equals("YES"))
-                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO18001INFO", "Photograph Of Displayed OHS Act");
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO18001INFO", "PhotographOfDisplayedOHSAct");
 
             this.organizationBusinessLogic.SaveMetaData(orgID, "HaveRegularToolboxTalks", haveRegularToolboxTalks);
             if (haveRegularToolboxTalks.ToUpper().Equals("YES"))
-                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO18001INFO", "Toolbox Safety Attendance Register");
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO18001INFO", "ToolboxSafetyAttendanceRegister");
 
             this.organizationBusinessLogic.SaveMetaData(orgID, "HaveAppointOHSRep", haveAppointOHSRep);
             if (haveAppointOHSRep.ToUpper().Equals("YES"))
-                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO18001INFO", "List Of Appointed OHS Reps");
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO18001INFO", "ListOfAppointedOHSReps");
 
             this.organizationBusinessLogic.SaveMetaData(orgID, "HaveFullyEquippedFirstAidBoxes", haveFullyEquippedFirstAidBoxes);
             if (haveFullyEquippedFirstAidBoxes.ToUpper().Equals("YES"))
-                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO18001INFO", "Photograph Of First Aid Boxes");
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO18001INFO", "PhotographOfFirstAidBoxes");
 
             decimal weightingPercentage = decimal.Parse(configBusinessLogic.FindBy(x => x.name.ToLower() == "Iso18001InfoWeightPer".ToLower()).Select(x => x.value).FirstOrDefault());
 
