@@ -201,6 +201,66 @@ namespace TBoard.Web.Controllers
 
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
+
+        [System.Web.Http.HttpPost]
+        [JWTTokenValidation]
+        public string PostRFQForm()
+        {
+            int expiryInMonths = 0;
+            var httpRequest = System.Web.HttpContext.Current.Request;
+            var guiidlist = new List<string>();
+            try
+            {
+                string storageDetails;
+                using (TBoardEntities entities = new TBoardEntities())
+                {
+                    storageDetails = entities.configs.Where(x => x.name == "StorageConnectionString").Select(y => y.value).FirstOrDefault();
+                }
+
+                //Get OrganizationID from Header
+                int orgID = Convert.ToInt32(EncryptionHelper.Decrypt(httpRequest.QueryString[0]));
+                if (httpRequest.Files.Count > 0)
+                {                   
+                    foreach (string file in httpRequest.Files)
+                    { 
+                        var guiidName = string.Format("{0}.{1}", Guid.NewGuid().ToString(), httpRequest.Files[file].FileName.Split('.')[1]);
+                        guiidlist.Add(guiidName);
+                        byte[] fileData = null;
+                        using (var binaryReader = new BinaryReader(httpRequest.Files[file].InputStream))
+                        {
+                            fileData = binaryReader.ReadBytes(Request.Files[file].ContentLength);
+                        }
+
+                        // Create the file.
+                        using (FileStream fs = System.IO.File.Create(storageDetails + guiidName))
+                        {
+                            // Add some information to the file.
+                            fs.Write(fileData, 0, fileData.Length);
+                        };
+
+                        using (TBoardEntities entities = new TBoardEntities())
+                        {
+                            entities.documents.Add(new document()
+                            {
+                                organizationID = orgID,
+                                dateCreated = DateTime.Now,
+                                documentTypeID = 1,
+                                documentPath = guiidName,
+                                expiryDate = DateTime.Now.AddMonths(expiryInMonths)
+                            });
+                            entities.SaveChanges();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+           
+            return String.Join(",", guiidlist.Select(x => x.ToString()).ToArray());
+        }
+
         public class UploadViewModel
         {
             public Dictionary<string, string> DocumentTypes { get; set; }

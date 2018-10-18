@@ -233,6 +233,27 @@ var RFQRequestDetail = React.createClass({
    
     componentDidMount: function () {
 
+        // Turn input element into a pond
+        $('#fileupload').filepond();
+
+        // Turn input element into a pond with configuration options
+        $('#fileupload').filepond({
+            allowMultiple: true,
+            server: 'Upload/PostRFQForm?orgID=' + this.props.OrganizationID
+        });
+
+        // Set allowMultiple property to true
+        $('#fileupload').filepond('allowMultiple', true);
+
+        // Listen for addfile event
+        $('#fileupload').on('FilePond:addfile', function (e) {
+            const inputElement = document.querySelector('input[type="file"]');
+            // create the FilePond instance
+            const pond = FilePond.create(inputElement);
+
+            console.log('file added event', e);
+        });
+       
         $('#expiryDate').datetimepicker();
 
         function formatRepo (repo) {
@@ -281,6 +302,10 @@ var RFQRequestDetail = React.createClass({
             marginBottom:0
         };
 
+        var uploadSyle = {
+            'font-size': '8pt'
+        };
+
         return (	
                 <div className="row">
 		            <div className="col-md-7 col-md-offset-2">
@@ -311,6 +336,11 @@ var RFQRequestDetail = React.createClass({
                                 <div className="form-group">
                                     <label>Quotation Details</label>
                                     <textarea id="rfqDetails" className="form-control" rows="5" value={this.props.RFQDetails} onChange={this.props.updateRFQDetails} placeholder="Details for your quotation"></textarea>
+                                </div>
+                                <div className="form-group" style={{ uploadSyle }}>
+                                 <input id="fileupload" type="file" data-file-metadata-hello={ this.props.OrganizationID }
+                                        className="filepond"
+                                        name="filepond"></input>
                                 </div>
                             </div>
                             <div className="panel-footer">
