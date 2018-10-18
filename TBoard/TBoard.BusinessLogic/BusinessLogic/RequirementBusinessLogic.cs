@@ -24,5 +24,6 @@ namespace TBoard.BusinessLogic.BusinessLogic
         {
            return this.repository.RaiseDocumentRequirement(entityOwnerType, entityOwningID, ownerType, owningID);
         }
+        
     }
 }

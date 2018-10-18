@@ -1552,7 +1552,7 @@ var DocumentRequirementsList = React.createClass({
         function ResolveView(cell, row) {
 
             if (row.ResolvedDate == "")
-                return <div><a href={'Upload/DocumentTypeIndex?&documentCode=' + row.RequirementName + '&key=' + row.OrgID} id="fakeLink" target="_blank"><button class="btn btn-outline btn-primary">Upload Document</button></a></div>           
+                return <div><a href={'Upload/DocumentTypeIndexEncrypted?&documentCode=' + row.RequirementName + '&key=' + row.OrgID} id="fakeLink" target="_blank"><button class="btn btn-outline btn-primary">Upload Document</button></a></div>           
             else
                 return <div>Resolved</div>
         }

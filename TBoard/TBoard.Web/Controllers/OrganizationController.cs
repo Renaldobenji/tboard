@@ -409,7 +409,7 @@ namespace TBoard.Web.Controllers
 
             this.organizationBusinessLogic.SaveMetaData(orgID, "QualityManagementSystemCertified", qualityManagementSystemCertified);
             if (qualityManagementSystemCertified.ToUpper().Equals("YES"))
-                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO9001INFO", "ISO19001Certificate");
+                this.requirementBusinessLogic.RaiseRequirement("ORG", orgID.ToString(), "ISO9001INFO", "ISO9001Certificate");
 
             this.organizationBusinessLogic.SaveMetaData(orgID, "QualityManagementSystem", qualityManagementSystem);
             if (qualityManagementSystem.ToUpper().Equals("YES"))

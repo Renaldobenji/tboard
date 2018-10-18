@@ -37,20 +37,30 @@ namespace TBoard.Data.Repository
             string[] req = isThereDocReq.Split(',');
             foreach(var s in req)
             {
-                docReq.Add(new RequirementsDTO()
-                {
-                    RequirementName = s,
-                    RequirementType = "DOCUMENTREQUIREMENT"
-                });
+                var existingDocumentRequirement = from x in this._dbContext.requirements
+                                                  where x.owningID == entityOwningID
+                                                  && x.owningType == entityOwnerType
+                                                  && x.requirementTypeCode == "DOCUMENTREQUIREMENT"
+                                                  && x.metaData == s
+                                                  select x;
 
-                this._dbContext.requirements.Add(new requirement()
+                if (existingDocumentRequirement.FirstOrDefault()==null)
                 {
-                    owningID = entityOwningID,
-                    owningType = entityOwnerType,
-                    date = DateTime.Now,
-                    requirementTypeCode = "DOCUMENTREQUIREMENT",
-                    metaData = s
-                });
+                    docReq.Add(new RequirementsDTO()
+                    {
+                        RequirementName = s,
+                        RequirementType = "DOCUMENTREQUIREMENT"
+                    });
+
+                    this._dbContext.requirements.Add(new requirement()
+                    {
+                        owningID = entityOwningID,
+                        owningType = entityOwnerType,
+                        date = DateTime.Now,
+                        requirementTypeCode = "DOCUMENTREQUIREMENT",
+                        metaData = s
+                    });
+                }
             }
 
             this._dbContext.SaveChanges();
