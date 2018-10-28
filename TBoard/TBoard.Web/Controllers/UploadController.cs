@@ -133,11 +133,19 @@ namespace TBoard.Web.Controllers
             
             try
             {
+<<<<<<< HEAD
                 string storageDetails;
                 using (TBoardEntitiesSQL entities = new TBoardEntitiesSQL())
+=======
+                string storageDetails = Path.GetPathRoot(Environment.CurrentDirectory).ToUpper();
+            
+                using (TBoardEntities entities = new TBoardEntities())
+>>>>>>> origin/master
                 {
-                    storageDetails = entities.configs.Where(x => x.name == "StorageConnectionString").Select(y => y.value).FirstOrDefault();                    
+                    storageDetails = Path.Combine(storageDetails,entities.configs.Where(x => x.name == "StorageConnectionString").Select(y => y.value).FirstOrDefault());                    
                 }
+
+                storageDetails= Path.Combine(storageDetails, getDatePath());
 
                 var httpRequest = System.Web.HttpContext.Current.Request;
                 if (httpRequest.Files.Count > 0)
@@ -165,9 +173,11 @@ namespace TBoard.Web.Controllers
                         {
                             fileData = binaryReader.ReadBytes(Request.Files[file].ContentLength);
                         }
-                       
+
+                        Directory.CreateDirectory(storageDetails);
+
                          // Create the file.
-                        using (FileStream fs = System.IO.File.Create(storageDetails+ guiidName))
+                        using (FileStream fs = System.IO.File.Create(Path.Combine(storageDetails, guiidName)))
                         {                            
                             // Add some information to the file.
                             fs.Write(fileData, 0, fileData.Length);
@@ -180,9 +190,10 @@ namespace TBoard.Web.Controllers
                                 organizationID = Convert.ToInt32(httpRequest.Form["OrganizationID"]),
                                 dateCreated = DateTime.Now,
                                 documentTypeID = Convert.ToInt32(httpRequest.Form["DocumentType"]),
-                                documentPath = guiidName,
+                                documentPath = Path.Combine(storageDetails, guiidName),
                                 expiryDate = DateTime.Now.AddMonths(expiryInMonths)
                             });
+
                             entities.SaveChanges();
                         }
                     }
@@ -264,6 +275,15 @@ namespace TBoard.Web.Controllers
             {
                 this.DocumentTypes = new Dictionary<string, string>();
             }
+        }
+
+        private string getDatePath()
+        {
+            string year = DateTime.Now.Year.ToString();
+            string month = DateTime.Now.Month.ToString();
+            string day = DateTime.Now.Day.ToString();
+
+            return Path.Combine(year, month, day);
         }
 
     }
