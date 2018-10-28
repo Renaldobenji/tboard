@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0b1c86ed408c464f9576f769155a649a" Name="Diagram1">
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.address" Width="1.5" PointX="3" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.addresstype" Width="1.5" PointX="0.75" PointY="18.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.auditentry" Width="1.5" PointX="0.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.auditentrytype" Width="1.5" PointX="2.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.bankaccountdetail" Width="1.5" PointX="15" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.bankaccounttype" Width="1.5" PointX="12.75" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.communication" Width="1.5" PointX="15" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.communicationtype" Width="1.5" PointX="12.75" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.config" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.custodian" Width="1.5" PointX="2.75" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.documentrequirement" Width="1.5" PointX="11" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.document" Width="1.5" PointX="13.25" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.documenttype" Width="1.5" PointX="8.75" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.emailqueue" Width="1.5" PointX="5.75" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.expertisecategory" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.expertiseownership" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.expertisesubcategory" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.groupmembership" Width="1.5" PointX="7.75" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.grouprolemapping" Width="1.5" PointX="15.75" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.group" Width="1.5" PointX="15.75" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.metadata" Width="1.5" PointX="15.75" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.organization" Width="1.5" PointX="11" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.organizationmapping" Width="1.5" PointX="9.75" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.organizationtype" Width="1.5" PointX="8.75" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.organizationweighting" Width="1.5" PointX="11.75" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.quote" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.quotestatu" Width="1.5" PointX="10.5" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.rating" Width="1.5" PointX="17.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.requirement" Width="1.5" PointX="17.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.rfq" Width="1.5" PointX="8.25" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.rfqtype" Width="1.5" PointX="6" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.role" Width="1.5" PointX="17.75" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TBoardEntitiesSQLModel.user" Width="1.5" PointX="6" PointY="11.5" IsExpanded="true" />
+        <AssociationConnector Association="TBoardEntitiesSQLModel.address_addType" ManuallyRouted="false" />
+        <AssociationConnector Association="TBoardEntitiesSQLModel.bankaccountdetails_bankAcctype" ManuallyRouted="false" />
+        <AssociationConnector Association="TBoardEntitiesSQLModel.communication_commTypeID" ManuallyRouted="false" />
+        <AssociationConnector Association="TBoardEntitiesSQLModel.documentrequirements_documentTypeID" ManuallyRouted="false" />
+        <AssociationConnector Association="TBoardEntitiesSQLModel.documentrequirements_organizationTypeID" ManuallyRouted="false" />
+        <AssociationConnector Association="TBoardEntitiesSQLModel.documents_documentType" ManuallyRouted="false" />
+        <AssociationConnector Association="TBoardEntitiesSQLModel.documents_orgID" ManuallyRouted="false" />
+        <AssociationConnector Association="TBoardEntitiesSQLModel.expertisesubcategory_CatetoryID" ManuallyRouted="false" />
+        <AssociationConnector Association="TBoardEntitiesSQLModel.expertiseownership_subCat" ManuallyRouted="false" />
+        <AssociationConnector Association="TBoardEntitiesSQLModel.rfq_rfq3" ManuallyRouted="false" />
+        <AssociationConnector Association="TBoardEntitiesSQLModel.organization_orgType" ManuallyRouted="false" />
+        <AssociationConnector Association="TBoardEntitiesSQLModel.quotestatus_a" ManuallyRouted="false" />
+        <AssociationConnector Association="TBoardEntitiesSQLModel.quotestatus_b" ManuallyRouted="false" />
+        <AssociationConnector Association="TBoardEntitiesSQLModel.rfq_rfq1" ManuallyRouted="false" />
+        <AssociationConnector Association="TBoardEntitiesSQLModel.rfq_rfq2" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

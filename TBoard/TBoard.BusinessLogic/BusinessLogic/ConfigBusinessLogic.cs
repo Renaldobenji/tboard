@@ -5,11 +5,12 @@ using System.Net.Configuration;
 using System.Text;
 using System.Threading.Tasks;
 using TBoard.Data.Interfaces;
+using TBoard.Data.Model.Refactored;
 using TBoard.Data.Repository;
 
 namespace TBoard.BusinessLogic.BusinessLogic
 {
-    public class ConfigBusinessLogic : BusinessLogic<TBoard.Data.Model.config>
+    public class ConfigBusinessLogic : BusinessLogic<config>
     {
         private ConfigRepository repository;
 

@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using TBoard.Data.Interfaces;
 using TBoard.Data.Model;
+using TBoard.Data.Model.Refactored;
 using TBoard.Data.Repository;
 
 namespace TBoard.BusinessLogic.BusinessLogic
 {
-    public class CommunicationBusinessLogic : BusinessLogic<TBoard.Data.Model.communication>
+    public class CommunicationBusinessLogic : BusinessLogic<communication>
     {
         private CommunicationRepository repository;
         public CommunicationBusinessLogic(IUnitOfWork unitOfWork, CommunicationRepository repository) : base(unitOfWork, repository)

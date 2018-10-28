@@ -5,18 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using TBoard.Data.Interfaces;
 using TBoard.Data.Model;
+using TBoard.Data.Model.Refactored;
 
 namespace TBoard.Data.Repository
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        private TBoardEntities context;
+        private TBoardEntitiesSQL context;
 
         /// <summary>
         /// Initializes a new instance of the UnitOfWork class.
         /// </summary>
         /// <param name="context">The object context</param>
-        public UnitOfWork(TBoardEntities context)
+        public UnitOfWork(TBoardEntitiesSQL context)
         {
             this.context = context;
         }

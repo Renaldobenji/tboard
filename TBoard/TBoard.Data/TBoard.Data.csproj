@@ -36,11 +36,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="JavaScriptEngineSwitcher.Core, Version=1.5.0.0, Culture=neutral, PublicKeyToken=c608b2a8cc9e4472, processorArchitecture=MSIL">
@@ -65,14 +65,6 @@
     </Reference>
     <Reference Include="MsieJavaScriptEngine, Version=1.7.0.0, Culture=neutral, PublicKeyToken=a3a2846a37ac0d3e, processorArchitecture=MSIL">
       <HintPath>..\packages\MsieJavaScriptEngine.1.7.0\lib\net40\MsieJavaScriptEngine.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>..\packages\MySql.Data.6.9.8\lib\net45\MySql.Data.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="MySql.Data.Entity.EF6, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>..\packages\MySql.Data.Entity.6.9.8\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -138,157 +130,157 @@
     <Compile Include="App_Start\ReactConfig.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
-    <Compile Include="Model\address.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\addresstype.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\auditentry.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\auditentrytype.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\bankaccountdetail.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\bankaccounttype.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\communication.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\CommunicationDTO.cs" />
-    <Compile Include="Model\communicationtype.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\config.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\custodian.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\document.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\DocumentReq.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\documentrequirement.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\documenttype.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\emailqueue.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\expertisecategory.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\expertiseownership.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\expertisesubcategory.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\GetSubscribedOwnershipDetails.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\group.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\groupmembership.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\grouprolemapping.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\metadata.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\organization.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\OrganizationDocumentsDTO.cs" />
     <Compile Include="Model\OrganizationDTO.cs" />
-    <Compile Include="Model\organizationmapping.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
+    <Compile Include="Model\Refactored\address.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\organizationtype.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
+    <Compile Include="Model\Refactored\addresstype.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\organizationweighting.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
+    <Compile Include="Model\Refactored\auditentry.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\quote.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
+    <Compile Include="Model\Refactored\auditentrytype.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\quotestatu.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
+    <Compile Include="Model\Refactored\bankaccountdetail.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\rating.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
+    <Compile Include="Model\Refactored\bankaccounttype.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\requirement.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
+    <Compile Include="Model\Refactored\communication.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\communicationtype.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\config.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\custodian.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\document.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\documentrequirement.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\documenttype.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\emailqueue.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\expertisecategory.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\expertiseownership.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\expertisesubcategory.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\GetSubscribedOwnershipDetails_Result.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\group.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\groupmembership.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\grouprolemapping.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\metadata.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\organization.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\organizationmapping.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\organizationtype.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\organizationweighting.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\quote.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\quotestatu.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\rating.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\requirement.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\rfq.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\rfqtype.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\role.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\sps_GetAllOrganizationInformation_Result.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\sps_GetAllUserInformation_Result.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\sps_GetBidsForQuote_Result.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\sps_GetHighestBidsForQuote_Result.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\sps_GetOutstandingDocumentRequirements_Result.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\sps_GetQuoteHistory_Result.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\sps_GetQuoteOwnerDetails_Result.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\sps_getRFQOwnerDetails_Result.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\sps_GetRolesForUser_Result.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\sps_GetSubCategories_Result.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\TBoardEntitiesSQL.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TBoardEntitiesSQL.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\TBoardEntitiesSQL.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\TBoardEntitiesSQL.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TBoardEntitiesSQL.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Refactored\user.cs">
+      <DependentUpon>TBoardEntitiesSQL.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\RequirementsDTO.cs" />
-    <Compile Include="Model\rfq.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\rfqtype.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\role.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\sps_GetAllOrganizationInformation_Result.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\sps_GetAllUserInformation_Result.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\sps_GetBidsForQuote_Result.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\sps_GetHighestBidsForQuote_Result.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\sps_GetQuoteHistory_Result.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\sps_GetQuoteOwnerDetails_Result.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\sps_getRFQOwnerDetails_Result.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\sps_GetRolesForUser_Result.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\sps_GetSubCategories_Result.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\TBoardEntities.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TBoardEntities.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\TBoardEntities.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\TBoardEntities.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TBoardEntities.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Model\user.cs">
-      <DependentUpon>TBoardEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\MetaDataRepository.cs" />
     <Compile Include="Repository\OrganizationWeightingRepository.cs" />
@@ -336,27 +328,33 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="Model\TBoardEntities.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>TBoardEntities.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config" />
-    <None Include="Model\TBoardEntities.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>TBoardEntities.Context.cs</LastGenOutput>
-      <DependentUpon>TBoardEntities.edmx</DependentUpon>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
     </None>
-    <None Include="Model\TBoardEntities.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>TBoardEntities.cs</LastGenOutput>
-      <DependentUpon>TBoardEntities.edmx</DependentUpon>
+    <EntityDeploy Include="Model\Refactored\TBoardEntitiesSQL.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TBoardEntitiesSQL.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model\Refactored\TBoardEntitiesSQL.edmx.diagram">
+      <DependentUpon>TBoardEntitiesSQL.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Model\Refactored\TBoardEntitiesSQL.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TBoardEntitiesSQL.edmx</DependentUpon>
+      <LastGenOutput>TBoardEntitiesSQL.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\Refactored\TBoardEntitiesSQL.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TBoardEntitiesSQL.edmx</DependentUpon>
+      <LastGenOutput>TBoardEntitiesSQL.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

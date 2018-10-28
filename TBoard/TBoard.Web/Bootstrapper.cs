@@ -8,10 +8,11 @@ using System.Web.Mvc;
 using Microsoft.Practices.Unity;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.Data.Interfaces;
-using TBoard.Data.Model;
+using TBoard.Data.Model.Refactored;
 using TBoard.Data.Repository;
 using TBoard.Web.Controllers;
 using Unity.WebApi;
+
 
 namespace TBoard.Web
 {
@@ -50,7 +51,7 @@ namespace TBoard.Web
         {
             // register all your components with the container here
             // it is NOT necessary to register your controllers
-            container.RegisterType<DbContext, TBoardEntities>(new HierarchicalLifetimeManager());
+            container.RegisterType<DbContext, TBoardEntitiesSQL>(new HierarchicalLifetimeManager());
             container.RegisterType<IUnitOfWork, UnitOfWork>(new HierarchicalLifetimeManager());
 
             container.RegisterType<CommunicationBusinessLogic, CommunicationBusinessLogic>();

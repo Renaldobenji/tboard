@@ -8,13 +8,14 @@ using System.Web.Mvc;
 using TBoard.Web.Models;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.Data.Interfaces;
-using TBoard.Data.Model;
+using TBoard.Data.Model.Refactored;
 using TBoard.Data.Repository;
 using Unity.WebApi;
 using TBoard.Web.Services;
 using TBoard.Web.Controllers;
 using System.Net.Http.Formatting;
 using System.IO;
+
 
 namespace TBoard.Web.Controllers
 {
@@ -25,10 +26,10 @@ namespace TBoard.Web.Controllers
         private DocumentRequirementBusinessLogic documentRequirementBusinessLogic;
         private DocumentBusinessLogic documentBusinessLogic;
         ConfigBusinessLogic configBusinesslogic;
-        private TBoardEntities entities;
+        private TBoardEntitiesSQL entities;
         public AdminFunctionController()
         {
-            entities = new TBoardEntities();          
+            entities = new TBoardEntitiesSQL();          
             this.documentBusinessLogic = new DocumentBusinessLogic(new UnitOfWork(entities),new DocumentRepository(entities));
             this.configBusinesslogic = new ConfigBusinessLogic(new UnitOfWork(entities),new ConfigRepository(entities)); 
         }
@@ -75,7 +76,7 @@ namespace TBoard.Web.Controllers
         public FileStreamResult DownloadDocument(VerifyDocumentViewModel formData)
         {
             string storageDetails;
-            using (TBoardEntities entities = new TBoardEntities())
+            using (TBoardEntitiesSQL entities = new TBoardEntitiesSQL())
             {
                 storageDetails = entities.configs.Where(x => x.name == "StorageConnectionString").Select(y => y.value).FirstOrDefault();
             }

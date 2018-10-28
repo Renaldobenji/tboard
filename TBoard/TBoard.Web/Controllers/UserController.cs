@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.BusinessLogic.Responses;
-using TBoard.Data.Model;
+using TBoard.Data.Model.Refactored;
 using TBoard.Web.Attributes;
 using TBoard.Web.Helpers;
 

@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TBoard.Data.Model;
+using TBoard.Data.Model.Refactored;
 
 namespace TBoard.Data.Repository
 {
-    public class QuoteRepository : Repository<Model.quote>
+    public class QuoteRepository : Repository<quote>
     {
-        public QuoteRepository(TBoardEntities dbContext)
+        public QuoteRepository(TBoardEntitiesSQL dbContext)
             : base(dbContext)
         {
                 
@@ -193,7 +194,9 @@ namespace TBoard.Data.Repository
 
         public IList<sps_GetQuoteHistory_Result> sps_GetQuoteHistory(int userID, string qStatus, string startDate, string endDate)
         {
-            return this._dbContext.sps_GetQuoteHistory(userID,qStatus,startDate,endDate).ToList();
+            var stDate = Convert.ToDateTime(startDate);
+            var eDate = Convert.ToDateTime(endDate);
+            return this._dbContext.sps_GetQuoteHistory(userID,qStatus, stDate, eDate).ToList();
         }
 
         public class AcceptedBidDetails

@@ -1,0 +1,2172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TBoardEntitiesSQLModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="address">
+          <Key>
+            <PropertyRef Name="addressID" />
+          </Key>
+          <Property Name="addressID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="owningType" Type="nvarchar" MaxLength="50" />
+          <Property Name="owningID" Type="nvarchar" MaxLength="50" />
+          <Property Name="addressTypeID" Type="int" />
+          <Property Name="addressLine1" Type="nvarchar" MaxLength="200" />
+          <Property Name="addressLine2" Type="nvarchar" MaxLength="200" />
+          <Property Name="addressLine3" Type="nvarchar" MaxLength="200" />
+          <Property Name="addressLine4" Type="nvarchar" MaxLength="200" />
+          <Property Name="addressLine5" Type="nvarchar" MaxLength="200" />
+          <Property Name="postalCode" Type="nvarchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="addresstype">
+          <Key>
+            <PropertyRef Name="addressTypeID" />
+          </Key>
+          <Property Name="addressTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="addressTypeTLA" Type="nvarchar" MaxLength="45" />
+          <Property Name="AddressTypeDescription" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="auditentry">
+          <Key>
+            <PropertyRef Name="auditEntryID" />
+          </Key>
+          <Property Name="auditEntryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userID" Type="int" Nullable="false" />
+          <Property Name="auditEntryOwnerType" Type="nvarchar" MaxLength="45" Nullable="false" />
+          <Property Name="auditEntryOwnerTypeID" Type="nvarchar" MaxLength="45" Nullable="false" />
+          <Property Name="auditEntrySummary" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="auditEntryDetail" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="auditEntryComment" Type="nvarchar" MaxLength="250" />
+          <Property Name="auditEntryTime" Type="datetime2" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="auditentrytype">
+          <Key>
+            <PropertyRef Name="auditEntryTypeID" />
+          </Key>
+          <Property Name="auditEntryTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="auditEntryOwnerType" Type="nvarchar" MaxLength="45" Nullable="false" />
+          <Property Name="auditEntryName" Type="nvarchar" MaxLength="45" Nullable="false" />
+          <Property Name="auditEntryDescription" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="bankaccountdetails">
+          <Key>
+            <PropertyRef Name="bankAccountDetailID" />
+          </Key>
+          <Property Name="bankAccountDetailID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="owningType" Type="nvarchar" MaxLength="45" />
+          <Property Name="owningID" Type="nvarchar" MaxLength="45" />
+          <Property Name="accountName" Type="nvarchar" MaxLength="45" />
+          <Property Name="accountNumber" Type="nvarchar" MaxLength="45" />
+          <Property Name="branchCode" Type="nvarchar" MaxLength="45" />
+          <Property Name="branchName" Type="nvarchar" MaxLength="150" />
+          <Property Name="default" Type="bit" />
+          <Property Name="bankAccountTypeID" Type="int" />
+          <Property Name="bankName" Type="nvarchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="bankaccounttype">
+          <Key>
+            <PropertyRef Name="bankAccountTypeID" />
+          </Key>
+          <Property Name="bankAccountTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="bankAccountTypeCode" Type="nvarchar" MaxLength="45" />
+          <Property Name="bankAccountTypeDescription" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="communication">
+          <Key>
+            <PropertyRef Name="communicationID" />
+          </Key>
+          <Property Name="communicationID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="owningType" Type="nvarchar" MaxLength="45" />
+          <Property Name="owningID" Type="nvarchar" MaxLength="45" />
+          <Property Name="communicationLine1" Type="nvarchar" MaxLength="45" />
+          <Property Name="communicationLine2" Type="nvarchar" MaxLength="45" />
+          <Property Name="communicationTypeID" Type="int" />
+          <Property Name="role" Type="nvarchar" MaxLength="145" />
+        </EntityType>
+        <EntityType Name="communicationtype">
+          <Key>
+            <PropertyRef Name="communicationTypeID" />
+          </Key>
+          <Property Name="communicationTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="communicationTypeTLA" Type="nvarchar" MaxLength="45" />
+          <Property Name="communicationTypeDescription" Type="nvarchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="config">
+          <Key>
+            <PropertyRef Name="configID" />
+          </Key>
+          <Property Name="configID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="200" />
+          <Property Name="value" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="custodian">
+          <Key>
+            <PropertyRef Name="custodianID" />
+          </Key>
+          <Property Name="custodianID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="150" />
+          <Property Name="surname" Type="nvarchar" MaxLength="150" />
+          <Property Name="jobTitle" Type="nvarchar" MaxLength="45" />
+          <Property Name="companyNumber" Type="nvarchar" MaxLength="150" />
+          <Property Name="email" Type="nvarchar" MaxLength="150" />
+          <Property Name="landline" Type="nvarchar" MaxLength="45" />
+          <Property Name="cell" Type="nvarchar" MaxLength="45" />
+          <Property Name="organizationID" Type="int" />
+        </EntityType>
+        <EntityType Name="documentrequirements">
+          <Key>
+            <PropertyRef Name="documentRequirementsID" />
+          </Key>
+          <Property Name="documentRequirementsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="documentTypeID" Type="int" />
+          <Property Name="organizationTypeID" Type="int" />
+        </EntityType>
+        <EntityType Name="documents">
+          <Key>
+            <PropertyRef Name="documentID" />
+          </Key>
+          <Property Name="documentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="documentTypeID" Type="int" />
+          <Property Name="organizationID" Type="int" />
+          <Property Name="documentPath" Type="nvarchar(max)" />
+          <Property Name="dateCreated" Type="datetime2" Precision="0" />
+          <Property Name="expiryDate" Type="datetime2" Precision="0" />
+          <Property Name="verified" Type="datetime2" Precision="0" />
+          <Property Name="documentuuid" Type="nvarchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="documenttypes">
+          <Key>
+            <PropertyRef Name="documentTypeID" />
+          </Key>
+          <Property Name="documentTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="documentCode" Type="nvarchar" MaxLength="45" />
+          <Property Name="documentDescription" Type="nvarchar" MaxLength="45" />
+          <Property Name="expiryTermMonths" Type="int" />
+        </EntityType>
+        <EntityType Name="emailqueue">
+          <Key>
+            <PropertyRef Name="emailQueueID" />
+          </Key>
+          <Property Name="emailQueueID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="from" Type="nvarchar" MaxLength="200" />
+          <Property Name="to" Type="nvarchar" MaxLength="200" />
+          <Property Name="subject" Type="nvarchar" MaxLength="500" />
+          <Property Name="body" Type="nvarchar(max)" />
+          <Property Name="createdDate" Type="datetime2" Precision="0" />
+          <Property Name="sentDate" Type="datetime2" Precision="0" />
+        </EntityType>
+        <EntityType Name="expertisecategory">
+          <Key>
+            <PropertyRef Name="ExpertiseCategoryID" />
+          </Key>
+          <Property Name="ExpertiseCategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="expertiseownership">
+          <Key>
+            <PropertyRef Name="expertiseOwnershipID" />
+          </Key>
+          <Property Name="expertiseOwnershipID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ownerType" Type="nvarchar" MaxLength="45" />
+          <Property Name="owningID" Type="nvarchar" MaxLength="45" />
+          <Property Name="expertiseSubCategoryID" Type="int" />
+        </EntityType>
+        <EntityType Name="expertisesubcategory">
+          <Key>
+            <PropertyRef Name="ExpertiseSubCategoryID" />
+          </Key>
+          <Property Name="ExpertiseSubCategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" />
+          <Property Name="ExpertiseCategoryID" Type="int" />
+        </EntityType>
+        <EntityType Name="groupmembership">
+          <Key>
+            <PropertyRef Name="groupMembershipID" />
+          </Key>
+          <Property Name="groupMembershipID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userID" Type="int" Nullable="false" />
+          <Property Name="groupCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="fromDate" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="toDate" Type="datetime2" Precision="0" />
+        </EntityType>
+        <EntityType Name="grouprolemapping">
+          <Key>
+            <PropertyRef Name="groupRoleMappingID" />
+          </Key>
+          <Property Name="groupRoleMappingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="groupCode" Type="nvarchar" MaxLength="45" Nullable="false" />
+          <Property Name="roleCode" Type="nvarchar" MaxLength="45" Nullable="false" />
+          <Property Name="fromDate" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="toDate" Type="datetime2" Precision="0" />
+        </EntityType>
+        <EntityType Name="groups">
+          <Key>
+            <PropertyRef Name="groupID" />
+          </Key>
+          <Property Name="groupID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="groupCode" Type="nvarchar" MaxLength="45" Nullable="false" />
+          <Property Name="groupName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="groupDescription" Type="nvarchar" MaxLength="100" />
+          <Property Name="groupStatus" Type="nvarchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="metadata">
+          <Key>
+            <PropertyRef Name="metadataID" />
+          </Key>
+          <Property Name="metadataID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ownerType" Type="nvarchar" MaxLength="45" />
+          <Property Name="ownerTypeID" Type="nvarchar" MaxLength="45" />
+          <Property Name="dateCreated" Type="datetime2" Precision="0" />
+          <Property Name="dateUpdated" Type="datetime2" Precision="0" />
+          <Property Name="metaDataName" Type="nvarchar" MaxLength="100" />
+          <Property Name="metaDataValue" Type="nvarchar" MaxLength="4000" Nullable="false" />
+        </EntityType>
+        <EntityType Name="organization">
+          <Key>
+            <PropertyRef Name="organizationID" />
+          </Key>
+          <Property Name="organizationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="150" />
+          <Property Name="tradingName" Type="nvarchar" MaxLength="150" />
+          <Property Name="registrationNumber" Type="nvarchar" MaxLength="150" />
+          <Property Name="vatNumber" Type="nvarchar" MaxLength="150" />
+          <Property Name="taxNumber" Type="nvarchar" MaxLength="150" />
+          <Property Name="organizationTypeID" Type="int" />
+          <Property Name="oem" Type="bit" />
+          <Property Name="verified" Type="datetime2" Precision="0" />
+          <Property Name="organizationuuid" Type="nvarchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="organizationmapping">
+          <Key>
+            <PropertyRef Name="organizationMappingID" />
+          </Key>
+          <Property Name="organizationMappingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="organizationID" Type="int" />
+          <Property Name="userID" Type="int" />
+          <Property Name="created" Type="datetime2" Precision="0" />
+        </EntityType>
+        <EntityType Name="organizationtypes">
+          <Key>
+            <PropertyRef Name="organizationTypeID" />
+          </Key>
+          <Property Name="organizationTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="150" />
+          <Property Name="description" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="organizationweighting">
+          <Key>
+            <PropertyRef Name="organizationWeightingID" />
+          </Key>
+          <Property Name="organizationWeightingID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="weighting" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="organizationID" Type="int" />
+          <Property Name="organizationInfo" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="financeInfo" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="hrInfo" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="beeInfo" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="insuranceInfo" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="iso9001" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="iso40001" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="iso18001" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="totalWeighting" Type="decimal" Precision="4" Scale="2" />
+        </EntityType>
+        <EntityType Name="quote">
+          <Key>
+            <PropertyRef Name="quoteID" />
+          </Key>
+          <Property Name="quoteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rfqReference" Type="nvarchar" MaxLength="45" Nullable="false" />
+          <Property Name="userID" Type="int" />
+          <Property Name="createdDate" Type="datetime2" Precision="0" />
+          <Property Name="amount" Type="decimal" Precision="16" Scale="9" />
+          <Property Name="supplyTime" Type="datetime2" Precision="0" />
+          <Property Name="deliveryTime" Type="datetime2" Precision="0" />
+        </EntityType>
+        <EntityType Name="quotestatus">
+          <Key>
+            <PropertyRef Name="quoteStatusID" />
+          </Key>
+          <Property Name="quoteStatusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rfqID" Type="int" />
+          <Property Name="quoteID" Type="int" />
+          <Property Name="status" Type="nvarchar" MaxLength="45" />
+          <Property Name="quoteStatusDateTime" Type="datetime2" Precision="0" />
+          <Property Name="userID" Type="int" />
+        </EntityType>
+        <EntityType Name="rating">
+          <Key>
+            <PropertyRef Name="ratingID" />
+          </Key>
+          <Property Name="ratingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ownerType" Type="nvarchar" MaxLength="45" />
+          <Property Name="owningID" Type="nvarchar" MaxLength="45" />
+          <Property Name="rating" Type="int" />
+          <Property Name="comment" Type="nvarchar" MaxLength="590" />
+          <Property Name="dateCreated" Type="datetime2" Precision="0" />
+        </EntityType>
+        <EntityType Name="requirements">
+          <Key>
+            <PropertyRef Name="requirementsID" />
+          </Key>
+          <Property Name="requirementsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="owningType" Type="nvarchar" MaxLength="45" Nullable="false" />
+          <Property Name="owningID" Type="nvarchar" MaxLength="45" />
+          <Property Name="requirementTypeCode" Type="nvarchar" MaxLength="45" />
+          <Property Name="metaData" Type="nvarchar(max)" />
+          <Property Name="date" Type="datetime2" Precision="0" />
+          <Property Name="resolved" Type="datetime2" Precision="0" />
+        </EntityType>
+        <EntityType Name="rfq">
+          <Key>
+            <PropertyRef Name="rfqID" />
+          </Key>
+          <Property Name="rfqID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="reference" Type="nvarchar" MaxLength="45" />
+          <Property Name="userID" Type="int" />
+          <Property Name="expertiseSubCategoryID" Type="int" />
+          <Property Name="rfqDetails" Type="nvarchar(max)" />
+          <Property Name="rfqTypeID" Type="int" />
+          <Property Name="dateCreated" Type="datetime2" Precision="0" />
+          <Property Name="expiryDate" Type="datetime2" Precision="0" />
+          <Property Name="status" Type="nvarchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="rfqtype">
+          <Key>
+            <PropertyRef Name="rfqTypeID" />
+          </Key>
+          <Property Name="rfqTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="code" Type="nvarchar" MaxLength="45" />
+          <Property Name="description" Type="nvarchar" MaxLength="200" />
+          <Property Name="Prefix" Type="nvarchar" MaxLength="3" />
+        </EntityType>
+        <EntityType Name="roles">
+          <Key>
+            <PropertyRef Name="roleID" />
+          </Key>
+          <Property Name="roleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="roleCode" Type="nvarchar" MaxLength="45" Nullable="false" />
+          <Property Name="roleName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="roleDescription" Type="nvarchar" MaxLength="200" />
+          <Property Name="roleStatus" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="organizationID" Type="int" />
+          <Property Name="username" Type="nvarchar" MaxLength="45" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="passwordSalt" Type="nvarchar" MaxLength="45" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="45" Nullable="false" />
+          <Property Name="firstname" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="surname" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="identificationNumber" Type="nvarchar" MaxLength="45" Nullable="false" />
+          <Property Name="isApproved" Type="bit" Nullable="false" />
+          <Property Name="isLockedOut" Type="nvarchar" MaxLength="45" Nullable="false" />
+          <Property Name="lastActivityDate" Type="datetime2" Precision="0" />
+          <Property Name="lastPasswordChange" Type="datetime2" Precision="0" />
+          <Property Name="lastLoginDate" Type="datetime2" Precision="0" />
+          <Property Name="failedPasswordAttemptCount" Type="int" />
+          <Property Name="created" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="updated" Type="datetime2" Precision="0" />
+          <Property Name="employeeCode" Type="nvarchar" MaxLength="245" />
+          <Property Name="departmentCode" Type="nvarchar" MaxLength="245" />
+          <Property Name="useruuid" Type="nvarchar" MaxLength="45" />
+        </EntityType>
+        <Association Name="address$addType">
+          <End Role="addresstype" Type="Self.addresstype" Multiplicity="0..1" />
+          <End Role="address" Type="Self.address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="addresstype">
+              <PropertyRef Name="addressTypeID" />
+            </Principal>
+            <Dependent Role="address">
+              <PropertyRef Name="addressTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="bankaccountdetails$bankAcctype">
+          <End Role="bankaccounttype" Type="Self.bankaccounttype" Multiplicity="0..1" />
+          <End Role="bankaccountdetails" Type="Self.bankaccountdetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bankaccounttype">
+              <PropertyRef Name="bankAccountTypeID" />
+            </Principal>
+            <Dependent Role="bankaccountdetails">
+              <PropertyRef Name="bankAccountTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="communication$commTypeID">
+          <End Role="communicationtype" Type="Self.communicationtype" Multiplicity="0..1" />
+          <End Role="communication" Type="Self.communication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="communicationtype">
+              <PropertyRef Name="communicationTypeID" />
+            </Principal>
+            <Dependent Role="communication">
+              <PropertyRef Name="communicationTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="documentrequirements$documentTypeID">
+          <End Role="documenttypes" Type="Self.documenttypes" Multiplicity="0..1" />
+          <End Role="documentrequirements" Type="Self.documentrequirements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="documenttypes">
+              <PropertyRef Name="documentTypeID" />
+            </Principal>
+            <Dependent Role="documentrequirements">
+              <PropertyRef Name="documentTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="documentrequirements$organizationTypeID">
+          <End Role="organizationtypes" Type="Self.organizationtypes" Multiplicity="0..1" />
+          <End Role="documentrequirements" Type="Self.documentrequirements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="organizationtypes">
+              <PropertyRef Name="organizationTypeID" />
+            </Principal>
+            <Dependent Role="documentrequirements">
+              <PropertyRef Name="organizationTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="documents$documentType">
+          <End Role="documenttypes" Type="Self.documenttypes" Multiplicity="0..1" />
+          <End Role="documents" Type="Self.documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="documenttypes">
+              <PropertyRef Name="documentTypeID" />
+            </Principal>
+            <Dependent Role="documents">
+              <PropertyRef Name="documentTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="documents$orgID">
+          <End Role="organization" Type="Self.organization" Multiplicity="0..1" />
+          <End Role="documents" Type="Self.documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="organization">
+              <PropertyRef Name="organizationID" />
+            </Principal>
+            <Dependent Role="documents">
+              <PropertyRef Name="organizationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="expertiseownership$subCat">
+          <End Role="expertisesubcategory" Type="Self.expertisesubcategory" Multiplicity="0..1" />
+          <End Role="expertiseownership" Type="Self.expertiseownership" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="expertisesubcategory">
+              <PropertyRef Name="ExpertiseSubCategoryID" />
+            </Principal>
+            <Dependent Role="expertiseownership">
+              <PropertyRef Name="expertiseSubCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="expertisesubcategory$CatetoryID">
+          <End Role="expertisecategory" Type="Self.expertisecategory" Multiplicity="0..1" />
+          <End Role="expertisesubcategory" Type="Self.expertisesubcategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="expertisecategory">
+              <PropertyRef Name="ExpertiseCategoryID" />
+            </Principal>
+            <Dependent Role="expertisesubcategory">
+              <PropertyRef Name="ExpertiseCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="organization$orgType">
+          <End Role="organizationtypes" Type="Self.organizationtypes" Multiplicity="0..1" />
+          <End Role="organization" Type="Self.organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="organizationtypes">
+              <PropertyRef Name="organizationTypeID" />
+            </Principal>
+            <Dependent Role="organization">
+              <PropertyRef Name="organizationTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="quotestatus$a">
+          <End Role="quote" Type="Self.quote" Multiplicity="0..1" />
+          <End Role="quotestatus" Type="Self.quotestatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="quote">
+              <PropertyRef Name="quoteID" />
+            </Principal>
+            <Dependent Role="quotestatus">
+              <PropertyRef Name="quoteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="quotestatus$b">
+          <End Role="rfq" Type="Self.rfq" Multiplicity="0..1" />
+          <End Role="quotestatus" Type="Self.quotestatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rfq">
+              <PropertyRef Name="rfqID" />
+            </Principal>
+            <Dependent Role="quotestatus">
+              <PropertyRef Name="rfqID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="rfq$rfq1">
+          <End Role="rfqtype" Type="Self.rfqtype" Multiplicity="0..1" />
+          <End Role="rfq" Type="Self.rfq" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rfqtype">
+              <PropertyRef Name="rfqTypeID" />
+            </Principal>
+            <Dependent Role="rfq">
+              <PropertyRef Name="rfqTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="rfq$rfq2">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="rfq" Type="Self.rfq" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="rfq">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="rfq$rfq3">
+          <End Role="expertisesubcategory" Type="Self.expertisesubcategory" Multiplicity="0..1" />
+          <End Role="rfq" Type="Self.rfq" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="expertisesubcategory">
+              <PropertyRef Name="ExpertiseSubCategoryID" />
+            </Principal>
+            <Dependent Role="rfq">
+              <PropertyRef Name="expertiseSubCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetSubscribedOwnershipDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="expertiseSubCategoryID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sps_GetAllOrganizationInformation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="organizationID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sps_GetAllUserInformation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sps_GetBidsForQuote" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="rfqReference" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sps_GetHighestBidsForQuote" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="rfqReference" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sps_GetOutstandingDocumentRequirements" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="organizationID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sps_GetQuoteHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userID" Type="int" Mode="In" />
+          <Parameter Name="qStatus" Type="varchar" Mode="In" />
+          <Parameter Name="startDate" Type="datetime" Mode="In" />
+          <Parameter Name="endDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sps_GetQuoteOwnerDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="quoteID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sps_getRFQOwnerDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="rfqReference" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sps_GetRolesForUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sps_GetSubCategories" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="TBoardEntitiesSQLModelStoreContainer">
+          <EntitySet Name="address" EntityType="Self.address" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="addresstype" EntityType="Self.addresstype" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="auditentry" EntityType="Self.auditentry" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="auditentrytype" EntityType="Self.auditentrytype" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bankaccountdetails" EntityType="Self.bankaccountdetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bankaccounttype" EntityType="Self.bankaccounttype" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="communication" EntityType="Self.communication" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="communicationtype" EntityType="Self.communicationtype" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="config" EntityType="Self.config" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="custodian" EntityType="Self.custodian" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="documentrequirements" EntityType="Self.documentrequirements" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="documents" EntityType="Self.documents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="documenttypes" EntityType="Self.documenttypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="emailqueue" EntityType="Self.emailqueue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="expertisecategory" EntityType="Self.expertisecategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="expertiseownership" EntityType="Self.expertiseownership" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="expertisesubcategory" EntityType="Self.expertisesubcategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="groupmembership" EntityType="Self.groupmembership" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="grouprolemapping" EntityType="Self.grouprolemapping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="groups" EntityType="Self.groups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="metadata" EntityType="Self.metadata" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="organization" EntityType="Self.organization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="organizationmapping" EntityType="Self.organizationmapping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="organizationtypes" EntityType="Self.organizationtypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="organizationweighting" EntityType="Self.organizationweighting" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="quote" EntityType="Self.quote" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="quotestatus" EntityType="Self.quotestatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="rating" EntityType="Self.rating" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="requirements" EntityType="Self.requirements" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="rfq" EntityType="Self.rfq" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="rfqtype" EntityType="Self.rfqtype" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="roles" EntityType="Self.roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="address$addType" Association="Self.address$addType">
+            <End Role="addresstype" EntitySet="addresstype" />
+            <End Role="address" EntitySet="address" />
+          </AssociationSet>
+          <AssociationSet Name="bankaccountdetails$bankAcctype" Association="Self.bankaccountdetails$bankAcctype">
+            <End Role="bankaccounttype" EntitySet="bankaccounttype" />
+            <End Role="bankaccountdetails" EntitySet="bankaccountdetails" />
+          </AssociationSet>
+          <AssociationSet Name="communication$commTypeID" Association="Self.communication$commTypeID">
+            <End Role="communicationtype" EntitySet="communicationtype" />
+            <End Role="communication" EntitySet="communication" />
+          </AssociationSet>
+          <AssociationSet Name="documentrequirements$documentTypeID" Association="Self.documentrequirements$documentTypeID">
+            <End Role="documenttypes" EntitySet="documenttypes" />
+            <End Role="documentrequirements" EntitySet="documentrequirements" />
+          </AssociationSet>
+          <AssociationSet Name="documentrequirements$organizationTypeID" Association="Self.documentrequirements$organizationTypeID">
+            <End Role="organizationtypes" EntitySet="organizationtypes" />
+            <End Role="documentrequirements" EntitySet="documentrequirements" />
+          </AssociationSet>
+          <AssociationSet Name="documents$documentType" Association="Self.documents$documentType">
+            <End Role="documenttypes" EntitySet="documenttypes" />
+            <End Role="documents" EntitySet="documents" />
+          </AssociationSet>
+          <AssociationSet Name="documents$orgID" Association="Self.documents$orgID">
+            <End Role="organization" EntitySet="organization" />
+            <End Role="documents" EntitySet="documents" />
+          </AssociationSet>
+          <AssociationSet Name="expertiseownership$subCat" Association="Self.expertiseownership$subCat">
+            <End Role="expertisesubcategory" EntitySet="expertisesubcategory" />
+            <End Role="expertiseownership" EntitySet="expertiseownership" />
+          </AssociationSet>
+          <AssociationSet Name="expertisesubcategory$CatetoryID" Association="Self.expertisesubcategory$CatetoryID">
+            <End Role="expertisecategory" EntitySet="expertisecategory" />
+            <End Role="expertisesubcategory" EntitySet="expertisesubcategory" />
+          </AssociationSet>
+          <AssociationSet Name="organization$orgType" Association="Self.organization$orgType">
+            <End Role="organizationtypes" EntitySet="organizationtypes" />
+            <End Role="organization" EntitySet="organization" />
+          </AssociationSet>
+          <AssociationSet Name="quotestatus$a" Association="Self.quotestatus$a">
+            <End Role="quote" EntitySet="quote" />
+            <End Role="quotestatus" EntitySet="quotestatus" />
+          </AssociationSet>
+          <AssociationSet Name="quotestatus$b" Association="Self.quotestatus$b">
+            <End Role="rfq" EntitySet="rfq" />
+            <End Role="quotestatus" EntitySet="quotestatus" />
+          </AssociationSet>
+          <AssociationSet Name="rfq$rfq1" Association="Self.rfq$rfq1">
+            <End Role="rfqtype" EntitySet="rfqtype" />
+            <End Role="rfq" EntitySet="rfq" />
+          </AssociationSet>
+          <AssociationSet Name="rfq$rfq2" Association="Self.rfq$rfq2">
+            <End Role="users" EntitySet="users" />
+            <End Role="rfq" EntitySet="rfq" />
+          </AssociationSet>
+          <AssociationSet Name="rfq$rfq3" Association="Self.rfq$rfq3">
+            <End Role="expertisesubcategory" EntitySet="expertisesubcategory" />
+            <End Role="rfq" EntitySet="rfq" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TBoardEntitiesSQLModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="address">
+          <Key>
+            <PropertyRef Name="addressID" />
+          </Key>
+          <Property Name="addressID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="owningType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="owningID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="addressTypeID" Type="Int32" />
+          <Property Name="addressLine1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="addressLine2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="addressLine3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="addressLine4" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="addressLine5" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="postalCode" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="addresstype" Relationship="Self.address_addType" FromRole="address" ToRole="addresstype" />
+        </EntityType>
+        <EntityType Name="addresstype">
+          <Key>
+            <PropertyRef Name="addressTypeID" />
+          </Key>
+          <Property Name="addressTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="addressTypeTLA" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="AddressTypeDescription" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="addresses" Relationship="Self.address_addType" FromRole="addresstype" ToRole="address" />
+        </EntityType>
+        <EntityType Name="auditentry">
+          <Key>
+            <PropertyRef Name="auditEntryID" />
+          </Key>
+          <Property Name="auditEntryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userID" Type="Int32" Nullable="false" />
+          <Property Name="auditEntryOwnerType" Type="String" MaxLength="45" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="auditEntryOwnerTypeID" Type="String" MaxLength="45" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="auditEntrySummary" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="auditEntryDetail" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="auditEntryComment" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="auditEntryTime" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="auditentrytype">
+          <Key>
+            <PropertyRef Name="auditEntryTypeID" />
+          </Key>
+          <Property Name="auditEntryTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="auditEntryOwnerType" Type="String" MaxLength="45" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="auditEntryName" Type="String" MaxLength="45" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="auditEntryDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="bankaccountdetail">
+          <Key>
+            <PropertyRef Name="bankAccountDetailID" />
+          </Key>
+          <Property Name="bankAccountDetailID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="owningType" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="owningID" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="accountName" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="accountNumber" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="branchCode" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="branchName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="default" Type="Boolean" />
+          <Property Name="bankAccountTypeID" Type="Int32" />
+          <Property Name="bankName" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="bankaccounttype" Relationship="Self.bankaccountdetails_bankAcctype" FromRole="bankaccountdetails" ToRole="bankaccounttype" />
+        </EntityType>
+        <EntityType Name="bankaccounttype">
+          <Key>
+            <PropertyRef Name="bankAccountTypeID" />
+          </Key>
+          <Property Name="bankAccountTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="bankAccountTypeCode" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="bankAccountTypeDescription" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="bankaccountdetails" Relationship="Self.bankaccountdetails_bankAcctype" FromRole="bankaccounttype" ToRole="bankaccountdetails" />
+        </EntityType>
+        <EntityType Name="communication">
+          <Key>
+            <PropertyRef Name="communicationID" />
+          </Key>
+          <Property Name="communicationID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="owningType" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="owningID" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="communicationLine1" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="communicationLine2" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="communicationTypeID" Type="Int32" />
+          <Property Name="role" Type="String" MaxLength="145" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="communicationtype" Relationship="Self.communication_commTypeID" FromRole="communication" ToRole="communicationtype" />
+        </EntityType>
+        <EntityType Name="communicationtype">
+          <Key>
+            <PropertyRef Name="communicationTypeID" />
+          </Key>
+          <Property Name="communicationTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="communicationTypeTLA" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="communicationTypeDescription" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="communications" Relationship="Self.communication_commTypeID" FromRole="communicationtype" ToRole="communication" />
+        </EntityType>
+        <EntityType Name="config">
+          <Key>
+            <PropertyRef Name="configID" />
+          </Key>
+          <Property Name="configID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="custodian">
+          <Key>
+            <PropertyRef Name="custodianID" />
+          </Key>
+          <Property Name="custodianID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="surname" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="jobTitle" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="companyNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="landline" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="cell" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="organizationID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="documentrequirement">
+          <Key>
+            <PropertyRef Name="documentRequirementsID" />
+          </Key>
+          <Property Name="documentRequirementsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="documentTypeID" Type="Int32" />
+          <Property Name="organizationTypeID" Type="Int32" />
+          <NavigationProperty Name="documenttype" Relationship="Self.documentrequirements_documentTypeID" FromRole="documentrequirements" ToRole="documenttypes" />
+          <NavigationProperty Name="organizationtype" Relationship="Self.documentrequirements_organizationTypeID" FromRole="documentrequirements" ToRole="organizationtypes" />
+        </EntityType>
+        <EntityType Name="document">
+          <Key>
+            <PropertyRef Name="documentID" />
+          </Key>
+          <Property Name="documentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="documentTypeID" Type="Int32" />
+          <Property Name="organizationID" Type="Int32" />
+          <Property Name="documentPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="dateCreated" Type="DateTime" Precision="0" />
+          <Property Name="expiryDate" Type="DateTime" Precision="0" />
+          <Property Name="verified" Type="DateTime" Precision="0" />
+          <Property Name="documentuuid" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="documenttype" Relationship="Self.documents_documentType" FromRole="documents" ToRole="documenttypes" />
+          <NavigationProperty Name="organization" Relationship="Self.documents_orgID" FromRole="documents" ToRole="organization" />
+        </EntityType>
+        <EntityType Name="documenttype">
+          <Key>
+            <PropertyRef Name="documentTypeID" />
+          </Key>
+          <Property Name="documentTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="documentCode" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="documentDescription" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="expiryTermMonths" Type="Int32" />
+          <NavigationProperty Name="documentrequirements" Relationship="Self.documentrequirements_documentTypeID" FromRole="documenttypes" ToRole="documentrequirements" />
+          <NavigationProperty Name="documents" Relationship="Self.documents_documentType" FromRole="documenttypes" ToRole="documents" />
+        </EntityType>
+        <EntityType Name="emailqueue">
+          <Key>
+            <PropertyRef Name="emailQueueID" />
+          </Key>
+          <Property Name="emailQueueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="from" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="to" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="subject" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="createdDate" Type="DateTime" Precision="0" />
+          <Property Name="sentDate" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="expertisecategory">
+          <Key>
+            <PropertyRef Name="ExpertiseCategoryID" />
+          </Key>
+          <Property Name="ExpertiseCategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="expertisesubcategories" Relationship="Self.expertisesubcategory_CatetoryID" FromRole="expertisecategory" ToRole="expertisesubcategory" />
+        </EntityType>
+        <EntityType Name="expertiseownership">
+          <Key>
+            <PropertyRef Name="expertiseOwnershipID" />
+          </Key>
+          <Property Name="expertiseOwnershipID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ownerType" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="owningID" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="expertiseSubCategoryID" Type="Int32" />
+          <NavigationProperty Name="expertisesubcategory" Relationship="Self.expertiseownership_subCat" FromRole="expertiseownership" ToRole="expertisesubcategory" />
+        </EntityType>
+        <EntityType Name="expertisesubcategory">
+          <Key>
+            <PropertyRef Name="ExpertiseSubCategoryID" />
+          </Key>
+          <Property Name="ExpertiseSubCategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ExpertiseCategoryID" Type="Int32" />
+          <NavigationProperty Name="expertisecategory" Relationship="Self.expertisesubcategory_CatetoryID" FromRole="expertisesubcategory" ToRole="expertisecategory" />
+          <NavigationProperty Name="expertiseownerships" Relationship="Self.expertiseownership_subCat" FromRole="expertisesubcategory" ToRole="expertiseownership" />
+          <NavigationProperty Name="rfqs" Relationship="Self.rfq_rfq3" FromRole="expertisesubcategory" ToRole="rfq" />
+        </EntityType>
+        <EntityType Name="groupmembership">
+          <Key>
+            <PropertyRef Name="groupMembershipID" />
+          </Key>
+          <Property Name="groupMembershipID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userID" Type="Int32" Nullable="false" />
+          <Property Name="groupCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="fromDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="toDate" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="grouprolemapping">
+          <Key>
+            <PropertyRef Name="groupRoleMappingID" />
+          </Key>
+          <Property Name="groupRoleMappingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="groupCode" Type="String" MaxLength="45" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="roleCode" Type="String" MaxLength="45" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="fromDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="toDate" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="group">
+          <Key>
+            <PropertyRef Name="groupID" />
+          </Key>
+          <Property Name="groupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="groupCode" Type="String" MaxLength="45" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="groupName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="groupDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="groupStatus" Type="String" MaxLength="45" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="metadata">
+          <Key>
+            <PropertyRef Name="metadataID" />
+          </Key>
+          <Property Name="metadataID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ownerType" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="ownerTypeID" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="dateCreated" Type="DateTime" Precision="0" />
+          <Property Name="dateUpdated" Type="DateTime" Precision="0" />
+          <Property Name="metaDataName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="metaDataValue" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="organization">
+          <Key>
+            <PropertyRef Name="organizationID" />
+          </Key>
+          <Property Name="organizationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="tradingName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="registrationNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="vatNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="taxNumber" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="organizationTypeID" Type="Int32" />
+          <Property Name="oem" Type="Boolean" Nullable="true" />
+          <Property Name="verified" Type="DateTime" Precision="0" Nullable="true" />
+          <Property Name="organizationuuid" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="documents" Relationship="Self.documents_orgID" FromRole="organization" ToRole="documents" />
+          <NavigationProperty Name="organizationtype" Relationship="Self.organization_orgType" FromRole="organization" ToRole="organizationtypes" />
+        </EntityType>
+        <EntityType Name="organizationmapping">
+          <Key>
+            <PropertyRef Name="organizationMappingID" />
+          </Key>
+          <Property Name="organizationMappingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="organizationID" Type="Int32" />
+          <Property Name="userID" Type="Int32" />
+          <Property Name="created" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="organizationtype">
+          <Key>
+            <PropertyRef Name="organizationTypeID" />
+          </Key>
+          <Property Name="organizationTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="documentrequirements" Relationship="Self.documentrequirements_organizationTypeID" FromRole="organizationtypes" ToRole="documentrequirements" />
+          <NavigationProperty Name="organizations" Relationship="Self.organization_orgType" FromRole="organizationtypes" ToRole="organization" />
+        </EntityType>
+        <EntityType Name="organizationweighting">
+          <Key>
+            <PropertyRef Name="organizationWeightingID" />
+          </Key>
+          <Property Name="organizationWeightingID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="weighting" Type="Decimal" Precision="4" Scale="2" />
+          <Property Name="organizationID" Type="Int32" />
+          <Property Name="organizationInfo" Type="Decimal" Precision="4" Scale="2" />
+          <Property Name="financeInfo" Type="Decimal" Precision="4" Scale="2" />
+          <Property Name="hrInfo" Type="Decimal" Precision="4" Scale="2" />
+          <Property Name="beeInfo" Type="Decimal" Precision="4" Scale="2" />
+          <Property Name="insuranceInfo" Type="Decimal" Precision="4" Scale="2" />
+          <Property Name="iso9001" Type="Decimal" Precision="4" Scale="2" />
+          <Property Name="iso40001" Type="Decimal" Precision="4" Scale="2" />
+          <Property Name="iso18001" Type="Decimal" Precision="4" Scale="2" />
+          <Property Name="totalWeighting" Type="Decimal" Precision="4" Scale="2" />
+        </EntityType>
+        <EntityType Name="quote">
+          <Key>
+            <PropertyRef Name="quoteID" />
+          </Key>
+          <Property Name="quoteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rfqReference" Type="String" MaxLength="45" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="userID" Type="Int32" />
+          <Property Name="createdDate" Type="DateTime" Precision="0" />
+          <Property Name="amount" Type="Decimal" Precision="16" Scale="9" />
+          <Property Name="supplyTime" Type="DateTime" Precision="0" />
+          <Property Name="deliveryTime" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="quotestatus" Relationship="Self.quotestatus_a" FromRole="quote" ToRole="quotestatus" />
+        </EntityType>
+        <EntityType Name="quotestatu">
+          <Key>
+            <PropertyRef Name="quoteStatusID" />
+          </Key>
+          <Property Name="quoteStatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rfqID" Type="Int32" />
+          <Property Name="quoteID" Type="Int32" />
+          <Property Name="status" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="quoteStatusDateTime" Type="DateTime" Precision="0" />
+          <Property Name="userID" Type="Int32" />
+          <NavigationProperty Name="quote" Relationship="Self.quotestatus_a" FromRole="quotestatus" ToRole="quote" />
+          <NavigationProperty Name="rfq" Relationship="Self.quotestatus_b" FromRole="quotestatus" ToRole="rfq" />
+        </EntityType>
+        <EntityType Name="rating">
+          <Key>
+            <PropertyRef Name="ratingID" />
+          </Key>
+          <Property Name="ratingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ownerType" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="owningID" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="rating1" Type="Int32" />
+          <Property Name="comment" Type="String" MaxLength="590" FixedLength="false" Unicode="true" />
+          <Property Name="dateCreated" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="requirement">
+          <Key>
+            <PropertyRef Name="requirementsID" />
+          </Key>
+          <Property Name="requirementsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="owningType" Type="String" MaxLength="45" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="owningID" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="requirementTypeCode" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="metaData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="DateTime" Precision="0" />
+          <Property Name="resolved" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="rfq">
+          <Key>
+            <PropertyRef Name="rfqID" />
+          </Key>
+          <Property Name="rfqID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="reference" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="userID" Type="Int32" />
+          <Property Name="expertiseSubCategoryID" Type="Int32" />
+          <Property Name="rfqDetails" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="rfqTypeID" Type="Int32" />
+          <Property Name="dateCreated" Type="DateTime" Precision="0" />
+          <Property Name="expiryDate" Type="DateTime" Precision="0" Nullable="true" />
+          <Property Name="status" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="expertisesubcategory" Relationship="Self.rfq_rfq3" FromRole="rfq" ToRole="expertisesubcategory" />
+          <NavigationProperty Name="quotestatus" Relationship="Self.quotestatus_b" FromRole="rfq" ToRole="quotestatus" />
+          <NavigationProperty Name="rfqtype" Relationship="Self.rfq_rfq1" FromRole="rfq" ToRole="rfqtype" />
+          <NavigationProperty Name="user" Relationship="Self.rfq_rfq2" FromRole="rfq" ToRole="users" />
+        </EntityType>
+        <EntityType Name="rfqtype">
+          <Key>
+            <PropertyRef Name="rfqTypeID" />
+          </Key>
+          <Property Name="rfqTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="code" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Prefix" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="rfqs" Relationship="Self.rfq_rfq1" FromRole="rfqtype" ToRole="rfq" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="roleID" />
+          </Key>
+          <Property Name="roleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="roleCode" Type="String" MaxLength="45" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="roleName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="roleDescription" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="roleStatus" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="organizationID" Type="Int32" />
+          <Property Name="username" Type="String" MaxLength="45" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="passwordSalt" Type="String" MaxLength="45" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="45" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="firstname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="surname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="identificationNumber" Type="String" MaxLength="45" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="isApproved" Type="Boolean" Nullable="false" />
+          <Property Name="isLockedOut" Type="String" MaxLength="45" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="lastActivityDate" Type="DateTime" Precision="0" />
+          <Property Name="lastPasswordChange" Type="DateTime" Precision="0" />
+          <Property Name="lastLoginDate" Type="DateTime" Precision="0" />
+          <Property Name="failedPasswordAttemptCount" Type="Int32" />
+          <Property Name="created" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="updated" Type="DateTime" Precision="0" />
+          <Property Name="employeeCode" Type="String" MaxLength="245" FixedLength="false" Unicode="true" />
+          <Property Name="departmentCode" Type="String" MaxLength="245" FixedLength="false" Unicode="true" />
+          <Property Name="useruuid" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="rfqs" Relationship="Self.rfq_rfq2" FromRole="users" ToRole="rfq" />
+        </EntityType>
+        <Association Name="address_addType">
+          <End Role="addresstype" Type="Self.addresstype" Multiplicity="0..1" />
+          <End Role="address" Type="Self.address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="addresstype">
+              <PropertyRef Name="addressTypeID" />
+            </Principal>
+            <Dependent Role="address">
+              <PropertyRef Name="addressTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="bankaccountdetails_bankAcctype">
+          <End Role="bankaccounttype" Type="Self.bankaccounttype" Multiplicity="0..1" />
+          <End Role="bankaccountdetails" Type="Self.bankaccountdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bankaccounttype">
+              <PropertyRef Name="bankAccountTypeID" />
+            </Principal>
+            <Dependent Role="bankaccountdetails">
+              <PropertyRef Name="bankAccountTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="communication_commTypeID">
+          <End Role="communicationtype" Type="Self.communicationtype" Multiplicity="0..1" />
+          <End Role="communication" Type="Self.communication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="communicationtype">
+              <PropertyRef Name="communicationTypeID" />
+            </Principal>
+            <Dependent Role="communication">
+              <PropertyRef Name="communicationTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="documentrequirements_documentTypeID">
+          <End Role="documenttypes" Type="Self.documenttype" Multiplicity="0..1" />
+          <End Role="documentrequirements" Type="Self.documentrequirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="documenttypes">
+              <PropertyRef Name="documentTypeID" />
+            </Principal>
+            <Dependent Role="documentrequirements">
+              <PropertyRef Name="documentTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="documentrequirements_organizationTypeID">
+          <End Role="organizationtypes" Type="Self.organizationtype" Multiplicity="0..1" />
+          <End Role="documentrequirements" Type="Self.documentrequirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="organizationtypes">
+              <PropertyRef Name="organizationTypeID" />
+            </Principal>
+            <Dependent Role="documentrequirements">
+              <PropertyRef Name="organizationTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="documents_documentType">
+          <End Role="documenttypes" Type="Self.documenttype" Multiplicity="0..1" />
+          <End Role="documents" Type="Self.document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="documenttypes">
+              <PropertyRef Name="documentTypeID" />
+            </Principal>
+            <Dependent Role="documents">
+              <PropertyRef Name="documentTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="documents_orgID">
+          <End Role="organization" Type="Self.organization" Multiplicity="0..1" />
+          <End Role="documents" Type="Self.document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="organization">
+              <PropertyRef Name="organizationID" />
+            </Principal>
+            <Dependent Role="documents">
+              <PropertyRef Name="organizationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="expertisesubcategory_CatetoryID">
+          <End Role="expertisecategory" Type="Self.expertisecategory" Multiplicity="0..1" />
+          <End Role="expertisesubcategory" Type="Self.expertisesubcategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="expertisecategory">
+              <PropertyRef Name="ExpertiseCategoryID" />
+            </Principal>
+            <Dependent Role="expertisesubcategory">
+              <PropertyRef Name="ExpertiseCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="expertiseownership_subCat">
+          <End Role="expertisesubcategory" Type="Self.expertisesubcategory" Multiplicity="0..1" />
+          <End Role="expertiseownership" Type="Self.expertiseownership" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="expertisesubcategory">
+              <PropertyRef Name="ExpertiseSubCategoryID" />
+            </Principal>
+            <Dependent Role="expertiseownership">
+              <PropertyRef Name="expertiseSubCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="rfq_rfq3">
+          <End Role="expertisesubcategory" Type="Self.expertisesubcategory" Multiplicity="0..1" />
+          <End Role="rfq" Type="Self.rfq" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="expertisesubcategory">
+              <PropertyRef Name="ExpertiseSubCategoryID" />
+            </Principal>
+            <Dependent Role="rfq">
+              <PropertyRef Name="expertiseSubCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="organization_orgType">
+          <End Role="organizationtypes" Type="Self.organizationtype" Multiplicity="0..1" />
+          <End Role="organization" Type="Self.organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="organizationtypes">
+              <PropertyRef Name="organizationTypeID" />
+            </Principal>
+            <Dependent Role="organization">
+              <PropertyRef Name="organizationTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="quotestatus_a">
+          <End Role="quote" Type="Self.quote" Multiplicity="0..1" />
+          <End Role="quotestatus" Type="Self.quotestatu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="quote">
+              <PropertyRef Name="quoteID" />
+            </Principal>
+            <Dependent Role="quotestatus">
+              <PropertyRef Name="quoteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="quotestatus_b">
+          <End Role="rfq" Type="Self.rfq" Multiplicity="0..1" />
+          <End Role="quotestatus" Type="Self.quotestatu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rfq">
+              <PropertyRef Name="rfqID" />
+            </Principal>
+            <Dependent Role="quotestatus">
+              <PropertyRef Name="rfqID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="rfq_rfq1">
+          <End Role="rfqtype" Type="Self.rfqtype" Multiplicity="0..1" />
+          <End Role="rfq" Type="Self.rfq" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rfqtype">
+              <PropertyRef Name="rfqTypeID" />
+            </Principal>
+            <Dependent Role="rfq">
+              <PropertyRef Name="rfqTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="rfq_rfq2">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="rfq" Type="Self.rfq" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="rfq">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TBoardEntitiesSQL" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="addresses" EntityType="Self.address" />
+          <EntitySet Name="addresstypes" EntityType="Self.addresstype" />
+          <EntitySet Name="auditentries" EntityType="Self.auditentry" />
+          <EntitySet Name="auditentrytypes" EntityType="Self.auditentrytype" />
+          <EntitySet Name="bankaccountdetails" EntityType="Self.bankaccountdetail" />
+          <EntitySet Name="bankaccounttypes" EntityType="Self.bankaccounttype" />
+          <EntitySet Name="communications" EntityType="Self.communication" />
+          <EntitySet Name="communicationtypes" EntityType="Self.communicationtype" />
+          <EntitySet Name="configs" EntityType="Self.config" />
+          <EntitySet Name="custodians" EntityType="Self.custodian" />
+          <EntitySet Name="documentrequirements" EntityType="Self.documentrequirement" />
+          <EntitySet Name="documents" EntityType="Self.document" />
+          <EntitySet Name="documenttypes" EntityType="Self.documenttype" />
+          <EntitySet Name="emailqueues" EntityType="Self.emailqueue" />
+          <EntitySet Name="expertisecategories" EntityType="Self.expertisecategory" />
+          <EntitySet Name="expertiseownerships" EntityType="Self.expertiseownership" />
+          <EntitySet Name="expertisesubcategories" EntityType="Self.expertisesubcategory" />
+          <EntitySet Name="groupmemberships" EntityType="Self.groupmembership" />
+          <EntitySet Name="grouprolemappings" EntityType="Self.grouprolemapping" />
+          <EntitySet Name="groups" EntityType="Self.group" />
+          <EntitySet Name="metadatas" EntityType="Self.metadata" />
+          <EntitySet Name="organizations" EntityType="Self.organization" />
+          <EntitySet Name="organizationmappings" EntityType="Self.organizationmapping" />
+          <EntitySet Name="organizationtypes" EntityType="Self.organizationtype" />
+          <EntitySet Name="organizationweightings" EntityType="Self.organizationweighting" />
+          <EntitySet Name="quotes" EntityType="Self.quote" />
+          <EntitySet Name="quotestatus" EntityType="Self.quotestatu" />
+          <EntitySet Name="ratings" EntityType="Self.rating" />
+          <EntitySet Name="requirements" EntityType="Self.requirement" />
+          <EntitySet Name="rfqs" EntityType="Self.rfq" />
+          <EntitySet Name="rfqtypes" EntityType="Self.rfqtype" />
+          <EntitySet Name="roles" EntityType="Self.role" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <AssociationSet Name="address_addType" Association="Self.address_addType">
+            <End Role="addresstype" EntitySet="addresstypes" />
+            <End Role="address" EntitySet="addresses" />
+          </AssociationSet>
+          <AssociationSet Name="bankaccountdetails_bankAcctype" Association="Self.bankaccountdetails_bankAcctype">
+            <End Role="bankaccounttype" EntitySet="bankaccounttypes" />
+            <End Role="bankaccountdetails" EntitySet="bankaccountdetails" />
+          </AssociationSet>
+          <AssociationSet Name="communication_commTypeID" Association="Self.communication_commTypeID">
+            <End Role="communicationtype" EntitySet="communicationtypes" />
+            <End Role="communication" EntitySet="communications" />
+          </AssociationSet>
+          <AssociationSet Name="documentrequirements_documentTypeID" Association="Self.documentrequirements_documentTypeID">
+            <End Role="documenttypes" EntitySet="documenttypes" />
+            <End Role="documentrequirements" EntitySet="documentrequirements" />
+          </AssociationSet>
+          <AssociationSet Name="documentrequirements_organizationTypeID" Association="Self.documentrequirements_organizationTypeID">
+            <End Role="organizationtypes" EntitySet="organizationtypes" />
+            <End Role="documentrequirements" EntitySet="documentrequirements" />
+          </AssociationSet>
+          <AssociationSet Name="documents_documentType" Association="Self.documents_documentType">
+            <End Role="documenttypes" EntitySet="documenttypes" />
+            <End Role="documents" EntitySet="documents" />
+          </AssociationSet>
+          <AssociationSet Name="documents_orgID" Association="Self.documents_orgID">
+            <End Role="organization" EntitySet="organizations" />
+            <End Role="documents" EntitySet="documents" />
+          </AssociationSet>
+          <AssociationSet Name="expertisesubcategory_CatetoryID" Association="Self.expertisesubcategory_CatetoryID">
+            <End Role="expertisecategory" EntitySet="expertisecategories" />
+            <End Role="expertisesubcategory" EntitySet="expertisesubcategories" />
+          </AssociationSet>
+          <AssociationSet Name="expertiseownership_subCat" Association="Self.expertiseownership_subCat">
+            <End Role="expertisesubcategory" EntitySet="expertisesubcategories" />
+            <End Role="expertiseownership" EntitySet="expertiseownerships" />
+          </AssociationSet>
+          <AssociationSet Name="rfq_rfq3" Association="Self.rfq_rfq3">
+            <End Role="expertisesubcategory" EntitySet="expertisesubcategories" />
+            <End Role="rfq" EntitySet="rfqs" />
+          </AssociationSet>
+          <AssociationSet Name="organization_orgType" Association="Self.organization_orgType">
+            <End Role="organizationtypes" EntitySet="organizationtypes" />
+            <End Role="organization" EntitySet="organizations" />
+          </AssociationSet>
+          <AssociationSet Name="quotestatus_a" Association="Self.quotestatus_a">
+            <End Role="quote" EntitySet="quotes" />
+            <End Role="quotestatus" EntitySet="quotestatus" />
+          </AssociationSet>
+          <AssociationSet Name="quotestatus_b" Association="Self.quotestatus_b">
+            <End Role="rfq" EntitySet="rfqs" />
+            <End Role="quotestatus" EntitySet="quotestatus" />
+          </AssociationSet>
+          <AssociationSet Name="rfq_rfq1" Association="Self.rfq_rfq1">
+            <End Role="rfqtype" EntitySet="rfqtypes" />
+            <End Role="rfq" EntitySet="rfqs" />
+          </AssociationSet>
+          <AssociationSet Name="rfq_rfq2" Association="Self.rfq_rfq2">
+            <End Role="users" EntitySet="users" />
+            <End Role="rfq" EntitySet="rfqs" />
+          </AssociationSet>
+          <FunctionImport Name="GetSubscribedOwnershipDetails" ReturnType="Collection(TBoardEntitiesSQLModel.GetSubscribedOwnershipDetails_Result)">
+          <Parameter Name="expertiseSubCategoryID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sps_GetAllOrganizationInformation" ReturnType="Collection(TBoardEntitiesSQLModel.sps_GetAllOrganizationInformation_Result)">
+          <Parameter Name="organizationID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sps_GetAllUserInformation" ReturnType="Collection(TBoardEntitiesSQLModel.sps_GetAllUserInformation_Result)">
+          <Parameter Name="userID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sps_GetBidsForQuote" ReturnType="Collection(TBoardEntitiesSQLModel.sps_GetBidsForQuote_Result)">
+          <Parameter Name="rfqReference" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sps_GetHighestBidsForQuote" ReturnType="Collection(TBoardEntitiesSQLModel.sps_GetHighestBidsForQuote_Result)">
+          <Parameter Name="rfqReference" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sps_GetOutstandingDocumentRequirements" ReturnType="Collection(TBoardEntitiesSQLModel.sps_GetOutstandingDocumentRequirements_Result)">
+          <Parameter Name="organizationID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sps_GetQuoteHistory" ReturnType="Collection(TBoardEntitiesSQLModel.sps_GetQuoteHistory_Result)">
+            <Parameter Name="userID" Mode="In" Type="Int32" />
+            <Parameter Name="qStatus" Mode="In" Type="String" />
+            <Parameter Name="startDate" Mode="In" Type="DateTime" />
+            <Parameter Name="endDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sps_GetQuoteOwnerDetails" ReturnType="Collection(TBoardEntitiesSQLModel.sps_GetQuoteOwnerDetails_Result)">
+          <Parameter Name="quoteID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sps_getRFQOwnerDetails" ReturnType="Collection(TBoardEntitiesSQLModel.sps_getRFQOwnerDetails_Result)">
+          <Parameter Name="rfqReference" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sps_GetRolesForUser" EntitySet="roles" ReturnType="Collection(TBoardEntitiesSQLModel.role)">
+          <Parameter Name="userID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sps_GetSubCategories" ReturnType="Collection(TBoardEntitiesSQLModel.sps_GetSubCategories_Result)" />
+        </EntityContainer>
+        <ComplexType Name="GetSubscribedOwnershipDetails_Result">
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="tradingName" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="ownerType" Nullable="true" MaxLength="45" />
+          <Property Type="String" Name="owningID" Nullable="true" MaxLength="45" />
+          <Property Type="String" Name="communicationLine1" Nullable="true" MaxLength="45" />
+          <Property Type="String" Name="communicationLine2" Nullable="true" MaxLength="45" />
+        </ComplexType>
+        <ComplexType Name="sps_GetAllOrganizationInformation_Result">
+          <Property Type="Int32" Name="organizationID" Nullable="false" />
+          <Property Type="String" Name="name" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="tradingName" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="registrationNumber" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="vatNumber" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="taxNumber" Nullable="true" MaxLength="150" />
+          <Property Type="Int32" Name="organizationTypeID" Nullable="true" />
+          <Property Type="Boolean" Name="oem" Nullable="true" />
+          <Property Type="DateTime" Name="verified" Nullable="true" />
+          <Property Type="String" Name="organizationuuid" Nullable="true" MaxLength="45" />
+          <Property Type="Int64" Name="addressID" Nullable="true" />
+          <Property Type="String" Name="owningType" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="owningID" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="addressTypeID" Nullable="true" />
+          <Property Type="String" Name="addressLine1" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="addressLine2" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="addressLine3" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="addressLine4" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="addressLine5" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="postalCode" Nullable="true" MaxLength="45" />
+          <Property Type="Int64" Name="bankAccountDetailID" Nullable="true" />
+          <Property Type="String" Name="accountName" Nullable="true" MaxLength="45" />
+          <Property Type="String" Name="accountNumber" Nullable="true" MaxLength="45" />
+          <Property Type="String" Name="branchCode" Nullable="true" MaxLength="45" />
+          <Property Type="String" Name="branchName" Nullable="true" MaxLength="150" />
+          <Property Type="Boolean" Name="default" Nullable="true" />
+          <Property Type="Int32" Name="bankAccountTypeID" Nullable="true" />
+          <Property Type="String" Name="bankName" Nullable="true" MaxLength="45" />
+          <Property Type="Int64" Name="communicationID" Nullable="true" />
+          <Property Type="String" Name="communicationLine1" Nullable="true" MaxLength="45" />
+          <Property Type="String" Name="communicationLine2" Nullable="true" MaxLength="45" />
+          <Property Type="Int32" Name="communicationTypeID" Nullable="true" />
+          <Property Type="String" Name="role" Nullable="true" MaxLength="145" />
+          <Property Type="Int32" Name="expertiseOwnershipID" Nullable="true" />
+          <Property Type="String" Name="ownerType" Nullable="true" MaxLength="45" />
+          <Property Type="Int32" Name="expertiseSubCategoryID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sps_GetAllUserInformation_Result">
+          <Property Type="Int32" Name="userID" Nullable="false" />
+          <Property Type="Int32" Name="organizationID" Nullable="true" />
+          <Property Type="String" Name="username" Nullable="false" MaxLength="45" />
+          <Property Type="String" Name="password" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="passwordSalt" Nullable="false" MaxLength="45" />
+          <Property Type="String" Name="title" Nullable="false" MaxLength="45" />
+          <Property Type="String" Name="firstname" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="surname" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="identificationNumber" Nullable="false" MaxLength="45" />
+          <Property Type="Boolean" Name="isApproved" Nullable="false" />
+          <Property Type="String" Name="isLockedOut" Nullable="false" MaxLength="45" />
+          <Property Type="DateTime" Name="lastActivityDate" Nullable="true" />
+          <Property Type="DateTime" Name="lastPasswordChange" Nullable="true" />
+          <Property Type="DateTime" Name="lastLoginDate" Nullable="true" />
+          <Property Type="Int32" Name="failedPasswordAttemptCount" Nullable="true" />
+          <Property Type="DateTime" Name="created" Nullable="false" />
+          <Property Type="DateTime" Name="updated" Nullable="true" />
+          <Property Type="String" Name="employeeCode" Nullable="true" MaxLength="245" />
+          <Property Type="String" Name="departmentCode" Nullable="true" MaxLength="245" />
+          <Property Type="String" Name="useruuid" Nullable="true" MaxLength="45" />
+          <Property Type="Int64" Name="addressID" Nullable="true" />
+          <Property Type="String" Name="owningType" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="owningID" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="addressTypeID" Nullable="true" />
+          <Property Type="String" Name="addressLine1" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="addressLine2" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="addressLine3" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="addressLine4" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="addressLine5" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="postalCode" Nullable="true" MaxLength="45" />
+          <Property Type="String" Name="name" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="tradingName" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="registrationNumber" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="vatNumber" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="taxNumber" Nullable="true" MaxLength="150" />
+          <Property Type="Int32" Name="organizationTypeID" Nullable="true" />
+          <Property Type="Boolean" Name="oem" Nullable="true" />
+          <Property Type="DateTime" Name="verified" Nullable="true" />
+          <Property Type="String" Name="organizationuuid" Nullable="true" MaxLength="45" />
+          <Property Type="Int64" Name="bankAccountDetailID" Nullable="true" />
+          <Property Type="String" Name="accountName" Nullable="true" MaxLength="45" />
+          <Property Type="String" Name="accountNumber" Nullable="true" MaxLength="45" />
+          <Property Type="String" Name="branchCode" Nullable="true" MaxLength="45" />
+          <Property Type="String" Name="branchName" Nullable="true" MaxLength="150" />
+          <Property Type="Boolean" Name="default" Nullable="true" />
+          <Property Type="Int32" Name="bankAccountTypeID" Nullable="true" />
+          <Property Type="String" Name="bankName" Nullable="true" MaxLength="45" />
+          <Property Type="Int64" Name="communicationID" Nullable="true" />
+          <Property Type="String" Name="communicationLine1" Nullable="true" MaxLength="45" />
+          <Property Type="String" Name="communicationLine2" Nullable="true" MaxLength="45" />
+          <Property Type="Int32" Name="communicationTypeID" Nullable="true" />
+          <Property Type="String" Name="role" Nullable="true" MaxLength="145" />
+        </ComplexType>
+        <ComplexType Name="sps_GetBidsForQuote_Result">
+          <Property Type="DateTime" Name="CreatedDate" Nullable="true" />
+          <Property Type="Decimal" Name="Amount" Nullable="true" Precision="16" Scale="9" />
+          <Property Type="DateTime" Name="SupplyTime" Nullable="true" />
+          <Property Type="DateTime" Name="DeliveryTime" Nullable="true" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Surname" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="name" Nullable="true" MaxLength="150" />
+          <Property Type="Boolean" Name="oem" Nullable="true" />
+          <Property Type="Int32" Name="OrganizationID" Nullable="true" />
+          <Property Type="Int32" Name="AverageRating" Nullable="true" />
+          <Property Type="Int32" Name="QuoteID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sps_GetHighestBidsForQuote_Result">
+          <Property Type="DateTime" Name="createdDate" Nullable="true" />
+          <Property Type="Decimal" Name="amount" Nullable="true" Precision="16" Scale="9" />
+        </ComplexType>
+        <ComplexType Name="sps_GetOutstandingDocumentRequirements_Result">
+          <Property Type="Int32" Name="documentTypeID" Nullable="true" />
+          <Property Type="String" Name="documentCode" Nullable="true" MaxLength="45" />
+          <Property Type="String" Name="documentDescription" Nullable="true" MaxLength="45" />
+        </ComplexType>
+        <ComplexType Name="sps_GetQuoteHistory_Result">
+          <Property Type="String" Name="rfqReference" Nullable="false" MaxLength="45" />
+          <Property Type="DateTime" Name="createdDate" Nullable="true" />
+          <Property Type="Decimal" Name="amount" Nullable="true" Precision="16" Scale="9" />
+          <Property Type="DateTime" Name="quoteStatusDateTime" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sps_GetQuoteOwnerDetails_Result">
+          <Property Type="String" Name="communicationLine1" Nullable="true" MaxLength="45" />
+          <Property Type="String" Name="firstname" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="surname" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="sps_getRFQOwnerDetails_Result">
+          <Property Type="String" Name="reference" Nullable="true" MaxLength="45" />
+          <Property Type="DateTime" Name="dateCreated" Nullable="true" />
+          <Property Type="String" Name="communicationLine1" Nullable="true" MaxLength="45" />
+          <Property Type="String" Name="firstname" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="surname" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="sps_GetRolesForUser_Result">
+          <Property Type="Int32" Name="roleID" Nullable="false" />
+          <Property Type="String" Name="roleCode" Nullable="false" MaxLength="45" />
+          <Property Type="String" Name="roleName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="roleDescription" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="roleStatus" Nullable="false" MaxLength="10" />
+        </ComplexType>
+        <ComplexType Name="sps_GetSubCategories_Result">
+          <Property Type="String" Name="SubCategoryName" Nullable="false" MaxLength="601" />
+          <Property Type="Int32" Name="ExpertiseSubCategoryID" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TBoardEntitiesSQLModelStoreContainer" CdmEntityContainer="TBoardEntitiesSQL">
+          <EntitySetMapping Name="addresses">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.address">
+              <MappingFragment StoreEntitySet="address">
+                <ScalarProperty Name="addressID" ColumnName="addressID" />
+                <ScalarProperty Name="owningType" ColumnName="owningType" />
+                <ScalarProperty Name="owningID" ColumnName="owningID" />
+                <ScalarProperty Name="addressTypeID" ColumnName="addressTypeID" />
+                <ScalarProperty Name="addressLine1" ColumnName="addressLine1" />
+                <ScalarProperty Name="addressLine2" ColumnName="addressLine2" />
+                <ScalarProperty Name="addressLine3" ColumnName="addressLine3" />
+                <ScalarProperty Name="addressLine4" ColumnName="addressLine4" />
+                <ScalarProperty Name="addressLine5" ColumnName="addressLine5" />
+                <ScalarProperty Name="postalCode" ColumnName="postalCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="addresstypes">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.addresstype">
+              <MappingFragment StoreEntitySet="addresstype">
+                <ScalarProperty Name="addressTypeID" ColumnName="addressTypeID" />
+                <ScalarProperty Name="addressTypeTLA" ColumnName="addressTypeTLA" />
+                <ScalarProperty Name="AddressTypeDescription" ColumnName="AddressTypeDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="auditentries">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.auditentry">
+              <MappingFragment StoreEntitySet="auditentry">
+                <ScalarProperty Name="auditEntryID" ColumnName="auditEntryID" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="auditEntryOwnerType" ColumnName="auditEntryOwnerType" />
+                <ScalarProperty Name="auditEntryOwnerTypeID" ColumnName="auditEntryOwnerTypeID" />
+                <ScalarProperty Name="auditEntrySummary" ColumnName="auditEntrySummary" />
+                <ScalarProperty Name="auditEntryDetail" ColumnName="auditEntryDetail" />
+                <ScalarProperty Name="auditEntryComment" ColumnName="auditEntryComment" />
+                <ScalarProperty Name="auditEntryTime" ColumnName="auditEntryTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="auditentrytypes">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.auditentrytype">
+              <MappingFragment StoreEntitySet="auditentrytype">
+                <ScalarProperty Name="auditEntryTypeID" ColumnName="auditEntryTypeID" />
+                <ScalarProperty Name="auditEntryOwnerType" ColumnName="auditEntryOwnerType" />
+                <ScalarProperty Name="auditEntryName" ColumnName="auditEntryName" />
+                <ScalarProperty Name="auditEntryDescription" ColumnName="auditEntryDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bankaccountdetails">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.bankaccountdetail">
+              <MappingFragment StoreEntitySet="bankaccountdetails">
+                <ScalarProperty Name="bankAccountDetailID" ColumnName="bankAccountDetailID" />
+                <ScalarProperty Name="owningType" ColumnName="owningType" />
+                <ScalarProperty Name="owningID" ColumnName="owningID" />
+                <ScalarProperty Name="accountName" ColumnName="accountName" />
+                <ScalarProperty Name="accountNumber" ColumnName="accountNumber" />
+                <ScalarProperty Name="branchCode" ColumnName="branchCode" />
+                <ScalarProperty Name="branchName" ColumnName="branchName" />
+                <ScalarProperty Name="default" ColumnName="default" />
+                <ScalarProperty Name="bankAccountTypeID" ColumnName="bankAccountTypeID" />
+                <ScalarProperty Name="bankName" ColumnName="bankName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bankaccounttypes">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.bankaccounttype">
+              <MappingFragment StoreEntitySet="bankaccounttype">
+                <ScalarProperty Name="bankAccountTypeID" ColumnName="bankAccountTypeID" />
+                <ScalarProperty Name="bankAccountTypeCode" ColumnName="bankAccountTypeCode" />
+                <ScalarProperty Name="bankAccountTypeDescription" ColumnName="bankAccountTypeDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="communications">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.communication">
+              <MappingFragment StoreEntitySet="communication">
+                <ScalarProperty Name="communicationID" ColumnName="communicationID" />
+                <ScalarProperty Name="owningType" ColumnName="owningType" />
+                <ScalarProperty Name="owningID" ColumnName="owningID" />
+                <ScalarProperty Name="communicationLine1" ColumnName="communicationLine1" />
+                <ScalarProperty Name="communicationLine2" ColumnName="communicationLine2" />
+                <ScalarProperty Name="communicationTypeID" ColumnName="communicationTypeID" />
+                <ScalarProperty Name="role" ColumnName="role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="communicationtypes">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.communicationtype">
+              <MappingFragment StoreEntitySet="communicationtype">
+                <ScalarProperty Name="communicationTypeID" ColumnName="communicationTypeID" />
+                <ScalarProperty Name="communicationTypeTLA" ColumnName="communicationTypeTLA" />
+                <ScalarProperty Name="communicationTypeDescription" ColumnName="communicationTypeDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="configs">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.config">
+              <MappingFragment StoreEntitySet="config">
+                <ScalarProperty Name="configID" ColumnName="configID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="value" ColumnName="value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="custodians">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.custodian">
+              <MappingFragment StoreEntitySet="custodian">
+                <ScalarProperty Name="custodianID" ColumnName="custodianID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="jobTitle" ColumnName="jobTitle" />
+                <ScalarProperty Name="companyNumber" ColumnName="companyNumber" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="landline" ColumnName="landline" />
+                <ScalarProperty Name="cell" ColumnName="cell" />
+                <ScalarProperty Name="organizationID" ColumnName="organizationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="documentrequirements">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.documentrequirement">
+              <MappingFragment StoreEntitySet="documentrequirements">
+                <ScalarProperty Name="documentRequirementsID" ColumnName="documentRequirementsID" />
+                <ScalarProperty Name="documentTypeID" ColumnName="documentTypeID" />
+                <ScalarProperty Name="organizationTypeID" ColumnName="organizationTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="documents">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.document">
+              <MappingFragment StoreEntitySet="documents">
+                <ScalarProperty Name="documentID" ColumnName="documentID" />
+                <ScalarProperty Name="documentTypeID" ColumnName="documentTypeID" />
+                <ScalarProperty Name="organizationID" ColumnName="organizationID" />
+                <ScalarProperty Name="documentPath" ColumnName="documentPath" />
+                <ScalarProperty Name="dateCreated" ColumnName="dateCreated" />
+                <ScalarProperty Name="expiryDate" ColumnName="expiryDate" />
+                <ScalarProperty Name="verified" ColumnName="verified" />
+                <ScalarProperty Name="documentuuid" ColumnName="documentuuid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="documenttypes">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.documenttype">
+              <MappingFragment StoreEntitySet="documenttypes">
+                <ScalarProperty Name="documentTypeID" ColumnName="documentTypeID" />
+                <ScalarProperty Name="documentCode" ColumnName="documentCode" />
+                <ScalarProperty Name="documentDescription" ColumnName="documentDescription" />
+                <ScalarProperty Name="expiryTermMonths" ColumnName="expiryTermMonths" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="emailqueues">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.emailqueue">
+              <MappingFragment StoreEntitySet="emailqueue">
+                <ScalarProperty Name="emailQueueID" ColumnName="emailQueueID" />
+                <ScalarProperty Name="from" ColumnName="from" />
+                <ScalarProperty Name="to" ColumnName="to" />
+                <ScalarProperty Name="subject" ColumnName="subject" />
+                <ScalarProperty Name="body" ColumnName="body" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="sentDate" ColumnName="sentDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="expertisecategories">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.expertisecategory">
+              <MappingFragment StoreEntitySet="expertisecategory">
+                <ScalarProperty Name="ExpertiseCategoryID" ColumnName="ExpertiseCategoryID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="expertiseownerships">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.expertiseownership">
+              <MappingFragment StoreEntitySet="expertiseownership">
+                <ScalarProperty Name="expertiseOwnershipID" ColumnName="expertiseOwnershipID" />
+                <ScalarProperty Name="ownerType" ColumnName="ownerType" />
+                <ScalarProperty Name="owningID" ColumnName="owningID" />
+                <ScalarProperty Name="expertiseSubCategoryID" ColumnName="expertiseSubCategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="expertisesubcategories">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.expertisesubcategory">
+              <MappingFragment StoreEntitySet="expertisesubcategory">
+                <ScalarProperty Name="ExpertiseSubCategoryID" ColumnName="ExpertiseSubCategoryID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ExpertiseCategoryID" ColumnName="ExpertiseCategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="groupmemberships">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.groupmembership">
+              <MappingFragment StoreEntitySet="groupmembership">
+                <ScalarProperty Name="groupMembershipID" ColumnName="groupMembershipID" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="groupCode" ColumnName="groupCode" />
+                <ScalarProperty Name="fromDate" ColumnName="fromDate" />
+                <ScalarProperty Name="toDate" ColumnName="toDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="grouprolemappings">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.grouprolemapping">
+              <MappingFragment StoreEntitySet="grouprolemapping">
+                <ScalarProperty Name="groupRoleMappingID" ColumnName="groupRoleMappingID" />
+                <ScalarProperty Name="groupCode" ColumnName="groupCode" />
+                <ScalarProperty Name="roleCode" ColumnName="roleCode" />
+                <ScalarProperty Name="fromDate" ColumnName="fromDate" />
+                <ScalarProperty Name="toDate" ColumnName="toDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="groups">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.group">
+              <MappingFragment StoreEntitySet="groups">
+                <ScalarProperty Name="groupID" ColumnName="groupID" />
+                <ScalarProperty Name="groupCode" ColumnName="groupCode" />
+                <ScalarProperty Name="groupName" ColumnName="groupName" />
+                <ScalarProperty Name="groupDescription" ColumnName="groupDescription" />
+                <ScalarProperty Name="groupStatus" ColumnName="groupStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="metadatas">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.metadata">
+              <MappingFragment StoreEntitySet="metadata">
+                <ScalarProperty Name="metadataID" ColumnName="metadataID" />
+                <ScalarProperty Name="ownerType" ColumnName="ownerType" />
+                <ScalarProperty Name="ownerTypeID" ColumnName="ownerTypeID" />
+                <ScalarProperty Name="dateCreated" ColumnName="dateCreated" />
+                <ScalarProperty Name="dateUpdated" ColumnName="dateUpdated" />
+                <ScalarProperty Name="metaDataName" ColumnName="metaDataName" />
+                <ScalarProperty Name="metaDataValue" ColumnName="metaDataValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="organizations">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.organization">
+              <MappingFragment StoreEntitySet="organization">
+                <ScalarProperty Name="organizationID" ColumnName="organizationID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="tradingName" ColumnName="tradingName" />
+                <ScalarProperty Name="registrationNumber" ColumnName="registrationNumber" />
+                <ScalarProperty Name="vatNumber" ColumnName="vatNumber" />
+                <ScalarProperty Name="taxNumber" ColumnName="taxNumber" />
+                <ScalarProperty Name="organizationTypeID" ColumnName="organizationTypeID" />
+                <ScalarProperty Name="oem" ColumnName="oem" />
+                <ScalarProperty Name="verified" ColumnName="verified" />
+                <ScalarProperty Name="organizationuuid" ColumnName="organizationuuid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="organizationmappings">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.organizationmapping">
+              <MappingFragment StoreEntitySet="organizationmapping">
+                <ScalarProperty Name="organizationMappingID" ColumnName="organizationMappingID" />
+                <ScalarProperty Name="organizationID" ColumnName="organizationID" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="created" ColumnName="created" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="organizationtypes">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.organizationtype">
+              <MappingFragment StoreEntitySet="organizationtypes">
+                <ScalarProperty Name="organizationTypeID" ColumnName="organizationTypeID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="organizationweightings">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.organizationweighting">
+              <MappingFragment StoreEntitySet="organizationweighting">
+                <ScalarProperty Name="organizationWeightingID" ColumnName="organizationWeightingID" />
+                <ScalarProperty Name="weighting" ColumnName="weighting" />
+                <ScalarProperty Name="organizationID" ColumnName="organizationID" />
+                <ScalarProperty Name="organizationInfo" ColumnName="organizationInfo" />
+                <ScalarProperty Name="financeInfo" ColumnName="financeInfo" />
+                <ScalarProperty Name="hrInfo" ColumnName="hrInfo" />
+                <ScalarProperty Name="beeInfo" ColumnName="beeInfo" />
+                <ScalarProperty Name="insuranceInfo" ColumnName="insuranceInfo" />
+                <ScalarProperty Name="iso9001" ColumnName="iso9001" />
+                <ScalarProperty Name="iso40001" ColumnName="iso40001" />
+                <ScalarProperty Name="iso18001" ColumnName="iso18001" />
+                <ScalarProperty Name="totalWeighting" ColumnName="totalWeighting" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="quotes">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.quote">
+              <MappingFragment StoreEntitySet="quote">
+                <ScalarProperty Name="quoteID" ColumnName="quoteID" />
+                <ScalarProperty Name="rfqReference" ColumnName="rfqReference" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="supplyTime" ColumnName="supplyTime" />
+                <ScalarProperty Name="deliveryTime" ColumnName="deliveryTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="quotestatus">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.quotestatu">
+              <MappingFragment StoreEntitySet="quotestatus">
+                <ScalarProperty Name="quoteStatusID" ColumnName="quoteStatusID" />
+                <ScalarProperty Name="rfqID" ColumnName="rfqID" />
+                <ScalarProperty Name="quoteID" ColumnName="quoteID" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="quoteStatusDateTime" ColumnName="quoteStatusDateTime" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ratings">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.rating">
+              <MappingFragment StoreEntitySet="rating">
+                <ScalarProperty Name="ratingID" ColumnName="ratingID" />
+                <ScalarProperty Name="ownerType" ColumnName="ownerType" />
+                <ScalarProperty Name="owningID" ColumnName="owningID" />
+                <ScalarProperty Name="rating1" ColumnName="rating" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="dateCreated" ColumnName="dateCreated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="requirements">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.requirement">
+              <MappingFragment StoreEntitySet="requirements">
+                <ScalarProperty Name="requirementsID" ColumnName="requirementsID" />
+                <ScalarProperty Name="owningType" ColumnName="owningType" />
+                <ScalarProperty Name="owningID" ColumnName="owningID" />
+                <ScalarProperty Name="requirementTypeCode" ColumnName="requirementTypeCode" />
+                <ScalarProperty Name="metaData" ColumnName="metaData" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="resolved" ColumnName="resolved" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rfqs">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.rfq">
+              <MappingFragment StoreEntitySet="rfq">
+                <ScalarProperty Name="rfqID" ColumnName="rfqID" />
+                <ScalarProperty Name="reference" ColumnName="reference" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="expertiseSubCategoryID" ColumnName="expertiseSubCategoryID" />
+                <ScalarProperty Name="rfqDetails" ColumnName="rfqDetails" />
+                <ScalarProperty Name="rfqTypeID" ColumnName="rfqTypeID" />
+                <ScalarProperty Name="dateCreated" ColumnName="dateCreated" />
+                <ScalarProperty Name="expiryDate" ColumnName="expiryDate" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rfqtypes">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.rfqtype">
+              <MappingFragment StoreEntitySet="rfqtype">
+                <ScalarProperty Name="rfqTypeID" ColumnName="rfqTypeID" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="Prefix" ColumnName="Prefix" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="roles">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.role">
+              <MappingFragment StoreEntitySet="roles">
+                <ScalarProperty Name="roleID" ColumnName="roleID" />
+                <ScalarProperty Name="roleCode" ColumnName="roleCode" />
+                <ScalarProperty Name="roleName" ColumnName="roleName" />
+                <ScalarProperty Name="roleDescription" ColumnName="roleDescription" />
+                <ScalarProperty Name="roleStatus" ColumnName="roleStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="TBoardEntitiesSQLModel.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="organizationID" ColumnName="organizationID" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="passwordSalt" ColumnName="passwordSalt" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="identificationNumber" ColumnName="identificationNumber" />
+                <ScalarProperty Name="isApproved" ColumnName="isApproved" />
+                <ScalarProperty Name="isLockedOut" ColumnName="isLockedOut" />
+                <ScalarProperty Name="lastActivityDate" ColumnName="lastActivityDate" />
+                <ScalarProperty Name="lastPasswordChange" ColumnName="lastPasswordChange" />
+                <ScalarProperty Name="lastLoginDate" ColumnName="lastLoginDate" />
+                <ScalarProperty Name="failedPasswordAttemptCount" ColumnName="failedPasswordAttemptCount" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="updated" ColumnName="updated" />
+                <ScalarProperty Name="employeeCode" ColumnName="employeeCode" />
+                <ScalarProperty Name="departmentCode" ColumnName="departmentCode" />
+                <ScalarProperty Name="useruuid" ColumnName="useruuid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetSubscribedOwnershipDetails" FunctionName="TBoardEntitiesSQLModel.Store.GetSubscribedOwnershipDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TBoardEntitiesSQLModel.GetSubscribedOwnershipDetails_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="tradingName" ColumnName="tradingName" />
+                <ScalarProperty Name="ownerType" ColumnName="ownerType" />
+                <ScalarProperty Name="owningID" ColumnName="owningID" />
+                <ScalarProperty Name="communicationLine1" ColumnName="communicationLine1" />
+                <ScalarProperty Name="communicationLine2" ColumnName="communicationLine2" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sps_GetAllOrganizationInformation" FunctionName="TBoardEntitiesSQLModel.Store.sps_GetAllOrganizationInformation">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TBoardEntitiesSQLModel.sps_GetAllOrganizationInformation_Result">
+                <ScalarProperty Name="organizationID" ColumnName="organizationID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="tradingName" ColumnName="tradingName" />
+                <ScalarProperty Name="registrationNumber" ColumnName="registrationNumber" />
+                <ScalarProperty Name="vatNumber" ColumnName="vatNumber" />
+                <ScalarProperty Name="taxNumber" ColumnName="taxNumber" />
+                <ScalarProperty Name="organizationTypeID" ColumnName="organizationTypeID" />
+                <ScalarProperty Name="oem" ColumnName="oem" />
+                <ScalarProperty Name="verified" ColumnName="verified" />
+                <ScalarProperty Name="organizationuuid" ColumnName="organizationuuid" />
+                <ScalarProperty Name="addressID" ColumnName="addressID" />
+                <ScalarProperty Name="owningType" ColumnName="owningType" />
+                <ScalarProperty Name="owningID" ColumnName="owningID" />
+                <ScalarProperty Name="addressTypeID" ColumnName="addressTypeID" />
+                <ScalarProperty Name="addressLine1" ColumnName="addressLine1" />
+                <ScalarProperty Name="addressLine2" ColumnName="addressLine2" />
+                <ScalarProperty Name="addressLine3" ColumnName="addressLine3" />
+                <ScalarProperty Name="addressLine4" ColumnName="addressLine4" />
+                <ScalarProperty Name="addressLine5" ColumnName="addressLine5" />
+                <ScalarProperty Name="postalCode" ColumnName="postalCode" />
+                <ScalarProperty Name="bankAccountDetailID" ColumnName="bankAccountDetailID" />
+                <ScalarProperty Name="accountName" ColumnName="accountName" />
+                <ScalarProperty Name="accountNumber" ColumnName="accountNumber" />
+                <ScalarProperty Name="branchCode" ColumnName="branchCode" />
+                <ScalarProperty Name="branchName" ColumnName="branchName" />
+                <ScalarProperty Name="default" ColumnName="default" />
+                <ScalarProperty Name="bankAccountTypeID" ColumnName="bankAccountTypeID" />
+                <ScalarProperty Name="bankName" ColumnName="bankName" />
+                <ScalarProperty Name="communicationID" ColumnName="communicationID" />
+                <ScalarProperty Name="communicationLine1" ColumnName="communicationLine1" />
+                <ScalarProperty Name="communicationLine2" ColumnName="communicationLine2" />
+                <ScalarProperty Name="communicationTypeID" ColumnName="communicationTypeID" />
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="expertiseOwnershipID" ColumnName="expertiseOwnershipID" />
+                <ScalarProperty Name="ownerType" ColumnName="ownerType" />
+                <ScalarProperty Name="expertiseSubCategoryID" ColumnName="expertiseSubCategoryID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sps_GetAllUserInformation" FunctionName="TBoardEntitiesSQLModel.Store.sps_GetAllUserInformation">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TBoardEntitiesSQLModel.sps_GetAllUserInformation_Result">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="organizationID" ColumnName="organizationID" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="passwordSalt" ColumnName="passwordSalt" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="identificationNumber" ColumnName="identificationNumber" />
+                <ScalarProperty Name="isApproved" ColumnName="isApproved" />
+                <ScalarProperty Name="isLockedOut" ColumnName="isLockedOut" />
+                <ScalarProperty Name="lastActivityDate" ColumnName="lastActivityDate" />
+                <ScalarProperty Name="lastPasswordChange" ColumnName="lastPasswordChange" />
+                <ScalarProperty Name="lastLoginDate" ColumnName="lastLoginDate" />
+                <ScalarProperty Name="failedPasswordAttemptCount" ColumnName="failedPasswordAttemptCount" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="updated" ColumnName="updated" />
+                <ScalarProperty Name="employeeCode" ColumnName="employeeCode" />
+                <ScalarProperty Name="departmentCode" ColumnName="departmentCode" />
+                <ScalarProperty Name="useruuid" ColumnName="useruuid" />
+                <ScalarProperty Name="addressID" ColumnName="addressID" />
+                <ScalarProperty Name="owningType" ColumnName="owningType" />
+                <ScalarProperty Name="owningID" ColumnName="owningID" />
+                <ScalarProperty Name="addressTypeID" ColumnName="addressTypeID" />
+                <ScalarProperty Name="addressLine1" ColumnName="addressLine1" />
+                <ScalarProperty Name="addressLine2" ColumnName="addressLine2" />
+                <ScalarProperty Name="addressLine3" ColumnName="addressLine3" />
+                <ScalarProperty Name="addressLine4" ColumnName="addressLine4" />
+                <ScalarProperty Name="addressLine5" ColumnName="addressLine5" />
+                <ScalarProperty Name="postalCode" ColumnName="postalCode" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="tradingName" ColumnName="tradingName" />
+                <ScalarProperty Name="registrationNumber" ColumnName="registrationNumber" />
+                <ScalarProperty Name="vatNumber" ColumnName="vatNumber" />
+                <ScalarProperty Name="taxNumber" ColumnName="taxNumber" />
+                <ScalarProperty Name="organizationTypeID" ColumnName="organizationTypeID" />
+                <ScalarProperty Name="oem" ColumnName="oem" />
+                <ScalarProperty Name="verified" ColumnName="verified" />
+                <ScalarProperty Name="organizationuuid" ColumnName="organizationuuid" />
+                <ScalarProperty Name="bankAccountDetailID" ColumnName="bankAccountDetailID" />
+                <ScalarProperty Name="accountName" ColumnName="accountName" />
+                <ScalarProperty Name="accountNumber" ColumnName="accountNumber" />
+                <ScalarProperty Name="branchCode" ColumnName="branchCode" />
+                <ScalarProperty Name="branchName" ColumnName="branchName" />
+                <ScalarProperty Name="default" ColumnName="default" />
+                <ScalarProperty Name="bankAccountTypeID" ColumnName="bankAccountTypeID" />
+                <ScalarProperty Name="bankName" ColumnName="bankName" />
+                <ScalarProperty Name="communicationID" ColumnName="communicationID" />
+                <ScalarProperty Name="communicationLine1" ColumnName="communicationLine1" />
+                <ScalarProperty Name="communicationLine2" ColumnName="communicationLine2" />
+                <ScalarProperty Name="communicationTypeID" ColumnName="communicationTypeID" />
+                <ScalarProperty Name="role" ColumnName="role" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sps_GetBidsForQuote" FunctionName="TBoardEntitiesSQLModel.Store.sps_GetBidsForQuote">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TBoardEntitiesSQLModel.sps_GetBidsForQuote_Result">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="SupplyTime" ColumnName="SupplyTime" />
+                <ScalarProperty Name="DeliveryTime" ColumnName="DeliveryTime" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="oem" ColumnName="oem" />
+                <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
+                <ScalarProperty Name="AverageRating" ColumnName="AverageRating" />
+                <ScalarProperty Name="QuoteID" ColumnName="QuoteID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sps_GetHighestBidsForQuote" FunctionName="TBoardEntitiesSQLModel.Store.sps_GetHighestBidsForQuote">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TBoardEntitiesSQLModel.sps_GetHighestBidsForQuote_Result">
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sps_GetOutstandingDocumentRequirements" FunctionName="TBoardEntitiesSQLModel.Store.sps_GetOutstandingDocumentRequirements">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TBoardEntitiesSQLModel.sps_GetOutstandingDocumentRequirements_Result">
+                <ScalarProperty Name="documentTypeID" ColumnName="documentTypeID" />
+                <ScalarProperty Name="documentCode" ColumnName="documentCode" />
+                <ScalarProperty Name="documentDescription" ColumnName="documentDescription" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sps_GetQuoteHistory" FunctionName="TBoardEntitiesSQLModel.Store.sps_GetQuoteHistory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TBoardEntitiesSQLModel.sps_GetQuoteHistory_Result">
+                <ScalarProperty Name="rfqReference" ColumnName="rfqReference" />
+                <ScalarProperty Name="createdDate" ColumnName="createdDate" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="quoteStatusDateTime" ColumnName="quoteStatusDateTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sps_GetQuoteOwnerDetails" FunctionName="TBoardEntitiesSQLModel.Store.sps_GetQuoteOwnerDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TBoardEntitiesSQLModel.sps_GetQuoteOwnerDetails_Result">
+                <ScalarProperty Name="communicationLine1" ColumnName="communicationLine1" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sps_getRFQOwnerDetails" FunctionName="TBoardEntitiesSQLModel.Store.sps_getRFQOwnerDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TBoardEntitiesSQLModel.sps_getRFQOwnerDetails_Result">
+                <ScalarProperty Name="reference" ColumnName="reference" />
+                <ScalarProperty Name="dateCreated" ColumnName="dateCreated" />
+                <ScalarProperty Name="communicationLine1" ColumnName="communicationLine1" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sps_GetRolesForUser" FunctionName="TBoardEntitiesSQLModel.Store.sps_GetRolesForUser">
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sps_GetSubCategories" FunctionName="TBoardEntitiesSQLModel.Store.sps_GetSubCategories">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TBoardEntitiesSQLModel.sps_GetSubCategories_Result">
+                <ScalarProperty Name="SubCategoryName" ColumnName="SubCategoryName" />
+                <ScalarProperty Name="ExpertiseSubCategoryID" ColumnName="ExpertiseSubCategoryID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

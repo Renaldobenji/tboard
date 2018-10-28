@@ -649,7 +649,7 @@ var RegisterAddress = React.createClass({
                             <div className="col-lg-6">
                                 <div className="panel panel-default">
                                     <div className="panel-heading">
-                                        Physical Address
+                                        Postal Address
                                     </div>
                                     <div className="panel-body">
                                         <div className="form-group">

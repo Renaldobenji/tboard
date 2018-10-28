@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using TBoard.Data.Interfaces;
-using TBoard.Data.Model;
+using TBoard.Data.Model.Refactored;
 using TBoard.Data.Repository;
 using TBoard.Web.Models;
 

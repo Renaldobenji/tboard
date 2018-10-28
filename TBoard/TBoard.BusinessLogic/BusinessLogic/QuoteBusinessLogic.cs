@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TBoard.Data.Interfaces;
-using TBoard.Data.Model;
+using TBoard.Data.Model.Refactored;
 using TBoard.Data.Repository;
 using static TBoard.Data.Repository.QuoteRepository;
 
 namespace TBoard.BusinessLogic.BusinessLogic
 {
-    public class QuoteBusinessLogic : BusinessLogic<TBoard.Data.Model.quote>
+    public class QuoteBusinessLogic : BusinessLogic<quote>
     {
         private QuoteRepository repository;
         public QuoteBusinessLogic(IUnitOfWork unitOfWork, QuoteRepository repository) : base(unitOfWork,repository)

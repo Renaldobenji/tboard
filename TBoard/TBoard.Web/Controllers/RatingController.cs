@@ -7,7 +7,7 @@ using System.Net.Http.Formatting;
 using System.Web.Http;
 using Newtonsoft.Json;
 using TBoard.BusinessLogic.BusinessLogic;
-using TBoard.Data.Model;
+using TBoard.Data.Model.Refactored;
 using TBoard.Web.Attributes;
 
 namespace TBoard.Web.Controllers

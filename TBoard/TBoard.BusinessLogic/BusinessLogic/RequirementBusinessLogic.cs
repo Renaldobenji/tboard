@@ -6,11 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using TBoard.Data.Interfaces;
 using TBoard.Data.Model;
+using TBoard.Data.Model.Refactored;
 using TBoard.Data.Repository;
 
 namespace TBoard.BusinessLogic.BusinessLogic
 {
-    public class RequirementBusinessLogic : BusinessLogic<TBoard.Data.Model.requirement>
+    public class RequirementBusinessLogic : BusinessLogic<requirement>
     {
         private RequirementsRepository repository;
 

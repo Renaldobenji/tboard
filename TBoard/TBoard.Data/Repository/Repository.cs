@@ -8,14 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using TBoard.Data.Interfaces;
 using TBoard.Data.Model;
+using TBoard.Data.Model.Refactored;
 
 namespace TBoard.Data.Repository
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class 
     {
-        public readonly TBoardEntities _dbContext;
+        public readonly TBoardEntitiesSQL _dbContext;
 
-        public Repository(TBoardEntities dbContext)
+        public Repository(TBoardEntitiesSQL dbContext)
         {
             _dbContext = dbContext;
         }

@@ -5,13 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TBoard.Data.Model;
+using TBoard.Data.Model.Refactored;
 
 namespace TBoard.Data.Repository
 {
    
     public class DocumentRepository : Repository<document>
     {
-        public DocumentRepository(TBoardEntities dbContext)
+        public DocumentRepository(TBoardEntitiesSQL dbContext)
             : base(dbContext)
         {
 

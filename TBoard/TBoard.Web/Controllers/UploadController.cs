@@ -11,7 +11,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using TBoard.BusinessLogic.BusinessLogic;
-using TBoard.Data.Model;
+using TBoard.Data.Model.Refactored;
 using TBoard.Web.Attributes;
 using TBoard.Web.Helpers;
 
@@ -24,7 +24,7 @@ namespace TBoard.Web.Controllers
         [JWTTokenValidation]
         public ActionResult Index(int key)
         {
-            using (TBoardEntities entities = new TBoardEntities())
+            using (TBoardEntitiesSQL entities = new TBoardEntitiesSQL())
             {
 
                 var documentReq = entities.sps_GetOutstandingDocumentRequirements(key);
@@ -44,7 +44,7 @@ namespace TBoard.Web.Controllers
         public ActionResult DocumentTypeIndex(string documentCode, int key)
         {
             UploadViewModel view = new UploadViewModel();
-            using (TBoardEntities entities = new TBoardEntities())
+            using (TBoardEntitiesSQL entities = new TBoardEntitiesSQL())
             {
                 var documentReq = entities.documenttypes.Where(x => x.documentDescription == documentCode).FirstOrDefault();
                 
@@ -60,7 +60,7 @@ namespace TBoard.Web.Controllers
             int orgID = Convert.ToInt32(EncryptionHelper.Decrypt(key));
 
             UploadViewModel view = new UploadViewModel();
-            using (TBoardEntities entities = new TBoardEntities())
+            using (TBoardEntitiesSQL entities = new TBoardEntitiesSQL())
             {
                 var documentReq = entities.documenttypes.Where(x => x.documentDescription == documentCode).FirstOrDefault();
 
@@ -77,7 +77,7 @@ namespace TBoard.Web.Controllers
             try
             {
                 string storageDetails;
-                using (TBoardEntities entities = new TBoardEntities())
+                using (TBoardEntitiesSQL entities = new TBoardEntitiesSQL())
                 {
                     storageDetails = entities.configs.Where(x => x.name == "StorageConnectionString").Select(y => y.value).FirstOrDefault();
                 }
@@ -102,7 +102,7 @@ namespace TBoard.Web.Controllers
                         // NOTE: To store in memory use postedFile.InputStream
                         blockBlob.UploadFromStream(httpRequest.Files[file].InputStream);
 
-                        using (TBoardEntities entities = new TBoardEntities())
+                        using (TBoardEntitiesSQL entities = new TBoardEntitiesSQL())
                         {
                             entities.documents.Add(new document()
                             {
@@ -134,7 +134,7 @@ namespace TBoard.Web.Controllers
             try
             {
                 string storageDetails;
-                using (TBoardEntities entities = new TBoardEntities())
+                using (TBoardEntitiesSQL entities = new TBoardEntitiesSQL())
                 {
                     storageDetails = entities.configs.Where(x => x.name == "StorageConnectionString").Select(y => y.value).FirstOrDefault();                    
                 }
@@ -146,7 +146,7 @@ namespace TBoard.Web.Controllers
                     foreach (string file in httpRequest.Files)
                     {
                         documentTypeID = Convert.ToInt32(httpRequest.Form["DocumentType"]);
-                        using (TBoardEntities entities = new TBoardEntities())
+                        using (TBoardEntitiesSQL entities = new TBoardEntitiesSQL())
                         {
                             try
                             {
@@ -173,7 +173,7 @@ namespace TBoard.Web.Controllers
                             fs.Write(fileData, 0, fileData.Length);
                         };
 
-                        using (TBoardEntities entities = new TBoardEntities())
+                        using (TBoardEntitiesSQL entities = new TBoardEntitiesSQL())
                         {
                             entities.documents.Add(new document()
                             {
@@ -206,7 +206,7 @@ namespace TBoard.Web.Controllers
             try
             {
                 string storageDetails;
-                using (TBoardEntities entities = new TBoardEntities())
+                using (TBoardEntitiesSQL entities = new TBoardEntitiesSQL())
                 {
                     storageDetails = entities.configs.Where(x => x.name == "StorageConnectionString").Select(y => y.value).FirstOrDefault();
                 }
@@ -232,7 +232,7 @@ namespace TBoard.Web.Controllers
                             fs.Write(fileData, 0, fileData.Length);
                         };
 
-                        using (TBoardEntities entities = new TBoardEntities())
+                        using (TBoardEntitiesSQL entities = new TBoardEntitiesSQL())
                         {
                             entities.documents.Add(new document()
                             {

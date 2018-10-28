@@ -8,6 +8,7 @@ using TBoard.BusinessLogic.Password;
 using TBoard.BusinessLogic.Responses;
 using TBoard.Data.Interfaces;
 using TBoard.Data.Model;
+using TBoard.Data.Model.Refactored;
 using TBoard.Data.Repository;
 
 namespace TBoard.BusinessLogic.BusinessLogic

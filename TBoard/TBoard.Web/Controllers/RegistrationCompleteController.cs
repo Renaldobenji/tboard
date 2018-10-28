@@ -10,7 +10,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using TBoard.BusinessLogic.BusinessLogic;
-using TBoard.Data.Model;
+using TBoard.Data.Model.Refactored;
 using TBoard.Web.Attributes;
 
 

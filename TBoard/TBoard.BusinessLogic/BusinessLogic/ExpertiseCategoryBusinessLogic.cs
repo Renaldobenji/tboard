@@ -6,11 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using TBoard.Data.Interfaces;
 using TBoard.Data.Repository;
-using TBoard.Data.Model;
+using TBoard.Data.Model.Refactored;
 
 namespace TBoard.BusinessLogic.BusinessLogic
 {
-    public class ExpertiseCategoryBusinessLogic : BusinessLogic<TBoard.Data.Model.expertisecategory>
+    public class ExpertiseCategoryBusinessLogic : BusinessLogic<expertisecategory>
     {
         private ExpertiseCategoryRepository repository;
 

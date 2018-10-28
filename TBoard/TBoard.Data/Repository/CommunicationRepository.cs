@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TBoard.Data.Model;
+using TBoard.Data.Model.Refactored;
 
 namespace TBoard.Data.Repository
 {
-    public class CommunicationRepository : Repository<Model.communication>
+    public class CommunicationRepository : Repository<communication>
     {
-        public CommunicationRepository(TBoardEntities dbContext)
+        public CommunicationRepository(TBoardEntitiesSQL dbContext)
             : base(dbContext)
         {
                 

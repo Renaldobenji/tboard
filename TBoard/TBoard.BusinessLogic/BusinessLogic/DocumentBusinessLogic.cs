@@ -6,11 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using TBoard.Data.Interfaces;
 using TBoard.Data.Repository;
+using TBoard.Data.Model.Refactored;
 using TBoard.Data.Model;
 
 namespace TBoard.BusinessLogic.BusinessLogic
 {
-    public class DocumentBusinessLogic : BusinessLogic<TBoard.Data.Model.document>
+    public class DocumentBusinessLogic : BusinessLogic<document>
     {
         private DocumentRepository repository;
 

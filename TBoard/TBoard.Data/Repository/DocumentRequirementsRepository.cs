@@ -7,20 +7,21 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MySql.Data.MySqlClient;
+
 using TBoard.Data.Model;
+using TBoard.Data.Model.Refactored;
 
 namespace TBoard.Data.Repository
 {
     public class DocumentRequirementsRepository : Repository<documentrequirement>
     {
-        public DocumentRequirementsRepository(TBoardEntities dbContext)
+        public DocumentRequirementsRepository(TBoardEntitiesSQL dbContext)
             :base(dbContext)
         {
            
         }
 
-        public IList<DocumentReq> GetOutstandingDocumentRequirements(int organizationID)
+        public IList<sps_GetOutstandingDocumentRequirements_Result> GetOutstandingDocumentRequirements(int organizationID)
         {
             var result = this._dbContext.sps_GetOutstandingDocumentRequirements(organizationID).ToList();
             return result;

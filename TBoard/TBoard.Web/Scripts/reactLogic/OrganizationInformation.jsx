@@ -169,7 +169,7 @@ var OrganizationInformation = React.createClass({
 	    // Typical usage (don't forget to compare props):
 	    if (this.props.OrganizationID !== prevProps.OrganizationID) {	       
 	        this.fetchDocumentRequirements(this.state.OrganizationID);
-	        this.fetchQuestionMetaData(decodedToken.OrganizationID);
+	        this.fetchQuestionMetaData(this.state.OrganizationID);
 	    }
 	},
 
@@ -177,7 +177,7 @@ var OrganizationInformation = React.createClass({
     
     componentDidMount: function() {
         this.fetchDocumentRequirements(this.state.OrganizationID);
-        this.fetchQuestionMetaData(decodedToken.OrganizationID);
+        this.fetchQuestionMetaData(this.state.OrganizationID);
     },	
 		
 	render: function(){

@@ -13,7 +13,7 @@ using System.Text;
 using System.Web.Http;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.BusinessLogic.Password;
-using TBoard.Data.Model;
+using TBoard.Data.Model.Refactored;
 using TBoard.Web.Helpers;
 using TBoard.Web.Services;
 
@@ -63,7 +63,7 @@ namespace TBoard.Web.Controllers
                 return errresp;
             }
 
-            var userRoles = this.userBusinessLogic.GetRolesForUser(user.userID);
+            var userRoles = userBusinessLogic.GetRolesForUser(user.userID);
             var organization = getUserOganization(user.organizationID);
             var verified = false;
             var organizationName = "";
@@ -252,7 +252,7 @@ namespace TBoard.Web.Controllers
                         // NOTE: To store in memory use postedFile.InputStream
                         blockBlob.UploadFromStream(httpRequest.Files[file].InputStream);
 
-                        using (TBoardEntities entities = new TBoardEntities())
+                        using (TBoardEntitiesSQL entities = new TBoardEntitiesSQL())
                         {
                             entities.documents.Add(new document()
                             {
@@ -294,7 +294,7 @@ namespace TBoard.Web.Controllers
             if (organizationID.HasValue == false)
                 return null;
 
-            return this.organizationBusinessLogic.FindBy(x => x.organizationID == organizationID).FirstOrDefault();
+            return organizationBusinessLogic.FindBy(x => x.organizationID == organizationID).FirstOrDefault();
         }
     }
 }

@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TBoard.Data.Model;
+using TBoard.Data.Model.Refactored;
 
 namespace TBoard.Data.Repository
 {
     public class RFQRepository : Repository<rfq>
     {
-        public RFQRepository(TBoardEntities dbContext)
+        public RFQRepository(TBoardEntitiesSQL dbContext)
             :base(dbContext)
         {
             

@@ -3,11 +3,12 @@ using Microsoft.Practices.Unity;
 using System.Web.Http;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.Data.Interfaces;
-using TBoard.Data.Model;
+using TBoard.Data.Model.Refactored;
 using TBoard.Data.Repository;
 using Unity.WebApi;
 using TBoard.Web.Services;
 using TBoard.Web.Controllers;
+
 
 namespace TBoard.Web
 {
@@ -17,7 +18,7 @@ namespace TBoard.Web
         {
 			var container = new UnityContainer();
 
-            container.RegisterType<TBoardEntities, TBoardEntities>(new HierarchicalLifetimeManager());
+            container.RegisterType<TBoardEntitiesSQL, TBoardEntitiesSQL>(new HierarchicalLifetimeManager());
             container.RegisterType<IUnitOfWork, UnitOfWork>(new HierarchicalLifetimeManager());
 
             container.RegisterType<IAuthenticationService, AuthenticationService>();

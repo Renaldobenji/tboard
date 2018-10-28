@@ -5,12 +5,12 @@ using System.Net.Configuration;
 using System.Text;
 using System.Threading.Tasks;
 using TBoard.Data.Interfaces;
-using TBoard.Data.Model;
+using TBoard.Data.Model.Refactored;
 using TBoard.Data.Repository;
 
 namespace TBoard.BusinessLogic.BusinessLogic
 {
-    public class EmailQueueBusinessLogic : BusinessLogic<TBoard.Data.Model.emailqueue>
+    public class EmailQueueBusinessLogic : BusinessLogic<emailqueue>
     {
         private EmailQueueRepository repository;
 

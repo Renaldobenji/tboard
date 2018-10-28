@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TBoard.Data.Model;
+using TBoard.Data.Model.Refactored;
 
 namespace TBoard.Data.Repository
 {
@@ -17,7 +18,7 @@ namespace TBoard.Data.Repository
 
     public class ExpertiseCategoryRepository : Repository<expertisecategory>
     {
-        public ExpertiseCategoryRepository(TBoardEntities dbContext)
+        public ExpertiseCategoryRepository(TBoardEntitiesSQL dbContext)
             :base(dbContext)
         {
             

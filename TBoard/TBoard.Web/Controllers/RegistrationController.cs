@@ -12,7 +12,7 @@ using System.Web;
 using System.Web.Http;
 using TBoard.BusinessLogic.BusinessLogic;
 using TBoard.BusinessLogic.Responses;
-using TBoard.Data.Model;
+using TBoard.Data.Model.Refactored;
 using TBoard.Data.Interfaces;
 using TBoard.Data.Repository;
 

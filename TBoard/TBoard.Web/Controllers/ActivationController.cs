@@ -10,7 +10,8 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using TBoard.BusinessLogic.BusinessLogic;
-using TBoard.Data.Model;
+using TBoard.Data.Model.Refactored;
+
 using TBoard.Web.Attributes;
 
 
@@ -24,7 +25,7 @@ namespace TBoard.Web.Controllers
         public ActionResult Index()
         {           
 
-            using (TBoardEntities entities = new TBoardEntities())
+            using (TBoardEntitiesSQL entities = new TBoardEntitiesSQL())
             {
                 string name = Request.QueryString["name"];
                 var user = entities.users.Where(x => x.username == name).FirstOrDefault();

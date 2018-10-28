@@ -9,7 +9,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Web.Http;
 using Newtonsoft.Json;
 using TBoard.BusinessLogic.BusinessLogic;
-using TBoard.Data.Model;
+using TBoard.Data.Model.Refactored;
 using System.Web;
 using TBoard.Web.Attributes;
 using TBoard.Web.Helpers;

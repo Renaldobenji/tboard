@@ -5,12 +5,12 @@ using System.Net.Configuration;
 using System.Text;
 using System.Threading.Tasks;
 using TBoard.Data.Interfaces;
-using TBoard.Data.Model;
+using TBoard.Data.Model.Refactored;
 using TBoard.Data.Repository;
 
 namespace TBoard.BusinessLogic.BusinessLogic
 {
-    public class DocumentRequirementBusinessLogic : BusinessLogic<TBoard.Data.Model.documentrequirement>
+    public class DocumentRequirementBusinessLogic : BusinessLogic<documentrequirement>
     {
         private DocumentRequirementsRepository repository;
 
@@ -20,7 +20,7 @@ namespace TBoard.BusinessLogic.BusinessLogic
             this.repository = repository;
         }
 
-        public IList<DocumentReq> GetOutstandingDocumentRequirements(
+        public IList<sps_GetOutstandingDocumentRequirements_Result> GetOutstandingDocumentRequirements(
             int organizationID)
         {
             return repository.GetOutstandingDocumentRequirements(organizationID);

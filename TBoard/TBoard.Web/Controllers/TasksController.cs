@@ -7,10 +7,11 @@ using System.Net.Http.Formatting;
 using System.Web.Http;
 using Newtonsoft.Json;
 using TBoard.BusinessLogic.BusinessLogic;
-using TBoard.Data.Model;
+using TBoard.Data.Model.Refactored;
 using System.Net.Mail;
 using System.IO;
 using System.Web;
+
 
 namespace TBoard.Web.Controllers
 {
@@ -33,7 +34,7 @@ namespace TBoard.Web.Controllers
             DateTime startDate = DateTime.Now;
             DateTime endDate = DateTime.Now.AddDays(10);
 
-            using (TBoardEntities entities = new TBoardEntities())
+            using (TBoardEntitiesSQL entities = new TBoardEntitiesSQL())
             {
                 var closeToExpiry = (from documents in entities.documents
                                    where documents.expiryDate.Value >= startDate && documents.expiryDate.Value <= endDate
@@ -78,7 +79,7 @@ namespace TBoard.Web.Controllers
         {
             DateTime startDate = DateTime.Now;
             DateTime endDate = DateTime.Now.AddDays(1);
-            using (TBoardEntities entities = new TBoardEntities())
+            using (TBoardEntitiesSQL entities = new TBoardEntitiesSQL())
             {
                 var organ =        (from org in entities.organizations
                                      join doc in entities.documents on org.organizationID equals doc.organizationID
