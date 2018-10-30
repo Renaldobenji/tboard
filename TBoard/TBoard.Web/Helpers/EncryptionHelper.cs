@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
@@ -29,12 +30,13 @@ namespace TBoard.Web.Helpers
                     clearText = Convert.ToBase64String(ms.ToArray());
                 }
             }
-            return clearText;
+            return clearText.Replace("/","+123");
         }
         public static string Decrypt(string cipherText)
         {
             string EncryptionKey = "abc123";
             cipherText = cipherText.Replace(" ", "+");
+            cipherText = cipherText.Replace("+123", "/");
             byte[] cipherBytes = Convert.FromBase64String(cipherText);
             using (Aes encryptor = Aes.Create())
             {
