@@ -130,10 +130,18 @@ namespace TBoard.Web.Controllers
         public HttpResponseMessage PostForm()
         {
             int expiryInMonths = 0;
-            
+            var httpRequest = System.Web.HttpContext.Current.Request;
+            string documentCode = httpRequest.QueryString[1];
+            int orgID = Convert.ToInt32(EncryptionHelper.Decrypt(httpRequest.QueryString[2]));
+            int documentTypeID = 0;
+
+            using (TBoardEntitiesSQL entities = new TBoardEntitiesSQL())
+            {
+                documentTypeID = entities.documenttypes.Where(x => x.documentCode == documentCode).FirstOrDefault().documentTypeID;
+            }
+
             try
             {
-
                 string storageDetails = Path.GetPathRoot(Environment.CurrentDirectory).ToUpper();
             
                 using (TBoardEntitiesSQL entities = new TBoardEntitiesSQL())
@@ -142,14 +150,11 @@ namespace TBoard.Web.Controllers
                 }
 
                 storageDetails= Path.Combine(storageDetails, getDatePath());
-
-                var httpRequest = System.Web.HttpContext.Current.Request;
+                
                 if (httpRequest.Files.Count > 0)
                 {
-                    int documentTypeID = 0;
                     foreach (string file in httpRequest.Files)
                     {
-                        documentTypeID = Convert.ToInt32(httpRequest.Form["DocumentType"]);
                         using (TBoardEntitiesSQL entities = new TBoardEntitiesSQL())
                         {
                             try
@@ -183,9 +188,9 @@ namespace TBoard.Web.Controllers
                         {
                             entities.documents.Add(new document()
                             {
-                                organizationID = Convert.ToInt32(httpRequest.Form["OrganizationID"]),
+                                organizationID = orgID,
                                 dateCreated = DateTime.Now,
-                                documentTypeID = Convert.ToInt32(httpRequest.Form["DocumentType"]),
+                                documentTypeID = documentTypeID,
                                 documentPath = Path.Combine(storageDetails, guiidName),
                                 expiryDate = DateTime.Now.AddMonths(expiryInMonths)
                             });

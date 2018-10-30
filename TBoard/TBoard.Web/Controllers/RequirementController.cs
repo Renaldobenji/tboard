@@ -25,7 +25,7 @@ namespace TBoard.Web.Controllers
         }
 
         // GET api/<controller>/5
-        [Route("api/Requirement/{requirementType}/{ownerType}/{ownerID}")]
+        [Route("api/Requirement/{requirementType}/{ownerType}/{*ownerID}")]
         [JWTTokenValidation]
         public HttpResponseMessage Get(string requirementType, string ownerType, string ownerID)
         {

@@ -1,4 +1,89 @@
-﻿var DocumentRequirementsSection = React.createClass({
+﻿var DocumentRequirementsList = React.createClass({
+
+    render: function () {
+        var filePondInformationCollection = [];
+        var filePondIds = [];
+
+        //console.log({ this.props.DocumentRequirements });
+        function onAfterTableComplete() {
+            //console.log(documentRequirementArray);
+
+            // Turn input element into a pond
+            $('.filepondClassIdentifier').filepond();
+
+            $('.filepondClassIdentifier').each(function () {
+                var currentFilePondElement = $(this);
+                for (var i = 0; i < filePondInformationCollection.length; i++) {
+                    if (filePondInformationCollection[i].filePondID == $(this).attr("id")) {
+                        $(currentFilePondElement).filepond({
+                            allowMultiple: true,
+                            server: filePondInformationCollection[i].uploadPath
+                        });
+                    }
+                }
+            });
+
+            // Set allowMultiple property to true
+            $('.filepondClassIdentifier').filepond('allowMultiple', true);
+
+            // Listen for addfile event
+            $('.filepondClassIdentifier').on('FilePond:addfile', function (e) {
+                const inputElement = document.querySelector('input[type="file"]');
+                // create the FilePond instance
+                const pond = FilePond.create(inputElement);
+
+                console.log('file added event', e);
+            });
+
+        }
+        var options = {
+            afterTableComplete: onAfterTableComplete // A hook for after table render complete.
+        };
+
+        function ResolveView(cell, row) {
+
+            var uploadSyle = {
+                'font-size': '8pt'
+            };
+
+            if (row.ResolvedDate == "") {
+                var url = 'Upload/PostForm?&documentCode=' + row.RequirementName + '&key=' + row.OrgID;
+                var filePondID = row.RequirementName .replace(/\s/g, '-');
+                var filePondInformation = { uploadPath: url, filePondID: filePondID };
+
+                filePondInformationCollection.push(filePondInformation);
+                console.log(filePondInformationCollection);
+                // return <div><a href={'Upload/DocumentTypeIndexEncrypted?&documentCode=' + row.RequirementName + '&key=' + row.OrgID} id="fakeLink" target="_blank"><button class="btn btn-outline btn-primary">Upload Document</button></a></div>    
+                return <div className="form-group" style={{ uploadSyle }}>
+                    <input id={filePondID} type="file"
+                        className="filepond filepondClassIdentifier" data-file-metadata-hello="test"
+                        name="filepond"></input>
+                </div>
+            }
+            else
+                return <div>Resolved</div>
+        }
+
+        return (
+            <div className="panel panel-red">
+                <div className="panel-heading">
+                    Document Requirements
+			            </div>
+                <div className="panel-body">
+                    <BootstrapTable data={this.props.DocumentRequirements} striped={true} hover={true} options={options}>
+                        <TableHeaderColumn isKey={true} dataField="RequirementType">Requirement Type</TableHeaderColumn>
+                        <TableHeaderColumn dataField="RequirementName">Document</TableHeaderColumn>
+                        <TableHeaderColumn dataField="CreatedDate">Created</TableHeaderColumn>
+                        <TableHeaderColumn dataFormat={ResolveView}>Resolution</TableHeaderColumn>
+                    </BootstrapTable>
+                </div>
+            </div>
+        );
+    }
+});
+
+
+var DocumentRequirementsSection = React.createClass({
 
     getInitialState: function () {
         return {
@@ -17,19 +102,6 @@
             cache: false,
             success: function (data) {
                 this.setState({ DocumentRequirements: data });
-
-                if (data.length > 0) {
-                    var opts = {
-                        title: "Document Requirement",
-                        text: "Please resolve the Outstanding Document Requirements.",
-                        addclass: "stack-bottomright",
-                        type: "error",
-                        nonblock: {
-                            nonblock: true
-                        }
-                    };
-                    new PNotify(opts);
-                }
 
             }.bind(this),
             error: function (xhr, status, err) {
@@ -90,7 +162,7 @@
                     <div className="row">
                         <div className="col-lg-10">
                             <h1 className="page-header">
-                                ISO 9001 Quality Management
+                                Document Requirements
                             </h1>
                         </div>
                     </div>
