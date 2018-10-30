@@ -133,15 +133,13 @@ namespace TBoard.Web.Controllers
             
             try
             {
-                string storageDetails;
-                using (TBoardEntitiesSQL entities = new TBoardEntitiesSQL())
 
-                 storageDetails = Path.GetPathRoot(Environment.CurrentDirectory).ToUpper();
+                string storageDetails = Path.GetPathRoot(Environment.CurrentDirectory).ToUpper();
             
-                /*using (TBoardEntities entities = new TBoardEntities())
-
+                using (TBoardEntitiesSQL entities = new TBoardEntitiesSQL())
+                {
                     storageDetails = Path.Combine(storageDetails,entities.configs.Where(x => x.name == "StorageConnectionString").Select(y => y.value).FirstOrDefault());                    
-                }*/
+                }
 
                 storageDetails= Path.Combine(storageDetails, getDatePath());
 
