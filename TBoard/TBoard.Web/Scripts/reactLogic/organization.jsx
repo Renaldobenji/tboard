@@ -1547,12 +1547,60 @@ var ContactDirectoryList = React.createClass({
 
 
 var DocumentRequirementsList = React.createClass({	
-    render: function () {
-        
-        function ResolveView(cell, row) {
 
-            if (row.ResolvedDate == "")
-                return <div><a href={'Upload/DocumentTypeIndexEncrypted?&documentCode=' + row.RequirementName + '&key=' + row.OrgID} id="fakeLink" target="_blank"><button class="btn btn-outline btn-primary">Upload Document</button></a></div>           
+    render: function () {
+        var documentRequirementArray = [];
+        //console.log({ this.props.DocumentRequirements });
+        function onAfterTableComplete() {
+            console.log(documentRequirementArray);
+
+            // Turn input element into a pond
+            $('.testing123').filepond();
+
+            $('.testing123').each(function () {
+                
+                //console.log($(this).attr("data-file-metadata-hello"))
+            });
+
+            // Turn input element into a pond with configuration options
+            $('.testing123').filepond({
+                allowMultiple: true,
+                server: 'Upload/PostRFQForm?orgID=' //+ this.props.OrganizationID
+            });
+
+            // Set allowMultiple property to true
+            $('.testing123').filepond('allowMultiple', true);
+
+            // Listen for addfile event
+            $('.testing123').on('FilePond:addfile', function (e) {
+                const inputElement = document.querySelector('input[type="file"]');
+                // create the FilePond instance
+                const pond = FilePond.create(inputElement);
+
+                console.log('file added event', e);
+            });
+           
+        }
+        var options = {
+            afterTableComplete: onAfterTableComplete // A hook for after table render complete.
+        };
+
+        function ResolveView(cell, row) {
+      
+            var uploadSyle = {
+                'font-size': '8pt'
+            };
+
+            if (row.ResolvedDate == "") {
+                var url = 'Upload/DocumentTypeIndexEncrypted?&documentCode=' + row.RequirementName + '&key=' + row.OrgID;
+                documentRequirementArray.push(url)
+                // return <div><a href={'Upload/DocumentTypeIndexEncrypted?&documentCode=' + row.RequirementName + '&key=' + row.OrgID} id="fakeLink" target="_blank"><button class="btn btn-outline btn-primary">Upload Document</button></a></div>    
+                return <div className="form-group" style={{ uploadSyle }}>
+                    <input id="fileuploadzz" type="file"
+                        className="filepond testing123" data-file-metadata-hello="test"
+                        name="filepond"></input>
+                </div>
+            }
             else
                 return <div>Resolved</div>
         }
@@ -1562,12 +1610,12 @@ var DocumentRequirementsList = React.createClass({
 			            <div className="panel-heading">
 				            Document Requirements
 			            </div>
-			            <div className="panel-body">
-				            <BootstrapTable data={this.props.DocumentRequirements} striped={true} hover={true}>
-                              <TableHeaderColumn isKey={true} dataField="RequirementType">Requirement Type</TableHeaderColumn>
-                              <TableHeaderColumn dataField="RequirementName">Document</TableHeaderColumn>
-                              <TableHeaderColumn dataField="CreatedDate">Created</TableHeaderColumn>                             
-                              <TableHeaderColumn dataFormat={ResolveView}>Resolution</TableHeaderColumn>                       
+                        <div className="panel-body">
+                            <BootstrapTable data={this.props.DocumentRequirements} striped={true} hover={true}  options={options}>
+                                <TableHeaderColumn isKey={true} dataField="RequirementType">Requirement Type</TableHeaderColumn>
+                                <TableHeaderColumn dataField="RequirementName">Document</TableHeaderColumn>
+                                <TableHeaderColumn dataField="CreatedDate">Created</TableHeaderColumn>                             
+                                <TableHeaderColumn dataFormat={ResolveView}>Resolution</TableHeaderColumn>   
 				            </BootstrapTable>
 			            </div>                         
 		            </div>

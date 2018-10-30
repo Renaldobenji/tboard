@@ -461,6 +461,7 @@ var OrganizationCompleteness = React.createClass({
     },
 
     loadData: function (orgID, userID) {
+
         $.ajax({
             url: 'api/User/OrganizationCompleteness/' + orgID,
             success: function (data) {

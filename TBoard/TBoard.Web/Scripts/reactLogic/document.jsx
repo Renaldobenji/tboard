@@ -20,7 +20,8 @@ var DocumentManagement = React.createClass({
 	    this.setState({ UploadURL: "Upload?key=" + decodedToken.OrganizationID });	    
 	},
 
-    fetchMissingRequirements: function(orgID) {
+    fetchMissingRequirements: function (orgID) {
+        console.log(orgID)
         $.ajax({
           url: 'api/Document/GetOutstandingRequirements/' + orgID,
           dataType: 'json',

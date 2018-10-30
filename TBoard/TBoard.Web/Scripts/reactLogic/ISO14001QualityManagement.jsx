@@ -2,7 +2,6 @@
 
     getInitialState: function () {
         return {
-            DocumentRequirements: [],
             OrganizationID: "",
             UserID: "",
             environmentalManagementSystemCertified: "NO",
@@ -57,7 +56,6 @@
             contentType: 'application/json',
             success: function (data) {
                 if (data.length > 0) {
-                    console.log(data);
                     this.setState({ environmentalManagementSystemCertified: data.find(metaData => metaData.metaDataName === "EnvironmentalManagementSystemCertified").metaDataValue });
                     this.setState({ usePrincipleOfReUse: data.find(metaData => metaData.metaDataName === "UsePrincipleOfReUse").metaDataValue });
                     this.setState({ environmentalManagementPolicy: data.find(metaData => metaData.metaDataName === "EnvironmentalManagementPolicy").metaDataValue });
@@ -83,35 +81,7 @@
         });
     },
 
-    fetchDocumentRequirements: function (orgID) {
-        $.ajax({
-            url: 'api/Requirement/DOCUMENTREQUIREMENT/ORG/' + orgID,
-            dataType: 'json',
-            cache: false,
-            success: function (data) {
-                this.setState({ DocumentRequirements: data });
-
-                if (data.length > 0) {
-                    var opts = {
-                        title: "Document Requirement",
-                        text: "Please resolve the Outstanding Document Requirements.",
-                        addclass: "stack-bottomright",
-                        type: "error",
-                        nonblock: {
-                            nonblock: true
-                        }
-                    };
-                    new PNotify(opts);
-                }
-
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error('api/Requirements/Document/ORG/', status, err.toString());
-            }.bind(this)
-        });
-    },
-
-
+   
     ISO14001InfoPOST: function () {
         console.log('POSTING FORM');
         $.ajax({
@@ -134,7 +104,7 @@
 
             }.bind(this),
             error: function (xhr, status, err) {
-                console.error('api/Organization/MetaData/ISO9001', status, err.toString());
+                console.error('api/Organization/MetaData/ISO14001', status, err.toString());
             }.bind(this)
         });
     },
@@ -142,82 +112,66 @@
 
     environmentalManagementSystemCertified: function (e) {
         this.setState({ environmentalManagementSystemCertified: e.target.value });
-        console.log(this.state.environmentalManagementSystemCertified);
     },
 
     environmentalManagementPolicy: function (e) {
         this.setState({ environmentalManagementPolicy: e.target.value });
-        console.log(this.state.environmentalManagementPolicy);
     },
 
     registeredWithSaatcaOrSacnasp: function (e) {
         this.setState({ registeredWithSaatcaOrSacnasp: e.target.value });
-        console.log(this.state.registeredWithSaatcaOrSacnasp);
     },
 
     reduceCarbonFootPrint: function (e) {
         this.setState({ reduceCarbonFootPrint: e.target.value });
-        console.log(this.state.reduceCarbonFootPrint);
     },
 
     enviromentalIncidentProcedure: function (e) {
         this.setState({ enviromentalIncidentProcedure: e.target.value });
-        console.log(this.state.enviromentalIncidentProcedure);
     },
 
     driversLicensedToTransportCargo: function (e) {
         this.setState({ drivesLicensedToTransportCargo: e.target.value });
-        console.log(this.state.drivesLicensedToTransportCargo);
     },
 
     supplyHazardousGoods: function (e) {
         this.setState({ supplyHazardousGoods: e.target.value });
-        console.log(this.state.supplyHazardousGoods);
     },
 
     transportWasteToLicensedWasteFacilities: function (e) {
         this.setState({ transportWasteToLicensedWasteFacilities: e.target.value });
-        console.log(this.state.transportWasteToLicensedWasteFacilities);
     },
 
     trucksMarkedWithCorrectSignage: function (e) {
         this.setState({ trucksMarkedWithCorrectSignage: e.target.value });
-        console.log(this.state.trucksMarkedWithCorrectSignage);
     },
 
     provideWasteDisposalProcedure: function (e) {
         this.setState({ provideWasteDisposalProcedure: e.target.value });
-        console.log(this.state.provideWasteDisposalProcedure);
     },
 
     permitsToTransportWaste: function (e) {
         this.setState({ permitsToTransportWaste: e.target.value });
-        console.log(this.state.permitsToTransportWaste);
     },
 
     trucksRegularlyServiced: function (e) {
         this.setState({ trucksRegularlyServiced: e.target.value });
-        console.log(this.state.trucksRegularlyServiced);
     },
 
     provideSpillCLeanUpProcedure: function (e) {
         this.setState({ provideSpillCLeanUpProcedure: e.target.value });
-        console.log(this.state.provideSpillCLeanUpProcedure);
     },
 
     provideHousekeepingProcedure: function (e) {
         this.setState({ provideHousekeepingProcedure: e.target.value });
-        console.log(this.state.provideHousekeepingProcedure);
     },
 
     usePrincipleOfReUse: function (e) {
         this.setState({ usePrincipleOfReUse: e.target.value });
-        console.log(this.state.usePrincipleOfReUse);
     },
 
     haveMaterialSafetyDataSheet: function (e) {
         this.setState({ haveMaterialSafetyDataSheet: e.target.value });
-        console.log(this.state.haveMaterialSafetyDataSheet);
     },
 
     componentWillMount: function () {
@@ -226,19 +180,8 @@
 
         this.setState({ OrganizationID: decodedToken.OrganizationID });
         this.setState({ UserID: decodedToken.UserID });
-        this.fetchQuestionMetaData(decodedToken.OrganizationID);
+      //  this.fetchQuestionMetaData(decodedToken.OrganizationID);
 
-    },
-
-    componentDidUpdate(prevProps) {
-        // Typical usage (don't forget to compare props):
-        if (this.props.OrganizationID !== prevProps.OrganizationID) {
-            this.fetchDocumentRequirements(this.state.OrganizationID);
-        }
-    },
-
-    componentDidMount: function () {
-        this.fetchDocumentRequirements(this.state.OrganizationID);
     },
 
     render: function () {
@@ -467,7 +410,7 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <DocumentRequirementsList OrgID={this.props.OrganizationID} DocumentRequirements={this.state.DocumentRequirements} />
+                                    
                                 </div>
                             </div>
                         </div>

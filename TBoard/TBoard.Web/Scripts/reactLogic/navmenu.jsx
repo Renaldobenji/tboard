@@ -77,7 +77,8 @@
                             </li>
                             { this.state.roles.indexOf("CanViewBidsMenu") > -1 || this.state.roles.indexOf("CorporateSeller") > -1  ?
                             <MyBidsMenu activeBidsTotal={this.state.activeBidsTotal}  bidsWonCount={this.state.bidsWonCount}/> : null }    
-                            <ReportsMenu />                       
+                        <ReportsMenu />
+                        <DocumentRequirements/>
                         </ul>
                     </div>                
                 </div>
@@ -112,6 +113,7 @@ var MyBidsMenu = React.createClass({
             )
 }
 });
+
 
 var OrganizationMenu = React.createClass({
 
@@ -226,5 +228,26 @@ var ReportsMenu = React.createClass({
 	                </ul>
                 </li>
             )
-}
+    }
+    
+});
+
+var DocumentRequirements = React.createClass({
+    render: function () {
+
+        var navBarSyle = {
+            marginBottom: 0
+        };
+
+        return (
+            <li>
+                <a><i className="fa fa-bar-chart-o fa-fw"></i>Document Requirements<span className="fa arrow"></span></a>
+                <ul className="nav nav-second-level">
+                    <li>
+                        <a href="#DocumentRequirements">Document Requirements</a>
+                    </li>
+                </ul>
+            </li>
+        )
+    }
 });

@@ -265,7 +265,7 @@ routie({
             );
         }
         ,
-        'ISO14001': function () {
+    'ISO14001': function () {
             ReactDOM.render(
                 React.createElement(ISO14001QualityManagement, null), document.getElementById('container')
             );
@@ -280,9 +280,12 @@ routie({
             ReactDOM.render(
                 React.createElement(BEECompliance, null), document.getElementById('container')
             );
-        }
-    
-
+    },
+    'DocumentRequirements': function () {
+        ReactDOM.render(
+            React.createElement(DocumentRequirementsSection, null), document.getElementById('container')
+        );
+    }
 });
 
 routie('rfqdetail/:rfqreference', function (rfqreference) {

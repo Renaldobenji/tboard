@@ -216,3 +216,5 @@ pip-log.txt
 #Mr Developer
 .mr.developer.cfg
 /TBoard/.vs/TBoard/v15/Server/sqlite3
+/.vs
+/TBoard/.vs/config

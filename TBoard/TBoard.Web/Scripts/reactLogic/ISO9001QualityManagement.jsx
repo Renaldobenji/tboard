@@ -3,7 +3,6 @@
     getInitialState: function () {
         return {
             FinanceInformation: [],
-            DocumentRequirements: [],
             OrganizationID: "",
             UserID: "",
             qualityManagementSystemCertified: "NO",
@@ -36,7 +35,6 @@
             contentType: 'application/json',
             success: function (data) {
                 if (data.length > 0) {
-
                     this.setState({ qualityManagementSystemCertified: data.find(metaData => metaData.metaDataName === "QualityManagementSystemCertified").metaDataValue });
                     this.setState({ qualityManagementSystem: data.find(metaData => metaData.metaDataName === "QualityManagementSystem").metaDataValue });
                     this.setState({ qualityPolicy: data.find(metaData => metaData.metaDataName === "QualityPolicy").metaDataValue });
@@ -54,35 +52,7 @@
         });
     },
 
-    fetchDocumentRequirements: function (orgID) {
-        $.ajax({
-            url: 'api/Requirement/DOCUMENTREQUIREMENT/ORG/' + orgID,
-            dataType: 'json',
-            cache: false,
-            success: function (data) {
-                this.setState({ DocumentRequirements: data });
-
-                if (data.length > 0) {
-                    var opts = {
-                        title: "Document Requirement",
-                        text: "Please resolve the Outstanding Document Requirements.",
-                        addclass: "stack-bottomright",
-                        type: "error",
-                        nonblock: {
-                            nonblock: true
-                        }
-                    };
-                    new PNotify(opts);
-                }
-
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error('api/Requirements/Document/ORG/', status, err.toString());
-            }.bind(this)
-        });
-    },
-
-
+   
     ISO9001InfoPOST: function () {
         console.log('POSTING FORM');
         $.ajax({
@@ -158,19 +128,8 @@
         this.setState({ OrganizationID: decodedToken.OrganizationID });
         this.setState({ UserID: decodedToken.UserID });
         this.fetchQuestionMetaData(decodedToken.OrganizationID);
-
     },
-
-    componentDidUpdate(prevProps) {
-        // Typical usage (don't forget to compare props):
-        if (this.props.OrganizationID !== prevProps.OrganizationID) {
-            this.fetchDocumentRequirements(this.state.OrganizationID);
-        }
-    },
-
-    componentDidMount: function () {
-        this.fetchDocumentRequirements(this.state.OrganizationID);
-    },
+    
 
     render: function () {
         var navBarSyle = {
@@ -311,7 +270,6 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <DocumentRequirementsList OrgID={this.props.OrganizationID} DocumentRequirements={this.state.DocumentRequirements} />
                                 </div>
                             </div>
                         </div>

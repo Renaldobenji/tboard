@@ -62,9 +62,9 @@ namespace TBoard.Web
                 "~/Scripts/reactLogic/rfqmybids.jsx",
                 "~/Scripts/reactLogic/rfqbid.jsx",
                 "~/Scripts/reactLogic/rfqdetail.jsx",
-                 "~/Scripts/reactLogic/rfqmine.jsx",
-                 "~/Scripts/reactLogic/rfqcreate.jsx",
-                 "~/Scripts/reactLogic/document.jsx",
+                "~/Scripts/reactLogic/rfqmine.jsx",
+                "~/Scripts/reactLogic/rfqcreate.jsx",
+                "~/Scripts/reactLogic/document.jsx",
                 "~/Scripts/reactLogic/users.jsx",
                 "~/Scripts/reactLogic/dashboard.jsx",
                 "~/Scripts/reactLogic/organization.jsx",
@@ -72,7 +72,8 @@ namespace TBoard.Web
                 "~/Scripts/reactLogic/navmenu.jsx",
                 "~/Scripts/reactLogic/admin.jsx",
                 "~/Scripts/reactLogic/registration.jsx",
-                "~/Scripts/reactLogic/app.jsx"
+                "~/Scripts/reactLogic/app.jsx",
+                "~/Scripts/reactLogic/DocumentRequirementsSection.jsx"
             ));
         }
     }

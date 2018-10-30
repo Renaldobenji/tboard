@@ -3,7 +3,6 @@
     getInitialState: function () {
         return {
             FinanceInformation: [],
-            DocumentRequirements: [],
             OrganizationID: "",
             UserID: "",
             occupationalHealthAndSafetyCertified: "NO",
@@ -51,35 +50,6 @@
         });
     },
 
-    fetchDocumentRequirements: function (orgID) {
-        $.ajax({
-            url: 'api/Requirement/DOCUMENTREQUIREMENT/ORG/' + orgID,
-            dataType: 'json',
-            cache: false,
-            success: function (data) {
-                this.setState({ DocumentRequirements: data });
-
-                if (data.length > 0) {
-                    var opts = {
-                        title: "Document Requirement",
-                        text: "Please resolve the Outstanding Document Requirements.",
-                        addclass: "stack-bottomright",
-                        type: "error",
-                        nonblock: {
-                            nonblock: true
-                        }
-                    };
-                    new PNotify(opts);
-                }
-
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error('api/Requirements/Document/ORG/', status, err.toString());
-            }.bind(this)
-        });
-    },
-
-
     ISO18001InfoPOST: function () {
         console.log('POSTING FORM');
         $.ajax({
@@ -109,37 +79,30 @@
     
     occupationalHealthAndSafetyCertified: function (e) {
         this.setState({ occupationalHealthAndSafetyCertified: e.target.value });
-        console.log(this.state.occupationalHealthAndSafetyCertified);
     },
 
     provideCopyOfCompayRiskAssessmentRecords: function (e) {
         this.setState({ provideCopyOfCompayRiskAssessmentRecords: e.target.value });
-        console.log(this.state.provideCopyOfCompayRiskAssessmentRecords);
     },
 
     haveAnEvacuationPlan: function (e) {
         this.setState({ haveAnEvacuationPlan: e.target.value });
-        console.log(this.state.haveAnEvacuationPlan);
     },
 
     companyDisplayCopyofOHSA: function (e) {
         this.setState({ companyDisplayCopyofOHSA: e.target.value });
-        console.log(this.state.companyDisplayCopyofOHSA);
     },
 
     haveRegularToolboxTalks: function (e) {
         this.setState({ haveRegularToolboxTalks: e.target.value });
-        console.log(this.state.haveRegularToolboxTalks);
     },
 
     haveAppointOHSRep: function (e) {
         this.setState({ haveAppointOHSRep: e.target.value });
-        console.log(this.state.haveAppointOHSRep);
     },
 
     haveFullyEquippedFirstAidBoxes: function (e) {
         this.setState({ haveFullyEquippedFirstAidBoxes: e.target.value });
-        console.log(this.state.guaranteeOnProducts);
     },
 
     componentWillMount: function () {
@@ -151,18 +114,7 @@
         this.fetchQuestionMetaData(decodedToken.OrganizationID);
 
     },
-
-    componentDidUpdate(prevProps) {
-        // Typical usage (don't forget to compare props):
-        if (this.props.OrganizationID !== prevProps.OrganizationID) {
-            this.fetchDocumentRequirements(this.state.OrganizationID);
-        }
-    },
-
-    componentDidMount: function () {
-        this.fetchDocumentRequirements(this.state.OrganizationID);
-    },
-
+    
     render: function () {
         var navBarSyle = {
             marginBottom: 0
@@ -291,7 +243,7 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <DocumentRequirementsList OrgID={this.props.OrganizationID} DocumentRequirements={this.state.DocumentRequirements} />
+                                    
                                 </div>
                             </div>
                         </div>

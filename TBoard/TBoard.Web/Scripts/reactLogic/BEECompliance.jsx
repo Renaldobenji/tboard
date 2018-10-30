@@ -2,61 +2,16 @@
 
     getInitialState: function () {
         return {
-            DocumentRequirements: [],
             OrganizationID: "",
             UserID: ""
         };
     },
-
-
-
-    fetchDocumentRequirements: function (orgID) {
-        $.ajax({
-            url: 'api/Requirement/DOCUMENTREQUIREMENT/ORG/' + orgID,
-            dataType: 'json',
-            cache: false,
-            success: function (data) {
-                this.setState({ DocumentRequirements: data });
-
-                if (data.length > 0) {
-                    var opts = {
-                        title: "Document Requirement",
-                        text: "Please resolve the Outstanding Document Requirements.",
-                        addclass: "stack-bottomright",
-                        type: "error",
-                        nonblock: {
-                            nonblock: true
-                        }
-                    };
-                    new PNotify(opts);
-                }
-
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error('api/Requirements/Document/ORG/', status, err.toString());
-            }.bind(this)
-        });
-    },
-
-
-
-
+    
     componentWillMount: function () {
         var tokens = new TboardJWTToken();
         var decodedToken = tokens.getJWTToken();
         this.setState({ OrganizationID: decodedToken.OrganizationID });
         this.setState({ UserID: decodedToken.UserID });
-    },
-
-    componentDidUpdate(prevProps) {
-        // Typical usage (don't forget to compare props):
-        if (this.props.OrganizationID !== prevProps.OrganizationID) {
-            this.fetchDocumentRequirements(this.state.OrganizationID);
-        }
-    },
-
-    componentDidMount: function () {
-        this.fetchDocumentRequirements(this.state.OrganizationID);
     },
 
     render: function () {
@@ -132,8 +87,7 @@
                     <div id="BEEAffidavit" style={hidewStyle}>
                         <BEEComplianceAffidavit />
                     </div>
-                    
-                    <DocumentRequirementsList OrgID={this.props.OrganizationID} DocumentRequirements={this.state.DocumentRequirements} />
+
                 </div>
             </div>
         );
@@ -145,7 +99,6 @@ var BEEComplianceBEECertificate = React.createClass({
 
     getInitialState: function () {
         return {
-            DocumentRequirements: [],
             OrganizationID: "",
             UserID: "",
             BusinessSector: "NO",
@@ -658,7 +611,6 @@ var BEEComplianceAffidavit = React.createClass({
 
     getInitialState: function () {
         return {
-            DocumentRequirements: [],
             OrganizationID: "",
             UserID: "",
             BusinessSector: "NO",

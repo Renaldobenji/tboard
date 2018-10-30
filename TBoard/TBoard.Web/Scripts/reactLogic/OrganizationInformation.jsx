@@ -4,7 +4,6 @@ var OrganizationInformation = React.createClass({
 	getInitialState: function() {
         return {
             OrganizationInformation: [],
-            DocumentRequirements: [],
             OrganizationID : "",			
             UserID: "",
             updateLetterHead: "NO",
@@ -63,35 +62,7 @@ var OrganizationInformation = React.createClass({
 	    });
 	},
 
-	fetchDocumentRequirements: function (orgID) {
-	    $.ajax({
-	        url: 'api/Requirement/DOCUMENTREQUIREMENT/ORG/' + orgID,
-	        dataType: 'json',
-	        cache: false,
-	        success: function (data) {
-	            this.setState({ DocumentRequirements: data });
-
-	            if (data.length > 0) {
-	                var opts = {
-	                    title: "Document Requirement",
-	                    text: "Please resolve the Outstanding Document Requirements.",
-	                    addclass: "stack-bottomright",
-	                    type: "error",
-	                    nonblock: {
-	                        nonblock: true
-	                    }
-	                };
-	                new PNotify(opts);
-	            }
-
-	        }.bind(this),
-	        error: function (xhr, status, err) {
-	            console.error('api/Requirements/Document/ORG/', status, err.toString());
-	        }.bind(this)
-	    });
-	},
-
-
+	
 	OrgInfoPOST: function () {
 	    console.log('POSTING FORM');
 	    $.ajax({
@@ -167,16 +138,12 @@ var OrganizationInformation = React.createClass({
 
 	componentDidUpdate(prevProps) {
 	    // Typical usage (don't forget to compare props):
-	    if (this.props.OrganizationID !== prevProps.OrganizationID) {	       
-	        this.fetchDocumentRequirements(this.state.OrganizationID);
+	    if (this.props.OrganizationID !== prevProps.OrganizationID) {	      
 	        this.fetchQuestionMetaData(this.state.OrganizationID);
 	    }
 	},
-
-   
     
     componentDidMount: function() {
-        this.fetchDocumentRequirements(this.state.OrganizationID);
         this.fetchQuestionMetaData(this.state.OrganizationID);
     },	
 		
@@ -283,8 +250,7 @@ var OrganizationInformation = React.createClass({
                                 </table>                          
                             </div>
                             <br/>
-                           <DocumentRequirementsList OrgID={this.props.OrganizationID} DocumentRequirements={this.state.DocumentRequirements} />
-                        </div>
+                                                   </div>
                         
                     </div>
                                 
@@ -303,7 +269,6 @@ var HumanResourcesInformation = React.createClass({
     getInitialState: function() {
         return {
             OrganizationInformation: [],
-            DocumentRequirements: [],
             OrganizationID : "",			
             UserID: "",
             companyOrganogram: "NO",
@@ -368,35 +333,7 @@ var HumanResourcesInformation = React.createClass({
         });
     },
 
-    fetchDocumentRequirements: function (orgID) {
-        $.ajax({
-            url: 'api/Requirement/DOCUMENTREQUIREMENT/ORG/' + orgID,
-            dataType: 'json',
-            cache: false,
-            success: function (data) {
-                this.setState({ DocumentRequirements: data });
-
-                if (data.length > 0) {
-                    var opts = {
-                        title: "Document Requirement",
-                        text: "Please resolve the Outstanding Document Requirements.",
-                        addclass: "stack-bottomright",
-                        type: "error",
-                        nonblock: {
-                            nonblock: true
-                        }
-                    };
-                    new PNotify(opts);
-                }
-
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error('api/Requirements/Document/ORG/', status, err.toString());
-            }.bind(this)
-        });
-    },
-
-
+  
     HRInfoPOST: function () {
         console.log('POSTING FORM');
         $.ajax({
@@ -480,17 +417,10 @@ var HumanResourcesInformation = React.createClass({
 
     componentDidUpdate(prevProps) {
         // Typical usage (don't forget to compare props):
-        if (this.props.OrganizationID !== prevProps.OrganizationID) {	       
-            this.fetchDocumentRequirements(this.state.OrganizationID);
+        if (this.props.OrganizationID !== prevProps.OrganizationID) {	    
             this.fetchQuestionMetaData(decodedToken.OrganizationID);
         }
     },
-
-   
-    
-    componentDidMount: function() {
-        this.fetchDocumentRequirements(this.state.OrganizationID);
-    },	
 		
     render: function(){
         var navBarSyle= {
@@ -607,7 +537,7 @@ var HumanResourcesInformation = React.createClass({
 </table>                          
 </div>
 <br/>
-<DocumentRequirementsList OrgID={this.props.OrganizationID} DocumentRequirements={this.state.DocumentRequirements} />
+
 </div>
                         
 </div>
@@ -628,7 +558,6 @@ var InsuranceAndRisk = React.createClass({
     getInitialState: function() {
         return {
             OrganizationInformation: [],
-            DocumentRequirements: [],
             OrganizationID : "",			
             UserID: "",
             BuildingsInsurance: "NO",
@@ -673,35 +602,6 @@ var InsuranceAndRisk = React.createClass({
             }.bind(this)
         });
     },
-
-    fetchDocumentRequirements: function (orgID) {
-        $.ajax({
-            url: 'api/Requirement/DOCUMENTREQUIREMENT/ORG/' + orgID,
-            dataType: 'json',
-            cache: false,
-            success: function (data) {
-                this.setState({ DocumentRequirements: data });
-
-                if (data.length > 0) {
-                    var opts = {
-                        title: "Document Requirement",
-                        text: "Please resolve the Outstanding Document Requirements.",
-                        addclass: "stack-bottomright",
-                        type: "error",
-                        nonblock: {
-                            nonblock: true
-                        }
-                    };
-                    new PNotify(opts);
-                }
-
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.error('api/Requirements/Document/ORG/', status, err.toString());
-            }.bind(this)
-        });
-    },
-
 
     InsuranceRiskPOST: function () {
         console.log('POSTING FORM');
@@ -762,18 +662,11 @@ var InsuranceAndRisk = React.createClass({
 
     componentDidUpdate(prevProps) {
         // Typical usage (don't forget to compare props):
-        if (this.props.OrganizationID !== prevProps.OrganizationID) {	       
-            this.fetchDocumentRequirements(this.state.OrganizationID);
+        if (this.props.OrganizationID !== prevProps.OrganizationID) {	  
             this.fetchQuestionMetaData(decodedToken.OrganizationID);
         }
     },
 
-   
-    
-    componentDidMount: function() {
-        this.fetchDocumentRequirements(this.state.OrganizationID);
-    },	
-		
     render: function(){
         var navBarSyle= {
             marginBottom:0
@@ -855,7 +748,7 @@ var InsuranceAndRisk = React.createClass({
 </table>                          
 </div>
 <br/>
-<DocumentRequirementsList OrgID={this.props.OrganizationID} DocumentRequirements={this.state.DocumentRequirements} />
+
 </div>
                         
 </div>
