@@ -24,5 +24,6 @@ namespace TBoard.Data.Model.Refactored
         public Nullable<int> OrganizationID { get; set; }
         public Nullable<int> AverageRating { get; set; }
         public int QuoteID { get; set; }
+        public Nullable<decimal> totalWeighting { get; set; }
     }
 }

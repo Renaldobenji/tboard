@@ -141,8 +141,8 @@
             <PropertyRef Name="documentTypeID" />
           </Key>
           <Property Name="documentTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="documentCode" Type="nvarchar" MaxLength="45" />
-          <Property Name="documentDescription" Type="nvarchar" MaxLength="45" />
+          <Property Name="documentCode" Type="varchar" MaxLength="100" />
+          <Property Name="documentDescription" Type="varchar" MaxLength="100" />
           <Property Name="expiryTermMonths" Type="int" />
         </EntityType>
         <EntityType Name="emailqueue">
@@ -835,8 +835,8 @@
             <PropertyRef Name="documentTypeID" />
           </Key>
           <Property Name="documentTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="documentCode" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
-          <Property Name="documentDescription" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="documentCode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="documentDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="expiryTermMonths" Type="Int32" />
           <NavigationProperty Name="documentrequirements" Relationship="Self.documentrequirements_documentTypeID" FromRole="documenttypes" ToRole="documentrequirements" />
           <NavigationProperty Name="documents" Relationship="Self.documents_documentType" FromRole="documenttypes" ToRole="documents" />
@@ -1511,6 +1511,7 @@
           <Property Type="Int32" Name="OrganizationID" Nullable="true" />
           <Property Type="Int32" Name="AverageRating" Nullable="true" />
           <Property Type="Int32" Name="QuoteID" Nullable="false" />
+          <Property Type="Decimal" Name="totalWeighting" Nullable="true" />
         </ComplexType>
         <ComplexType Name="sps_GetHighestBidsForQuote_Result">
           <Property Type="DateTime" Name="createdDate" Nullable="true" />
