@@ -425,6 +425,7 @@ var RFQBidQuotes = React.createClass({
                         <TableHeaderColumn dataField="SupplyTime">SupplyTime</TableHeaderColumn>
                         <TableHeaderColumn dataField="DeliveryTime">DeliveryTime</TableHeaderColumn>
                         <TableHeaderColumn dataField="name">Company Name</TableHeaderColumn>
+                        <TableHeaderColumn dataField="totalWeighting">Weighting</TableHeaderColumn>
                         <TableHeaderColumn dataFormat={oemFormatter}>OEM</TableHeaderColumn>
                         <TableHeaderColumn dataFormat={actionsRateDisplayFormatter}>Rating</TableHeaderColumn>
                         <TableHeaderColumn dataFormat={actionsRateFormatter}>Actions</TableHeaderColumn>
@@ -442,6 +443,7 @@ var RFQBidQuotes = React.createClass({
                                         <li id="Amount" className="list-group-item">                                    <span className="drag-handle">☰ </span>Cost</li>
                                         <li id="SupplyTime" className="list-group-item">                                    <span className="drag-handle">☰ </span>Supply Time</li>
                                         <li id="DeliveryTime" className="list-group-item">                                    <span className="drag-handle">☰ </span>Delivery Time</li>
+                                        <li id="totalWeighting" className="list-group-item">                                    <span className="drag-handle">☰ </span>Weighting</li>
                                         <li id="oem" className="list-group-item">                                    <span className="drag-handle">☰ </span>OEM</li>
                                         <li id="AverageRating" className="list-group-item">                                    <span className="drag-handle">☰ </span>Rating</li>
 
